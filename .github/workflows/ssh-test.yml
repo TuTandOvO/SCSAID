@@ -6,6 +6,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: SKINDB
     steps:
       - name: SSH connect
         uses: appleboy/ssh-action@v1.0.3
