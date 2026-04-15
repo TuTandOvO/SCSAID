@@ -122,6 +122,32 @@
             font-size: 0.9rem;
         }
 
+        .sortable-th {
+            cursor: pointer;
+            user-select: none;
+        }
+        .sort-link {
+            color: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .sort-link:hover {
+            color: #3498db;
+        }
+        .sort-arrow {
+            font-size: 0.7em;
+            opacity: 0.7;
+        }
+        .sortable-th.sorted {
+            color: #2c3e50;
+        }
+        .sortable-th.sorted .sort-arrow {
+            opacity: 1;
+            color: #3498db;
+        }
         .browse-table thead {
             background: #1a2332;
         }
@@ -582,6 +608,14 @@
             if (filterCondition == null) filterCondition = "";
             if (filterTissue == null) filterTissue = "";
 
+            // Sort parameters
+            String sortCol = request.getParameter("sort");
+            String sortOrder = request.getParameter("order");
+            if (sortCol == null || sortCol.isEmpty()) sortCol = "said";
+            if (sortOrder == null || sortOrder.isEmpty()) sortOrder = "asc";
+            final String finalSortCol = sortCol;
+            final String finalSortOrder = sortOrder;
+
             // Load all data from CSV files
             List<Map<String, String>> allData = new ArrayList<Map<String, String>>();
             Set<String> allTissues = new TreeSet<String>(); // For populating dropdown
@@ -687,6 +721,30 @@
                 reader.close();
                 reader = null;
 
+                // Sort allData
+                allData.sort(new java.util.Comparator<Map<String, String>>() {
+                    public int compare(Map<String, String> a, Map<String, String> b) {
+                        String va = a.get(finalSortCol) != null ? a.get(finalSortCol) : "";
+                        String vb = b.get(finalSortCol) != null ? b.get(finalSortCol) : "";
+                        int cmp;
+                        // Numeric sort for n_cells and said
+                        if ("n_cells".equals(finalSortCol) || "said".equals(finalSortCol)) {
+                            try {
+                                String na = va.replaceAll("[^0-9]", "");
+                                String nb = vb.replaceAll("[^0-9]", "");
+                                int ia = na.isEmpty() ? 0 : Integer.parseInt(na);
+                                int ib = nb.isEmpty() ? 0 : Integer.parseInt(nb);
+                                cmp = Integer.compare(ia, ib);
+                            } catch (Exception e) {
+                                cmp = va.compareToIgnoreCase(vb);
+                            }
+                        } else {
+                            cmp = va.compareToIgnoreCase(vb);
+                        }
+                        return "desc".equals(finalSortOrder) ? -cmp : cmp;
+                    }
+                });
+
                 int rowsPerPage = 10;
                 int totalRows = allData.size();
                 int totalPages = (int) Math.ceil((double) totalRows / rowsPerPage);
@@ -706,6 +764,7 @@
                 if (!filterSpecies.isEmpty()) filterQueryString += "&species=" + java.net.URLEncoder.encode(filterSpecies, "UTF-8");
                 if (!filterCondition.isEmpty()) filterQueryString += "&condition=" + java.net.URLEncoder.encode(filterCondition, "UTF-8");
                 if (!filterTissue.isEmpty()) filterQueryString += "&tissue=" + java.net.URLEncoder.encode(filterTissue, "UTF-8");
+                filterQueryString += "&sort=" + java.net.URLEncoder.encode(sortCol, "UTF-8") + "&order=" + java.net.URLEncoder.encode(sortOrder, "UTF-8");
         %>
 
         <div class="table-card" data-panel-enter>
@@ -770,13 +829,28 @@
                     <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all" title="Select all"></th>
-                        <th>SAID</th>
-                        <th>GSE</th>
-                        <th>GSM</th>
-                        <th>Species</th>
-                        <th>Cells</th>
-                        <th>Condition</th>
-                        <th>Tissue</th>
+                        <%
+                            String[][] sortCols = {
+                                {"said", "SAID"}, {"gse", "GSE"}, {"gsm", "GSM"},
+                                {"species", "Species"}, {"n_cells", "Cells"},
+                                {"condition", "Condition"}, {"tissue", "Tissue"}
+                            };
+                            for (String[] sc : sortCols) {
+                                String colKey = sc[0], colLabel = sc[1];
+                                String nextOrder = (colKey.equals(sortCol) && "asc".equals(sortOrder)) ? "desc" : "asc";
+                                String arrow = "";
+                                if (colKey.equals(sortCol)) {
+                                    arrow = "asc".equals(sortOrder) ? " &#9650;" : " &#9660;";
+                                }
+                                String sortUrl = "?sort=" + colKey + "&order=" + nextOrder;
+                                if (!filterSpecies.isEmpty()) sortUrl += "&species=" + java.net.URLEncoder.encode(filterSpecies, "UTF-8");
+                                if (!filterCondition.isEmpty()) sortUrl += "&condition=" + java.net.URLEncoder.encode(filterCondition, "UTF-8");
+                                if (!filterTissue.isEmpty()) sortUrl += "&tissue=" + java.net.URLEncoder.encode(filterTissue, "UTF-8");
+                        %>
+                        <th class="sortable-th<%= colKey.equals(sortCol) ? " sorted" : "" %>">
+                            <a href="<%= sortUrl %>" class="sort-link"><%= colLabel %><span class="sort-arrow"><%= arrow %></span></a>
+                        </th>
+                        <% } %>
                         <th>Details</th>
                     </tr>
                     </thead>

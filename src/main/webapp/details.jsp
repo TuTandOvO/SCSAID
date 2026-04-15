@@ -314,34 +314,32 @@
                 General Information
             </a>
             <a href="#CellClustering" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <circle cx="19" cy="12" r="2"></circle>
-                    <circle cx="5" cy="12" r="2"></circle>
-                    <circle cx="12" cy="5" r="2"></circle>
-                    <circle cx="12" cy="19" r="2"></circle>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                    <circle cx="7" cy="8" r="2.5" fill="currentColor" opacity="0.3"></circle><circle cx="16" cy="6" r="2" fill="currentColor" opacity="0.3"></circle><circle cx="12" cy="14" r="3" fill="currentColor" opacity="0.3"></circle><circle cx="5" cy="17" r="1.5" fill="currentColor" opacity="0.3"></circle><circle cx="19" cy="15" r="2" fill="currentColor" opacity="0.3"></circle>
                 </svg>
                 Cell Clustering
             </a>
             <a href="#DEGResults" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 3v18h18"></path>
-                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                    <rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line>
                 </svg>
                 DEG Results
             </a>
+            <a href="#GeneSetScoring" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                    <rect x="3" y="12" width="4" height="9" rx="1"></rect><rect x="10" y="7" width="4" height="14" rx="1"></rect><rect x="17" y="3" width="4" height="18" rx="1"></rect>
+                </svg>
+                Gene Set Scoring
+            </a>
             <a href="#CellPhoneDBAnalysis" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                    <circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><line x1="5" y1="8" x2="12" y2="16"></line><line x1="19" y1="8" x2="12" y2="16"></line><line x1="7" y1="6" x2="17" y2="6"></line>
                 </svg>
                 CellPhoneDB Analysis
             </a>
             <a href="#EnrichmentAnalysis" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 12h-4l-3 9L9 3l-3 9H3"></path>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                    <path d="M21 12a9 9 0 1 1-9-9"></path><path d="M21 3v9h-9"></path>
                 </svg>
                 Enrichment Analysis
             </a>
@@ -483,6 +481,44 @@
                             <tbody></tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+
+            <div class="cluster" id="GeneSetScoring">
+                <div class="header">
+                    <div class="header-content">
+                        <div>
+                            <div class="header-title">Gene Set Scoring (AUCell)</div>
+                            <div class="header-subtitle">Score cells by a custom gene set using the AUCell algorithm</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" style="padding:1.5rem;">
+                    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-end; margin-bottom:1rem;">
+                        <div style="flex:1; min-width:300px;">
+                            <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Gene Set (comma-separated)</label>
+                            <textarea id="gssGeneInput" rows="2" placeholder="e.g. COL1A1, COL1A2, COL3A1, FN1, VIM, ACTA2" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; resize:vertical; transition: border-color 0.2s;"></textarea>
+                        </div>
+                        <div style="min-width:140px;">
+                            <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Group By</label>
+                            <select id="gssGroupBy" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; background:#fff; cursor:pointer;">
+                                <option value="Fine_Map">Fine_Map</option>
+                                <option value="Gross_Map">Gross_Map</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button id="gssRunBtn" style="padding:0.7rem 1.5rem; background:linear-gradient(135deg, #5b86e5 0%, #36d1dc 100%); color:#fff; border:none; border-radius:8px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.9rem; cursor:pointer; transition:all 0.2s; white-space:nowrap;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(91,134,229,0.35)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                                Run AUCell
+                            </button>
+                        </div>
+                    </div>
+                    <div id="gssGeneInfo" style="font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#8b95a5; margin-bottom:1rem; display:none;"></div>
+                    <div id="gssProgress" style="display:none; text-align:center; padding:2rem; color:#6b7c93; font-family:'Source Sans 3',sans-serif;">
+                        <div style="margin-bottom:0.5rem;">Running AUCell scoring...</div>
+                        <div style="width:200px; height:4px; background:#eee; border-radius:2px; margin:0 auto;"><div id="gssProgressBar" style="width:30%; height:100%; background:linear-gradient(90deg, #5b86e5, #36d1dc); border-radius:2px; transition:width 0.3s;"></div></div>
+                    </div>
+                    <div id="gssError" style="display:none; padding:1rem; background:#fff5f5; border:1px solid #fed7d7; border-radius:8px; color:#c53030; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; margin-bottom:1rem;"></div>
+                    <div id="gssViolinPlot" style="min-height:200px;"></div>
                 </div>
             </div>
 
@@ -1329,6 +1365,110 @@
                         Plotly.Plots.resize('cpdbDotplot');
                     }
                 });
+
+                // ─── Gene Set Scoring (AUCell) ─────────────────────────
+                $('#gssRunBtn').click(function() {
+                    var genes = $('#gssGeneInput').val().trim();
+                    if (!genes) {
+                        $('#gssError').text('Please enter a gene set.').show();
+                        return;
+                    }
+
+                    var groupBy = $('#gssGroupBy').val();
+                    var btn = $(this);
+                    btn.prop('disabled', true).css('opacity', '0.6');
+                    $('#gssProgress').show();
+                    $('#gssError').hide();
+                    $('#gssGeneInfo').hide();
+                    $('#gssViolinPlot').empty();
+
+                    $.ajax({
+                        url: contextPath + '/cpdb-api?action=geneset-score',
+                        type: 'POST',
+                        data: { said: said, genes: genes, group_by: groupBy },
+                        dataType: 'json',
+                        timeout: 120000,
+                        success: function(data) {
+                            btn.prop('disabled', false).css('opacity', '1');
+                            $('#gssProgress').hide();
+
+                            if (data.error) {
+                                $('#gssError').text(data.error).show();
+                                return;
+                            }
+
+                            // Show gene match info
+                            var info = 'Genes found: ' + data.genes_found.length;
+                            if (data.genes_not_found && data.genes_not_found.length > 0) {
+                                info += ' | Not found: ' + data.genes_not_found.join(', ');
+                            }
+                            info += ' | Grouped by: ' + data.group_by;
+                            $('#gssGeneInfo').html(info).show();
+
+                            renderGssViolin(data);
+                        },
+                        error: function(xhr) {
+                            btn.prop('disabled', false).css('opacity', '1');
+                            $('#gssProgress').hide();
+                            $('#gssError').text('Request failed: ' + xhr.statusText).show();
+                        }
+                    });
+                });
+
+                function renderGssViolin(data) {
+                    var cellTypes = data.cell_types;
+                    var violinData = data.violin_data;
+
+                    if (!cellTypes || cellTypes.length === 0) {
+                        $('#gssViolinPlot').html('<div style="text-align:center; padding:2rem; color:#999;">No data to display</div>');
+                        return;
+                    }
+
+                    var traces = [];
+                    var colors = [
+                        '#e8927c','#5b86e5','#36d1dc','#f5a623','#7b68ee',
+                        '#2ecc71','#e74c3c','#9b59b6','#1abc9c','#f39c12',
+                        '#3498db','#e67e22','#2c3e50','#16a085','#d35400',
+                        '#8e44ad','#27ae60','#c0392b','#2980b9','#f1c40f'
+                    ];
+
+                    for (var i = 0; i < cellTypes.length; i++) {
+                        var ct = cellTypes[i];
+                        var vd = violinData[ct];
+                        traces.push({
+                            type: 'violin',
+                            y: vd.values,
+                            name: ct + ' (n=' + vd.n_cells + ')',
+                            box: { visible: true, width: 0.1 },
+                            meanline: { visible: true },
+                            line: { color: colors[i % colors.length], width: 1.5 },
+                            fillcolor: colors[i % colors.length],
+                            opacity: 0.65,
+                            spanmode: 'soft',
+                            bandwidth: 0.05,
+                            points: vd.n_cells <= 30 ? 'all' : false,
+                            jitter: 0.3,
+                            pointpos: -1.5,
+                            marker: { size: 3, opacity: 0.5 },
+                            scalemode: 'width',
+                            width: 0.8
+                        });
+                    }
+
+                    var h = Math.max(500, 50 + cellTypes.length * 8);
+                    var layout = {
+                        title: { text: 'AUCell Gene Set Score by Cell Type', font: { family: 'Montserrat, sans-serif', size: 15 } },
+                        yaxis: { title: 'AUCell Score', zeroline: false },
+                        xaxis: { tickangle: -45, tickfont: { size: 8 }, automargin: true },
+                        margin: { l: 60, r: 30, t: 50, b: 200 },
+                        height: h,
+                        showlegend: false,
+                        violingap: 0.25,
+                        violinmode: 'group'
+                    };
+
+                    Plotly.newPlot('gssViolinPlot', traces, layout, { responsive: true });
+                }
 
                 // Initialize
                 initCpdbCellTypes();
