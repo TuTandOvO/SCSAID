@@ -283,67 +283,15 @@ public class CellPhoneDBServlet extends HttpServlet {
     }
 
     private boolean startCpdbServerIfNeeded() {
+        // The canonical CellPhoneDB analysis backend (cpdb_api_server.py — real
+        // cellphonedb statistical_analysis + decoupler/gseapy gene-set scoring) is
+        // managed by systemd (cpdb-api.service) on the host. This servlet only
+        // proxies to it. We deliberately do NOT spawn a local fallback: the old
+        // fallback launched a non-canonical stand-in that silently returned
+        // incorrect results. If the managed server is down we report unavailable.
         synchronized (processLock) {
-            // Check if already running
-            if (isServerHealthy()) {
-                serverStarted = true;
-                return true;
-            }
-
-            // Get path to Python script
-            String webappPath = getServletContext().getRealPath("/");
-            String scriptPath = webappPath + "cpdb_resources/cpdb_analysis.py";
-
-            File scriptFile = new File(scriptPath);
-            if (!scriptFile.exists()) {
-                System.err.println("CellPhoneDB script not found: " + scriptPath);
-                return false;
-            }
-
-            try {
-                // Try to use conda environment
-                ProcessBuilder pb = new ProcessBuilder(
-                        "python3", scriptPath,
-                        "--port", String.valueOf(CPDB_PORT),
-                        "--host", CPDB_HOST
-                );
-
-                pb.directory(new File(webappPath + "cpdb_resources"));
-                pb.redirectErrorStream(true);
-
-                cpdbProcess = pb.start();
-
-                // Start output monitoring thread
-                new Thread(() -> {
-                    try (BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(cpdbProcess.getInputStream()))) {
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println("[CPDB] " + line);
-                        }
-                    } catch (IOException e) {
-                        System.err.println("Error reading CPDB output: " + e.getMessage());
-                    }
-                }).start();
-
-                // Wait for server to start
-                Thread.sleep(5000);
-
-                // Check if healthy
-                if (isServerHealthy()) {
-                    serverStarted = true;
-                    System.out.println("CellPhoneDB server started on port " + CPDB_PORT);
-                    return true;
-                } else {
-                    System.err.println("CellPhoneDB server failed to start");
-                    return false;
-                }
-
-            } catch (Exception e) {
-                System.err.println("Error starting CellPhoneDB server: " + e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
+            serverStarted = isServerHealthy();
+            return serverStarted;
         }
     }
 

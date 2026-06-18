@@ -176,6 +176,15 @@ try:
     sc.pp.filter_genes(integrated, min_cells=10)
     print(f"✓ {integrated.n_vars:,} genes remaining")
 
+    # Keep the raw counts in a layer BEFORE normalization. The seurat_v3 HVG
+    # flavor models the mean-variance relationship of raw counts and must be
+    # given counts, not log-normalized data (scanpy will otherwise warn and
+    # produce an incorrect HVG ranking). We therefore stash counts here and
+    # point highly_variable_genes at that layer further down.
+    print("Stashing raw counts in layers['counts']...", end=" ")
+    integrated.layers['counts'] = integrated.X.copy()
+    print("✓")
+
     print("Normalizing counts (target_sum=1e4)...", end=" ")
     sc.pp.normalize_total(integrated, target_sum=1e4)
     print("✓")
@@ -184,12 +193,13 @@ try:
     sc.pp.log1p(integrated)
     print("✓")
 
-    print("Identifying highly variable genes (n=2000)...", end=" ")
+    print("Identifying highly variable genes (n=2000, seurat_v3 on raw counts)...", end=" ")
     sc.pp.highly_variable_genes(
         integrated,
         n_top_genes=2000,
         batch_key='batch',
-        flavor='seurat_v3'
+        flavor='seurat_v3',
+        layer='counts'
     )
     print("✓")
 
