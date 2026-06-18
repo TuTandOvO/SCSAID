@@ -1,6 +1,11 @@
 <%@ page language="java"
          contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%
+    String turnstileSiteKey = (String) request.getAttribute("turnstileSiteKey");
+    if (turnstileSiteKey == null) turnstileSiteKey = "";
+    boolean gateEnabled = !turnstileSiteKey.isEmpty();
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +22,11 @@
     <link rel="stylesheet" href="CSS/design-system.css">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/construction-modal-simple.css">
+
+    <% if (gateEnabled) { %>
+    <!-- Cloudflare Turnstile (gates the feedback form against over-submission) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <% } %>
 
     <style>
         body {
@@ -90,6 +100,39 @@
             text-align: center;
         }
 
+        .feedback-gate {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .feedback-gate__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.75rem;
+            color: #1a2332;
+            margin: 0 0 0.5rem;
+        }
+
+        .feedback-gate__hint {
+            color: #6b7280;
+            margin: 0 0 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .cf-turnstile {
+            display: inline-block;
+        }
+
+        .feedback-gate__error {
+            color: #b91c1c;
+            margin-top: 1rem;
+            min-height: 1.2em;
+            font-size: 0.9rem;
+        }
+
+        .is-hidden {
+            display: none !important;
+        }
+
         @media (max-width: 768px) {
             .page-header {
                 padding: 3.5rem 0;
@@ -159,14 +202,30 @@
 
     <div class="feedback-content">
         <div class="feedback-card">
+            <% if (gateEnabled) { %>
+            <!-- Verification gate: the form is revealed only after Turnstile passes -->
+            <div id="feedbackGate" class="feedback-gate">
+                <h2 class="feedback-gate__title">Quick check before you continue</h2>
+                <p class="feedback-gate__hint">Please confirm you're human to open the feedback form.</p>
+                <div class="cf-turnstile"
+                     data-sitekey="<%= turnstileSiteKey %>"
+                     data-callback="onTurnstileSuccess"
+                     data-error-callback="onTurnstileError"
+                     data-expired-callback="onTurnstileExpired"></div>
+                <div id="feedbackGateError" class="feedback-gate__error"></div>
+            </div>
+            <% } %>
+
             <iframe
-                    class="feedback-iframe"
+                    id="feedbackIframe"
+                    class="feedback-iframe<%= gateEnabled ? " is-hidden" : "" %>"
                     title="Feedback form"
-                    src="https://docs.google.com/forms/d/e/1FAIpQLSflIMVjxnvApZ7I0uUwPdvt9_C7self4p-a3K2NoC6T8YLgLg/viewform?embedded=true"
+                    data-src="https://docs.google.com/forms/d/e/1FAIpQLSflIMVjxnvApZ7I0uUwPdvt9_C7self4p-a3K2NoC6T8YLgLg/viewform?embedded=true"
+                    <% if (!gateEnabled) { %>src="https://docs.google.com/forms/d/e/1FAIpQLSflIMVjxnvApZ7I0uUwPdvt9_C7self4p-a3K2NoC6T8YLgLg/viewform?embedded=true"<% } %>
                     loading="lazy"
             ></iframe>
 
-            <div class="feedback-fallback">
+            <div class="feedback-fallback<%= gateEnabled ? " is-hidden" : "" %>" id="feedbackFallback">
                 <a
                         class="btn btn--outline"
                         href="https://docs.google.com/forms/d/e/1FAIpQLSflIMVjxnvApZ7I0uUwPdvt9_C7self4p-a3K2NoC6T8YLgLg/viewform?usp=dialog"
@@ -179,6 +238,60 @@
         </div>
     </div>
 </main>
+
+<% if (gateEnabled) { %>
+<script>
+    (function () {
+        function revealForm() {
+            var iframe = document.getElementById('feedbackIframe');
+            if (iframe && !iframe.src) {
+                iframe.src = iframe.getAttribute('data-src');
+            }
+            iframe && iframe.classList.remove('is-hidden');
+            var gate = document.getElementById('feedbackGate');
+            gate && gate.classList.add('is-hidden');
+            var fallback = document.getElementById('feedbackFallback');
+            fallback && fallback.classList.remove('is-hidden');
+        }
+
+        function showError(msg) {
+            var el = document.getElementById('feedbackGateError');
+            if (el) el.textContent = msg;
+        }
+
+        window.onTurnstileSuccess = function (token) {
+            showError('');
+            var body = 'cf-turnstile-response=' + encodeURIComponent(token);
+            fetch('feedback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body
+            }).then(function (r) {
+                return r.json().catch(function () { return { ok: false }; });
+            }).then(function (data) {
+                if (data && data.ok) {
+                    revealForm();
+                } else if (data && data.error === 'rate_limited') {
+                    showError('Too many attempts. Please wait a minute and try again.');
+                } else {
+                    showError('Verification failed. Please try again.');
+                    if (window.turnstile) window.turnstile.reset();
+                }
+            }).catch(function () {
+                showError('Network error during verification. Please try again.');
+            });
+        };
+
+        window.onTurnstileError = function () {
+            showError('Could not load the verification widget. Please refresh the page.');
+        };
+
+        window.onTurnstileExpired = function () {
+            showError('Verification expired. Please complete the check again.');
+        };
+    })();
+</script>
+<% } %>
 
 <script src="JS/construction-modal-simple.js"></script>
 </body>

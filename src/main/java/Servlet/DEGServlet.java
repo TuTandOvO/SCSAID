@@ -42,7 +42,7 @@ public class DEGServlet extends HttpServlet {
 
         Map<String, String> meta = mapping.get(said);
         if (meta == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "SAID not found in mapping: " + said);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Requested dataset was not found.");
             return;
         }
 
@@ -96,8 +96,10 @@ public class DEGServlet extends HttpServlet {
             if (scoreCol == null) scoreCol = lowerToOrig.get("scores");
 
             if (geneCol == null || fcCol == null || pvalCol == null || scoreCol == null) {
+                getServletContext().log("DEG CSV missing required columns for said=" + said
+                        + " found=" + parser.getHeaderMap().keySet());
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        "CSV missing required columns. Found: " + parser.getHeaderMap().keySet());
+                        "Unable to process the dataset.");
                 return;
             }
 
@@ -129,7 +131,8 @@ public class DEGServlet extends HttpServlet {
             }
 
         } catch (IOException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading CSV: " + e.getMessage());
+            getServletContext().log("DEG CSV read error for said=" + said, e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to read the dataset.");
             return;
         }
 

@@ -67,7 +67,7 @@ public class DownloadServlet extends HttpServlet {
 
         FileInfo fileInfo = ALLOWED_FILES.get(fileKey);
         if (fileInfo == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid file key: " + fileKey);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid file key.");
             return;
         }
 

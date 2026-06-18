@@ -40,6 +40,21 @@ public class ExternalAPIClient {
     }
 
     /**
+     * Restrict cache-key components to a safe character set so a crafted gene
+     * name (e.g. containing "/" or "..") cannot escape the cache directory.
+     */
+    private static String sanitizeKey(String value) {
+        if (value == null) {
+            return "unknown";
+        }
+        String cleaned = value.replaceAll("[^A-Za-z0-9_.-]", "_");
+        if (cleaned.isEmpty()) {
+            return "unknown";
+        }
+        return cleaned.length() > 64 ? cleaned.substring(0, 64) : cleaned;
+    }
+
+    /**
      * Fetch gene information with caching
      */
     public static GeneInfo fetchGeneInfo(String geneName, String species) {
@@ -275,7 +290,7 @@ public class ExternalAPIClient {
      */
     private static GeneInfo getCachedGeneInfo(String geneName, String species) {
         try {
-            String cacheKey = geneName + "_" + species;
+            String cacheKey = sanitizeKey(geneName) + "_" + sanitizeKey(species);
             Path cacheFile = Paths.get(CACHE_DIR, cacheKey + ".cache");
             Path timestampFile = Paths.get(CACHE_DIR, cacheKey + ".timestamp");
 
@@ -303,7 +318,7 @@ public class ExternalAPIClient {
      */
     private static void cacheGeneInfo(String geneName, String species, GeneInfo geneInfo) {
         try {
-            String cacheKey = geneName + "_" + species;
+            String cacheKey = sanitizeKey(geneName) + "_" + sanitizeKey(species);
             Path cacheFile = Paths.get(CACHE_DIR, cacheKey + ".cache");
             Path timestampFile = Paths.get(CACHE_DIR, cacheKey + ".timestamp");
 

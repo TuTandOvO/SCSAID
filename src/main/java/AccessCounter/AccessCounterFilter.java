@@ -157,6 +157,9 @@ public class AccessCounterFilter implements Filter {
             countCookie.setPath(req.getContextPath());
             // 1 year so returning visitors aren't re-counted as total
             countCookie.setMaxAge(60 * 60 * 24 * 365);
+            // Harden: not script-accessible and HTTPS-only (SameSite set via context.xml)
+            countCookie.setHttpOnly(true);
+            countCookie.setSecure(true);
             res.addCookie(countCookie);
         }
         // 将请求继续传递到下一个过滤器或目标资源

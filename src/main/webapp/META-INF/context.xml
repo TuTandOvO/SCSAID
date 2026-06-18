@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- Apply SameSite=Lax to all cookies (JSESSIONID, count_cookie) to reduce
+         CSRF / cross-site cookie leakage. Secure & HttpOnly are set per-cookie
+         (session cookie via web.xml, count_cookie in AccessCounterFilter). -->
+    <CookieProcessor sameSiteCookies="lax" />
+</Context>
