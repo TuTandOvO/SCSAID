@@ -39,13 +39,20 @@ jobs:
           script: |
             set -e
             WAR=$(ls /tmp/target/*.war | head -n1)
-            # Stop via systemd (and force-kill any stray Catalina) so the next
-            # start runs as the 'tomcat' user — keeps webapps/work/temp owned by
-            # tomcat and avoids root-owned files that break later restarts.
+            # Stop via systemd so the next start runs as the 'tomcat' user —
+            # keeps webapps/work/temp owned by tomcat and avoids root-owned files
+            # that break later restarts.
+            #
+            # IMPORTANT: do NOT `pkill -f catalina` here. appleboy/ssh-action runs
+            # this script via `bash -c "<script text>"`, so the literal word
+            # "catalina" appears in this session's own command line; `pkill -f
+            # catalina` then kills its OWN SSH session (SIGKILL/137) right after
+            # the stop above and before the start below — stopping Tomcat and
+            # stranding the site DOWN. `systemctl stop` already terminates the
+            # service cleanly, so the pkill is both unnecessary and dangerous.
             systemctl stop tomcat 2>/dev/null || true
-            pkill -9 -f catalina 2>/dev/null || true
-            # pkill -9 is async — wait for port 8080 to actually be released,
-            # otherwise the new JVM hits BindException and dies silently.
+            # Wait for port 8080 to actually be released before starting, else the
+            # new JVM hits BindException and dies silently.
             for i in $(seq 1 20); do ss -tln | grep -q ':8080 ' || break; sleep 1; done
             # Clear old app, compiled-JSP cache and stale PID before swapping in.
             rm -rf /opt/tomcat/webapps/ROOT \
