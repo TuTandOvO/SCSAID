@@ -37,9 +37,19 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            set -e
             WAR=$(ls /tmp/target/*.war | head -n1)
-            rm -rf /opt/tomcat/webapps/ROOT /opt/tomcat/webapps/ROOT.war
+            # Stop via systemd (and force-kill any stray Catalina) so the next
+            # start runs as the 'tomcat' user — keeps webapps/work/temp owned by
+            # tomcat and avoids root-owned files that break later restarts.
+            systemctl stop tomcat 2>/dev/null || true
+            pkill -9 -f catalina 2>/dev/null || true
+            # Clear old app, compiled-JSP cache and stale PID before swapping in.
+            rm -rf /opt/tomcat/webapps/ROOT \
+                   /opt/tomcat/webapps/ROOT.war \
+                   /opt/tomcat/work/Catalina/localhost/ROOT \
+                   /opt/tomcat/temp/tomcat.pid
             mv "$WAR" /opt/tomcat/webapps/ROOT.war
             chown tomcat:tomcat /opt/tomcat/webapps/ROOT.war
-            pkill -9 java
-            /opt/tomcat/bin/startup.sh
+            systemctl reset-failed tomcat 2>/dev/null || true
+            systemctl start tomcat
