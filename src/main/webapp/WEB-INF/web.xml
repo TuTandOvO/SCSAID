@@ -33,6 +33,7 @@
     </filter>
     <filter-mapping>
         <filter-name>RateLimitFilter</filter-name>
+        <url-pattern>/visualization</url-pattern>
         <url-pattern>/enrichment</url-pattern>
         <url-pattern>/integrate</url-pattern>
         <url-pattern>/deg</url-pattern>
@@ -128,6 +129,15 @@
     <servlet-mapping>
         <servlet-name>IntegrateServlet</servlet-name>
         <url-pattern>/integrate</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VisualizationServlet</servlet-name>
+        <servlet-class>Servlet.VisualizationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VisualizationServlet</servlet-name>
+        <url-pattern>/visualization</url-pattern>
     </servlet-mapping>
 
     <servlet>
