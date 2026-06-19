@@ -727,11 +727,11 @@
                             </div>
                             <div class="filter-card">
                                 <div class="filter-label">
-                                    <span class="filter-name">Log fold change</span>
+                                    <span class="filter-name">|Log₂ fold change|</span>
                                     <span class="filter-value" id="fcLabel">1.0</span>
                                 </div>
                                 <input type="range" id="fcSlider" class="elegant-slider" min="0" max="10" step="0.1" value="1.0">
-                                <div class="filter-hint">Minimum log₂ fold change</div>
+                                <div class="filter-hint">Minimum |log₂ fold change| (up- or down-regulated)</div>
                             </div>
                             <div class="filter-card">
                                 <div class="filter-label">

@@ -115,7 +115,9 @@ public class DEGServlet extends HttpServlet {
                     String score = rec.get(scoreCol);
                     String group = (groupCol != null) ? rec.get(groupCol) : "All";
 
-                    if (pval <= pvalThreshold && logfc >= fcThreshold) {
+                    // Keep both up- and down-regulated markers: filter on |log2FC|
+                    // so strongly down-regulated genes (logFC <= -fc) are not silently dropped.
+                    if (pval <= pvalThreshold && Math.abs(logfc) >= fcThreshold) {
                         if (filterGroup == null || filterGroup.isEmpty() || group.equals(filterGroup)) {
                             Map<String, String> row = new HashMap<>();
                             row.put("gene",           gene);
