@@ -209,4 +209,60 @@
         <servlet-name>GeoMetaServlet</servlet-name>
         <url-pattern>/geo_meta</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <servlet-class>Servlet.DEGCompareServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/datasets</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/deg-compare</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/deg-compare/status</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/deg-compare/result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/deg-per-celltype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/deg-per-celltype/status</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DEGCompareServlet</servlet-name>
+        <url-pattern>/deg-per-celltype/result</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConditionCompareServlet</servlet-name>
+        <servlet-class>Servlet.ConditionCompareServlet</servlet-class>
+    </servlet>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/conditions</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-compare</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-compare/status</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-compare/result</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-gsea</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-gsea/status</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-gsea/result</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/gmt-catalog</url-pattern></servlet-mapping>
+
+    <servlet>
+        <servlet-name>compareJsp</servlet-name>
+        <jsp-file>/compare.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>compareJsp</servlet-name>
+        <url-pattern>/compare</url-pattern>
+    </servlet-mapping>
+
 </web-app>

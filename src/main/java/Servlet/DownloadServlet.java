@@ -25,6 +25,12 @@ public class DownloadServlet extends HttpServlet {
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             "Complete dataset with all metadata"
         ));
+        ALLOWED_FILES.put("csv", new FileInfo(
+            "WEB-INF/scSAID_sample_metadata.csv",
+            "scSAID_sample_metadata.csv",
+            "text/csv; charset=UTF-8",
+            "Sample metadata (252 rows, CSV, easy for R/Python)"
+        ));
         ALLOWED_FILES.put("integrate", new FileInfo(
             "WEB-INF/IntegrateTable.xlsx",
             "scSAID_Integration_Table.xlsx",

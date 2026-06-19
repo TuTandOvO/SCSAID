@@ -9,6 +9,15 @@
 <%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <html>
 <head>
+    <!-- Favicons / PWA icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#1a2332">
     <meta charset="UTF-8">
     <title>美观实用的下拉框示例</title>
     <!-- 引入 Bootstrap CSS -->
@@ -66,7 +75,7 @@
     </form>
 </div>
 <!-- 引入 jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
 <!-- 引入 Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 引入 Select2 JS -->
