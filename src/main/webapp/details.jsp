@@ -21,28 +21,6 @@
         }
         return Paths.get(dataRoot, DOWNLOAD_DATA_RELATIVE_PATH, "10X", "human", gse, gsm, "cpdb_out").toString();
     }
-
-    // Escape a string so it can be embedded inside a JSON string literal (used
-    // to build inline JSON-LD without pulling in Gson here).
-    protected static String jsonEscape(String s) {
-        if (s == null) return "";
-        StringBuilder out = new StringBuilder(s.length() + 8);
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            switch (c) {
-                case '\\': out.append("\\\\"); break;
-                case '"':  out.append("\\\""); break;
-                case '\n': out.append(" "); break;
-                case '\r': out.append(" "); break;
-                case '\t': out.append(" "); break;
-                case '<':  out.append("\\u003C"); break; // avoid </script> injection
-                case '>':  out.append("\\u003E"); break;
-                default:
-                    if (c < 0x20) out.append(' '); else out.append(c);
-            }
-        }
-        return out.toString();
-    }
 %>
 <%
     // =========================================================================
@@ -288,138 +266,14 @@
         if (csvReader != null) try { csvReader.close(); } catch (Exception ignore) {}
     }
     }
-
-    // =========================================================================
-    // Server-side render of GEO study metadata (static per SAID) so the
-    // Experimental Design panel does not depend on an AJAX call into geo_meta.
-    // =========================================================================
-    String geoTitle = "";
-    String geoSummary = "";
-    String geoDesign = "";
-    java.util.List<String> geoPubmedIds = new java.util.ArrayList<String>();
-    try {
-        File gseMetaFile = new File(dataRoot, "gse_metadata.json");
-        if (gseMetaFile.exists() && gseVal != null && !gseVal.isEmpty()) {
-            com.google.gson.JsonObject all = com.google.gson.JsonParser
-                    .parseReader(new java.io.FileReader(gseMetaFile))
-                    .getAsJsonObject();
-            if (all.has(gseVal)) {
-                com.google.gson.JsonObject g = all.getAsJsonObject(gseVal);
-                if (g.has("title") && !g.get("title").isJsonNull()) geoTitle = g.get("title").getAsString();
-                if (g.has("summary") && !g.get("summary").isJsonNull()) geoSummary = g.get("summary").getAsString();
-                if (g.has("overall_design") && !g.get("overall_design").isJsonNull()) geoDesign = g.get("overall_design").getAsString();
-                if (g.has("pubmed_ids") && g.get("pubmed_ids").isJsonArray()) {
-                    for (com.google.gson.JsonElement e : g.getAsJsonArray("pubmed_ids")) {
-                        if (!e.isJsonNull()) geoPubmedIds.add(e.getAsString());
-                    }
-                }
-            }
-        }
-    } catch (Exception e) {
-        // Leave fields blank on any parse/IO issue — the panel will show an empty-state.
-    }
-
-    // Suppress browser/proxy caching of the JSP response so CDN -> local lib
-    // migration is picked up immediately without Cmd+Shift+R.
-    response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-    response.setHeader("Pragma", "no-cache");
-    response.setHeader("Expires", "0");
 %>
 
 <!DOCTYPE html>
-<%
-    // ---- SEO: per-SAID meta + JSON-LD ------------------------------------
-    // Build a compact "search snippet" from the (cleaned) curator metadata
-    // plus the GEO study description; capped so Google treats it as a normal
-    // meta description. Single-line, HTML-escaped.
-    String pageTitle = saidVal + " — " + speciesVal + " " + conditionVal
-            + " " + tissueVal + " | scSAID";
-    StringBuilder sbMeta = new StringBuilder();
-    sbMeta.append(speciesVal).append(" ")
-          .append(conditionVal).append(" scRNA-seq dataset (")
-          .append(n_cellsVal).append(" cells, ")
-          .append(tissueVal).append(") from ")
-          .append(gseVal).append("/").append(gsmVal)
-          .append(". ");
-    if (geoTitle != null && !geoTitle.isEmpty()) {
-        sbMeta.append(geoTitle).append(". ");
-    }
-    if (geoSummary != null && !geoSummary.isEmpty()) {
-        sbMeta.append(geoSummary);
-    }
-    String metaDesc = sbMeta.toString().replace('\n',' ').replace('\r',' ');
-    if (metaDesc.length() > 300) metaDesc = metaDesc.substring(0, 297) + "...";
-    String metaDescHtml = metaDesc.replace("&","&amp;").replace("<","&lt;")
-                                  .replace(">","&gt;").replace("\"","&quot;");
-
-    String canonUrl = "https://skin-scsaid.com/details.jsp?said=" + saidVal;
-
-    // Build JSON-LD Dataset schema for this specific SAID.
-    StringBuilder sbJ = new StringBuilder();
-    sbJ.append("{");
-    sbJ.append("\"@context\":\"https://schema.org/\",");
-    sbJ.append("\"@type\":\"Dataset\",");
-    sbJ.append("\"name\":\"").append(jsonEscape(pageTitle)).append("\",");
-    sbJ.append("\"alternateName\":\"").append(jsonEscape(saidVal)).append("\",");
-    sbJ.append("\"identifier\":\"").append(jsonEscape(saidVal)).append("\",");
-    sbJ.append("\"url\":\"").append(canonUrl).append("\",");
-    sbJ.append("\"description\":\"").append(jsonEscape(metaDesc)).append("\",");
-    sbJ.append("\"keywords\":[\"scRNA-seq\",\"single-cell RNA-seq\",\"")
-       .append(jsonEscape(speciesVal.toLowerCase())).append(" skin\",\"")
-       .append(jsonEscape(conditionVal)).append("\",\"")
-       .append(jsonEscape(tissueVal)).append("\",\"scSAID\"],");
-    sbJ.append("\"isAccessibleForFree\":true,");
-    sbJ.append("\"license\":\"https://creativecommons.org/licenses/by/4.0/\",");
-    sbJ.append("\"measurementTechnique\":\"single-cell RNA sequencing\",");
-    sbJ.append("\"variableMeasured\":[\"gene expression\",\"cell type annotation\"],");
-    sbJ.append("\"creator\":{\"@type\":\"Organization\",\"name\":\"ZJU-UoE Joint Institute\",\"url\":\"https://zje.zju.edu.cn/\"},");
-    sbJ.append("\"includedInDataCatalog\":{\"@type\":\"DataCatalog\",\"name\":\"scSAID\",\"url\":\"https://skin-scsaid.com/\"},");
-    if (gseVal != null && gseVal.startsWith("GSE")) {
-        sbJ.append("\"isBasedOn\":\"https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=")
-           .append(gseVal).append("\",");
-    }
-    if (!geoPubmedIds.isEmpty()) {
-        sbJ.append("\"citation\":[");
-        for (int i = 0; i < geoPubmedIds.size(); i++) {
-            if (i > 0) sbJ.append(",");
-            sbJ.append("\"https://pubmed.ncbi.nlm.nih.gov/")
-               .append(geoPubmedIds.get(i)).append("/\"");
-        }
-        sbJ.append("],");
-    }
-    sbJ.append("\"spatialCoverage\":{\"@type\":\"Place\",\"name\":\"")
-       .append(jsonEscape(speciesVal)).append(" ").append(jsonEscape(tissueVal)).append("\"}");
-    sbJ.append("}");
-    String jsonLd = sbJ.toString();
-%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Favicons / PWA icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a2332">
-    <title><%= pageTitle.replace("<","&lt;").replace(">","&gt;") %></title>
-
-    <!-- SEO: per-SAID meta tags + JSON-LD Dataset schema -->
-    <meta name="description" content="<%= metaDescHtml %>">
-    <meta name="keywords" content="scSAID, <%= saidVal %>, <%= gseVal %>, <%= gsmVal %>, <%= speciesVal %> scRNA-seq, <%= conditionVal %>, <%= tissueVal %>, skin atlas, single-cell">
-    <meta name="robots" content="index,follow,max-image-preview:large">
-    <link rel="canonical" href="<%= canonUrl %>">
-
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="scSAID">
-    <meta property="og:title" content="<%= (saidVal + " — " + speciesVal + " " + conditionVal + " (" + tissueVal + ")").replace("\"","&quot;") %>">
-    <meta property="og:description" content="<%= metaDescHtml %>">
-    <meta property="og:url" content="<%= canonUrl %>">
-
-    <script type="application/ld+json"><%= jsonLd %></script>
+    <title>Dataset Details - scSAID</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -430,13 +284,13 @@
     <link rel="stylesheet" href="CSS/design-system.css">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/details.css">
-    <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
-    <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
-    <script src="lib/jquery-3.7.1.min.js?v=20260416"></script>
-    <script src="lib/jquery.dataTables.min.js?v=20260416"></script>
-    <script src="lib/xlsx.full.min.js?v=20260416"></script>
-    <script src="lib/plotly-2.20.0.min.js?v=20260416"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
 </head>
 <body style="background: #faf8f5;">
 
@@ -461,9 +315,10 @@
                 </div>
             </div>
             <a href="feedback" class="main-nav__link">Feedback</a>
+            <a href="contact" class="main-nav__link">Contact</a>
         </nav>
         <div class="header-icons">
-            <a href="https://github.com/TuTandOvO/SCSAID" target="_blank" class="header-icon-link" title="View on GitHub">
+            <a href="https://github.com/Dostoyevsky7/SkinDB_web" target="_blank" class="header-icon-link" title="View on GitHub">
                 <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
@@ -475,156 +330,108 @@
     </div>
 </header>
 <div class="details-box">
-
-    <!-- Dataset Hero — editorial header that carries the homepage language
-         (dark navy, gold eyebrow, serif title, JetBrains-Mono meta chips). -->
-    <section class="dataset-hero" id="ExperimentInformation">
-        <div class="dataset-hero__inner">
-            <div class="dataset-hero__eyebrow">
-                <span>Dataset</span>
-                <code><%= saidVal %></code>
-            </div>
-            <h1 class="dataset-hero__title"><%
-                    StringBuilder heroTitle = new StringBuilder();
-                    heroTitle.append(speciesVal);
-                    if (conditionVal != null && !conditionVal.isEmpty()) heroTitle.append(" · ").append(conditionVal);
-                    if (tissueVal   != null && !tissueVal.isEmpty()  && !"NA".equalsIgnoreCase(tissueVal)) heroTitle.append(" — ").append(tissueVal);
-                %><%= heroTitle.toString().replace("<","&lt;").replace(">","&gt;") %></h1>
-            <p class="dataset-hero__subtitle">
-                <% if (!geoTitle.isEmpty()) { %>
-                    <%= geoTitle.replace("<","&lt;").replace(">","&gt;") %>
-                <% } else { %>
-                    Single-cell RNA-seq dataset catalogued in scSAID under accession <%= gseVal %> / <%= gsmVal %>.
-                <% } %>
-            </p>
-            <div class="dataset-hero__meta">
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">Cells</span>
-                    <span class="dataset-hero__meta-value dataset-hero__meta-value--large"><%= (n_cellsVal == null || n_cellsVal.isEmpty()) ? "—" : n_cellsVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">GSE</span>
-                    <span class="dataset-hero__meta-value"><%= gseVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">GSM</span>
-                    <span class="dataset-hero__meta-value"><%= gsmVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">Species</span>
-                    <span class="dataset-hero__meta-value"><%= speciesVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">Tissue</span>
-                    <span class="dataset-hero__meta-value"><%= (tissueVal == null || tissueVal.isEmpty()) ? "—" : tissueVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">Condition</span>
-                    <span class="dataset-hero__meta-value"><%= (conditionVal == null || conditionVal.isEmpty()) ? "—" : conditionVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">Age</span>
-                    <span class="dataset-hero__meta-value"><%= (ageVal == null || ageVal.isEmpty()) ? "—" : ageVal %></span>
-                </div>
-                <div class="dataset-hero__meta-item">
-                    <span class="dataset-hero__meta-label">Sex</span>
-                    <span class="dataset-hero__meta-value"><%= (sexVal == null || sexVal.isEmpty()) ? "—" : sexVal %></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
-        <p class="sidebar__title">Analyses</p>
+        <h1 class="sidebar__title">Dataset Navigation</h1>
         <nav class="sidebar__nav">
             <a href="#ExperimentInformation" class="nav-item active">
                 <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <path d="M12 16v-4M12 8h.01"></path>
                 </svg>
-                Overview
+                General Information
             </a>
             <a href="#CellProportion" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
                     <circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20"></path><line x1="12" y1="2" x2="12" y2="22"></line>
                 </svg>
                 Cell Proportion
             </a>
             <a href="#CellClustering" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
                     <circle cx="7" cy="8" r="2.5" fill="currentColor" opacity="0.3"></circle><circle cx="16" cy="6" r="2" fill="currentColor" opacity="0.3"></circle><circle cx="12" cy="14" r="3" fill="currentColor" opacity="0.3"></circle><circle cx="5" cy="17" r="1.5" fill="currentColor" opacity="0.3"></circle><circle cx="19" cy="15" r="2" fill="currentColor" opacity="0.3"></circle>
                 </svg>
                 Cell Clustering
             </a>
             <a href="#DEGResults" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
                     <rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line>
                 </svg>
                 DEG Results
             </a>
             <a href="#GeneSetScoring" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
                     <rect x="3" y="12" width="4" height="9" rx="1"></rect><rect x="10" y="7" width="4" height="14" rx="1"></rect><rect x="17" y="3" width="4" height="18" rx="1"></rect>
                 </svg>
                 Gene Set Scoring
             </a>
             <a href="#CellPhoneDBAnalysis" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
                     <circle cx="5" cy="6" r="2"></circle><circle cx="19" cy="6" r="2"></circle><circle cx="12" cy="18" r="2"></circle><line x1="5" y1="8" x2="12" y2="16"></line><line x1="19" y1="8" x2="12" y2="16"></line><line x1="7" y1="6" x2="17" y2="6"></line>
                 </svg>
-                Cell-Cell Communication
+                CellPhoneDB Analysis
             </a>
             <a href="#EnrichmentAnalysis" class="nav-item">
-                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
                     <path d="M21 12a9 9 0 1 1-9-9"></path><path d="M21 3v9h-9"></path>
                 </svg>
                 Enrichment Analysis
             </a>
         </nav>
     </aside>
+    <div class="basic"  id="ExperimentInformation">
+        <div class="general_info" style="height: 600px;">
+            <div class="header">General Information</div>
+            <div class="general_info_part">
+                <div style="width: 40%">
+                    <div class="title_1">Overview<div class="separator"></div></div>
 
-    <div class="basic">
-        <!-- Study brief: GEO study context, when available. -->
-        <% if (!geoTitle.isEmpty() || !geoSummary.isEmpty() || !geoDesign.isEmpty() || !geoPubmedIds.isEmpty()) { %>
-        <section class="study-brief" aria-label="Experimental design">
-            <% if (!geoTitle.isEmpty()) { %>
-            <div class="study-brief__item">
-                <span class="study-brief__label">Study</span>
-                <div class="study-brief__value study-brief__value--title"><%= geoTitle.replace("<","&lt;").replace(">","&gt;") %></div>
-            </div>
-            <% } %>
-            <% if (!geoSummary.isEmpty()) { %>
-            <div class="study-brief__item">
-                <span class="study-brief__label">Summary</span>
-                <div class="study-brief__value"><%= geoSummary.replace("<","&lt;").replace(">","&gt;") %></div>
-            </div>
-            <% } %>
-            <% if (!geoDesign.isEmpty()) { %>
-            <div class="study-brief__item">
-                <span class="study-brief__label">Overall Design</span>
-                <div class="study-brief__value"><%= geoDesign.replace("<","&lt;").replace(">","&gt;") %></div>
-            </div>
-            <% } %>
-            <% if (!geoPubmedIds.isEmpty()) { %>
-            <div class="study-brief__item">
-                <span class="study-brief__label">PubMed</span>
-                <div class="study-brief__value">
-                    <% for (int i = 0; i < geoPubmedIds.size(); i++) {
-                        String pmid = geoPubmedIds.get(i);
-                    %><%= i > 0 ? " · " : "" %><a href="https://pubmed.ncbi.nlm.nih.gov/<%= pmid %>/" target="_blank" rel="noopener">PMID: <%= pmid %></a><% } %>
+                    <div class="detail_container_1"><div class="subtitle">Data ID: </div><div class="text_2"><%= saidVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">GSE: </div><div class="text_2"><%= gseVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">GSM: </div><div class="text_2"><%= gsmVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">Species: </div><div class="text_2"><%= speciesVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">Condition: </div><div class="text_2"><%= conditionVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">Tissue: </div><div class="text_2"><%= tissueVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">Cells: </div><div class="text_2"><%= n_cellsVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">Age: </div><div class="text_2"><%= ageVal %></div></div>
+                    <div class="detail_container_1"><div class="subtitle">Sex: </div><div class="text_2"><%= sexVal %></div></div>
+                </div>
+                <div style="width: 60%">
+                    <div class="title_1">Experimental Design<div class="separator"></div></div>
+                    <div id="geo-meta-container" style="max-height: 500px; overflow-y: auto; padding-right: 10px;">
+                        <div id="geo-meta-loading" style="color:#999; font-size:0.9rem;">Loading study information...</div>
+                        <div id="geo-meta-content" style="display:none;">
+                            <div class="detail_container_2" style="margin-bottom:10px;">
+                                <div class="subtitle" style="font-weight:600; color:#2c3e50;">Study Title</div>
+                                <div id="geo-title" class="text_2" style="font-size:0.9rem; line-height:1.5; margin-top:4px;"></div>
+                            </div>
+                            <div class="detail_container_2" style="margin-bottom:10px;">
+                                <div class="subtitle" style="font-weight:600; color:#2c3e50;">Summary</div>
+                                <div id="geo-summary" class="text_2" style="font-size:0.85rem; line-height:1.6; margin-top:4px; text-align:justify;"></div>
+                            </div>
+                            <div class="detail_container_2" style="margin-bottom:10px;">
+                                <div class="subtitle" style="font-weight:600; color:#2c3e50;">Overall Design</div>
+                                <div id="geo-design" class="text_2" style="font-size:0.85rem; line-height:1.6; margin-top:4px; text-align:justify;"></div>
+                            </div>
+                            <div id="geo-pubmed-row" class="detail_container_2" style="display:none;">
+                                <div class="subtitle" style="font-weight:600; color:#2c3e50;">PubMed</div>
+                                <div id="geo-pubmed" class="text_2" style="font-size:0.85rem; margin-top:4px;"></div>
+                            </div>
+                        </div>
+                        <div id="geo-meta-empty" style="display:none; color:#999; font-size:0.9rem;">
+                            No GEO metadata available for this dataset.
+                        </div>
+                    </div>
                 </div>
             </div>
-            <% } %>
-        </section>
-        <% } %>
+        </div>
         <div class="cluster" id="CellProportion">
             <div class="header">
                 <div class="header-content">
                     <div><div class="header-title">Cell Proportion</div></div>
-                    <div class="umap-controls control-row" style="align-items:center; gap:12px;">
-                        <label class="panel-label" style="margin:0;">Annotation</label>
-                        <select id="proportionMapType" class="form-select elegant-select" style="min-width:140px;">
+                    <div class="umap-controls" style="display:flex; align-items:center; gap:12px;">
+                        <label style="font-size:0.85rem; color:#666;">Annotation:</label>
+                        <select id="proportionMapType" class="elegant-select" style="min-width:140px;">
                             <option value="Gross_Map" selected>Gross Map</option>
                             <option value="Fine_Map">Fine Map</option>
                         </select>
@@ -632,11 +439,11 @@
                 </div>
             </div>
             <div class="panel-body" style="padding:1.5rem;">
-                <div id="proportion-loading" class="progress-box">
+                <div id="proportion-loading" style="text-align:center; padding:40px; color:#999;">
                     <div class="spinner" style="margin:0 auto 10px;"></div>
                     Loading cell proportion data...
                 </div>
-                <div id="proportion-error" class="status-error" style="display:none;"></div>
+                <div id="proportion-error" style="display:none; padding:1rem; background:#fff5f5; border:1px solid #fed7d7; border-radius:8px; color:#c53030; font-size:0.9rem;"></div>
                 <div id="proportion-charts" style="display:none;">
                     <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
                         <div style="flex:1; min-width:400px;">
@@ -655,12 +462,12 @@
                 <div class="header">
                     <div class="header-content">
                         <div><div class="header-title">Cell Clustering</div></div>
-                        <div class="umap-controls control-row" style="align-items:center; gap:12px;">
-                            <label class="panel-label" style="margin:0;">Color by</label>
-                            <select id="umapColorBy" class="form-select elegant-select" style="min-width:160px;">
+                        <div class="umap-controls" style="display:flex; align-items:center; gap:12px;">
+                            <label style="font-size:0.85rem; color:#666;">Color by:</label>
+                            <select id="umapColorBy" class="elegant-select" style="min-width:160px;">
                                 <option value="">Loading...</option>
                             </select>
-                            <button id="downloadUmapPdf" class="export-btn btn-ghost" title="Download PDF">
+                            <button id="downloadUmapPdf" class="export-btn" title="Download PDF">
                                 <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="7 10 12 15 17 10"></polyline>
@@ -686,7 +493,7 @@
                         <div>
                             <div class="header-title">Differentially Expressed Genes</div>
                         </div>
-                        <button id="exportExcelBtn" class="export-btn btn-ghost">
+                        <button id="exportExcelBtn" class="export-btn">
                             <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -696,25 +503,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="panel-body section-stack">
-                    <div class="comparison-bar control-row">
-                        <div class="control-group" style="min-width:280px; flex:1;">
-                            <label class="panel-label" for="degCompareSelect">Compare with</label>
-                            <select id="degCompareSelect" class="form-select elegant-select">
-                                <option value="">— No comparison (cluster vs rest of this sample)</option>
-                            </select>
-                        </div>
-                        <div class="control-group" style="flex:0 0 auto;">
-                            <label class="panel-label">&nbsp;</label>
-                            <button id="degRunCompareBtn" class="btn-primary" disabled>Run comparison</button>
-                        </div>
-                    </div>
-                    <div id="degCompareStatus" class="info-bar" style="display:none;"></div>
-                    <div id="degProgress" class="progress-box" style="display:none;">
-                        <div class="spinner" style="margin:0 auto 10px;"></div>
-                        <span id="degProgressText">Running comparison…</span>
-                    </div>
-                    <div id="degError" class="status-error" style="display:none;"></div>
+                <div class="panel-body">
                     <div class="deg-controls">
                         <div class="filter-grid">
                             <div class="filter-card">
@@ -735,22 +524,12 @@
                             </div>
                             <div class="filter-card">
                                 <div class="filter-label">
-                                    <span class="filter-name">Cell type</span>
+                                    <span class="filter-name">Cell type group</span>
                                 </div>
-                                <select id="cellTypeSelect" class="elegant-select">
-                                    <option value="">All cell types</option>
+                                <select id="groupSelect" class="elegant-select">
+                                    <option value="">All groups</option>
                                 </select>
                                 <div class="filter-hint">Filter by cell type</div>
-                            </div>
-                            <div class="filter-card">
-                                <div class="filter-label">
-                                    <span class="filter-name">Pseudogenes</span>
-                                </div>
-                                <label class="checkbox-item" style="padding-top:0.25rem;">
-                                    <input type="checkbox" id="hidePseudogenes" checked>
-                                    <span class="checkbox-item__text">Hide pseudogenes</span>
-                                </label>
-                                <div class="filter-hint">Filter Gm####, -ps, Rik, ...Pn</div>
                             </div>
                         </div>
                     </div>
@@ -762,7 +541,7 @@
                                     <th>logFC</th>
                                     <th>p-value</th>
                                     <th>Score</th>
-                                    <th>Cell type</th>
+                                    <th>Group</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -781,72 +560,72 @@
                 </div>
                 <div class="panel-body" style="padding:1.5rem;">
                     <!-- Gene Set Input Mode Tabs -->
-                    <div class="tab-bar" style="margin-bottom:1rem;">
-                        <button class="gss-input-tab tab-btn active" data-mode="custom">Custom Genes</button>
-                        <button class="gss-input-tab tab-btn" data-mode="msigdb">MSigDB Library</button>
-                        <button class="gss-input-tab tab-btn" data-mode="upload">Upload GMT</button>
+                    <div style="display:flex; gap:0; margin-bottom:1rem; border-bottom:2px solid #e5e0d8;">
+                        <button class="gss-input-tab active" data-mode="custom" style="padding:0.6rem 1.2rem; border:none; background:none; font-family:'Montserrat',sans-serif; font-size:0.85rem; font-weight:600; color:#999; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.2s;">Custom Genes</button>
+                        <button class="gss-input-tab" data-mode="msigdb" style="padding:0.6rem 1.2rem; border:none; background:none; font-family:'Montserrat',sans-serif; font-size:0.85rem; font-weight:600; color:#999; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.2s;">MSigDB Library</button>
+                        <button class="gss-input-tab" data-mode="upload" style="padding:0.6rem 1.2rem; border:none; background:none; font-family:'Montserrat',sans-serif; font-size:0.85rem; font-weight:600; color:#999; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.2s;">Upload GMT</button>
                     </div>
 
                     <!-- Mode 1: Custom gene list (original) -->
                     <div id="gssCustomPanel" class="gss-input-panel">
-                        <div class="control-group" style="min-width:0; margin-bottom:1rem;">
-                            <label class="panel-label">Gene Set (comma-separated)</label>
-                            <textarea id="gssGeneInput" class="form-textarea" rows="2" placeholder="e.g. COL1A1, COL1A2, COL3A1, FN1, VIM, ACTA2"></textarea>
+                        <div style="margin-bottom:1rem;">
+                            <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Gene Set (comma-separated)</label>
+                            <textarea id="gssGeneInput" rows="2" placeholder="e.g. COL1A1, COL1A2, COL3A1, FN1, VIM, ACTA2" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; resize:vertical; transition: border-color 0.2s;"></textarea>
                         </div>
                     </div>
 
                     <!-- Mode 2: MSigDB predefined gene sets -->
                     <div id="gssMsigdbPanel" class="gss-input-panel" style="display:none;">
-                        <div class="control-row" style="margin-bottom:0.8rem;">
-                            <div class="control-group" style="min-width:200px; flex:0 0 auto;">
-                                <label class="panel-label">Library</label>
-                                <select id="gssLibrary" class="form-select">
+                        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+                            <div style="min-width:200px; flex:0 0 auto;">
+                                <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Library</label>
+                                <select id="gssLibrary" style="width:100%; padding:0.5rem 0.7rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.85rem; background:#fff; cursor:pointer;">
                                     <option value="">Loading...</option>
                                 </select>
                             </div>
-                            <div class="control-group" style="flex:1; min-width:250px;">
-                                <label class="panel-label">Search Gene Sets</label>
-                                <input type="text" id="gssSetSearch" class="form-input" placeholder="Type to search (e.g. apoptosis, WNT, MAPK)...">
+                            <div style="flex:1; min-width:250px;">
+                                <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Search Gene Sets</label>
+                                <input type="text" id="gssSetSearch" placeholder="Type to search (e.g. apoptosis, WNT, MAPK)..." style="width:100%; padding:0.5rem 0.7rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.85rem;">
                             </div>
                         </div>
-                        <div id="gssSetList" class="list-panel" style="max-height:200px; padding:4px 0;">
-                            <div class="help-text" style="padding:12px;">Select a library to browse gene sets</div>
+                        <div id="gssSetList" style="max-height:200px; overflow-y:auto; border:1px solid #e5e0d8; border-radius:8px; background:#fafaf8; padding:4px 0;">
+                            <div style="padding:12px; color:#999; font-size:0.85rem;">Select a library to browse gene sets</div>
                         </div>
-                        <div id="gssSelectedSetInfo" class="info-bar" style="display:none; margin-top:0.5rem;">
+                        <div id="gssSelectedSetInfo" style="display:none; margin-top:0.5rem; padding:0.5rem 0.8rem; background:#f0f7ff; border:1px solid #bdd7f1; border-radius:6px; font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#2c5f8a;">
                         </div>
                     </div>
 
                     <!-- Mode 3: Upload GMT file -->
                     <div id="gssUploadPanel" class="gss-input-panel" style="display:none;">
-                        <div id="gssDropZone" class="drop-zone" style="margin-bottom:0.8rem;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px; height:36px; margin-bottom:0.5rem; color:var(--ink-mute);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            <div style="font-family:'Source Sans 3',sans-serif; font-size:0.9rem; color:var(--ink-soft);">
+                        <div style="border:2px dashed #d0cdc7; border-radius:10px; padding:1.5rem; text-align:center; background:#fafaf8; transition:all 0.2s; margin-bottom:0.8rem;" id="gssDropZone">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" style="width:36px; height:36px; margin-bottom:0.5rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <div style="font-family:'Source Sans 3',sans-serif; font-size:0.9rem; color:#666;">
                                 Drag & drop a <strong>.gmt</strong> file here, or
-                                <label class="action-link" style="cursor:pointer; text-decoration:underline;">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
+                                <label style="color:#5b86e5; cursor:pointer; text-decoration:underline;">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
                             </div>
-                            <div class="help-text" style="margin-top:0.3rem;">GMT format: name &lt;tab&gt; description &lt;tab&gt; gene1 &lt;tab&gt; gene2 &lt;tab&gt; ...</div>
+                            <div style="font-size:0.75rem; color:#aaa; margin-top:0.3rem;">GMT format: name &lt;tab&gt; description &lt;tab&gt; gene1 &lt;tab&gt; gene2 &lt;tab&gt; ...</div>
                         </div>
                         <div id="gssUploadResult" style="display:none;">
-                            <div id="gssSpeciesWarning" style="display:none; padding:0.6rem 0.8rem; background:#fff8e1; border:1px solid #ffe082; border-radius:var(--radius-sm); font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#8d6e00; margin-bottom:0.5rem;">
+                            <div id="gssSpeciesWarning" style="display:none; padding:0.6rem 0.8rem; background:#fff8e1; border:1px solid #ffe082; border-radius:6px; font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#8d6e00; margin-bottom:0.5rem;">
                                 <strong>&#9888; Species mismatch:</strong> <span id="gssSpeciesWarningText"></span>
                             </div>
-                            <div id="gssUploadSetList" class="list-panel" style="max-height:180px; padding:4px 0;"></div>
-                            <div id="gssUploadSelectedInfo" class="info-bar" style="display:none; margin-top:0.5rem;"></div>
+                            <div id="gssUploadSetList" style="max-height:180px; overflow-y:auto; border:1px solid #e5e0d8; border-radius:8px; background:#fafaf8; padding:4px 0;"></div>
+                            <div id="gssUploadSelectedInfo" style="display:none; margin-top:0.5rem; padding:0.5rem 0.8rem; background:#f0f7ff; border:1px solid #bdd7f1; border-radius:6px; font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#2c5f8a;"></div>
                         </div>
                     </div>
 
                     <!-- Controls row: Group By, Method, Run button -->
-                    <div class="control-row" style="margin:1rem 0;">
-                        <div class="control-group" style="min-width:140px;">
-                            <label class="panel-label">Group By</label>
-                            <select id="gssGroupBy" class="form-select">
+                    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:flex-end; margin-bottom:1rem; margin-top:1rem;">
+                        <div style="min-width:140px;">
+                            <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Group By</label>
+                            <select id="gssGroupBy" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; background:#fff; cursor:pointer;">
                                 <option value="Fine_Map">Fine_Map</option>
                                 <option value="Gross_Map">Gross_Map</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:140px;">
-                            <label class="panel-label">Method</label>
-                            <select id="gssMethod" class="form-select">
+                        <div style="min-width:140px;">
+                            <label style="font-family:'Source Sans 3',sans-serif; font-size:0.85rem; color:#6b7c93; margin-bottom:0.4rem; display:block;">Method</label>
+                            <select id="gssMethod" style="width:100%; padding:0.6rem 0.8rem; border:1.5px solid #e0dcd7; border-radius:8px; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; background:#fff; cursor:pointer;">
                                 <option value="aucell" selected>AUCell</option>
                                 <option value="scanpy">Scanpy score_genes</option>
                                 <option value="ucell">UCell</option>
@@ -854,16 +633,18 @@
                                 <option value="gsva">GSVA</option>
                             </select>
                         </div>
-                        <button id="gssRunBtn" class="btn-primary">
-                            Run Scoring
-                        </button>
+                        <div>
+                            <button id="gssRunBtn" style="padding:0.7rem 1.5rem; background:linear-gradient(135deg, #5b86e5 0%, #36d1dc 100%); color:#fff; border:none; border-radius:8px; font-family:'Montserrat',sans-serif; font-weight:600; font-size:0.9rem; cursor:pointer; transition:all 0.2s; white-space:nowrap;" onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(91,134,229,0.35)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">
+                                Run Scoring
+                            </button>
+                        </div>
                     </div>
-                    <div id="gssGeneInfo" class="help-text" style="margin-bottom:1rem; display:none;"></div>
-                    <div id="gssProgress" class="progress-box" style="display:none;">
+                    <div id="gssGeneInfo" style="font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#8b95a5; margin-bottom:1rem; display:none;"></div>
+                    <div id="gssProgress" style="display:none; text-align:center; padding:2rem; color:#6b7c93; font-family:'Source Sans 3',sans-serif;">
                         <div id="gssProgressText" style="margin-bottom:0.5rem;">Running scoring...</div>
-                        <div style="width:200px; height:4px; background:var(--line); border-radius:2px; margin:0 auto;"><div id="gssProgressBar" style="width:30%; height:100%; background:var(--accent); border-radius:2px; transition:width var(--dur-slow) var(--ease);"></div></div>
+                        <div style="width:200px; height:4px; background:#eee; border-radius:2px; margin:0 auto;"><div id="gssProgressBar" style="width:30%; height:100%; background:linear-gradient(90deg, #5b86e5, #36d1dc); border-radius:2px; transition:width 0.3s;"></div></div>
                     </div>
-                    <div id="gssError" class="status-error" style="display:none; margin-bottom:1rem;"></div>
+                    <div id="gssError" style="display:none; padding:1rem; background:#fff5f5; border:1px solid #fed7d7; border-radius:8px; color:#c53030; font-family:'Source Sans 3',sans-serif; font-size:0.9rem; margin-bottom:1rem;"></div>
                     <div id="gssViolinPlot" style="min-height:200px;"></div>
                 </div>
             </div>
@@ -874,14 +655,15 @@
                         <div>
                             <div class="header-title">CellPhoneDB Cell-Cell Communication Analysis</div>
                         </div>
+                        <span class="cpdb-badge">Dynamic Analysis</span>
                     </div>
                 </div>
                 <div class="panel-body">
                     <!-- Cell Type Selection -->
                     <div class="cpdb-config-section">
-                        <div class="control-row" style="gap:16px; margin-bottom:12px;">
-                            <h3 class="cpdb-section-title">Cell-Cell Communication</h3>
-                            <div class="cpdb-mode-toggle">
+                        <div style="display:flex; align-items:center; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
+                            <h3 class="cpdb-section-title" style="margin:0;">Cell-Cell Communication</h3>
+                            <div class="cpdb-mode-toggle" style="margin:0;">
                                 <label class="cpdb-radio">
                                     <input type="radio" name="cpdbMode" value="all" checked>
                                     <span>All Combinations</span>
@@ -893,58 +675,40 @@
                             </div>
                         </div>
 
-                        <!-- Annotation-granularity toggle (Fine_Map / Gross_Map) -->
-                        <div class="control-row" style="gap:16px; margin-bottom:12px; align-items:center;">
-                            <label class="panel-label" style="margin:0;">Annotation level</label>
-                            <div class="cpdb-mode-toggle">
-                                <label class="cpdb-radio">
-                                    <input type="radio" name="cpdbLevel" value="fine" checked>
-                                    <span>Fine_Map (fine-grained)</span>
-                                </label>
-                                <label class="cpdb-radio">
-                                    <input type="radio" name="cpdbLevel" value="gross">
-                                    <span>Gross_Map (broad)</span>
-                                </label>
-                            </div>
-                            <span class="help-text" style="margin-left:8px;">
-                                Switch to refresh the cell-type lists at the chosen granularity.
-                            </span>
-                        </div>
-
                         <!-- All Combinations mode: single checkbox list -->
                         <div id="cpdbAllControls">
                             <p class="cpdb-section-desc">Select 2 or more cell types to analyze ligand-receptor interactions</p>
-                            <div id="cpdbCellTypeList" class="list-panel" style="max-height:300px;">
-                                <div class="help-text">Loading cell types...</div>
+                            <div id="cpdbCellTypeList" style="max-height:300px; overflow-y:auto; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; background:#fafafa;">
+                                <div style="color:#999;">Loading cell types...</div>
                             </div>
-                            <div class="help-text" style="margin-top:6px;">
+                            <div style="margin-top:6px; font-size:0.8rem; color:#888;">
                                 <span id="cpdbSelectedCount">0</span> cell types selected
-                                <a href="javascript:void(0)" id="cpdbSelectAll" class="action-link" style="margin-left:12px;">Select All</a>
-                                <a href="javascript:void(0)" id="cpdbClearAll" class="action-link action-link--danger" style="margin-left:8px;">Clear</a>
+                                <a href="javascript:void(0)" id="cpdbSelectAll" style="margin-left:12px; color:#3498db;">Select All</a>
+                                <a href="javascript:void(0)" id="cpdbClearAll" style="margin-left:8px; color:#e74c3c;">Clear</a>
                             </div>
                         </div>
 
                         <!-- Sender/Receiver mode: two checkbox lists side by side -->
                         <div id="cpdbDirectedControls" style="display:none;">
                             <p class="cpdb-section-desc">Assign cell types as senders (left) and receivers (right)</p>
-                            <div class="control-row" style="align-items:stretch; gap:16px;">
-                                <div class="control-group" style="flex:1; min-width:0;">
-                                    <label class="panel-label">Sender Cell Types</label>
-                                    <div id="cpdbSenderList" class="list-panel" style="max-height:280px;">
+                            <div style="display:flex; gap:16px; align-items:stretch;">
+                                <div style="flex:1; min-width:0;">
+                                    <label style="font-weight:600; color:#2c3e50; font-size:0.9rem; display:block; margin-bottom:6px;">Sender Cell Types</label>
+                                    <div id="cpdbSenderList" style="max-height:280px; overflow-y:auto; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; background:#fafafa;">
                                     </div>
-                                    <div class="help-text"><span id="cpdbSenderCount">0</span> selected</div>
+                                    <div style="margin-top:4px; font-size:0.75rem; color:#888;"><span id="cpdbSenderCount">0</span> selected</div>
                                 </div>
-                                <div class="arrow-separator">→</div>
-                                <div class="control-group" style="flex:1; min-width:0;">
-                                    <label class="panel-label">Receiver Cell Types</label>
-                                    <div id="cpdbReceiverList" class="list-panel" style="max-height:280px;">
+                                <div style="display:flex; align-items:center; font-size:2rem; color:#999; padding:0 8px;">→</div>
+                                <div style="flex:1; min-width:0;">
+                                    <label style="font-weight:600; color:#2c3e50; font-size:0.9rem; display:block; margin-bottom:6px;">Receiver Cell Types</label>
+                                    <div id="cpdbReceiverList" style="max-height:280px; overflow-y:auto; border:1px solid #e0e0e0; border-radius:8px; padding:8px 12px; background:#fafafa;">
                                     </div>
-                                    <div class="help-text"><span id="cpdbReceiverCount">0</span> selected</div>
+                                    <div style="margin-top:4px; font-size:0.75rem; color:#888;"><span id="cpdbReceiverCount">0</span> selected</div>
                                 </div>
                             </div>
                         </div>
 
-                        <button id="runCpdbAnalysisBtn" class="btn-primary" style="margin-top:1rem;">
+                        <button id="runCpdbAnalysisBtn" class="generate-btn" style="margin-top:16px;">
                             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
                             </svg>
@@ -964,9 +728,9 @@
                     <!-- Results Section -->
                     <div id="cpdbResultsSection" style="display:none;">
                         <div class="cpdb-results-tabs">
-                            <button class="cpdb-tab tab-btn active" data-tab="heatmap">Interaction Heatmap</button>
-                            <button class="cpdb-tab tab-btn" data-tab="dotplot">Dot Plot</button>
-                            <button class="cpdb-tab tab-btn" data-tab="table">Results Table</button>
+                            <button class="cpdb-tab active" data-tab="heatmap">Interaction Heatmap</button>
+                            <button class="cpdb-tab" data-tab="dotplot">Dot Plot</button>
+                            <button class="cpdb-tab" data-tab="table">Results Table</button>
                         </div>
 
                         <div id="cpdbHeatmapTab" class="cpdb-tab-content active">
@@ -978,16 +742,6 @@
                         </div>
 
                         <div id="cpdbTableTab" class="cpdb-tab-content">
-                            <div class="cpdb-table-toolbar" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:0.75rem;">
-                                <button id="cpdbExportExcelBtn" class="export-btn btn-ghost" disabled>
-                                    <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                                    </svg>
-                                    Export Excel
-                                </button>
-                            </div>
                             <div class="table-wrapper">
                                 <table id="cpdbResultsTable" class="elegant-table">
                                     <thead>
@@ -1015,43 +769,34 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div id="enrichSource" class="enrich-source info-bar">
-                        Source: <strong>cluster markers of this sample</strong>
-                    </div>
-                    <div class="control-row toolbar-row" style="margin-bottom:1rem;">
-                        <div class="control-group" style="min-width:220px;">
-                            <label class="panel-label">Gene Set</label>
-                            <select id="enrichGeneSet" class="form-select elegant-select">
+                    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:16px; padding:12px 16px; background:#f8f9fa; border-radius:8px; border:1px solid #e9ecef;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <label style="font-size:0.85rem; color:#555; font-weight:500;">Gene Set:</label>
+                            <select id="enrichGeneSet" class="elegant-select" style="min-width:220px;">
                                 <option value="">Loading...</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:180px; display:none;" id="enrichCellTypeWrap">
-                            <label class="panel-label">Cell type</label>
-                            <select id="enrichCellTypeSelect" class="form-select elegant-select">
-                                <option value="">All</option>
-                            </select>
-                        </div>
-                        <div class="control-group" style="min-width:80px;">
-                            <label class="panel-label">Top</label>
-                            <select id="enrichTopN" class="form-select elegant-select">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <label style="font-size:0.85rem; color:#555; font-weight:500;">Top:</label>
+                            <select id="enrichTopN" class="elegant-select" style="min-width:80px;">
                                 <option value="10" selected>10</option>
                                 <option value="20">20</option>
                                 <option value="30">30</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:140px;">
-                            <label class="panel-label">Filter</label>
-                            <select id="enrichFilter" class="form-select elegant-select">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <label style="font-size:0.85rem; color:#555; font-weight:500;">Filter:</label>
+                            <select id="enrichFilter" class="elegant-select" style="min-width:130px;">
                                 <option value="all" selected>All results</option>
                                 <option value="significant">Significant only</option>
                             </select>
                         </div>
                     </div>
-                    <div id="enrich-loading" class="progress-box" style="display:none;">
+                    <div id="enrich-loading" style="text-align:center; padding:40px; color:#999; display:none;">
                         <div class="spinner" style="margin:0 auto 10px;"></div>
                         Loading enrichment data...
                     </div>
-                    <div id="enrich-empty" class="progress-box" style="display:none;">
+                    <div id="enrich-empty" style="text-align:center; padding:40px; color:#999; display:none;">
                         No enrichment data available for this dataset.
                     </div>
                     <div id="enrichChart" style="width:100%; min-height:500px;"></div>
@@ -1102,216 +847,39 @@
                 const gse = '<%= gseVal %>';
                 const gsm = '<%= gsmVal %>';
 
-                // Module-scope state for cross-dataset comparison
-                var currentComparisonJobId = null;
-                var comparisonCellTypes = [];
-                var comparisonSaidB = null;
-                var comparisonLabelB = null;
-                var species = '<%= speciesVal == null ? "" : speciesVal.toLowerCase() %>';
-                var legacyJobId = null;
-                var legacyCellTypes = [];
-                var legacyReady = false;
-
-                function loadCompareOptions() {
-                    $.getJSON(contextPath + '/datasets', { species: species, exclude: said })
-                        .done(function(data){
-                            const select = $('#degCompareSelect');
-                            select.find('option:not(:first)').remove();
-                            (data || []).forEach(function(d){
-                                const label = d.gsm + ' · ' + (d.tissue || '—') + ' · ' + (d.condition || '—');
-                                select.append('<option value="' + d.said + '" data-label="' + label + '">' + label + '</option>');
-                            });
-                        })
-                        .fail(function(xhr){ console.error("Dataset list failed:", xhr.status); });
-                }
-
-                function populateCellTypeSelect(types, selectEl) {
-                    selectEl.find('option:not(:first)').remove();
-                    (types || []).forEach(function(t){
-                        selectEl.append('<option value="' + t + '">' + t + '</option>');
-                    });
-                }
-
                 function initGroupOptions() {
-                    // Kick off the per-cell-type DEG job for this sample so the
-                    // cell-type dropdown and pval/fc filters have something real
-                    // to filter. Cached by sha1(said), so subsequent visits are
-                    // instant.
-                    legacyReady = false;
-                    $('#degProgress').show();
-                    $('#degProgressText').text('Preparing DEG results…');
-                    $.ajax({
-                        url: contextPath + '/deg-per-celltype',
-                        method: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({ said: said })
-                    })
-                    .done(function(resp){ pollLegacyStatus(resp.jobId); })
-                    .fail(function(xhr){
-                        $('#degProgress').hide();
-                        $('#degError').show().text('Failed to start DEG job (' + xhr.status + ')');
-                    });
-                }
+                    console.log("🔍 Initializing DEG group dropdown");
 
-                function pollLegacyStatus(jobId) {
-                    $.getJSON(contextPath + '/deg-per-celltype/status', { jobId: jobId })
-                        .done(function(s){
-                            if (s.state === 'done') {
-                                legacyJobId = jobId;
-                                legacyCellTypes = s.cellTypes || [];
-                                legacyReady = true;
-                                $('#degProgress').hide();
-                                if (!currentComparisonJobId) {
-                                    populateCellTypeSelect(legacyCellTypes, $('#cellTypeSelect'));
-                                    loadDEG();
-                                }
-                            } else if (s.state === 'error') {
-                                $('#degProgress').hide();
-                                $('#degError').show().text('DEG job failed: ' + (s.error || 'unknown'));
-                            } else {
-                                $('#degProgressText').text('Computing DEGs… ' + (s.cellTypesDone || 0) + '/' + (s.cellTypesTotal || '?') + ' cell types');
-                                setTimeout(function(){ pollLegacyStatus(jobId); }, 2000);
-                            }
+                    $.getJSON(contextPath + '/deg', { said: said, pval: 1.0, fc: 0.0 })
+                        .done(function(data){
+                            console.log("✅ DEG group data fetched");
+                            const groups = Array.from(new Set(data.map(r => typeof r.group === "string" ? r.group.trim() : null).filter(g => g)));
+                            const select = $('#groupSelect');
+                            select.empty().append('<option value="">All</option>');
+                            groups.forEach(g => select.append('<option value="' + g + '">' + g + '</option>'));
+                            console.log("✅ DEG group dropdown populated");
                         })
-                        .fail(function(xhr){
-                            $('#degProgress').hide();
-                            $('#degError').show().text('DEG status poll failed (' + xhr.status + ')');
-                        });
-                }
-
-                function updateEnrichSource() {
-                    var src = $('#enrichSource');
-                    if (currentComparisonJobId) {
-                        src.html('Source: <strong>' + gsm + ' vs ' + comparisonLabelB + '</strong> (A-vs-B DEG, uncorrected)');
-                        $('#enrichCellTypeWrap').show();
-                        populateCellTypeSelect(comparisonCellTypes, $('#enrichCellTypeSelect'));
-                    } else {
-                        src.html('Source: <strong>cluster markers of ' + gsm + '</strong>');
-                        $('#enrichCellTypeWrap').hide();
-                    }
-                }
-
-                // Conservative name-based pseudogene heuristic (high-precision suffixes only):
-                //   Mouse: Gm\d+, -ps\d*, Rik suffix
-                //   Both:  -PS\d* suffix
-                // Intentionally avoids the broad human [A-Z0-9]+P\d+ pattern because it
-                // false-positives on real genes (CASP1, CDK5RAP1, etc.). Users can uncheck
-                // the filter to see everything.
-                const PSEUDOGENE_RE = /^(Gm\d+|.+-ps\d*|.+Rik|.+-PS\d*)$/;
-                function isPseudogene(name) {
-                    if (!name) return false;
-                    return PSEUDOGENE_RE.test(String(name));
+                        .fail(function(xhr){ console.error("❌ DEG group data failed:", xhr.status, xhr.statusText); });
                 }
 
                 function loadDEG(){
                     const pval = $('#pvalSlider').val();
                     const fc = $('#fcSlider').val();
-                    const cellType = $('#cellTypeSelect').val();
-                    const hidePseudo = $('#hidePseudogenes').is(':checked');
+                    const group = $('#groupSelect').val();
                     $('#pvalLabel').text(pval);
                     $('#fcLabel').text(fc);
-
-                    if (currentComparisonJobId) {
-                        const params = { jobId: currentComparisonJobId, pval: pval, fc: fc };
-                        if (cellType) params.cellType = cellType;
-                        $.getJSON(contextPath + '/deg-compare/result', params)
-                            .done(function(data){
-                                table.clear();
-                                (data || []).forEach(function(r){
-                                    if (hidePseudo && isPseudogene(r.gene)) return;
-                                    table.row.add([r.gene, r.logFC, r.pval_adj, r.score, r.cell_type]);
-                                });
-                                table.draw();
-                            })
-                            .fail(function(xhr){ console.error("Comparison result load failed:", xhr.status); });
-                        return;
-                    }
-
-                    if (!legacyReady || !legacyJobId) {
-                        // Job is still running — table will populate on completion.
-                        return;
-                    }
-                    const params = { jobId: legacyJobId, pval: pval, fc: fc };
-                    if (cellType) params.cellType = cellType;
-                    $.getJSON(contextPath + '/deg-per-celltype/result', params)
+                    const params = { said: said, pval: pval, fc: fc };
+                    if (group) params.group = group;
+                    console.log("📡 Requesting DEG data:", params);
+                    $.getJSON(contextPath + '/deg', params)
                         .done(function(data){
+                            console.log("✅ DEG data received");
                             table.clear();
-                            (data || []).forEach(function(r){
-                                if (hidePseudo && isPseudogene(r.gene)) return;
-                                table.row.add([r.gene, r.logFC, r.pval_adj, r.score, r.cell_type]);
-                            });
+
+                            data.forEach(r => table.row.add([r.gene, r.logfoldchanges, r.pvals_adj, r.scores, r.group]));
                             table.draw();
                         })
-                        .fail(function(xhr){ console.error("DEG data loading failed:", xhr.status); });
-                }
-
-                function pollCompareStatus(jobId) {
-                    $.getJSON(contextPath + '/deg-compare/status', { jobId: jobId })
-                        .done(function(s){
-                            if (s.state === 'done') {
-                                $('#degProgress').hide();
-                                comparisonCellTypes = s.cellTypes || [];
-                                currentComparisonJobId = jobId;
-                                populateCellTypeSelect(comparisonCellTypes, $('#cellTypeSelect'));
-                                $('#degCompareStatus').show().html('Comparing <strong>' + gsm + '</strong> vs <strong>' + comparisonLabelB + '</strong>' + (s.skipped && s.skipped.length ? ' · skipped: ' + s.skipped.join(', ') : ''));
-                                updateEnrichSource();
-                                loadDEG();
-                                if (typeof loadEnrichData === 'function') loadEnrichData();
-                            } else if (s.state === 'error') {
-                                $('#degProgress').hide();
-                                $('#degError').show().text('Comparison failed: ' + (s.error || 'unknown error'));
-                                $('#degRunCompareBtn').prop('disabled', false);
-                            } else {
-                                $('#degProgressText').text('Running comparison… ' + (s.cellTypesDone || 0) + '/' + (s.cellTypesTotal || '?') + ' cell types');
-                                setTimeout(function(){ pollCompareStatus(jobId); }, 2000);
-                            }
-                        })
-                        .fail(function(xhr){
-                            $('#degProgress').hide();
-                            $('#degError').show().text('Status poll failed (' + xhr.status + ')');
-                            $('#degRunCompareBtn').prop('disabled', false);
-                        });
-                }
-
-                function runComparison() {
-                    const saidB = $('#degCompareSelect').val();
-                    if (!saidB) return;
-                    comparisonSaidB = saidB;
-                    comparisonLabelB = $('#degCompareSelect option:selected').data('label') || saidB;
-                    $('#degError').hide();
-                    $('#degCompareStatus').hide();
-                    $('#degProgress').show();
-                    $('#degRunCompareBtn').prop('disabled', true);
-                    $.ajax({
-                        url: contextPath + '/deg-compare',
-                        method: 'POST',
-                        contentType: 'application/json',
-                        data: JSON.stringify({ saidA: said, saidB: saidB })
-                    })
-                    .done(function(resp){ pollCompareStatus(resp.jobId); })
-                    .fail(function(xhr){
-                        $('#degProgress').hide();
-                        $('#degError').show().text('Failed to start comparison (' + xhr.status + ')');
-                        $('#degRunCompareBtn').prop('disabled', false);
-                    });
-                }
-
-                function clearComparison() {
-                    currentComparisonJobId = null;
-                    comparisonCellTypes = [];
-                    comparisonSaidB = null;
-                    comparisonLabelB = null;
-                    $('#degCompareStatus').hide();
-                    $('#degError').hide();
-                    $('#degRunCompareBtn').prop('disabled', true);
-                    if (legacyReady) {
-                        populateCellTypeSelect(legacyCellTypes, $('#cellTypeSelect'));
-                    } else {
-                        initGroupOptions();
-                    }
-                    updateEnrichSource();
-                    loadDEG();
-                    if (typeof loadEnrichData === 'function') loadEnrichData();
+                        .fail(function(xhr){ console.error("❌ DEG data loading failed:", xhr.status, xhr.statusText); });
                 }
 
                 function exportTableToExcel() {
@@ -1377,20 +945,38 @@
                     window.open(pdfUrl, '_blank');
                 });
 
-                loadCompareOptions();
                 initGroupOptions();
                 loadDEG();
-                $('#pvalSlider, #fcSlider, #cellTypeSelect, #hidePseudogenes').on('input change', loadDEG);
+                $('#pvalSlider, #fcSlider, #groupSelect').on('input change', loadDEG);
                 $('#exportExcelBtn').on('click', exportTableToExcel);
-                $('#degCompareSelect').on('change', function(){
-                    const v = $(this).val();
-                    $('#degRunCompareBtn').prop('disabled', !v);
-                    if (!v && currentComparisonJobId) clearComparison();
-                });
-                $('#degRunCompareBtn').on('click', runComparison);
 
-                // Experimental Design / GEO metadata is now rendered server-side in
-                // the JSP body above (no AJAX needed — the data is static per SAID).
+                // =========================================================================
+                // =========================================================================
+                // EXPERIMENTAL DESIGN (GEO Metadata)
+                // =========================================================================
+                $.getJSON(contextPath + '/geo_meta', { said: said })
+                    .done(function(data) {
+                        $('#geo-meta-loading').hide();
+                        if (data && (data.title || data.summary || data.overall_design)) {
+                            $('#geo-title').text(data.title || 'N/A');
+                            $('#geo-summary').text(data.summary || 'N/A');
+                            $('#geo-design').text(data.overall_design || 'N/A');
+                            if (data.pubmed_ids && data.pubmed_ids.length > 0) {
+                                var links = data.pubmed_ids.map(function(pmid) {
+                                    return '<a href="https://pubmed.ncbi.nlm.nih.gov/' + pmid + '/" target="_blank" style="color:#2471a3;">PMID: ' + pmid + '</a>';
+                                });
+                                $('#geo-pubmed').html(links.join(', '));
+                                $('#geo-pubmed-row').show();
+                            }
+                            $('#geo-meta-content').show();
+                        } else {
+                            $('#geo-meta-empty').show();
+                        }
+                    })
+                    .fail(function() {
+                        $('#geo-meta-loading').hide();
+                        $('#geo-meta-empty').show();
+                    });
 
                 // Enrichment Analysis - Horizontal Bar Chart
                 // =========================================================================
@@ -1425,15 +1011,7 @@
                     $('#enrich-empty').hide();
                     $('#enrichChart').empty();
 
-                    var enrichParams = { gene_set: geneSet, filter: filter };
-                    if (currentComparisonJobId) {
-                        enrichParams.jobId = currentComparisonJobId;
-                        var ect = $('#enrichCellTypeSelect').val();
-                        if (ect) enrichParams.cellType = ect;
-                    } else {
-                        enrichParams.said = said;
-                    }
-                    $.getJSON(contextPath + '/enrichment', enrichParams)
+                    $.getJSON(contextPath + '/enrichment', { said: said, gene_set: geneSet, filter: filter })
                         .done(function(data) {
                             $('#enrich-loading').hide();
                             if (!data || data.length === 0) {
@@ -1552,7 +1130,7 @@
                 }
 
                 loadEnrichGeneSets();
-                $('#enrichGeneSet, #enrichFilter, #enrichCellTypeSelect').on('change', loadEnrichData);
+                $('#enrichGeneSet, #enrichFilter').on('change', loadEnrichData);
                 $('#enrichTopN').on('change', renderEnrichChart);
 
                 // =========================================================================
@@ -1566,10 +1144,10 @@
                     cellTypes.forEach(function(ct, i) {
                         var count = cellCounts[ct] || 0;
                         var id = prefix + '_' + i;
-                        html += '<label class="checkbox-item" title="' + ct + ' (' + count + ' cells)">' +
-                            '<input type="checkbox" value="' + ct.replace(/"/g, '&quot;') + '" id="' + id + '">' +
-                            '<span class="checkbox-item__text">' + ct + '</span>' +
-                            '<span class="checkbox-item__count">' + count + '</span>' +
+                        html += '<label style="display:flex; align-items:center; padding:4px 0; cursor:pointer; gap:8px; font-size:0.85rem;" title="' + ct + ' (' + count + ' cells)">' +
+                            '<input type="checkbox" value="' + ct.replace(/"/g, '&quot;') + '" id="' + id + '" style="margin:0; width:16px; height:16px; cursor:pointer;">' +
+                            '<span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + ct + '</span>' +
+                            '<span style="color:#aaa; font-size:0.75rem; flex-shrink:0;">' + count + '</span>' +
                             '</label>';
                     });
                     $('#' + containerId).html(html);
@@ -1581,16 +1159,8 @@
                     $('#cpdbReceiverCount').text($('#cpdbReceiverList input:checked').length);
                 }
 
-                function currentCpdbLevel() {
-                    // Returns "fine" or "gross" based on the radio button state.
-                    return $('input[name="cpdbLevel"]:checked').val() || 'fine';
-                }
-
                 function initCpdbCellTypes() {
-                    var level = currentCpdbLevel();
-                    $('#cpdbCellTypeList').html('<div class="help-text">Loading ' + level + '-level cell types…</div>');
-                    $('#cpdbSenderList, #cpdbReceiverList').html('');
-                    $.getJSON(contextPath + '/cpdb-api?action=cell-types', { said: said, level: level })
+                    $.getJSON(contextPath + '/cpdb-api?action=cell-types', { said: said })
                         .done(function(data) {
                             if (data.error) {
                                 $('#cpdbCellTypeList').html('<div style="color:#c00;">' + data.error + '</div>');
@@ -1602,15 +1172,11 @@
                             buildCheckboxList('cpdbSenderList', data.cell_types, counts, 'ct_sender');
                             buildCheckboxList('cpdbReceiverList', data.cell_types, counts, 'ct_recv');
                             $('#cpdbCellTypeList, #cpdbSenderList, #cpdbReceiverList').on('change', 'input', updateCounts);
-                            updateCounts();
                         })
                         .fail(function() {
                             $('#cpdbCellTypeList').html('<div style="color:#c00;">Failed to load cell types</div>');
                         });
                 }
-
-                // When the granularity toggle flips, reload the cell-type lists at the new level.
-                $('input[name="cpdbLevel"]').on('change', function() { initCpdbCellTypes(); });
 
                 $('#cpdbSelectAll').click(function() {
                     $('#cpdbCellTypeList input[type="checkbox"]').prop('checked', true);
@@ -1679,8 +1245,7 @@
                             said: said,
                             cell_types: JSON.stringify(selectedTypes),
                             senders: mode === 'directed' ? JSON.stringify(senderTypes) : null,
-                            receivers: mode === 'directed' ? JSON.stringify(receiverTypes) : null,
-                            level: currentCpdbLevel()
+                            receivers: mode === 'directed' ? JSON.stringify(receiverTypes) : null
                         },
                         success: function(response) {
                             console.log("✅ CPDB analysis started:", response);
@@ -1767,7 +1332,7 @@
                             [1, '#8B0000']
                         ],
                         hoverongaps: false,
-                        hovertemplate: 'Receiver: %{x}<br>Sender: %{y}<br>Significant interactions: %{z}<extra></extra>'
+                        hovertemplate: 'Sender: %{x}<br>Receiver: %{y}<br>Significant interactions: %{z}<extra></extra>'
                     };
 
                     var el = document.getElementById('cpdbHeatmapPlot');
@@ -1856,7 +1421,7 @@
                         width: w,
                         height: h,
                         xaxis: {
-                            title: dotplotData.directed ? 'Cell Type Pairs (Sender | Receiver)' : 'Cell Type Pairs',
+                            title: 'Cell Type Pairs',
                             tickangle: -45,
                             tickfont: { size: 9 },
                             automargin: true
@@ -1883,11 +1448,8 @@
                     var tbody = $('#cpdbResultsTable tbody');
                     tbody.empty();
 
-                    var exportBtn = document.getElementById('cpdbExportExcelBtn');
-
                     if (!interactions || interactions.length === 0) {
                         tbody.append('<tr><td colspan="5" style="text-align:center; color:#999;">No significant interactions found</td></tr>');
-                        if (exportBtn) exportBtn.disabled = true;
                         return;
                     }
 
@@ -1912,46 +1474,7 @@
                         order: [[4, 'asc']],
                         language: { search: 'Filter:' }
                     });
-
-                    if (exportBtn) exportBtn.disabled = false;
                 }
-
-                // Export the (filtered) CPDB results table to an Excel file.
-                // Uses the SheetJS XLSX library already loaded for DEG export.
-                function exportCpdbResultsToExcel() {
-                    if (!cpdbTable) return;
-                    try {
-                        var exportData = [["Interaction Pair", "Sender", "Receiver", "Mean Expression", "P-value"]];
-                        cpdbTable.rows({ search: 'applied' }).every(function () {
-                            // DataTable rows are HTML strings; pull plain text from the row's DOM cells
-                            var node = this.node();
-                            if (!node) return;
-                            var cells = $(node).find('td');
-                            exportData.push([
-                                cells.eq(0).text(),
-                                cells.eq(1).text(),
-                                cells.eq(2).text(),
-                                cells.eq(3).text(),
-                                cells.eq(4).text()
-                            ]);
-                        });
-
-                        var ws = XLSX.utils.aoa_to_sheet(exportData);
-                        var wb = XLSX.utils.book_new();
-                        XLSX.utils.book_append_sheet(wb, ws, "CPDB_Significant");
-
-                        var safeSaid = (typeof said !== 'undefined' && said) ? String(said).replace(/[^A-Za-z0-9_-]+/g, '_') : 'sample';
-                        var filename = 'CPDB_' + safeSaid + '_significant_interactions.xlsx';
-                        XLSX.writeFile(wb, filename);
-                    } catch (err) {
-                        console.error('CPDB Excel export failed:', err);
-                        alert('Export failed: ' + (err && err.message ? err.message : 'unknown error'));
-                    }
-                }
-                $(document).on('click', '#cpdbExportExcelBtn', function() {
-                    if (this.disabled) return;
-                    exportCpdbResultsToExcel();
-                });
 
                 // Show error
                 function showCpdbError(message) {
@@ -2071,10 +1594,10 @@
                             }
                             var html = '';
                             data.sets.forEach(function(s) {
-                                var isSelectedBool = (s.name === gssSelectedMsigdbName);
-                                html += "<div class=\"gss-set-item set-list-item" + (isSelectedBool ? " selected" : "") + "\" data-name=\"" + s.name.replace(/"/g, "&quot;") + "\" data-file=\"" + file + "\">" +
-                                    '<span>' + s.name.replace(/_/g, ' ') + '</span>' +
-                                    '<span class="set-list-item__meta">' + s.n_genes + ' genes</span></div>';
+                                var isSelected = (s.name === gssSelectedMsigdbName) ? ' background:#e8f4fd;' : '';
+                                html += '<div class="gss-set-item" data-name="' + s.name.replace(/"/g, '&quot;') + '" data-file="' + file + '" style="padding:6px 12px; cursor:pointer; font-size:0.83rem; font-family:'Source Sans 3',sans-serif; border-bottom:1px solid #f0ede8; transition:background 0.15s;' + isSelected + '" onmouseover="this.style.background='#f0f7ff'" onmouseout="this.style.background='' + (isSelected ? '#e8f4fd' : '') + ''">' +
+                                    '<span style="color:#2c3e50;">' + s.name.replace(/_/g, ' ') + '</span>' +
+                                    '<span style="float:right; color:#aaa; font-size:0.75rem;">' + s.n_genes + ' genes</span></div>';
                             });
                             if (data.sets.length >= 100) {
                                 html += '<div style="padding:8px 12px; color:#888; font-size:0.78rem; text-align:center; font-style:italic;">Showing first 100 results. Use search to narrow down.</div>';
@@ -2090,8 +1613,8 @@
                 $(document).on('click', '.gss-set-item', function() {
                     var name = $(this).data('name');
                     var file = $(this).data('file');
-                    $('.gss-set-item').removeClass('selected');
-                    $(this).addClass('selected');
+                    $('.gss-set-item').css('background', '');
+                    $(this).css('background', '#e8f4fd');
                     gssSelectedMsigdbName = name;
                     $('#gssSelectedSetInfo').html('Loading genes for <strong>' + name.replace(/_/g, ' ') + '</strong>...').show();
                     $.getJSON('/cpdb-api/gmt-genes', { file: file, set_name: name })
@@ -2151,9 +1674,9 @@
                         // Render set list
                         var html = '';
                         setsInfo.forEach(function(s) {
-                            html += "<div class=\"gss-upload-item set-list-item\" data-name=\"" + s.name.replace(/"/g, "&quot;") + "\">" +
-                                '<span>' + s.name.replace(/_/g, ' ') + '</span>' +
-                                '<span class="set-list-item__meta">' + s.n_genes + ' genes</span></div>';
+                            html += '<div class="gss-upload-item" data-name="' + s.name.replace(/"/g, '&quot;') + '" style="padding:6px 12px; cursor:pointer; font-size:0.83rem; font-family:'Source Sans 3',sans-serif; border-bottom:1px solid #f0ede8; transition:background 0.15s;" onmouseover="this.style.background='#f0f7ff'" onmouseout="this.style.background=''">' +
+                                '<span style="color:#2c3e50;">' + s.name.replace(/_/g, ' ') + '</span>' +
+                                '<span style="float:right; color:#aaa; font-size:0.75rem;">' + s.n_genes + ' genes</span></div>';
                         });
                         $('#gssUploadSetList').html(html);
                         $('#gssUploadResult').show();
@@ -2172,8 +1695,8 @@
                 // Click uploaded set
                 $(document).on('click', '.gss-upload-item', function() {
                     var name = $(this).data('name');
-                    $('.gss-upload-item').removeClass('selected');
-                    $(this).addClass('selected');
+                    $('.gss-upload-item').css('background', '');
+                    $(this).css('background', '#e8f4fd');
                     gssSelectedUploadName = name;
                     gssSelectedUploadGenes = gssUploadedSets[name];
                     var genes = gssSelectedUploadGenes;
@@ -2186,11 +1709,11 @@
                 // Drag & drop
                 var dropZone = document.getElementById('gssDropZone');
                 if (dropZone) {
-                    dropZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('drag-active'); });
-                    dropZone.addEventListener('dragleave', function(e) { this.classList.remove('drag-active'); });
+                    dropZone.addEventListener('dragover', function(e) { e.preventDefault(); this.style.borderColor='#5b86e5'; this.style.background='#f0f7ff'; });
+                    dropZone.addEventListener('dragleave', function(e) { this.style.borderColor='#d0cdc7'; this.style.background='#fafaf8'; });
                     dropZone.addEventListener('drop', function(e) {
                         e.preventDefault();
-                        this.classList.remove('drag-active');
+                        this.style.borderColor='#d0cdc7'; this.style.background='#fafaf8';
                         if (e.dataTransfer.files.length > 0) handleGmtFile(e.dataTransfer.files[0]);
                     });
                 }
