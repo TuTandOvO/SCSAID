@@ -3,7 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>scSAID - Single-Cell Skin & Appendages Integrated Database</title>
+    <!-- Favicons / PWA icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#1a2332">
+    <title>scSAID — Single-Cell Skin & Appendages Integrated Database</title>
+
+    <!-- SEO: descriptive meta tags -->
+    <meta name="description" content="scSAID: a curated database of 252 single-cell RNA-seq datasets covering human and mouse skin and appendages (1.2M+ cells). Browse integrated UMAP atlases, per-dataset differential expression, cell-cell communication (CellPhoneDB), gene set scoring, pathway enrichment, and gene feature plots across the full atlas.">
+    <meta name="keywords" content="scSAID, SkinDB, single-cell RNA-seq, scRNA-seq database, skin atlas, integrated cell atlas, keratinocyte atlas, hair follicle, dermatology bioinformatics, mouse skin, human skin, CellPhoneDB, cell-cell communication, psoriasis, atopic dermatitis, skin scRNAseq, skin sc-RNAseq">
+    <meta name="author" content="ZJU-UoE Joint Institute, Zhejiang University">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://skin-scsaid.com/">
+
+    <!-- Open Graph (LinkedIn, Twitter link preview, WeChat preview) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="scSAID">
+    <meta property="og:title" content="scSAID — Single-Cell Skin & Appendages Integrated Database">
+    <meta property="og:description" content="Integrated scRNA-seq atlas of human and mouse skin with 1.2M+ cells across 252 curated datasets.">
+    <meta property="og:url" content="https://skin-scsaid.com/">
+    <meta property="og:image" content="https://skin-scsaid.com/images/og-preview.png">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="scSAID — Single-Cell Skin Atlas Database">
+    <meta name="twitter:description" content="Integrated scRNA-seq atlas of human and mouse skin (1.2M+ cells, 252 datasets).">
+    <meta name="twitter:image" content="https://skin-scsaid.com/images/og-preview.png">
+
+    <!-- JSON-LD Dataset schema for Google Dataset Search indexing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Dataset",
+      "name": "scSAID — Single-Cell Skin & Appendages Integrated Database",
+      "alternateName": ["scSAID", "SkinDB", "skin single-cell atlas"],
+      "description": "A curated resource of 252 single-cell RNA-seq datasets covering human and mouse skin and appendages (1.2M+ cells). Provides integrated UMAP atlases, per-dataset differentially expressed genes, cell-cell communication analysis (CellPhoneDB), gene set scoring (AUCell / ssGSEA / GSVA / UCell / scanpy), pathway enrichment, and interactive gene expression feature plots.",
+      "url": "https://skin-scsaid.com/",
+      "identifier": "https://skin-scsaid.com/",
+      "keywords": [
+        "single-cell RNA-seq",
+        "scRNA-seq",
+        "skin atlas",
+        "skin scRNA-seq",
+        "keratinocyte",
+        "hair follicle",
+        "dermatology",
+        "mouse skin",
+        "human skin",
+        "CellPhoneDB",
+        "cell-cell communication",
+        "gene expression atlas",
+        "scSAID",
+        "SkinDB",
+        "integrated atlas"
+      ],
+      "sameAs": ["https://github.com/TuTandOvO/SCSAID"],
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true,
+      "creator": {
+        "@type": "Organization",
+        "name": "ZJU–UoE Joint Institute, Zhejiang University",
+        "url": "https://zje.zju.edu.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Zhejiang University–University of Edinburgh Joint Institute",
+        "url": "https://zje.zju.edu.cn/"
+      },
+      "includedInDataCatalog": {
+        "@type": "DataCatalog",
+        "name": "scSAID"
+      },
+      "measurementTechnique": [
+        "single-cell RNA sequencing",
+        "scRNA-seq",
+        "10x Genomics Chromium",
+        "Smart-seq2"
+      ],
+      "variableMeasured": [
+        "gene expression",
+        "cell type annotation",
+        "cell-cell ligand-receptor interactions",
+        "differential expression",
+        "pathway enrichment scores"
+      ],
+      "temporalCoverage": "2018/..",
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Human and mouse skin and appendages"
+      }
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -467,7 +563,8 @@
         <nav class="main-nav">
             <a href="index.jsp" class="main-nav__link main-nav__link--active">Home</a>
             <a href="browse.jsp" class="main-nav__link">Browse</a>
-            <a href="gene-search.jsp" class="main-nav__link">Search</a>
+            <a href="featureplot.jsp" class="main-nav__link">Search</a>
+            <a href="compare.jsp" class="main-nav__link">Compare</a>
             <a href="download.jsp" class="main-nav__link">Download</a>
             <div class="main-nav__item">
                 <a href="help?topic=faq" class="main-nav__link">Help</a>
@@ -480,11 +577,10 @@
                 </div>
             </div>
             <a href="feedback" class="main-nav__link">Feedback</a>
-            <a href="contact" class="main-nav__link">Contact</a>
         </nav>
 
         <div class="header-icons">
-            <a href="https://github.com/Dostoyevsky7/SkinDB_web" target="_blank" class="header-icon-link" title="View on GitHub">
+            <a href="https://github.com/TuTandOvO/SCSAID" target="_blank" class="header-icon-link" title="View on GitHub">
                 <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
@@ -514,7 +610,7 @@
         </p>
         <div class="hero__actions">
             <a href="browse.jsp" class="btn btn--primary hero__btn">Browse Datasets</a>
-            <a href="gene-search.jsp" class="btn btn--outline hero__btn" style="border-color: rgba(255,255,255,0.3); color: white;">Search Genes</a>
+            <a href="featureplot.jsp" class="btn btn--outline hero__btn" style="border-color: rgba(255,255,255,0.3); color: white;">Search Genes</a>
         </div>
     </div>
 </section>
@@ -534,7 +630,7 @@
                 </div>
                 <span class="quick-nav__label">Browse</span>
             </a>
-            <a href="gene-search.jsp" class="quick-nav__item">
+            <a href="featureplot.jsp" class="quick-nav__item">
                 <div class="quick-nav__icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -572,16 +668,16 @@
     <div class="container">
         <div class="stats__grid">
             <div class="stats__item">
-                <div class="stats__number">1M+</div>
+                <div class="stats__number">1.2M</div>
                 <div class="stats__label">Total Cells</div>
             </div>
             <div class="stats__item">
-                <div class="stats__number">600+</div>
+                <div class="stats__number">252</div>
                 <div class="stats__label">Samples</div>
             </div>
             <div class="stats__item">
-                <div class="stats__number">100+</div>
-                <div class="stats__label">Experiments</div>
+                <div class="stats__number">49</div>
+                <div class="stats__label">Studies</div>
             </div>
             <div class="stats__item">
                 <div class="stats__number">2</div>
@@ -599,7 +695,7 @@
                 <span class="overview__section-label">About the Database</span>
                 <h2 class="overview__heading">Comprehensive scRNA-seq Repository for Skin Research</h2>
                 <p class="overview__text">
-                    Welcome to our comprehensive scRNA-seq database dedicated to skin and its appendages. This database contains data from over <strong>1,000,000</strong> cells derived from more than <strong>600</strong> samples across <strong>100</strong> independent experiments, including both human and mouse datasets.
+                    Welcome to our comprehensive scRNA-seq database dedicated to skin and its appendages. This database contains data from over <strong>1.2 million</strong> cells derived from <strong>252</strong> samples across <strong>49</strong> independent studies, including both human and mouse datasets.
                 </p>
                 <p class="overview__text">
                     As one of the most extensive collections available to date, our database provides a platform for exploring the complex cellular landscapes and molecular mechanisms underlying skin biology and its associated structures.

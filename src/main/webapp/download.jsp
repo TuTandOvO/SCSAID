@@ -6,7 +6,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicons / PWA icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#1a2332">
     <title>Download Center - scSAID</title>
+    <meta name="description" content="Download scRNA-seq processed data from scSAID: 252 curated datasets as h5ad / zarr files, with cleaned obs metadata (condition, age, sex, tissue location, cell-type annotation). Free to use under CC-BY-4.0.">
+    <meta name="keywords" content="download scRNA-seq, h5ad download, scSAID download, skin atlas download, AnnData download">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://skin-scsaid.com/download.jsp">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -323,7 +336,8 @@
         <nav class="main-nav">
             <a href="index.jsp" class="main-nav__link">Home</a>
             <a href="browse.jsp" class="main-nav__link">Browse</a>
-            <a href="gene-search.jsp" class="main-nav__link">Search</a>
+            <a href="featureplot.jsp" class="main-nav__link">Search</a>
+            <a href="compare.jsp" class="main-nav__link">Compare</a>
             <a href="download.jsp" class="main-nav__link main-nav__link--active">Download</a>
             <div class="main-nav__item">
                 <a href="help?topic=faq" class="main-nav__link">Help</a>
@@ -336,10 +350,9 @@
                 </div>
             </div>
             <a href="feedback" class="main-nav__link">Feedback</a>
-            <a href="contact" class="main-nav__link">Contact</a>
         </nav>
         <div class="header-icons">
-            <a href="https://github.com/Dostoyevsky7/SkinDB_web" target="_blank" class="header-icon-link" title="View on GitHub">
+            <a href="https://github.com/TuTandOvO/SCSAID" target="_blank" class="header-icon-link" title="View on GitHub">
                 <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
@@ -486,6 +499,51 @@
                     </a>
                 </div>
             </div>
+
+            <!-- CSV (programmatic) Card -->
+            <div class="download-card">
+                <div class="download-card__header">
+                    <div class="download-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="8" y1="13" x2="16" y2="13"/>
+                            <line x1="8" y1="17" x2="16" y2="17"/>
+                            <line x1="10" y1="9" x2="14" y2="9"/>
+                        </svg>
+                    </div>
+                    <div class="download-card__meta">
+                        <h3 class="download-card__title">Sample Metadata (CSV)</h3>
+                        <span class="download-card__format">Comma-separated (.csv)</span>
+                    </div>
+                </div>
+                <div class="download-card__body">
+                    <p class="download-card__description">
+                        Flat, UTF-8 CSV of all 252 samples with the cleaned obs fields
+                        (condition, age, sex, skin location, cell-type map). Reads
+                        directly into R (<code>read.csv</code>) or Python
+                        (<code>pd.read_csv</code>).
+                    </p>
+                    <div class="download-card__details">
+                        <div class="download-card__detail">
+                            <span class="download-card__detail-label">Rows</span>
+                            <span class="download-card__detail-value">252</span>
+                        </div>
+                        <div class="download-card__detail">
+                            <span class="download-card__detail-label">Size</span>
+                            <span class="download-card__detail-value" id="csv-size">Loading...</span>
+                        </div>
+                    </div>
+                    <a href="download-file?file=csv" class="download-card__btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Download
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Info Section -->
@@ -539,7 +597,7 @@
     </section>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="lib/jquery-3.7.1.min.js"></script>
 <script>
 $(document).ready(function() {
     // Format file size
@@ -577,7 +635,7 @@ $(document).ready(function() {
             }
         },
         error: function() {
-            $('#browse-size, #all-size, #integrate-size').text('Error');
+            $('#browse-size, #all-size, #integrate-size, #csv-size').text('Error');
         }
     });
 });

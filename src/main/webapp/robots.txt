@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Block internal / non-content paths
+Disallow: /WEB-INF/
+Disallow: /lib/
+Disallow: /CSS/
+Disallow: /images/
+Disallow: /_dash-component-suites/
+Disallow: /_dash-layout
+Disallow: /_dash-dependencies
+Disallow: /_dash-update-component
+Disallow: /cpdb-api
+Disallow: /deg
+Disallow: /enrichment
+Disallow: /geo_meta
+Disallow: /umap_png
+Disallow: /umap_pdf
+Disallow: /visualization_servlet
+
+# Block aggressive / noisy crawlers we don't want costing bandwidth
+User-agent: AhrefsBot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+
+Sitemap: https://skin-scsaid.com/sitemap.xml
