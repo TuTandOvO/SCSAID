@@ -46,7 +46,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="CSS/design-system.css">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
     <link rel="stylesheet" href="CSS/header.css">
 
     <style>

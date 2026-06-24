@@ -16,9 +16,9 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#1a2332">
     <title>Gene: <%= request.getAttribute("geneName") %> - scSAID</title>
-    <link rel="stylesheet" href="CSS/design-system.css">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
     <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/gene-details.css">
+    <link rel="stylesheet" href="CSS/gene-details.css?v=20260624">
     <link rel="stylesheet" href="CSS/construction-modal-simple.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
