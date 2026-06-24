@@ -42,7 +42,7 @@ public class DEGServlet extends HttpServlet {
 
         Map<String, String> meta = mapping.get(said);
         if (meta == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Requested dataset was not found.");
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "SAID not found in mapping: " + said);
             return;
         }
 
@@ -96,10 +96,8 @@ public class DEGServlet extends HttpServlet {
             if (scoreCol == null) scoreCol = lowerToOrig.get("scores");
 
             if (geneCol == null || fcCol == null || pvalCol == null || scoreCol == null) {
-                getServletContext().log("DEG CSV missing required columns for said=" + said
-                        + " found=" + parser.getHeaderMap().keySet());
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        "Unable to process the dataset.");
+                        "CSV missing required columns. Found: " + parser.getHeaderMap().keySet());
                 return;
             }
 
@@ -115,9 +113,7 @@ public class DEGServlet extends HttpServlet {
                     String score = rec.get(scoreCol);
                     String group = (groupCol != null) ? rec.get(groupCol) : "All";
 
-                    // Keep both up- and down-regulated markers: filter on |log2FC|
-                    // so strongly down-regulated genes (logFC <= -fc) are not silently dropped.
-                    if (pval <= pvalThreshold && Math.abs(logfc) >= fcThreshold) {
+                    if (pval <= pvalThreshold && logfc >= fcThreshold) {
                         if (filterGroup == null || filterGroup.isEmpty() || group.equals(filterGroup)) {
                             Map<String, String> row = new HashMap<>();
                             row.put("gene",           gene);
@@ -133,8 +129,7 @@ public class DEGServlet extends HttpServlet {
             }
 
         } catch (IOException e) {
-            getServletContext().log("DEG CSV read error for said=" + said, e);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to read the dataset.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading CSV: " + e.getMessage());
             return;
         }
 

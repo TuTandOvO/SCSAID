@@ -73,11 +73,11 @@ public class CellPhoneDBServlet extends HttpServlet {
                     handleHealth(response);
                     break;
                 default:
-                    sendError(response, "Unknown action.");
+                    sendError(response, "Unknown action: " + action);
             }
         } catch (Exception e) {
-            getServletContext().log("CellPhoneDB error", e);
-            sendError(response, "An internal error occurred.");
+            e.printStackTrace();
+            sendError(response, "Server error: " + e.getMessage());
         }
     }
 
@@ -105,11 +105,11 @@ public class CellPhoneDBServlet extends HttpServlet {
             if ("run-analysis".equals(action)) {
                 handleRunAnalysis(request, response);
             } else {
-                sendError(response, "Unknown action.");
+                sendError(response, "Unknown action: " + action);
             }
         } catch (Exception e) {
-            getServletContext().log("CellPhoneDB error", e);
-            sendError(response, "An internal error occurred.");
+            e.printStackTrace();
+            sendError(response, "Server error: " + e.getMessage());
         }
     }
 

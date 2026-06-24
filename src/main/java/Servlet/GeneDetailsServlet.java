@@ -62,9 +62,9 @@ public class GeneDetailsServlet extends HttpServlet {
             request.getRequestDispatcher("gene-details.jsp").forward(request, response);
 
         } catch (Exception e) {
-            getServletContext().log("Gene details error", e);
+            e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                             "Unable to fetch gene information.");
+                             "Error fetching gene information: " + e.getMessage());
         }
     }
 

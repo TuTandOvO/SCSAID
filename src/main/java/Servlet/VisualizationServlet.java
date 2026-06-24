@@ -59,9 +59,7 @@ public class VisualizationServlet extends HttpServlet {
             }
 
             if (datasetPath == null || !Files.exists(Paths.get(datasetPath))) {
-                getServletContext().log("Visualization dataset not found for id=" + datasetId
-                        + " path=" + datasetPath);
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Dataset not found.");
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Dataset file not found: " + datasetPath);
                 return;
             }
 
@@ -92,9 +90,9 @@ public class VisualizationServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
-            getServletContext().log("Visualization start error for id=" + datasetId, e);
+            e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                             "Unable to start visualization.");
+                             "Error starting visualization: " + e.getMessage());
         }
     }
 

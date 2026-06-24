@@ -147,8 +147,7 @@ public class EnrichmentServlet extends HttpServlet {
                 results.add(row);
             }
         } catch (Exception e) {
-            getServletContext().log("Enrichment CSV read error", e);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to read the dataset.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading CSV: " + e.getMessage());
             return;
         }
 
