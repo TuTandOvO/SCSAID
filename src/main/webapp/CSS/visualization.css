@@ -1,8 +1,10 @@
-/* Visualization Page Styles */
+/* Visualization Page Styles
+   Built on top of design-system.css — colors and type resolve to design
+   tokens so this page reads as a natural extension of the home page. */
 
 .visualization-container {
     min-height: 100vh;
-    background: #faf8f5;
+    background: var(--bg-body);
     padding-top: 80px;
 }
 
@@ -19,40 +21,40 @@
     gap: 8px;
     font-size: 0.9rem;
     margin-bottom: 16px;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .breadcrumb a {
-    color: #e8927c;
+    color: var(--color-secondary);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color var(--transition-base);
 }
 
 .breadcrumb a:hover {
-    color: #d4755d;
+    color: var(--color-secondary-dark);
     text-decoration: underline;
 }
 
 .breadcrumb .separator {
-    color: #999;
+    color: var(--text-muted);
 }
 
 .breadcrumb .current {
-    color: #1a2332;
+    color: var(--text-primary);
     font-weight: 600;
 }
 
 .page-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.5rem);
     font-weight: 600;
-    color: #1a2332;
+    color: var(--text-primary);
     margin: 0 0 12px;
 }
 
 .page-description {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-secondary);
     margin: 0;
 }
 
@@ -64,8 +66,8 @@
 }
 
 .status-content {
-    background: linear-gradient(135deg, #e8927c 0%, #d4755d 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+    color: var(--text-inverse);
     padding: 16px 24px;
     border-radius: 8px;
     display: flex;
@@ -75,14 +77,14 @@
 }
 
 .status-banner.error .status-content {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger-dark) 100%);
 }
 
 .spinner {
     width: 20px;
     height: 20px;
     border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
+    border-top-color: var(--text-inverse);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
@@ -104,8 +106,8 @@
 }
 
 .viz-toolbar {
-    background: white;
-    border: 1px solid #e5e0d8;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
     border-bottom: none;
     border-radius: 8px 8px 0 0;
     padding: 12px 20px;
@@ -126,20 +128,20 @@
     gap: 8px;
     padding: 8px 16px;
     background: transparent;
-    border: 1px solid #e5e0d8;
+    border: 1px solid var(--border-light);
     border-radius: 6px;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #1a2332;
+    color: var(--text-primary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
     text-decoration: none;
 }
 
 .toolbar-btn:hover {
-    background: #faf8f5;
-    border-color: #d4a574;
-    color: #d4a574;
+    background: var(--bg-body);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 .toolbar-btn svg {
@@ -147,8 +149,8 @@
 }
 
 .viz-frame-wrapper {
-    background: white;
-    border: 1px solid #e5e0d8;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
     border-radius: 0 0 8px 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -178,7 +180,7 @@
     width: 100%;
     height: 800px;
     display: block;
-    background: #faf8f5;
+    background: var(--bg-body);
 }
 
 .viz-frame-wrapper:fullscreen #viz-frame {
@@ -193,10 +195,10 @@
 }
 
 .instructions-panel h2 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 600;
-    color: #1a2332;
+    color: var(--text-primary);
     margin: 0 0 24px;
 }
 
@@ -207,17 +209,17 @@
 }
 
 .tool-card {
-    background: white;
-    border: 1px solid #e5e0d8;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
     border-radius: 8px;
     padding: 24px;
-    transition: all 0.3s ease;
+    transition: all var(--transition-slow);
 }
 
 .tool-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    border-color: #d4a574;
+    border-color: var(--color-accent);
 }
 
 .tool-icon {
@@ -226,16 +228,16 @@
 }
 
 .tool-card h3 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-display);
     font-size: 1.3rem;
     font-weight: 600;
-    color: #1a2332;
+    color: var(--text-primary);
     margin: 0 0 8px;
 }
 
 .tool-card p {
     font-size: 0.95rem;
-    color: #666;
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.5;
 }
@@ -248,16 +250,16 @@
 }
 
 .tips-section h2 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 600;
-    color: #1a2332;
+    color: var(--text-primary);
     margin: 0 0 24px;
 }
 
 .tips-list {
-    background: white;
-    border: 1px solid #e5e0d8;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
     border-radius: 8px;
     padding: 32px 40px;
     list-style: none;
@@ -269,7 +271,7 @@
     margin-bottom: 16px;
     font-size: 1rem;
     line-height: 1.6;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .tips-list li:last-child {
@@ -280,20 +282,20 @@
     content: "→";
     position: absolute;
     left: 0;
-    color: #d4a574;
+    color: var(--color-accent);
     font-weight: 700;
     font-size: 1.2rem;
 }
 
 .tips-list li strong {
-    color: #1a2332;
+    color: var(--text-primary);
     font-weight: 600;
 }
 
 /* Footer */
 .main-footer {
-    background: #1a2332;
-    color: white;
+    background: var(--color-primary);
+    color: var(--text-inverse);
     padding: 40px 20px;
     text-align: center;
     margin-top: 0;

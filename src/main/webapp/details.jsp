@@ -438,7 +438,7 @@
     <script src="lib/xlsx.full.min.js?v=20260416"></script>
     <script src="lib/plotly-2.20.0.min.js?v=20260416"></script>
 </head>
-<body style="background: #faf8f5;">
+<body style="background: var(--bg-body);">
 
 <!-- Header -->
 <header class="site-header">
