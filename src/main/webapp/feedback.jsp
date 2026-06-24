@@ -30,7 +30,7 @@
 
     <style>
         body {
-            background-color: #faf8f5;
+            background-color: var(--bg-body);
         }
 
         .feedback-page {
@@ -39,7 +39,7 @@
         }
 
         .page-header {
-            background: #1a2332;
+            background: var(--color-primary);
             padding: 4.5rem 0;
             text-align: center;
         }
@@ -56,15 +56,15 @@
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #d4a574;
+            color: var(--color-accent);
             margin-bottom: 1.5rem;
         }
 
         .page-header__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: var(--font-display);
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 500;
-            color: #ffffff;
+            color: var(--text-inverse);
             margin: 0 0 1rem;
         }
 
@@ -82,9 +82,9 @@
         }
 
         .feedback-card {
-            background: #ffffff;
+            background: var(--bg-surface);
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+            box-shadow: var(--shadow-md);
             padding: 2rem;
         }
 
@@ -106,14 +106,14 @@
         }
 
         .feedback-gate__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: var(--font-display);
             font-size: 1.75rem;
-            color: #1a2332;
+            color: var(--text-primary);
             margin: 0 0 0.5rem;
         }
 
         .feedback-gate__hint {
-            color: #6b7280;
+            color: var(--text-secondary);
             margin: 0 0 1.5rem;
             font-size: 0.95rem;
         }
@@ -123,7 +123,7 @@
         }
 
         .feedback-gate__error {
-            color: #b91c1c;
+            color: var(--color-danger);
             margin-top: 1rem;
             min-height: 1.2em;
             font-size: 0.9rem;

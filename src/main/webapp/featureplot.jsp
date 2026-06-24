@@ -50,11 +50,11 @@
     <link rel="stylesheet" href="CSS/header.css">
 
     <style>
-        body { background:#faf8f5; margin:0; font-family:'Montserrat', sans-serif; }
+        body { background:var(--bg-body); margin:0; font-family:var(--font-body); }
         .featureplot-page { min-height:100vh; padding-top:72px; }
 
         .featureplot-hero {
-            background:#1a2332; padding:3.5rem 0 2.5rem; text-align:center;
+            background:var(--color-primary); padding:3.5rem 0 2.5rem; text-align:center;
         }
         .featureplot-hero__content {
             max-width:760px; margin:0 auto; padding:0 2rem;
@@ -62,12 +62,12 @@
         .featureplot-hero__eyebrow {
             display:inline-block; font-size:0.75rem; font-weight:700;
             letter-spacing:0.15em; text-transform:uppercase;
-            color:#d4a574; margin-bottom:1rem;
+            color:var(--color-accent); margin-bottom:1rem;
         }
         .featureplot-hero__title {
-            font-family:'Cormorant Garamond', Georgia, serif;
+            font-family:var(--font-display);
             font-size:clamp(2rem, 4vw, 2.7rem); font-weight:500;
-            color:#ffffff; margin:0 0 0.75rem;
+            color:var(--text-inverse); margin:0 0 0.75rem;
         }
         .featureplot-hero__desc {
             font-size:1rem; color:rgba(255,255,255,0.7);
@@ -75,20 +75,20 @@
         }
         .featureplot-search {
             display:flex; max-width:520px; margin:0 auto;
-            background:#ffffff; border-radius:10px; overflow:hidden;
+            background:var(--bg-surface); border-radius:var(--radius-control); overflow:hidden;
             box-shadow:0 6px 24px rgba(0,0,0,0.18);
         }
         .featureplot-search__input {
-            flex:1; padding:1rem 1.2rem; font-family:'Montserrat', sans-serif;
+            flex:1; padding:1rem 1.2rem; font-family:var(--font-body);
             font-size:1rem; border:none; outline:none; background:transparent;
         }
         .featureplot-search__btn {
-            padding:1rem 1.8rem; background:#e8927c; color:#ffffff;
-            font-family:'Montserrat', sans-serif; font-size:0.95rem;
+            padding:1rem 1.8rem; background:var(--color-secondary); color:var(--text-inverse);
+            font-family:var(--font-body); font-size:0.95rem;
             font-weight:600; border:none; cursor:pointer;
-            transition:background 0.2s ease;
+            transition:background var(--transition-base);
         }
-        .featureplot-search__btn:hover { background:#d47b64; }
+        .featureplot-search__btn:hover { background:var(--color-secondary-dark); }
 
         .featureplot-hint {
             font-size:0.82rem; color:rgba(255,255,255,0.6);
@@ -99,19 +99,19 @@
             max-width:1400px; margin:0 auto; padding:1.5rem 1rem 4rem;
         }
         .featureplot-frame {
-            width:100%; height:950px; border:1px solid #e5e0d8;
-            border-radius:12px; background:#ffffff;
+            width:100%; height:950px; border:1px solid var(--border-light);
+            border-radius:12px; background:var(--bg-surface);
             box-shadow:0 4px 20px rgba(26,35,50,0.06);
         }
 
         .featureplot-empty {
-            padding:3.5rem 1.5rem; text-align:center; color:#5a6473;
-            background:#ffffff; border:1px dashed #e5e0d8;
+            padding:3.5rem 1.5rem; text-align:center; color:var(--text-secondary);
+            background:var(--bg-surface); border:1px dashed var(--border-light);
             border-radius:12px; max-width:900px; margin:3rem auto;
         }
         .featureplot-empty h2 {
-            font-family:'Cormorant Garamond', Georgia, serif;
-            font-size:1.5rem; color:#1a2332; margin:0 0 0.5rem;
+            font-family:var(--font-display);
+            font-size:1.5rem; color:var(--text-primary); margin:0 0 0.5rem;
         }
     </style>
 </head>
@@ -170,10 +170,10 @@
             </form>
             <div class="featureplot-hint">
                 Try&nbsp;
-                <a href="featureplot.jsp?gene=COL1A1" style="color:#d4a574;">COL1A1</a>,&nbsp;
-                <a href="featureplot.jsp?gene=KRT14" style="color:#d4a574;">KRT14</a>,&nbsp;
-                <a href="featureplot.jsp?gene=Ptprc" style="color:#d4a574;">Ptprc</a>,&nbsp;
-                <a href="featureplot.jsp?gene=Col1a1" style="color:#d4a574;">Col1a1</a>
+                <a href="featureplot.jsp?gene=COL1A1" style="color:var(--color-accent);">COL1A1</a>,&nbsp;
+                <a href="featureplot.jsp?gene=KRT14" style="color:var(--color-accent);">KRT14</a>,&nbsp;
+                <a href="featureplot.jsp?gene=Ptprc" style="color:var(--color-accent);">Ptprc</a>,&nbsp;
+                <a href="featureplot.jsp?gene=Col1a1" style="color:var(--color-accent);">Col1a1</a>
             </div>
         </div>
     </section>

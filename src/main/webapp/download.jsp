@@ -33,7 +33,7 @@
 
     <style>
         body {
-            background-color: #faf8f5;
+            background-color: var(--bg-body);
         }
 
         .download-page {
@@ -43,7 +43,7 @@
 
         /* Page Header */
         .page-header {
-            background: #1a2332;
+            background: var(--color-primary);
             padding: 5rem 0;
             text-align: center;
         }
@@ -60,15 +60,15 @@
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #d4a574;
+            color: var(--color-accent);
             margin-bottom: 1.5rem;
         }
 
         .page-header__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: var(--font-display);
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 500;
-            color: #ffffff;
+            color: var(--text-inverse);
             margin: 0 0 1rem;
         }
 
@@ -87,10 +87,10 @@
         }
 
         .section-title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: var(--font-display);
             font-size: 1.75rem;
             font-weight: 500;
-            color: #1a2332;
+            color: var(--text-primary);
             margin: 0 0 2rem;
         }
 
@@ -103,21 +103,21 @@
 
         /* Download Card */
         .download-card {
-            background: #ffffff;
+            background: var(--bg-surface);
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+            box-shadow: var(--shadow-md);
             overflow: hidden;
-            transition: all 0.25s ease;
+            transition: all var(--transition-base);
         }
 
         .download-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(26, 35, 50, 0.12);
+            box-shadow: var(--shadow-lg);
         }
 
         .download-card__header {
             padding: 1.5rem;
-            background: #f5f3f0;
+            background: var(--bg-muted);
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -126,7 +126,7 @@
         .download-card__icon {
             width: 56px;
             height: 56px;
-            background: #1a2332;
+            background: var(--color-primary);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -137,7 +137,7 @@
         .download-card__icon svg {
             width: 28px;
             height: 28px;
-            color: #d4a574;
+            color: var(--color-accent);
         }
 
         .download-card__meta {
@@ -145,18 +145,18 @@
         }
 
         .download-card__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: var(--font-display);
             font-size: 1.25rem;
             font-weight: 600;
-            color: #1a2332;
+            color: var(--text-primary);
             margin: 0 0 0.25rem;
         }
 
         .download-card__format {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono);
             font-size: 0.75rem;
             font-weight: 500;
-            color: #5a6473;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -167,7 +167,7 @@
 
         .download-card__description {
             font-size: 0.95rem;
-            color: #5a6473;
+            color: var(--text-secondary);
             line-height: 1.6;
             margin: 0 0 1.5rem;
         }
@@ -177,7 +177,7 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid #e5e0d8;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .download-card__detail {
@@ -191,13 +191,13 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #9ca3af;
+            color: var(--text-muted);
         }
 
         .download-card__detail-value {
             font-size: 0.95rem;
             font-weight: 500;
-            color: #1a2332;
+            color: var(--text-primary);
         }
 
         .download-card__btn {
@@ -207,25 +207,25 @@
             gap: 0.5rem;
             width: 100%;
             padding: 1rem 1.5rem;
-            background: #e8927c;
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
+            background: var(--color-secondary);
+            color: var(--text-inverse);
+            font-family: var(--font-body);
             font-size: 0.95rem;
             font-weight: 600;
             border: none;
-            border-radius: 10px;
+            border-radius: var(--radius-control);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all var(--transition-base);
             text-decoration: none;
         }
 
         .download-card__btn:hover {
-            background: #d4755d;
+            background: var(--color-secondary-dark);
         }
 
         .download-card__btn--disabled {
-            background: #e5e0d8;
-            color: #9ca3af;
+            background: var(--border-light);
+            color: var(--text-muted);
             cursor: not-allowed;
         }
 
@@ -238,16 +238,16 @@
         .info-section {
             margin-top: 4rem;
             padding: 2.5rem;
-            background: #ffffff;
+            background: var(--bg-surface);
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+            box-shadow: var(--shadow-md);
         }
 
         .info-section__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 500;
-            color: #1a2332;
+            color: var(--text-primary);
             margin: 0 0 1.5rem;
         }
 
@@ -276,26 +276,26 @@
         .info-item__icon svg {
             width: 22px;
             height: 22px;
-            color: #e8927c;
+            color: var(--color-secondary);
         }
 
         .info-item__text h4 {
             font-size: 1rem;
             font-weight: 600;
-            color: #1a2332;
+            color: var(--text-primary);
             margin: 0 0 0.25rem;
         }
 
         .info-item__text p {
             font-size: 0.9rem;
-            color: #5a6473;
+            color: var(--text-secondary);
             margin: 0;
             line-height: 1.5;
         }
 
         /* Loading State */
         .loading-placeholder {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background: linear-gradient(90deg, var(--bg-muted) 25%, var(--border-light) 50%, var(--bg-muted) 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: 4px;
