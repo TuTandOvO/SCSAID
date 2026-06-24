@@ -1,0 +1,103 @@
+/* ==========================================================================
+   scSAID — Shared Button System
+   Token-only. No hardcoded colors, radii, or fonts — every value resolves
+   to a design-system.css custom property so buttons read identically across
+   every page as a natural extension of the home page.
+
+   This is the canonical compact-control button grammar (the same one the
+   analysis pages use via details.css). Link this AFTER design-system.css on
+   any page that needs buttons but does not already inherit details.css.
+   The large hero CTA variants (.btn / .btn--primary / .btn--outline /
+   .btn--ghost) live in design-system.css and are intentionally separate.
+   ========================================================================== */
+
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+.btn-outline,
+.btn-danger,
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: 0.6rem 1.15rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    border-radius: var(--radius-control);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), color var(--transition-fast),
+                border-color var(--transition-fast), box-shadow var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+/* Primary — coral call to action */
+.btn-primary {
+    background: var(--color-secondary);
+    color: var(--text-inverse);
+    border-color: var(--color-secondary);
+}
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
+    box-shadow: var(--shadow-md);
+}
+.btn-primary:disabled {
+    background: var(--bg-muted);
+    color: var(--text-muted);
+    border-color: var(--border-light);
+    cursor: not-allowed;
+}
+
+/* Outline — navy outline that fills on hover */
+.btn-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.btn-outline:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+/* Secondary / ghost / export — quiet surface controls */
+.btn-ghost,
+.btn-secondary,
+.export-btn {
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    border-color: var(--border-light);
+}
+.btn-ghost:hover:not(:disabled),
+.btn-secondary:hover:not(:disabled),
+.export-btn:hover:not(:disabled) {
+    background: var(--bg-muted);
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+}
+
+/* Danger — destructive actions (e.g. clear selection) */
+.btn-danger {
+    background: var(--color-danger);
+    color: var(--text-inverse);
+    border-color: var(--color-danger);
+}
+.btn-danger:hover:not(:disabled) {
+    background: var(--color-danger-dark);
+    border-color: var(--color-danger-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-icon,
+.export-icon {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
