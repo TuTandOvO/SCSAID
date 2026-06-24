@@ -1,5 +1,5 @@
 body {
-    background-color: #faf8f5;
+    background-color: var(--bg-body);
 }
 
 .help-page {
@@ -8,7 +8,7 @@ body {
 }
 
 .page-header {
-    background: #1a2332;
+    background: var(--color-primary);
     padding: 4.5rem 0;
     text-align: center;
 }
@@ -25,15 +25,15 @@ body {
     font-weight: 700;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #d4a574;
+    color: var(--color-accent);
     margin-bottom: 1.5rem;
 }
 
 .page-header__title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 500;
-    color: #ffffff;
+    color: var(--text-inverse);
     margin: 0 0 1rem;
 }
 
@@ -59,9 +59,9 @@ body {
 .help-sidebar {
     width: 260px;
     flex: 0 0 260px;
-    background: #ffffff;
+    background: var(--bg-surface);
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+    box-shadow: var(--shadow-md);
     padding: 1.5rem;
     position: sticky;
     top: calc(72px + 2rem);
@@ -70,10 +70,10 @@ body {
 }
 
 .help-sidebar__heading {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    color: #1a2332;
+    color: var(--text-primary);
 }
 
 .help-sidebar__topics {
@@ -93,7 +93,7 @@ body {
     padding: 0.6rem 0.85rem;
     border-radius: 10px;
     font-weight: 600;
-    color: #1a2332;
+    color: var(--text-primary);
     transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -103,13 +103,13 @@ body {
 
 .help-sidebar__topic--active {
     background: rgba(232, 146, 124, 0.15);
-    color: #e8927c;
+    color: var(--color-secondary);
 }
 
 .help-sidebar__subheadings {
     padding-left: 0.75rem;
     margin-left: 0.4rem;
-    border-left: 1px solid #f0e7de;
+    border-left: 1px solid var(--border-light);
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
@@ -117,69 +117,69 @@ body {
 
 .help-sidebar__sublink {
     font-size: 0.9rem;
-    color: #6b7280;
+    color: var(--text-secondary);
     transition: color 0.2s ease;
 }
 
 .help-sidebar__sublink:hover {
-    color: #1a2332;
+    color: var(--text-primary);
 }
 
 .help-sidebar__sublink--active {
-    color: #e8927c;
+    color: var(--color-secondary);
     font-weight: 600;
 }
 
 .help-sidebar__empty {
     font-size: 0.85rem;
-    color: #9aa1ad;
+    color: var(--text-muted);
 }
 
 .help-content {
     flex: 1;
     min-width: 0;
-    background: #ffffff;
+    background: var(--bg-surface);
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+    box-shadow: var(--shadow-md);
     padding: 2.5rem;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .help-content__loading,
 .help-content__error {
     font-size: 1rem;
-    color: #6b7280;
+    color: var(--text-secondary);
 }
 
 .help-content h2 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: var(--font-display);
     font-size: 1.6rem;
     margin: 2rem 0 0.75rem;
-    color: #1a2332;
+    color: var(--text-primary);
     scroll-margin-top: calc(72px + 1.5rem);
 }
 
 .help-content h3 {
     font-size: 1.1rem;
     margin: 1.5rem 0 0.5rem;
-    color: #374151;
+    color: var(--text-primary);
 }
 
 .help-content p {
     margin: 0 0 1.25rem;
     line-height: 1.7;
-    color: #4b5563;
+    color: var(--text-secondary);
 }
 
 .help-content ul,
 .help-content ol {
     margin: 0 0 1.5rem 1.5rem;
-    color: #4b5563;
+    color: var(--text-secondary);
     line-height: 1.7;
 }
 
 .help-content a {
-    color: #e8927c;
+    color: var(--color-secondary);
     text-decoration: none;
     font-weight: 600;
 }
@@ -189,16 +189,16 @@ body {
 }
 
 .help-content code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
-    background: #f4efe9;
+    background: var(--bg-muted);
     padding: 0.15rem 0.35rem;
     border-radius: 4px;
 }
 
 .help-content pre {
-    background: #1a2332;
-    color: #f8fafc;
+    background: var(--color-primary);
+    color: var(--text-inverse);
     padding: 1rem 1.25rem;
     border-radius: 10px;
     overflow-x: auto;
