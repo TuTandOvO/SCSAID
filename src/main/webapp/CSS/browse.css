@@ -11,7 +11,7 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 2.5rem;
     font-weight: 500;
-    color: #1a2332;
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,23 +28,23 @@
 
 /* Table Card Wrapper */
 .browse_main .table-wrapper {
-    background: #ffffff;
+    background: var(--bg-surface);
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
 }
 
 /* Table Links */
 td a:link,
 td a:visited {
-    color: #e8927c;
+    color: var(--color-secondary);
     font-weight: 600;
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition: color var(--transition-fast);
 }
 
 td a:hover {
-    color: #d4755d;
+    color: var(--color-secondary-dark);
     text-decoration: underline;
 }
 
@@ -62,7 +62,7 @@ td a:hover {
 
 .species-badge--human {
     background: rgba(232, 146, 124, 0.15);
-    color: #d4755d;
+    color: var(--color-secondary-dark);
 }
 
 .species-badge--mouse {

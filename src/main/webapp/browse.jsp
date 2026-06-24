@@ -33,6 +33,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css">
+    <link rel="stylesheet" href="CSS/buttons.css">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/animations.css">
     <link rel="stylesheet" href="CSS/construction-modal-simple.css">
@@ -152,21 +153,21 @@
             white-space: nowrap;
         }
         .sort-link:hover {
-            color: #3498db;
+            color: var(--color-secondary);
         }
         .sort-arrow {
             font-size: 0.7em;
             opacity: 0.7;
         }
         .sortable-th.sorted {
-            color: #2c3e50;
+            color: var(--text-primary);
         }
         .sortable-th.sorted .sort-arrow {
             opacity: 1;
-            color: #3498db;
+            color: var(--color-secondary);
         }
         .browse-table thead {
-            background: #1a2332;
+            background: var(--color-primary);
         }
 
         .browse-table th {
@@ -415,8 +416,8 @@
         /* Error Message */
         .error-message {
             padding: 1rem 1.5rem;
-            background: rgba(220, 53, 69, 0.1);
-            color: #dc3545;
+            background: rgba(192, 57, 43, 0.1);
+            color: var(--color-danger);
             border-radius: 8px;
             margin: 2rem;
             text-align: center;
@@ -428,8 +429,8 @@
             flex-wrap: wrap;
             gap: 1rem;
             padding: 1.5rem 2rem;
-            background: #f5f3f0;
-            border-bottom: 1px solid #e5e0d8;
+            background: var(--bg-muted);
+            border-bottom: 1px solid var(--border-light);
             align-items: flex-end;
         }
 
@@ -982,7 +983,7 @@
             // Show error message if data couldn't be loaded
             if (dataLoadError != null) {
         %>
-        <div class="error-message" style="background: #fff3cd; border: 1px solid #ffc107; color: #856404; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <div class="error-message" style="background: var(--color-warning-bg); border: 1px solid var(--color-warning-border); color: var(--color-warning-text); padding: 20px; border-radius: var(--radius-md); margin: 20px 0;">
             <strong>Data Loading Notice:</strong> <%= dataLoadError %>
             <br><br>
             <em>The data files may not be available on this deployment. This feature requires the CSV data files to be present on the server.</em>
@@ -1040,8 +1041,8 @@ $(document).ready(function() {
 
     // Add badge next to the Generate button
     $('#integrate-button').after(
-        '<span id="selection-badge" style="display:none; margin-left:12px; background:#3498db; color:#fff; padding:4px 12px; border-radius:12px; font-size:0.85rem; font-weight:500;"></span>' +
-        '<button id="clear-selection-btn" class="btn" style="margin-left:8px; padding:6px 14px; font-size:0.8rem; background:#e74c3c; color:#fff; border:none; border-radius:6px; cursor:pointer; display:none;" title="Clear all selections">Clear All</button>'
+        '<span id="selection-badge" style="display:none; margin-left:12px; background:var(--color-primary); color:var(--text-inverse); padding:4px 12px; border-radius:var(--radius-lg); font-size:0.85rem; font-weight:500;"></span>' +
+        '<button id="clear-selection-btn" class="btn-danger" style="margin-left:8px; display:none;" title="Clear all selections">Clear All</button>'
     );
 
     // Restore selections on page load
