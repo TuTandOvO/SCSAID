@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="CSS/design-system.css">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/details.css">
-    <link rel="stylesheet" href="CSS/compare.css">
+    <link rel="stylesheet" href="CSS/compare.css?v=20260625">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
 
     <!-- Third-party libs (same versions as details.jsp) -->

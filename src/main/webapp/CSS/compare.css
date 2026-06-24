@@ -28,21 +28,22 @@ body { background-color: var(--bg-body); }
 
 
 /* --------------------------------------------------------------------------
-   B. Page hero — cream, serif, editorial. Matches homepage tone.
-   No dark banner here on purpose: this is a working surface, not a landing.
+   B. Page hero — cream, serif, editorial. Mirrors the gene-search hero so the
+   two analysis tools read as a matched pair (centered, symmetric eyebrow rule).
    -------------------------------------------------------------------------- */
 .page-hero {
     background: transparent;
-    padding: var(--space-3xl) var(--space-xl) var(--space-xl);
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
+    max-width: 1000px;
+    margin: 0 auto var(--space-2xl);
     width: 100%;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid var(--border-light);
 }
 
 .page-hero__inner {
     max-width: 760px;
+    margin: 0 auto;
 }
 
 .page-hero__eyebrow {
@@ -58,7 +59,8 @@ body { background-color: var(--bg-body); }
     margin-bottom: var(--space-md);
 }
 
-.page-hero__eyebrow::before {
+.page-hero__eyebrow::before,
+.page-hero__eyebrow::after {
     content: "";
     width: 28px;
     height: 1px;
@@ -67,7 +69,7 @@ body { background-color: var(--bg-body); }
 
 .page-hero__title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
     font-weight: 500;
     color: var(--text-primary);
     line-height: 1.1;
@@ -76,11 +78,11 @@ body { background-color: var(--bg-body); }
 }
 
 .page-hero__description {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     color: var(--text-secondary);
     line-height: 1.7;
     max-width: 62ch;
-    margin: 0;
+    margin: 0 auto;
 }
 
 
