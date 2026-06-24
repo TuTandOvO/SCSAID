@@ -8,6 +8,7 @@ import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.csv.*;
+import Utils.DataPathResolver;
 
 @WebServlet("/gene-search")
 public class GeneSearchServlet extends HttpServlet {
@@ -39,24 +40,30 @@ public class GeneSearchServlet extends HttpServlet {
         }
 
         query = query.trim().toLowerCase();
-        int maxResults = 500; // Limit results to prevent overwhelming response
+        final int maxResults = 500; // Limit results to prevent overwhelming response
 
         List<Map<String, String>> results = new ArrayList<>();
 
-        // Search across all datasets
+        // Search across every dataset in the mapping
         for (Map.Entry<String, Map<String, String>> entry : mapping.entrySet()) {
             if (results.size() >= maxResults) break;
 
             String said = entry.getKey();
             Map<String, String> meta = entry.getValue();
-            String csvRelPath = meta.get("csv_path");
 
-            if (csvRelPath == null) continue;
+            // Resolve the DEG file the same way DEGServlet does. The csv_path in
+            // mapping.csv.json points at a SkinDB_New/... layout that does not exist
+            // on the server, so build the real path instead:
+            //   {dataRoot}/DEG/{species}/{GSE}/{GSM}/DEGs_all.csv
+            String csvPath = meta.get("csv_path");
+            String species = (csvPath != null && csvPath.contains("/mouse/")) ? "mouse" : "human";
+            String gse = meta.get("GSE");
+            String gsm = meta.get("GSM");
+            if (gse == null || gsm == null) continue;
 
-            String realPath = getServletContext().getRealPath("/" + csvRelPath);
-            File csvFile = new File(realPath);
-
-            if (!csvFile.exists()) continue;
+            String relPath = "DEG/" + species + "/" + gse + "/" + gsm + "/DEGs_all.csv";
+            File csvFile = DataPathResolver.resolveReadableFile(getServletContext(), relPath);
+            if (csvFile == null || !csvFile.exists()) continue;
 
             try (
                 Reader in = new FileReader(csvFile);
@@ -72,17 +79,20 @@ public class GeneSearchServlet extends HttpServlet {
                     lowerToOrig.put(orig.trim().toLowerCase(), orig);
                 }
 
-                // Check required columns exist
-                if (!lowerToOrig.containsKey("names") ||
-                    !lowerToOrig.containsKey("logfoldchanges") ||
-                    !lowerToOrig.containsKey("pvals_adj")) {
+                // Real DEG files use: gene, logfoldchange, pval_adj (+ score).
+                // Fall back to the older names/logfoldchanges/pvals_adj naming.
+                String namesCol = lowerToOrig.containsKey("gene")
+                        ? lowerToOrig.get("gene") : lowerToOrig.get("names");
+                String fcCol = lowerToOrig.containsKey("logfoldchange")
+                        ? lowerToOrig.get("logfoldchange") : lowerToOrig.get("logfoldchanges");
+                String pvalCol = lowerToOrig.containsKey("pval_adj")
+                        ? lowerToOrig.get("pval_adj") : lowerToOrig.get("pvals_adj");
+                String groupCol = lowerToOrig.get("group");
+
+                // Skip files missing the columns we need
+                if (namesCol == null || fcCol == null || pvalCol == null) {
                     continue;
                 }
-
-                String namesCol = lowerToOrig.get("names");
-                String fcCol = lowerToOrig.get("logfoldchanges");
-                String pvalCol = lowerToOrig.get("pvals_adj");
-                String groupCol = lowerToOrig.get("group");
 
                 for (CSVRecord rec : parser) {
                     if (results.size() >= maxResults) break;
@@ -94,7 +104,8 @@ public class GeneSearchServlet extends HttpServlet {
                         if (geneName.toLowerCase().contains(query)) {
                             double logfc = Double.parseDouble(rec.get(fcCol));
                             double pval = Double.parseDouble(rec.get(pvalCol));
-                            String group = groupCol != null ? rec.get(groupCol) : "Unknown";
+                            // DEGs_all.csv is dataset-level (no per-cell-type group)
+                            String group = (groupCol != null) ? rec.get(groupCol) : "All";
 
                             Map<String, String> row = new HashMap<>();
                             row.put("gene", geneName);
@@ -115,7 +126,7 @@ public class GeneSearchServlet extends HttpServlet {
             }
         }
 
-        // Sort results by p-value (ascending)
+        // Sort results by adjusted p-value (ascending)
         results.sort((a, b) -> {
             try {
                 double pvalA = Double.parseDouble(a.get("pval"));
