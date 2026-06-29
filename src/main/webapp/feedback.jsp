@@ -162,6 +162,7 @@
             <a href="index.jsp" class="main-nav__link">Home</a>
             <a href="browse.jsp" class="main-nav__link">Browse</a>
             <a href="gene-search.jsp" class="main-nav__link">Search</a>
+            <a href="featureplot.jsp" class="main-nav__link">Feature Plot</a>
             <a href="download.jsp" class="main-nav__link">Download</a>
             <div class="main-nav__item">
                 <a href="help?topic=faq" class="main-nav__link">Help</a>

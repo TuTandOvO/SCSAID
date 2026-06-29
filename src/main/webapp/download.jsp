@@ -336,7 +336,8 @@
         <nav class="main-nav">
             <a href="index.jsp" class="main-nav__link">Home</a>
             <a href="browse.jsp" class="main-nav__link">Browse</a>
-            <a href="featureplot.jsp" class="main-nav__link">Search</a>
+            <a href="gene-search.jsp" class="main-nav__link">Search</a>
+            <a href="featureplot.jsp" class="main-nav__link">Feature Plot</a>
             <a href="compare.jsp" class="main-nav__link">Compare</a>
             <a href="download.jsp" class="main-nav__link main-nav__link--active">Download</a>
             <div class="main-nav__item">
