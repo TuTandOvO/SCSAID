@@ -20,10 +20,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260629">
+    <link rel="stylesheet" href="CSS/design-system.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/details.css">
-    <link rel="stylesheet" href="CSS/compare.css?v=20260629b">
+    <link rel="stylesheet" href="CSS/details.css?v=<%= System.currentTimeMillis() %>">
+    <link rel="stylesheet" href="CSS/compare.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
 
     <!-- Third-party libs (same versions as details.jsp) -->
