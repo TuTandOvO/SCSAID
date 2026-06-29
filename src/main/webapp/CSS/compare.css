@@ -18,11 +18,22 @@
 body { background-color: var(--bg-body); }
 
 .compare-page {
+    /* Local layout tokens. Compare reuses the details.css panel primitives
+       (.panel / .panel-header / .panel-body / .filter-card), whose padding,
+       radius and gap resolve through these tokens. details.css only scopes
+       them to .details-page/.details-box, so without redeclaring them here the
+       panels collapse to zero padding and sit flush against their borders. */
+    --panel-radius: 16px;
+    --control-radius: var(--radius-control);
+    --panel-pad-x: var(--space-xl);   /* 32px inner card padding (desktop) */
+    --panel-pad-y: var(--space-xl);
+    --panel-gap: var(--space-2xl);
+
     min-height: 100vh;
     padding-top: var(--header-height);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
+    gap: var(--space-2xl);            /* breathing room: hero -> content */
     padding-bottom: var(--space-4xl);
 }
 
@@ -33,9 +44,9 @@ body { background-color: var(--bg-body); }
    -------------------------------------------------------------------------- */
 .page-hero {
     background: transparent;
-    padding: var(--space-3xl) var(--space-xl) var(--space-2xl);
-    max-width: 1000px;
-    margin: 0 auto var(--space-2xl);
+    padding: var(--space-3xl) clamp(var(--space-md), 4vw, var(--space-2xl)) var(--space-2xl);
+    max-width: 1200px;
+    margin: 0 auto;
     width: 100%;
     text-align: center;
     border-bottom: 1px solid var(--border-light);
@@ -90,21 +101,36 @@ body { background-color: var(--bg-body); }
    C. Panel layout — single-column setup card + two-column results
    -------------------------------------------------------------------------- */
 .compare-shell {
-    max-width: 1320px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--space-xl);
+    /* Responsive outer padding: ~16px mobile -> ~24px tablet -> 48px desktop,
+       so content never touches the browser edges. */
+    padding: 0 clamp(var(--space-md), 4vw, var(--space-2xl));
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
+    gap: var(--space-xl);             /* 32px between Step 1 and Step 2 */
 }
 
 .setup-card { margin: 0; }
 
+/* Step 1 controls — explicit responsive grid: 4-col desktop, 2-col tablet,
+   1-col mobile (the generic .filter-grid auto-fit can leave an awkward 3+1). */
+.setup-card .filter-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+}
+@media (min-width: 640px) {
+    .setup-card .filter-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    .setup-card .filter-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
 .results-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-lg);
+    gap: var(--space-xl);             /* 32px between DEG and GSEA */
     margin: 0;
 }
 .results-grid > .panel { margin: 0; }
@@ -311,8 +337,9 @@ body { background-color: var(--bg-body); }
    L. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 640px) {
+    /* Tighten inner card padding on phones so panels keep proportion. */
+    .compare-page { --panel-pad-x: var(--space-lg); --panel-pad-y: var(--space-lg); }
     .page-hero { padding: var(--space-2xl) var(--space-md); }
-    .compare-shell { padding: 0 var(--space-md); }
     .filter-grid { grid-template-columns: 1fr; }
     .species-toggle__option { padding: 0.4rem 0.85rem; }
 }
