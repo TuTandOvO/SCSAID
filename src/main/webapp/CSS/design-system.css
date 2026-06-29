@@ -107,6 +107,13 @@ body {
     background-color: var(--bg-body);
 }
 
+/* The hidden attribute must always win, even over component display rules
+   (e.g. .progress-box/.status-error set display:flex). Without this, elements
+   toggled via the `hidden` attribute stay visible as empty bars. */
+[hidden] {
+    display: none !important;
+}
+
 /* --------------------------------------------------------------------------
    Typography
    -------------------------------------------------------------------------- */
