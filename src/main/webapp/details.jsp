@@ -2427,8 +2427,7 @@
                         title: { text: 'Relative Proportion', font: { family: 'Montserrat, sans-serif', size: 14 } },
                         height: barHeight,
                         margin: { l: 20, r: 20, t: 50, b: 20 },
-                        showlegend: labels.length <= 15,
-                        legend: { font: { size: 9 }, orientation: 'h', y: -0.15 },
+                        showlegend: false,
                         paper_bgcolor: '#fff',
                         font: { family: 'Montserrat, sans-serif' },
                         annotations: [{
