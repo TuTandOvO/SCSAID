@@ -2,19 +2,17 @@
          contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%
-    // Landing page that wraps the Integrated UMAP "gene expression" mode inside
-    // a scSAID page shell (header + footer). The actual feature plot is served
-    // by the Dash app at /integrated_umap/, so all we do here is:
-    //   * read ?gene= from the URL
-    //   * build an <iframe> pointing at /integrated_umap/?gene=<gene>
-    //   * provide a search box that re-navigates with the new gene
+    // Feature Plot — gene expression overlaid on the integrated human/mouse skin
+    // UMAP. Client-side Plotly FeaturePlot (see JS/umap-explorer.js); the
+    // ~50k-cell base + per-gene expression come from the zarr-backed JSON API
+    // under /integrated_umap/api/. A ?gene= query deep-links a gene (species is
+    // auto-detected from whichever panel contains it).
     String geneParam = request.getParameter("gene");
     if (geneParam == null) geneParam = "";
     geneParam = geneParam.trim();
-
-    // Escape for embedding in HTML / JS
-    String geneHtml = geneParam.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
-    String geneUrl  = java.net.URLEncoder.encode(geneParam, "UTF-8");
+    // Escape for safe embedding in an HTML attribute.
+    String geneHtml = geneParam.replace("&","&amp;").replace("<","&lt;")
+                               .replace(">","&gt;").replace("\"","&quot;").replace("'","&#39;");
 
     response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
 %>
@@ -33,7 +31,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#1a2332">
     <title>Feature Plot - scSAID</title>
-    <meta name="description" content="Interactive gene expression feature plots on the integrated human and mouse skin atlas. Enter any gene symbol to visualise its expression across ~400K human cells or ~800K mouse cells. Case-insensitive (COL1A1, Col1a1 both work).">
+    <meta name="description" content="Interactive gene expression feature plots on the integrated human and mouse skin atlas. Enter any gene symbol to visualise its expression on the UMAP. Choose human or mouse; case-insensitive (COL1A1, Col1a1 both work).">
     <meta name="keywords" content="gene expression atlas, feature plot, UMAP gene, scRNA-seq gene expression, skin gene atlas, scSAID feature plot, keratinocyte marker, dermal gene">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://skin-scsaid.com/featureplot.jsp">
@@ -44,80 +42,22 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
+    <!-- Design System + reused page styles -->
+    <link rel="stylesheet" href="CSS/design-system.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/details.css?v=<%= System.currentTimeMillis() %>">
+    <link rel="stylesheet" href="CSS/compare.css?v=<%= System.currentTimeMillis() %>">
+    <link rel="stylesheet" href="CSS/umap-explorer.css?v=<%= System.currentTimeMillis() %>">
 
-    <style>
-        body { background:var(--bg-body); margin:0; font-family:var(--font-body); }
-        .featureplot-page { min-height:100vh; padding-top:72px; }
-
-        .featureplot-hero {
-            background:var(--color-primary); padding:3.5rem 0 2.5rem; text-align:center;
-        }
-        .featureplot-hero__content {
-            max-width:760px; margin:0 auto; padding:0 2rem;
-        }
-        .featureplot-hero__eyebrow {
-            display:inline-block; font-size:0.75rem; font-weight:700;
-            letter-spacing:0.15em; text-transform:uppercase;
-            color:var(--color-accent); margin-bottom:1rem;
-        }
-        .featureplot-hero__title {
-            font-family:var(--font-display);
-            font-size:clamp(2rem, 4vw, 2.7rem); font-weight:500;
-            color:var(--text-inverse); margin:0 0 0.75rem;
-        }
-        .featureplot-hero__desc {
-            font-size:1rem; color:rgba(255,255,255,0.7);
-            margin:0 0 1.8rem; line-height:1.6;
-        }
-        .featureplot-search {
-            display:flex; max-width:520px; margin:0 auto;
-            background:var(--bg-surface); border-radius:var(--radius-control); overflow:hidden;
-            box-shadow:0 6px 24px rgba(0,0,0,0.18);
-        }
-        .featureplot-search__input {
-            flex:1; padding:1rem 1.2rem; font-family:var(--font-body);
-            font-size:1rem; border:none; outline:none; background:transparent;
-        }
-        .featureplot-search__btn {
-            padding:1rem 1.8rem; background:var(--color-secondary); color:var(--text-inverse);
-            font-family:var(--font-body); font-size:0.95rem;
-            font-weight:600; border:none; cursor:pointer;
-            transition:background var(--transition-base);
-        }
-        .featureplot-search__btn:hover { background:var(--color-secondary-dark); }
-
-        .featureplot-hint {
-            font-size:0.82rem; color:rgba(255,255,255,0.6);
-            margin-top:0.8rem;
-        }
-
-        .featureplot-frame-wrap {
-            max-width:1400px; margin:0 auto; padding:1.5rem 1rem 4rem;
-        }
-        .featureplot-frame {
-            width:100%; height:950px; border:1px solid var(--border-light);
-            border-radius:12px; background:var(--bg-surface);
-            box-shadow:0 4px 20px rgba(26,35,50,0.06);
-        }
-
-        .featureplot-empty {
-            padding:3.5rem 1.5rem; text-align:center; color:var(--text-secondary);
-            background:var(--bg-surface); border:1px dashed var(--border-light);
-            border-radius:12px; max-width:900px; margin:3rem auto;
-        }
-        .featureplot-empty h2 {
-            font-family:var(--font-display);
-            font-size:1.5rem; color:var(--text-primary); margin:0 0 0.5rem;
-        }
-    </style>
+    <!-- Third-party libs -->
+    <script src="lib/jquery-3.7.1.min.js?v=20260420"></script>
+    <script src="lib/plotly-2.20.0.min.js?v=20260420"></script>
 </head>
-<body>
+<body data-initial-gene="<%= geneHtml %>">
 
-<!-- Header (identical to other pages) -->
+<!-- Header -->
 <header class="site-header">
     <div class="container">
         <a href="index.jsp" class="site-logo">scSAID</a>
@@ -152,47 +92,81 @@
     </div>
 </header>
 
-<div class="featureplot-page">
-    <section class="featureplot-hero">
-        <div class="featureplot-hero__content">
-            <span class="featureplot-hero__eyebrow">Integrated Atlas · Gene Expression</span>
-            <h1 class="featureplot-hero__title">Feature Plot</h1>
-            <p class="featureplot-hero__desc">
-                Enter a gene symbol to visualise its expression on the integrated
-                human or mouse skin UMAP atlas. Case-insensitive — both HGNC
-                (e.g. <em>COL1A1</em>) and MGI (e.g. <em>Col1a1</em>) names are accepted.
+<main class="umap-page">
+
+    <!-- Editorial hero -->
+    <section class="page-hero">
+        <div class="page-hero__inner">
+            <span class="page-hero__eyebrow">Integrated atlas · gene expression</span>
+            <h1 class="page-hero__title">Feature plot</h1>
+            <p class="page-hero__description">
+                Search a gene to paint its expression intensity onto the integrated skin UMAP.
+                Choose the human or mouse atlas; gene names are case-insensitive
+                (<em>COL1A1</em>, <em>Col1a1</em> both work).
             </p>
-            <form action="featureplot.jsp" method="get" class="featureplot-search" autocomplete="off">
-                <input class="featureplot-search__input" type="text" name="gene"
-                       placeholder="Gene symbol, e.g. COL1A1"
-                       value="<%= geneHtml %>" autofocus required>
-                <button class="featureplot-search__btn" type="submit">View</button>
-            </form>
-            <div class="featureplot-hint">
-                Try&nbsp;
-                <a href="featureplot.jsp?gene=COL1A1" style="color:var(--color-accent);">COL1A1</a>,&nbsp;
-                <a href="featureplot.jsp?gene=KRT14" style="color:var(--color-accent);">KRT14</a>,&nbsp;
-                <a href="featureplot.jsp?gene=Ptprc" style="color:var(--color-accent);">Ptprc</a>,&nbsp;
-                <a href="featureplot.jsp?gene=Col1a1" style="color:var(--color-accent);">Col1a1</a>
-            </div>
         </div>
     </section>
 
-    <% if (geneParam.isEmpty()) { %>
-        <div class="featureplot-empty">
-            <h2>No gene selected</h2>
-            <p>Enter a gene symbol above to render its expression atlas. Rendering typically takes 2–4 seconds.</p>
-        </div>
-    <% } else { %>
-        <div class="featureplot-frame-wrap">
-            <iframe class="featureplot-frame"
-                    src="/integrated_umap/?gene=<%= geneUrl %>"
-                    title="Feature plot for <%= geneHtml %>"
-                    loading="eager">
-            </iframe>
-        </div>
-    <% } %>
-</div>
+    <div class="umap-shell">
 
+        <!-- Controls -->
+        <section class="panel" aria-labelledby="umap-controls-title">
+            <div class="panel-body">
+                <div class="umap-control-row">
+                    <div class="umap-control">
+                        <span class="filter-name" id="umap-controls-title">Species</span>
+                        <div class="species-toggle" role="radiogroup" aria-label="Species">
+                            <label>
+                                <input type="radio" name="umap-species" value="human" checked>
+                                <span class="species-toggle__option">Human</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="umap-species" value="mouse">
+                                <span class="species-toggle__option">Mouse</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="umap-control umap-control--search">
+                        <label class="filter-name" for="geneInput">Gene</label>
+                        <div class="gene-search">
+                            <input type="text" id="geneInput" class="gene-search__input"
+                                   placeholder="Search gene…" autocomplete="off"
+                                   spellcheck="false" role="combobox" aria-autocomplete="list"
+                                   aria-expanded="false" aria-controls="geneSuggest">
+                            <ul id="geneSuggest" class="gene-search__suggest" role="listbox" hidden></ul>
+                        </div>
+                    </div>
+
+                    <div class="umap-control umap-control--action">
+                        <span class="filter-name">&nbsp;</span>
+                        <button id="clearGeneBtn" class="btn-secondary" disabled>Clear gene</button>
+                    </div>
+                </div>
+
+                <div id="geneStatus" class="umap-gene-status umap-gene-status--warn" hidden></div>
+            </div>
+        </section>
+
+        <!-- Plot -->
+        <section class="panel" aria-label="UMAP feature plot">
+            <div class="panel-body umap-plot-body">
+                <div class="umap-stage">
+                    <div id="umapPlot" class="umap-plot"></div>
+                    <div id="umapLegend" class="umap-legend"></div>
+                    <div id="umapLoading" class="umap-overlay-state">
+                        <span class="spinner"></span>
+                        <span>Loading atlas…</span>
+                    </div>
+                    <div id="umapError" class="umap-overlay-state umap-overlay-state--error" hidden></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<script src="JS/umap-overlay-core.js?v=<%= System.currentTimeMillis() %>"></script>
+<script src="JS/umap-explorer.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>
 </html>

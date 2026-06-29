@@ -25,6 +25,7 @@
         genes: { human: null, mouse: null },     // gene-symbol arrays
         exprCache: {},                            // "species|GENE" -> {gene,values,min,max,stats}
         currentGene: null,
+        pendingGene: null,
         suggestIdx: -1,
         plotInited: false
     };
@@ -58,6 +59,7 @@
         hideSuggest();
         if (state.base[sp]) {
             renderCategorical(state.base[sp]);
+            maybeSelectPending();
             return;
         }
         show($loading);
@@ -71,10 +73,46 @@
             state.base[sp] = buildBase(raw);
             hide($loading);
             renderCategorical(state.base[sp]);
+            maybeSelectPending();
         }).fail(function () {
             hide($loading);
             showError("Could not load the " + sp + " atlas. Please retry in a moment.");
         });
+    }
+
+    function maybeSelectPending() {
+        if (state.pendingGene) {
+            var g = state.pendingGene;
+            state.pendingGene = null;
+            selectGene(g);
+        }
+    }
+
+    /* Programmatically reflect the species in the toggle (no change event). */
+    function setSpeciesRadio(sp) {
+        state.species = sp;
+        var radios = document.querySelectorAll('input[name="umap-species"]');
+        for (var i = 0; i < radios.length; i++) { radios[i].checked = (radios[i].value === sp); }
+    }
+
+    /* Deep-link entry (?gene=): pick whichever species' panel has the gene,
+       set the toggle, then load that atlas and select the gene. */
+    function initDeepLink(gene) {
+        show($loading);
+        hide($error);
+        $.when(
+            $.getJSON(API + "/genes?species=human"),
+            $.getJSON(API + "/genes?species=mouse")
+        ).done(function (h, m) {
+            state.genes.human = h[0].genes || [];
+            state.genes.mouse = m[0].genes || [];
+            var sp = Core.matchGene(gene, state.genes.human) ? "human"
+                : Core.matchGene(gene, state.genes.mouse) ? "mouse" : "human";
+            setSpeciesRadio(sp);
+            $input.value = gene;
+            state.pendingGene = gene;
+            loadSpecies(sp);
+        }).fail(function () { loadSpecies("human"); });
     }
 
     /* Pre-decode categorical codes into per-point label strings + customdata. */
@@ -394,7 +432,9 @@
             if (state.plotInited) { Plotly.Plots.resize(PLOT_ID); }
         }, 150));
 
-        loadSpecies("human");
+        var initialGene = (document.body.getAttribute("data-initial-gene") || "").trim();
+        if (initialGene) { initDeepLink(initialGene); }
+        else { loadSpecies("human"); }
     }
 
     if (document.readyState === "loading") {
