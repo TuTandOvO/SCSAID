@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>umap-overlay-core — tests</title>
+<style>
+    body { font-family: ui-monospace, "JetBrains Mono", monospace; margin: 2rem; color: #1a2332; }
+    h1 { font-family: Georgia, serif; }
+    #summary { font-size: 1.2rem; font-weight: 700; margin: 1rem 0; padding: 0.6rem 1rem; border-radius: 8px; }
+    .ok { background: #e6f4ea; color: #167d3d; }
+    .bad { background: #fdecea; color: #b91c1c; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 3px 0; border-bottom: 1px solid #eee; }
+    li.pass::before { content: "✓ "; color: #167d3d; font-weight: 700; }
+    li.fail::before { content: "✗ "; color: #b91c1c; font-weight: 700; }
+    li.fail { color: #b91c1c; }
+    .grp { margin-top: 1.2rem; font-weight: 700; color: #555; }
+</style>
+</head>
+<body>
+<h1>umap-overlay-core — unit tests</h1>
+<div id="summary">running…</div>
+<ul id="results"></ul>
+
+<!-- Module under test -->
+<script src="../JS/umap-overlay-core.js"></script>
+<script>
+(function () {
+    "use strict";
+    var C = window.UMAPOverlayCore;
+    var results = document.getElementById("results");
+    var pass = 0, fail = 0;
+
+    function group(name) {
+        var li = document.createElement("li");
+        li.className = "grp";
+        li.textContent = name;
+        results.appendChild(li);
+    }
+    function ok(cond, msg) {
+        var li = document.createElement("li");
+        li.className = cond ? "pass" : "fail";
+        li.textContent = msg;
+        results.appendChild(li);
+        cond ? pass++ : fail++;
+    }
+    function eq(a, b, msg) { ok(a === b, msg + "  (got " + JSON.stringify(a) + ")"); }
+    function isHex(s) { return /^#[0-9a-fA-F]{6}$/.test(s); }
+
+    var GENES = ["EPCAM", "MS4A1", "CD3D", "COL1A1", "KRT14", "EPCAM2", "COL1A2"];
+
+    /* 1. Gene search / autocomplete */
+    group("gene search & autocomplete");
+    ok(C.filterGenes("epc", GENES).indexOf("EPCAM") === 0, "case-insensitive prefix puts EPCAM first");
+    ok(C.filterGenes("col1", GENES).length === 2, "'col1' matches COL1A1 + COL1A2");
+    ok(C.filterGenes("", GENES).length === 0, "empty query yields no suggestions");
+    eq(C.filterGenes("zzz", GENES).length, 0, "no match yields empty list");
+    eq(C.filterGenes("a", GENES, 3).length <= 3, true, "limit is respected");
+    eq(C.matchGene("epcam", GENES), "EPCAM", "matchGene resolves canonical symbol (case-insensitive)");
+
+    /* 2. Gene not found */
+    group("gene not found");
+    eq(C.matchGene("NOTAGENE", GENES), null, "unknown gene -> null");
+    eq(C.matchGene("", GENES), null, "blank query -> null");
+
+    /* 3. Expression -> color mapping */
+    group("expression -> color");
+    eq(C.normalizeValue(5, 0, 10), 0.5, "midpoint normalizes to 0.5");
+    eq(C.normalizeValue(0, 0, 10), 0, "min normalizes to 0");
+    eq(C.normalizeValue(10, 0, 10), 1, "max normalizes to 1");
+    eq(C.normalizeValue(99, 0, 10), 1, "above max clamps to 1");
+    ok(isHex(C.valueToColor(5, 0, 10)), "valueToColor returns a hex");
+    ok(C.valueToColor(10, 0, 10) !== C.valueToColor(0, 0, 10), "high vs low expression differ in color");
+    ok(isHex(C.sampleColorscale(0)) && isHex(C.sampleColorscale(1)), "colorscale endpoints are hex");
+
+    /* 4. Clear / reset (no overlay -> all grey via empty map) */
+    group("clear / reset");
+    var resetVals = C.joinExpression(["a", "b", "c"], new Map());
+    ok(resetVals.every(function (v) { return v === null; }), "empty expr map -> all null (overlay cleared)");
+    ok(C.valueToColor(null, 0, 1) === C.MISSING_COLOR, "null value -> MISSING_COLOR (grey)");
+
+    /* 5. Expression caching (memoization simulation) */
+    group("expression caching");
+    var fetches = 0;
+    var cache = {};
+    function getExpr(key, raw) {
+        if (cache[key]) { return cache[key]; }
+        fetches++;
+        var stats = C.computeColorStats(raw);
+        return (cache[key] = { values: raw, stats: stats });
+    }
+    getExpr("human|EPCAM", [0, 1, 2]);
+    getExpr("human|EPCAM", [0, 1, 2]);
+    getExpr("mouse|EPCAM", [0, 1, 2]);
+    eq(fetches, 2, "second identical lookup is served from cache (2 fetches for 3 calls)");
+    ok(getExpr("human|EPCAM") === getExpr("human|EPCAM"), "cache returns the same entry reference");
+
+    /* 6. All-zero expression */
+    group("all-zero expression");
+    var z = C.computeColorStats([0, 0, 0, 0]);
+    ok(z.allZero === true && z.constant === true, "all-zero flagged allZero & constant");
+    ok(!isNaN(C.normalizeValue(0, 0, 0)), "normalize on all-zero is not NaN");
+    ok(isHex(C.valueToColor(0, 0, 0)), "valueToColor on all-zero returns a hex (no crash)");
+
+    /* 7. max === min (constant non-zero) */
+    group("max === min");
+    var cst = C.computeColorStats([2, 2, 2]);
+    ok(cst.constant === true && cst.allZero === false, "constant non-zero flagged constant, not allZero");
+    eq(C.normalizeValue(2, 2, 2), 0, "constant min===max normalizes to 0 (safe, no divide-by-zero)");
+
+    /* 8. Mismatched cell IDs -> grey */
+    group("mismatched cell IDs");
+    var idx = C.buildCellIndex(["a", "b", "c"]);
+    eq(idx.get("b"), 1, "buildCellIndex maps id -> position");
+    var joined = C.joinExpression(["a", "x", "c"], new Map([["a", 1.5], ["c", 3.0]]));
+    ok(joined[0] === 1.5 && joined[1] === null && joined[2] === 3.0, "absent cell id 'x' -> null");
+    ok(C.valueToColor(joined[1], 0, 3) === C.MISSING_COLOR, "missing-join cell colors grey");
+
+    /* categorical coloring sanity */
+    group("categorical coloring");
+    var cols = C.categoricalColors([0, 1, -1, 2]);
+    ok(isHex(cols[0]) && cols[2] === C.MISSING_COLOR, "code -1 -> grey, valid codes -> hex");
+    eq(C.categoricalLegend(["A", "B"]).length, 2, "legend has one entry per category");
+
+    /* summary */
+    var s = document.getElementById("summary");
+    s.textContent = (fail === 0 ? "ALL PASSED — " : "FAILURES — ") + pass + " passed, " + fail + " failed";
+    s.className = fail === 0 ? "ok" : "bad";
+})();
+</script>
+</body>
+</html>
