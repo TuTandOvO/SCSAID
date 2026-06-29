@@ -1119,5 +1119,7 @@ $(document).ready(function() {
 <!-- Under Construction Modal Script -->
 <script src="JS/construction-modal-simple.js"></script>
 
+
+<script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>
 </html>

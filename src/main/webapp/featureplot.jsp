@@ -168,5 +168,6 @@
 
 <script src="JS/umap-overlay-core.js?v=<%= System.currentTimeMillis() %>"></script>
 <script src="JS/umap-explorer.js?v=<%= System.currentTimeMillis() %>"></script>
+<script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>
 </html>

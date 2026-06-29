@@ -300,5 +300,6 @@
 </main>
 
 <script src="JS/compare.js?v=<%= System.currentTimeMillis() %>"></script>
+<script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>
 </html>

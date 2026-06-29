@@ -2456,5 +2456,6 @@
     </div>
 </div>
 
+<script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>
 </html>
