@@ -160,10 +160,7 @@ body { background-color: var(--bg-body); }
 .filter-card--action {
     align-items: stretch;
     justify-content: flex-end;
-    background: transparent;
-    border-style: dashed;
 }
-.filter-card--action:hover { background: transparent; }
 .filter-card--action .btn-primary { width: 100%; }
 
 
@@ -179,9 +176,9 @@ body { background-color: var(--bg-body); }
     gap: var(--space-sm);
     padding: var(--space-2xl) var(--space-lg);
     color: var(--text-muted);
-    border: 1px dashed var(--border-light);
+    border: 1px solid var(--border-light);
     border-radius: var(--control-radius);
-    background: color-mix(in srgb, var(--bg-muted) 40%, transparent);
+    background: var(--bg-muted);
     min-height: 220px;
 }
 
@@ -254,7 +251,7 @@ body { background-color: var(--bg-body); }
     font-size: 0.78rem;
     color: var(--text-secondary);
     font-style: italic;
-    border-top: 1px dashed color-mix(in srgb, var(--color-accent) 25%, var(--border-light));
+    border-top: 1px solid color-mix(in srgb, var(--color-accent) 25%, var(--border-light));
     padding-top: 0.55rem;
     margin-top: 0.15rem;
 }
