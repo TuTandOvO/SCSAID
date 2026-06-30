@@ -334,6 +334,71 @@ body { background-color: var(--bg-body); }
 
 
 /* --------------------------------------------------------------------------
+   K2. Comparison guidance + suitability advisory
+   -------------------------------------------------------------------------- */
+.compare-guidance {
+    margin-top: var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--control-radius);
+    background: var(--bg-muted);
+    font-size: 0.85rem;
+}
+.compare-guidance > summary {
+    cursor: pointer;
+    padding: 0.7rem var(--space-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+.compare-guidance > summary::-webkit-details-marker { display: none; }
+.compare-guidance > summary::before {
+    content: "ⓘ";
+    color: var(--color-accent);
+    font-weight: 700;
+}
+.compare-guidance[open] > summary { border-bottom: 1px solid var(--border-light); }
+.compare-guidance__body {
+    padding: var(--space-md) var(--space-lg);
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.compare-guidance__body p { margin: 0 0 var(--space-sm); }
+.compare-guidance__body ul { margin: 0; padding-left: 1.15rem; }
+.compare-guidance__body li { margin-bottom: 0.4rem; }
+.compare-guidance__body li:last-child { margin-bottom: 0; }
+.compare-guidance__body strong { color: var(--text-primary); }
+.compare-guidance__body em { font-style: italic; color: var(--text-primary); }
+
+.compare-advisory {
+    margin-top: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--control-radius);
+    background: color-mix(in srgb, var(--color-accent) 10%, var(--bg-surface));
+    border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--border-light));
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+.compare-advisory__title {
+    font-weight: 700;
+    color: #8a5a00;
+    margin-bottom: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+.compare-advisory__title::before { content: "⚠"; }
+.compare-advisory__list { margin: 0; padding-left: 1.15rem; }
+.compare-advisory__list li { margin-bottom: var(--space-sm); }
+.compare-advisory__list li:last-child { margin-bottom: 0; }
+.compare-advisory em { font-style: italic; }
+.compare-advisory strong { color: var(--text-primary); }
+
+
+/* --------------------------------------------------------------------------
    L. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 640px) {

@@ -10,6 +10,7 @@
         degJobId: null,
         cellTypes: [],
         gseaJobId: null,
+        conditions: {},   // condition name -> n_samples (for the advisory)
     };
 
     // Conservative name-based pseudogene heuristic (same regex as details.jsp).
@@ -41,7 +42,9 @@
     function loadConditions() {
         $.getJSON("conditions", { species: state.species })
             .done(function (rows) {
+                state.conditions = {};
                 var opts = (rows || []).map(function (r) {
+                    state.conditions[r.condition] = r.n_samples;
                     return { value: r.condition, label: r.condition + "  (n=" + r.n_samples + ")" };
                 });
                 populateSelect(opts, $("#conditionA"), "— select condition A —");
@@ -70,6 +73,47 @@
         var a = $("#conditionA").val();
         var b = $("#conditionB").val();
         $("#runBtn").prop("disabled", !a || !b || a === b);
+        updateAdvisory();
+    }
+
+    // Non-blocking advisory: flag comparisons that are easy to over-interpret —
+    // disease-vs-disease (no shared baseline; region/cohort/batch confounding)
+    // and very small sample sizes (underpowered pseudobulk). The user can still run.
+    function updateAdvisory() {
+        var $box = $("#compareAdvisory");
+        if (!$box.length) { return; }
+        var a = $("#conditionA").val();
+        var b = $("#conditionB").val();
+        if (!a || !b || a === b) { $box.prop("hidden", true).empty(); return; }
+
+        var BASELINE = "Healthy";
+        var SMALL = 3;
+        var esc = function (s) { return $('<div>').text(s).html(); };
+        var notes = [];
+
+        if (a !== BASELINE && b !== BASELINE) {
+            notes.push("<strong>Disease vs disease.</strong> Neither side is the healthy baseline, so the " +
+                "differentially expressed genes can reflect <em>skin region, cohort and study (batch)</em> " +
+                "differences as much as disease biology — especially when the two conditions were profiled at " +
+                "different body sites. For a cleaner result, compare each condition against <em>Healthy</em>, " +
+                "or read these genes as descriptive rather than disease-specific.");
+        }
+
+        var low = [];
+        var nA = state.conditions[a], nB = state.conditions[b];
+        if (nA != null && nA < SMALL) { low.push(esc(a) + " (n=" + nA + ")"); }
+        if (nB != null && nB < SMALL) { low.push(esc(b) + " (n=" + nB + ")"); }
+        if (low.length) {
+            notes.push("<strong>Small sample size:</strong> " + low.join(" and ") + ". Pseudobulk DESeq2 " +
+                "uses samples as replicates, so with this few replicates the fold-changes and adjusted " +
+                "p-values are underpowered and unstable.");
+        }
+
+        if (!notes.length) { $box.prop("hidden", true).empty(); return; }
+        var html = '<div class="compare-advisory__title">Interpret with care — you can still run it</div>' +
+                   '<ul class="compare-advisory__list">';
+        notes.forEach(function (n) { html += "<li>" + n + "</li>"; });
+        $box.html(html + "</ul>").prop("hidden", false);
     }
 
     // -------- Summary chips ---------------------------------------------------

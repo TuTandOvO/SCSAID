@@ -133,6 +133,20 @@
 
                 </div>
 
+                <details class="compare-guidance">
+                    <summary>How to choose a valid comparison</summary>
+                    <div class="compare-guidance__body">
+                        <p>This tool runs <strong>pseudobulk DESeq2</strong> — each sample is one statistical replicate, so more samples per condition means more reliable results.</p>
+                        <ul>
+                            <li><strong>Cleanest comparison:</strong> a disease against <em>Healthy</em>. A shared baseline isolates disease-driven changes.</li>
+                            <li><strong>Disease vs disease</strong> has no shared control, so differences can reflect <strong>skin region, cohort or study (batch)</strong> as much as disease — comparisons across <strong>different body sites</strong> are especially confounded.</li>
+                            <li><strong>Small sample sizes</strong> (n = 2–3) are underpowered; treat marginal genes with caution.</li>
+                            <li>Cell types with too few cells in either condition are skipped automatically.</li>
+                        </ul>
+                    </div>
+                </details>
+                <div id="compareAdvisory" class="compare-advisory" hidden></div>
+
                 <div id="runSummary" class="run-summary" hidden></div>
                 <div id="runProgress" class="progress-box" hidden>
                     <span class="spinner"></span>
