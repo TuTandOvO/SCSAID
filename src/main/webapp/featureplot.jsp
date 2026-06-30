@@ -30,13 +30,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#1a2332">
-    <title>Feature Plot - scSAID</title>
+    <title>Expression - scSAID</title>
     <meta name="description" content="Interactive gene expression feature plots on the integrated human and mouse skin atlas. Enter any gene symbol to visualise its expression on the UMAP. Choose human or mouse; case-insensitive (COL1A1, Col1a1 both work).">
     <meta name="keywords" content="gene expression atlas, feature plot, UMAP gene, scRNA-seq gene expression, skin gene atlas, scSAID feature plot, keratinocyte marker, dermal gene">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://skin-scsaid.com/featureplot.jsp">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Feature Plot — Gene Expression Atlas | scSAID">
+    <meta property="og:title" content="Expression — Gene Expression Atlas | scSAID">
     <meta property="og:description" content="Interactive gene featureplot on the integrated human and mouse skin scRNA-seq atlas.">
     <meta property="og:url" content="https://skin-scsaid.com/featureplot.jsp">
 
@@ -69,7 +69,7 @@
             <a href="index.jsp" class="main-nav__link">Home</a>
             <a href="browse.jsp" class="main-nav__link">Browse</a>
             <a href="gene-search.jsp" class="main-nav__link">Search</a>
-            <a href="featureplot.jsp" class="main-nav__link main-nav__link--active">Feature Plot</a>
+            <a href="featureplot.jsp" class="main-nav__link main-nav__link--active">Expression</a>
             <a href="compare.jsp" class="main-nav__link">Compare</a>
             <a href="download.jsp" class="main-nav__link">Download</a>
             <div class="main-nav__item">
@@ -103,7 +103,7 @@
     <section class="page-hero">
         <div class="page-hero__inner">
             <span class="page-hero__eyebrow">Integrated atlas · gene expression</span>
-            <h1 class="page-hero__title">Feature plot</h1>
+            <h1 class="page-hero__title">Expression</h1>
             <p class="page-hero__description">
                 Search a gene to paint its expression intensity onto the integrated skin UMAP.
                 Choose the human or mouse atlas; gene names are case-insensitive
