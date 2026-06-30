@@ -32,6 +32,26 @@
     <link rel="stylesheet" href="CSS/details.css">
     <link rel="stylesheet" href="CSS/search.css">
     <link rel="stylesheet" href="CSS/construction-modal-simple.css">
+    <style>
+        /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
+        .search-box { position: relative; }
+        .search-suggest {
+            position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
+            margin: 0; padding: 6px; list-style: none; text-align: left;
+            background: var(--bg-surface); border: 1px solid var(--border-light);
+            border-radius: var(--radius-control); box-shadow: var(--shadow-lg);
+            max-height: 300px; overflow-y: auto;
+        }
+        .search-suggest__item {
+            padding: 0.55rem 0.8rem; font-family: var(--font-mono); font-size: 0.9rem;
+            color: var(--text-primary); border-radius: var(--radius-sm); cursor: pointer;
+        }
+        .search-suggest__item mark { background: transparent; color: var(--color-secondary-dark); font-weight: 700; }
+        .search-suggest__item:hover,
+        .search-suggest__item.is-active {
+            background: color-mix(in srgb, var(--color-secondary) 14%, transparent);
+        }
+    </style>
 </head>
 <body>
 
@@ -95,6 +115,7 @@
                 </svg>
                 <span>Search</span>
             </button>
+            <ul id="gene-suggest" class="search-suggest" role="listbox" hidden></ul>
         </form>
 
         <div class="search-examples" aria-label="Example genes">
@@ -218,6 +239,7 @@
 </main>
 
 <script src="lib/jquery-3.7.1.min.js"></script>
+<script src="JS/umap-overlay-core.js?v=<%= System.currentTimeMillis() %>"></script>
 <script>
 $(document).ready(function() {
     const $input = $('#gene-query');
@@ -420,9 +442,63 @@ $(document).ready(function() {
         return string.replace(/[.*+?^$\x7B\x7D()|[\]\\]/g, '\\$&');
     }
 
+    // ---- Gene-name autocomplete (real-time, partial + fuzzy) -------------
+    var geneUniverse = [];
+    var $suggest = $('#gene-suggest');
+    var suggestIdx = -1, suggestTimer = null;
+
+    // Load the gene vocabulary (human + mouse panels) for suggestions.
+    $.when(
+        $.getJSON('/integrated_umap/api/genes?species=human'),
+        $.getJSON('/integrated_umap/api/genes?species=mouse')
+    ).done(function (h, m) {
+        var seen = {}, all = ((h[0] && h[0].genes) || []).concat((m[0] && m[0].genes) || []);
+        for (var i = 0; i < all.length; i++) {
+            var k = all[i].toLowerCase();
+            if (!seen[k]) { seen[k] = 1; geneUniverse.push(all[i]); }
+        }
+    });
+
+    function renderSuggest() {
+        var q = $input.val();
+        var matches = (q && q.trim() && window.UMAPOverlayCore)
+            ? UMAPOverlayCore.filterGenes(q, geneUniverse, 8) : [];
+        suggestIdx = -1;
+        if (!matches.length) { hideSuggest(); return; }
+        var ql = q.trim().toLowerCase(), html = '';
+        for (var i = 0; i < matches.length; i++) {
+            html += '<li class="search-suggest__item" role="option" data-gene="'
+                + escapeHtml(matches[i]) + '">' + highlightMatch(matches[i], ql) + '</li>';
+        }
+        $suggest.html(html).prop('hidden', false);
+    }
+    function hideSuggest() { $suggest.prop('hidden', true); suggestIdx = -1; }
+    function suggestItems() { return $suggest.find('.search-suggest__item'); }
+    function highlightSuggest(i) {
+        var items = suggestItems();
+        items.removeClass('is-active');
+        if (i >= 0 && i < items.length) { items.eq(i).addClass('is-active'); suggestIdx = i; }
+    }
+    function selectSuggest(gene) { $input.val(gene); hideSuggest(); performSearch(gene); }
+
+    $input.on('input', function () { clearTimeout(suggestTimer); suggestTimer = setTimeout(renderSuggest, 140); });
+    $input.on('focus', function () { if ($input.val().trim()) { renderSuggest(); } });
+    $input.on('keydown', function (e) {
+        var items = suggestItems();
+        var open = !$suggest.prop('hidden') && items.length;
+        if (e.which === 40 && open) { e.preventDefault(); highlightSuggest(Math.min(suggestIdx + 1, items.length - 1)); }
+        else if (e.which === 38 && open) { e.preventDefault(); highlightSuggest(Math.max(suggestIdx - 1, 0)); }
+        else if (e.which === 13) {
+            e.preventDefault();
+            if (open && suggestIdx >= 0) { selectSuggest(items.eq(suggestIdx).data('gene')); }
+            else { hideSuggest(); performSearch($input.val()); }
+        } else if (e.which === 27) { hideSuggest(); }
+    });
+    $suggest.on('mousedown', '.search-suggest__item', function (e) { e.preventDefault(); selectSuggest($(this).data('gene')); });
+    $(document).on('click', function (e) { if (!$(e.target).closest('.search-box').length) { hideSuggest(); } });
+
     // Wire up events
     $searchBtn.on('click', function() { performSearch($input.val()); });
-    $input.on('keypress', function(e) { if (e.which === 13) { e.preventDefault(); performSearch($input.val()); } });
 
     $('.search-examples__btn').on('click', function() {
         const gene = $(this).data('gene');

@@ -59,6 +59,15 @@
     eq(C.filterGenes("a", GENES, 3).length <= 3, true, "limit is respected");
     eq(C.matchGene("epcam", GENES), "EPCAM", "matchGene resolves canonical symbol (case-insensitive)");
 
+    /* 1b. Fuzzy / typo-tolerant matching */
+    group("fuzzy gene matching");
+    ok(C.filterGenes("epcom", GENES).indexOf("EPCAM") >= 0, "typo 'epcom' -> EPCAM (edit dist 1)");
+    ok(C.filterGenes("kot14", GENES).indexOf("KRT14") >= 0, "typo 'kot14' -> KRT14 (edit dist 1)");
+    ok(C.filterGenes("col1a3", GENES).indexOf("COL1A1") >= 0, "typo 'col1a3' -> COL1A1");
+    ok(C.filterGenes("xy", GENES).length === 0, "short non-matching query stays empty (no over-eager fuzzy)");
+    eq(C.editDistance("col1a1", "cok1a1", 2), 1, "editDistance(col1a1, cok1a1) === 1");
+    eq(C.editDistance("abc", "abcdef", 2), Infinity, "editDistance bails past the budget");
+
     /* 2. Gene not found */
     group("gene not found");
     eq(C.matchGene("NOTAGENE", GENES), null, "unknown gene -> null");

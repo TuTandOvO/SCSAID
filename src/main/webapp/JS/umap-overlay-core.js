@@ -176,20 +176,65 @@
     }
 
     /* ---- gene search / autocomplete --------------------------------------- */
-    /* Case-insensitive suggestions: prefix matches first, then substring. */
+    /* Bounded Levenshtein edit distance; returns Infinity once it exceeds max
+       (so near-misses are cheap to reject). */
+    function editDistance(a, b, max) {
+        var m = a.length, n = b.length;
+        if (Math.abs(m - n) > max) { return Infinity; }
+        if (m === 0) { return n; }
+        if (n === 0) { return m; }
+        var prev = new Array(n + 1), cur = new Array(n + 1), i, j;
+        for (j = 0; j <= n; j++) { prev[j] = j; }
+        for (i = 1; i <= m; i++) {
+            cur[0] = i;
+            var ca = a.charCodeAt(i - 1), rowMin = cur[0];
+            for (j = 1; j <= n; j++) {
+                var cost = (ca === b.charCodeAt(j - 1)) ? 0 : 1;
+                var del = prev[j] + 1, ins = cur[j - 1] + 1, sub = prev[j - 1] + cost;
+                cur[j] = del < ins ? (del < sub ? del : sub) : (ins < sub ? ins : sub);
+                if (cur[j] < rowMin) { rowMin = cur[j]; }
+            }
+            if (rowMin > max) { return Infinity; }   // whole row past budget -> bail
+            var tmp = prev; prev = cur; cur = tmp;
+        }
+        return prev[n];
+    }
+
+    /* Real-time suggestions, case-insensitive, ranked:
+         1. exact, 2. prefix, 3. substring, 4. fuzzy (typo-tolerant).
+       Fuzzy tolerance scales with query length so e.g. "Cok1a1" -> "Col1a1"
+       and "Ap" -> "Apoe" (the latter is just a prefix match). */
     function filterGenes(query, geneList, limit) {
         limit = limit || 10;
         var q = (query || "").trim().toLowerCase();
         if (!q) { return []; }
-        var prefix = [], contains = [];
+        var maxDist = q.length < 4 ? 0 : (q.length < 7 ? 1 : 2);
+        var prefix = [], contains = [], fuzzy = [];
         for (var i = 0; i < geneList.length; i++) {
             var g = geneList[i], lg = g.toLowerCase();
-            if (lg === q) { prefix.unshift(g); continue; }
-            if (lg.indexOf(q) === 0) { prefix.push(g); }
-            else if (lg.indexOf(q) > 0) { contains.push(g); }
-            if (prefix.length >= limit) { break; }
+            var idx = lg.indexOf(q);
+            if (idx === 0) { prefix.push(g); }
+            else if (idx > 0) { contains.push(g); }
+            else if (maxDist > 0 && Math.abs(lg.length - q.length) <= maxDist) {
+                var d = editDistance(q, lg, maxDist);
+                if (d <= maxDist) { fuzzy.push({ g: g, d: d }); }
+            }
         }
-        return prefix.concat(contains).slice(0, limit);
+        prefix.sort(function (a, b) {
+            var al = a.toLowerCase(), bl = b.toLowerCase();
+            if (al === q) { return -1; }
+            if (bl === q) { return 1; }
+            return (al.length - bl.length) || (al < bl ? -1 : 1);
+        });
+        fuzzy.sort(function (a, b) { return (a.d - b.d) || (a.g < b.g ? -1 : 1); });
+        var out = prefix.concat(contains);
+        for (var k = 0; k < fuzzy.length; k++) { out.push(fuzzy[k].g); }
+        var seen = {}, res = [];
+        for (var p = 0; p < out.length && res.length < limit; p++) {
+            var key = out[p].toLowerCase();
+            if (!seen[key]) { seen[key] = 1; res.push(out[p]); }
+        }
+        return res;
     }
 
     /* Exact case-insensitive match -> canonical symbol, or null. */
@@ -220,6 +265,7 @@
         categoryColor: categoryColor,
         categoricalColors: categoricalColors,
         categoricalLegend: categoricalLegend,
+        editDistance: editDistance,
         filterGenes: filterGenes,
         matchGene: matchGene
     };
