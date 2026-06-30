@@ -115,7 +115,7 @@
     <div class="umap-shell">
 
         <!-- Controls -->
-        <section class="panel" aria-labelledby="umap-controls-title">
+        <section class="panel umap-controls" aria-labelledby="umap-controls-title">
             <div class="panel-body">
                 <div class="umap-control-row">
                     <div class="umap-control">

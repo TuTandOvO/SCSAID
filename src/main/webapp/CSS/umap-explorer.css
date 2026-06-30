@@ -59,6 +59,13 @@ body { background-color: var(--bg-body); }
 /* --------------------------------------------------------------------------
    B. Gene search + autocomplete
    -------------------------------------------------------------------------- */
+/* The controls card clips its content (.panel overflow:hidden) and the plot
+   card sits right below it — so let the autocomplete dropdown escape the card
+   and stack above the plot card. */
+.umap-controls,
+.umap-controls .panel-body { overflow: visible; }
+.umap-controls { position: relative; z-index: 20; }
+
 .gene-search { position: relative; }
 
 .gene-search__input {
