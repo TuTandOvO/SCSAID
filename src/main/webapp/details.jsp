@@ -1016,14 +1016,21 @@
             <div class="cluster" id="EnrichmentAnalysis">
                 <div class="header">
                     <div class="header-content">
-                        <div><div class="header-title">Enrichment Analysis (GSEA)</div></div>
+                        <div><div class="header-title">Enrichment Analysis</div></div>
                     </div>
                 </div>
                 <div class="panel-body">
                     <div id="enrichSource" class="enrich-source info-bar">
                         Source: <strong>cluster markers of this sample</strong>
                     </div>
-                    <div class="control-row toolbar-row" style="margin-bottom:1rem;">
+                    <div class="control-row toolbar-row" style="margin-bottom:0.5rem;">
+                        <div class="control-group" style="min-width:170px;">
+                            <label class="panel-label">Method</label>
+                            <select id="enrichMethod" class="form-select elegant-select">
+                                <option value="gsea" selected>GSEA (ranked)</option>
+                                <option value="ora">ORA (over-representation)</option>
+                            </select>
+                        </div>
                         <div class="control-group" style="min-width:220px;">
                             <label class="panel-label">Gene Set</label>
                             <select id="enrichGeneSet" class="form-select elegant-select">
@@ -1051,6 +1058,13 @@
                                 <option value="significant">Significant only</option>
                             </select>
                         </div>
+                    </div>
+                    <div id="enrichMethodNote" class="help-text" style="margin:0 0 12px; font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">
+                        <strong>GSEA</strong> ranks the whole gene list and tests whether a pathway is
+                        skewed toward the top or bottom. <strong>ORA</strong> tests whether the
+                        significant up-regulated markers (adj p &lt; 0.05, log<sub>2</sub>FC &ge; 1)
+                        over-represent a pathway (hypergeometric test). They answer different questions —
+                        try both.
                     </div>
                     <div id="enrich-loading" class="progress-box" style="display:none;">
                         <div class="spinner" style="margin:0 auto 10px;"></div>
@@ -1194,6 +1208,11 @@
                         src.html('Source: <strong>cluster markers of ' + gsm + '</strong>');
                         $('#enrichCellTypeWrap').hide();
                     }
+                    // ORA is only available for the sample-marker source (it reads the per-sample
+                    // DEG file); for the comparison-job source, fall back to GSEA.
+                    var $m = $('#enrichMethod');
+                    $m.find('option[value="ora"]').prop('disabled', !!currentComparisonJobId);
+                    if (currentComparisonJobId && $m.val() === 'ora') { $m.val('gsea'); }
                 }
 
                 // Conservative name-based pseudogene heuristic (high-precision suffixes only):
@@ -1402,7 +1421,10 @@
                 var enrichAllData = [];
 
                 function loadEnrichGeneSets() {
-                    $.getJSON(contextPath + '/enrichment', { said: said, action: 'list' })
+                    var method = $('#enrichMethod').val();
+                    var action = (method === 'ora') ? 'ora-list' : 'list';
+                    $('#enrichChart').empty();
+                    $.getJSON(contextPath + '/enrichment', { said: said, action: action })
                         .done(function(data) {
                             var select = $('#enrichGeneSet');
                             select.empty();
@@ -1412,8 +1434,10 @@
                                 });
                                 loadEnrichData();
                             } else {
-                                select.append('<option value="">No enrichment data</option>');
-                                $('#enrich-empty').show();
+                                select.append('<option value="">No data</option>');
+                                $('#enrich-empty').show().text(method === 'ora'
+                                    ? 'No ORA gene-set libraries available for this species.'
+                                    : 'No enrichment data available for this dataset.');
                             }
                         })
                         .fail(function() {
@@ -1422,6 +1446,7 @@
                 }
 
                 function loadEnrichData() {
+                    var method = $('#enrichMethod').val();
                     var geneSet = $('#enrichGeneSet').val();
                     var filter = $('#enrichFilter').val();
                     if (!geneSet) return;
@@ -1429,6 +1454,29 @@
                     $('#enrich-loading').show();
                     $('#enrich-empty').hide();
                     $('#enrichChart').empty();
+
+                    if (method === 'ora') {
+                        var topN = parseInt($('#enrichTopN').val()) || 10;
+                        $.getJSON(contextPath + '/enrichment',
+                            { said: said, method: 'ora', library: geneSet, top: topN, filter: filter })
+                            .done(function(data) {
+                                $('#enrich-loading').hide();
+                                if (!data || data.length === 0) {
+                                    $('#enrich-empty').show().text(filter === 'significant'
+                                        ? 'No terms at FDR < 0.05. Try showing all results.'
+                                        : 'No over-represented terms for this library.');
+                                    return;
+                                }
+                                $('#enrich-empty').hide();
+                                enrichAllData = data;
+                                renderOraChart();
+                            })
+                            .fail(function() {
+                                $('#enrich-loading').hide();
+                                $('#enrich-empty').show().text('Error loading ORA results.');
+                            });
+                        return;
+                    }
 
                     var enrichParams = { gene_set: geneSet, filter: filter };
                     if (currentComparisonJobId) {
@@ -1555,9 +1603,63 @@
                     }));
                 }
 
+                function renderOraChart() {
+                    var rows = (enrichAllData || []).slice();
+                    if (rows.length === 0) { $('#enrich-empty').show().text('No terms to display.'); return; }
+                    // Server returns top-N by p-value ascending; reverse so the most significant
+                    // term sits at the top of the horizontal bar chart.
+                    rows.reverse();
+
+                    var terms = rows.map(function(r) {
+                        var t = String(r.term).replace(/^(GOBP_|GOCC_|GOMF_|HALLMARK_|KEGG_|REACTOME_|WP_)/, '');
+                        t = t.replace(/_/g, ' ');
+                        if (t.length > 60) t = t.substring(0, 57) + '...';
+                        return t;
+                    });
+                    var vals = rows.map(function(r) {
+                        var f = parseFloat(r.fdr);
+                        if (!(f > 0)) f = 1e-300;
+                        return -Math.log10(f);
+                    });
+                    var hoverText = rows.map(function(r) {
+                        return '<b>' + String(r.term).replace(/_/g, ' ') + '</b><br>' +
+                               'Overlap: ' + r.overlap + ' / ' + r.set_size + ' genes<br>' +
+                               'Fold enrichment: ' + parseFloat(r.fold_enrichment).toFixed(2) + '×<br>' +
+                               'p-value: ' + parseFloat(r.pval).toExponential(2) + '<br>' +
+                               'FDR: ' + parseFloat(r.fdr).toExponential(2) + '<br>' +
+                               '<span style="font-size:10px">' + String(r.overlap_genes) + '</span>';
+                    });
+                    var barText = rows.map(function(r) { return r.overlap + '/' + r.set_size; });
+                    var chartHeight = Math.max(400, rows.length * 30 + 110);
+
+                    var trace = {
+                        type: 'bar', orientation: 'h',
+                        x: vals, y: terms,
+                        marker: { color: '#c0392b' },
+                        text: barText, textposition: 'outside', textfont: { size: 11 },
+                        hovertext: hoverText, hoverinfo: 'text'
+                    };
+                    var layout = {
+                        margin: { l: 320, r: 70, t: 30, b: 50 },
+                        xaxis: { title: '−log₁₀(FDR)', zeroline: true, zerolinecolor: '#999' },
+                        yaxis: { automargin: true, tickfont: { size: 11 } },
+                        height: chartHeight,
+                        plot_bgcolor: '#fff', paper_bgcolor: '#fff',
+                        font: { family: 'Montserrat, sans-serif' }
+                    };
+                    Plotly.newPlot('enrichChart', [trace], layout, figConfig('ORA_' + said, {
+                        responsive: true, displayModeBar: true,
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }));
+                }
+
                 loadEnrichGeneSets();
+                $('#enrichMethod').on('change', loadEnrichGeneSets);
                 $('#enrichGeneSet, #enrichFilter, #enrichCellTypeSelect').on('change', loadEnrichData);
-                $('#enrichTopN').on('change', renderEnrichChart);
+                $('#enrichTopN').on('change', function() {
+                    if ($('#enrichMethod').val() === 'ora') { loadEnrichData(); }
+                    else { renderEnrichChart(); }
+                });
 
                 // =========================================================================
                 // SECTION D: CELLPHONEDB DYNAMIC ANALYSIS
