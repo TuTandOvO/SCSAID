@@ -421,12 +421,15 @@
             font: { family: "Montserrat, sans-serif", color: "#1a2332" },
         };
         // Enable the modebar so users can pan/zoom/save when terms are long.
-        var config = {
+        var baseConfig = {
             displayModeBar: true,
             responsive: false,        // wrapper handles horizontal scroll
             displaylogo: false,
             modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d"],
         };
+        // High-res PNG / vector PDF download buttons (figure-export.js).
+        var fname = "compare_GSEA_" + (state.species || "");
+        var config = window.FigureExport ? window.FigureExport.config(fname, baseConfig) : baseConfig;
         Plotly.newPlot("gseaChart", [trace], layout, config);
     }
 

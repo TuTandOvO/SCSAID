@@ -437,6 +437,10 @@
     <script src="lib/jquery.dataTables.min.js?v=20260416"></script>
     <script src="lib/xlsx.full.min.js?v=20260416"></script>
     <script src="lib/plotly-2.20.0.min.js?v=20260416"></script>
+    <!-- Publication-quality figure download (high-res PNG / vector PDF) -->
+    <script src="lib/jspdf.umd.min.js?v=20260630"></script>
+    <script src="lib/svg2pdf.umd.min.js?v=20260630"></script>
+    <script src="JS/figure-export.js?v=<%= System.currentTimeMillis() %>"></script>
 </head>
 <body style="background: var(--bg-body);">
 
@@ -1544,12 +1548,11 @@
                         ]
                     };
 
-                    Plotly.newPlot('enrichChart', [trace], layout, {
+                    Plotly.newPlot('enrichChart', [trace], layout, figConfig('GSEA_' + said, {
                         responsive: true,
                         displayModeBar: true,
-                        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
-                        toImageButtonOptions: { format: 'svg', filename: 'GSEA_' + said }
-                    });
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }));
                 }
 
                 loadEnrichGeneSets();
@@ -1793,7 +1796,7 @@
                         margin: { l: 150, r: 50, t: 60, b: 150 }
                     };
 
-                    Plotly.newPlot('cpdbHeatmapPlot', [trace], layout, { responsive: true });
+                    Plotly.newPlot('cpdbHeatmapPlot', [trace], layout, figConfig('cpdb_heatmap_' + said, { responsive: true }));
                 }
 
                 // Render dot plot using Plotly
@@ -1870,7 +1873,7 @@
                         margin: { l: 200, r: 80, t: 60, b: 150 }
                     };
 
-                    Plotly.newPlot('cpdbDotplot', [trace], layout, { responsive: true });
+                    Plotly.newPlot('cpdbDotplot', [trace], layout, figConfig('cpdb_dotplot_' + said, { responsive: true }));
                 }
 
                 // Populate results table
@@ -2330,7 +2333,7 @@
                         violinmode: 'group'
                     };
 
-                    Plotly.newPlot('gssViolinPlot', traces, layout, { responsive: true });
+                    Plotly.newPlot('gssViolinPlot', traces, layout, figConfig('geneset_violin_' + said, { responsive: true }));
                 }
 
                 // =========================================================================
@@ -2403,12 +2406,11 @@
                         font: { family: 'Montserrat, sans-serif' }
                     };
 
-                    Plotly.newPlot('proportionBarChart', [barTrace], barLayout, {
+                    Plotly.newPlot('proportionBarChart', [barTrace], barLayout, figConfig('cell_proportion_bar_' + said, {
                         responsive: true,
                         displayModeBar: true,
-                        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
-                        toImageButtonOptions: { format: 'svg', filename: 'cell_proportion_bar_' + said }
-                    });
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }));
 
                     // Donut Chart (relative proportion)
                     var donutTrace = {
@@ -2439,12 +2441,11 @@
                         }]
                     };
 
-                    Plotly.newPlot('proportionDonutChart', [donutTrace], donutLayout, {
+                    Plotly.newPlot('proportionDonutChart', [donutTrace], donutLayout, figConfig('cell_proportion_donut_' + said, {
                         responsive: true,
                         displayModeBar: true,
-                        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
-                        toImageButtonOptions: { format: 'svg', filename: 'cell_proportion_donut_' + said }
-                    });
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }));
                 }
 
                 loadCellProportion();

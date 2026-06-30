@@ -31,6 +31,10 @@
     <script src="lib/jquery.dataTables.min.js?v=20260420"></script>
     <script src="lib/xlsx.full.min.js?v=20260420"></script>
     <script src="lib/plotly-2.20.0.min.js?v=20260420"></script>
+    <!-- Publication-quality figure download (high-res PNG / vector PDF) -->
+    <script src="lib/jspdf.umd.min.js?v=20260630"></script>
+    <script src="lib/svg2pdf.umd.min.js?v=20260630"></script>
+    <script src="JS/figure-export.js?v=<%= System.currentTimeMillis() %>"></script>
 </head>
 <body>
 

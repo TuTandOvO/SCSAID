@@ -162,11 +162,19 @@
         },
         font: { family: "Montserrat, sans-serif", size: 12, color: "#1a2332" }
     };
-    var PLOT_CONFIG = {
+    var PLOT_CONFIG_BASE = {
         responsive: true, displaylogo: false,
-        modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d"],
-        toImageButtonOptions: { format: "png", filename: "umap-featureplot", scale: 2 }
+        modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d"]
     };
+    // High-res PNG / vector PDF download buttons (figure-export.js), with a
+    // filename that reflects the current species + gene at click time.
+    function plotConfig() {
+        var name = function () {
+            return "featureplot_" + state.species + (state.currentGene ? "_" + state.currentGene : "");
+        };
+        return window.FigureExport ? window.FigureExport.config(name, PLOT_CONFIG_BASE)
+                                   : PLOT_CONFIG_BASE;
+    }
 
     var CAT_HOVER =
         "Cell ID: %{customdata[0]}<br>" +
@@ -194,7 +202,7 @@
             hovertemplate: CAT_HOVER,
             marker: { size: 3.5, opacity: 0.7, color: base.catColors, line: { width: 0 } }
         };
-        Plotly.react(PLOT_ID, [trace], BASE_LAYOUT, PLOT_CONFIG);
+        Plotly.react(PLOT_ID, [trace], BASE_LAYOUT, plotConfig());
         state.plotInited = true;
         renderLegendCategorical(base.legend);
     }
