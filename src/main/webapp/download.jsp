@@ -94,6 +94,36 @@
             margin: 0 0 2rem;
         }
 
+        .section-intro {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 72ch;
+            margin: -1rem 0 2rem;
+        }
+
+        .section-intro code {
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            background: var(--bg-muted);
+            padding: 0.1em 0.35em;
+            border-radius: 4px;
+        }
+
+        .download-card__badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--color-secondary-dark);
+            background: rgba(232, 146, 124, 0.12);
+            border-radius: 999px;
+            padding: 0.2rem 0.6rem;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
         /* Download Cards Grid */
         .download-grid {
             display: grid;
@@ -379,7 +409,104 @@
 
     <!-- Download Section -->
     <section class="download-section">
-        <h2 class="section-title">Available Downloads</h2>
+        <h2 class="section-title">Integrated single-cell atlases</h2>
+        <p class="section-intro">
+            The full integrated atlases as AnnData (<code>.h5ad</code>) objects — UMAP embeddings,
+            cleaned <code>obs</code> metadata, and cell-type annotations — are deposited on Zenodo,
+            one record per species. Open access under CC-BY-4.0.
+        </p>
+
+        <div class="download-grid">
+            <!-- Human integrated atlas (Zenodo) -->
+            <div class="download-card">
+                <div class="download-card__header">
+                    <div class="download-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                    </div>
+                    <div class="download-card__meta">
+                        <h3 class="download-card__title">Human integrated atlas</h3>
+                        <span class="download-card__format">AnnData (.h5ad) · Zenodo</span>
+                    </div>
+                </div>
+                <div class="download-card__body">
+                    <p class="download-card__description">
+                        The integrated human skin single-cell atlas — UMAP embedding, cleaned
+                        <code>obs</code> metadata (condition, age, sex, skin location), and Gross/Fine
+                        cell-type maps — as a single AnnData object, hosted on Zenodo.
+                    </p>
+                    <div class="download-card__details">
+                        <div class="download-card__detail">
+                            <span class="download-card__detail-label">Species</span>
+                            <span class="download-card__detail-value">Human</span>
+                        </div>
+                        <div class="download-card__detail">
+                            <span class="download-card__detail-label">Cells</span>
+                            <span class="download-card__detail-value">~405K</span>
+                        </div>
+                    </div>
+                    <a href="https://zenodo.org/records/19050479" target="_blank" rel="noopener" class="download-card__btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        View on Zenodo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mouse integrated atlas (Zenodo) -->
+            <div class="download-card">
+                <div class="download-card__header">
+                    <div class="download-card__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                    </div>
+                    <div class="download-card__meta">
+                        <h3 class="download-card__title">Mouse integrated atlas</h3>
+                        <span class="download-card__format">AnnData (.h5ad) · Zenodo</span>
+                    </div>
+                </div>
+                <div class="download-card__body">
+                    <p class="download-card__description">
+                        The integrated mouse skin single-cell atlas — UMAP embedding, cleaned
+                        <code>obs</code> metadata, and Gross/Fine cell-type maps — as a single
+                        AnnData object, hosted on Zenodo.
+                    </p>
+                    <div class="download-card__details">
+                        <div class="download-card__detail">
+                            <span class="download-card__detail-label">Species</span>
+                            <span class="download-card__detail-value">Mouse</span>
+                        </div>
+                        <div class="download-card__detail">
+                            <span class="download-card__detail-label">Cells</span>
+                            <span class="download-card__detail-value">~795K</span>
+                        </div>
+                    </div>
+                    <a href="https://zenodo.org/records/19015807" target="_blank" rel="noopener" class="download-card__btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        View on Zenodo
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 3.5rem;">Metadata &amp; summary tables</h2>
+        <p class="section-intro">
+            Curated metadata for all 252 samples — dataset overview, full metadata, the
+            integration table, and a flat CSV for R/Python.
+        </p>
 
         <div class="download-grid" id="download-grid">
             <!-- Browse Data Card -->
@@ -563,7 +690,7 @@
                     </div>
                     <div class="info-item__text">
                         <h4>Data Format</h4>
-                        <p>All files are provided in Excel format (.xlsx) compatible with Microsoft Excel, Google Sheets, and R/Python libraries.</p>
+                        <p>Metadata is provided as Excel (.xlsx) and CSV, readable in Excel, Google Sheets, and R/Python. The full integrated atlases are AnnData (.h5ad) objects on Zenodo — load with <code>scanpy.read_h5ad</code>.</p>
                     </div>
                 </div>
 
