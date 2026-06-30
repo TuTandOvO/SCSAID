@@ -110,8 +110,6 @@
     <link rel="stylesheet" href="CSS/design-system.css">
     <link rel="stylesheet" href="CSS/header.css">
 
-    <!-- Under Construction Modal -->
-    <link rel="stylesheet" href="CSS/construction-modal-simple.css">
 
     <!-- Composition Charts -->
     <link rel="stylesheet" href="CSS/composition-charts.css">
@@ -807,8 +805,6 @@
     </div>
 </footer>
 
-<!-- Under Construction Modal Script -->
-<script src="JS/construction-modal-simple.js"></script>
 
 <!-- Composition Charts -->
 <script src="JS/cell-count-data.js"></script>

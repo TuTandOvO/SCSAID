@@ -21,7 +21,6 @@
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
     <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/construction-modal-simple.css">
 
     <% if (gateEnabled) { %>
     <!-- Cloudflare Turnstile (gates the feedback form against over-submission) -->
@@ -294,7 +293,6 @@
 </script>
 <% } %>
 
-<script src="JS/construction-modal-simple.js"></script>
 
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>

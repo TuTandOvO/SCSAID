@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="CSS/design-system.css">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/help.css">
-    <link rel="stylesheet" href="CSS/construction-modal-simple.css">
 </head>
 <body>
 <%
@@ -244,7 +243,6 @@
             contentEl.innerHTML = "<p class=\"help-content__error\">Unable to load help content. Please try again later.</p>";
         });
 </script>
-<script src="JS/construction-modal-simple.js"></script>
 
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>

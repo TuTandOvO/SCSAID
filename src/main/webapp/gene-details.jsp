@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/gene-details.css?v=20260624">
-    <link rel="stylesheet" href="CSS/construction-modal-simple.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -215,8 +214,6 @@
         }
     </script>
 
-    <!-- Under Construction Modal Script -->
-    <script src="JS/construction-modal-simple.js"></script>
 
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>

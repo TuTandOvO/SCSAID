@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/details.css">
     <link rel="stylesheet" href="CSS/search.css">
-    <link rel="stylesheet" href="CSS/construction-modal-simple.css">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown
@@ -527,8 +526,6 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Under Construction Modal Script -->
-<script src="JS/construction-modal-simple.js"></script>
 
 
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>

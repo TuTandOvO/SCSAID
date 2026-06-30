@@ -29,7 +29,6 @@
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
     <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/construction-modal-simple.css">
 
     <style>
         body {
@@ -769,8 +768,6 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Under Construction Modal Script -->
-<script src="JS/construction-modal-simple.js"></script>
 
 
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
