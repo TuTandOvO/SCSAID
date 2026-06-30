@@ -34,7 +34,9 @@
     <link rel="stylesheet" href="CSS/construction-modal-simple.css">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
-        .search-box { position: relative; }
+        /* The form itself uses overflow:hidden for its pill shape, so the dropdown
+           lives in a non-clipping wrapper that matches the form's width. */
+        .search-box-wrap { position: relative; max-width: 640px; margin: 0 auto; }
         .search-suggest {
             position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
             margin: 0; padding: 6px; list-style: none; text-align: left;
@@ -104,6 +106,7 @@
             — find where, in which population, and at what effect size your gene of interest is regulated.
         </p>
 
+        <div class="search-box-wrap">
         <form class="search-box" role="search" onsubmit="return false;">
             <input type="text" id="gene-query" class="search-box__input"
                    placeholder="Enter a gene symbol — e.g. KRT14, COL1A1, ACTA2"
@@ -115,8 +118,9 @@
                 </svg>
                 <span>Search</span>
             </button>
-            <ul id="gene-suggest" class="search-suggest" role="listbox" hidden></ul>
         </form>
+        <ul id="gene-suggest" class="search-suggest" role="listbox" hidden></ul>
+        </div>
 
         <div class="search-examples" aria-label="Example genes">
             <span class="search-examples__label">Try</span>
@@ -495,7 +499,7 @@ $(document).ready(function() {
         } else if (e.which === 27) { hideSuggest(); }
     });
     $suggest.on('mousedown', '.search-suggest__item', function (e) { e.preventDefault(); selectSuggest($(this).data('gene')); });
-    $(document).on('click', function (e) { if (!$(e.target).closest('.search-box').length) { hideSuggest(); } });
+    $(document).on('click', function (e) { if (!$(e.target).closest('.search-box-wrap').length) { hideSuggest(); } });
 
     // Wire up events
     $searchBtn.on('click', function() { performSearch($input.val()); });
