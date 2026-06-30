@@ -27,6 +27,29 @@
         transform: "matrix(1 0 0 1 0 0)"
     };
 
+    // Four-corners "expand to full screen" modebar icon.
+    var EXPAND_ICON = {
+        width: 24, height: 24,
+        path: "M4 4h6V2H2v8h2V4zm16 0v6h2V2h-8v2h6zM4 20v-6H2v8h8v-2H4zm16 0h-6v2h8v-8h-2v6z"
+    };
+
+    // Inject modal styles once.
+    (function injectStyles() {
+        if (typeof document === "undefined" || document.getElementById("fig-export-style")) { return; }
+        var st = document.createElement("style");
+        st.id = "fig-export-style";
+        st.textContent =
+            ".fig-modal{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:rgba(26,35,50,.55);padding:2.5vh 2.5vw;}" +
+            ".fig-modal__panel{background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.35);width:95vw;height:95vh;display:flex;flex-direction:column;overflow:hidden;}" +
+            ".fig-modal__bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e5e0d8;flex:none;}" +
+            ".fig-modal__title{font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.04em;color:#1a2332;text-transform:capitalize;}" +
+            ".fig-modal__close{appearance:none;-webkit-appearance:none;border:none;background:transparent;font-size:1.7rem;line-height:1;color:#5a6473;cursor:pointer;padding:0 8px;border-radius:6px;}" +
+            ".fig-modal__close:hover{background:#f0ede8;color:#1a2332;}" +
+            ".fig-modal__body{flex:1;min-height:0;padding:8px;}" +
+            ".fig-modal__plot{width:100%;height:100%;}";
+        (document.head || document.documentElement).appendChild(st);
+    })();
+
     function dims(gd) {
         var fl = (gd && gd._fullLayout) || {};
         return {
@@ -89,10 +112,61 @@
             });
     }
 
+    /* ---- full-screen modal ---------------------------------------------- */
+    // Re-render the figure large (95% of the viewport, autosized — no fixed
+    // height) so dense legends/axes (many cell types) aren't squashed. The big
+    // view keeps its own download buttons.
+    function expand(gd, name) {
+        if (!gd || !window.Plotly) { return; }
+        var Plotly = window.Plotly;
+
+        var ov = document.createElement("div"); ov.className = "fig-modal";
+        var panel = document.createElement("div"); panel.className = "fig-modal__panel";
+        var bar = document.createElement("div"); bar.className = "fig-modal__bar";
+        var title = document.createElement("span"); title.className = "fig-modal__title";
+        title.textContent = resolveName(name).replace(/[_]+/g, " ");
+        var close = document.createElement("button"); close.className = "fig-modal__close";
+        close.setAttribute("aria-label", "Close full-screen view"); close.innerHTML = "&times;";
+        var body = document.createElement("div"); body.className = "fig-modal__body";
+        var plot = document.createElement("div"); plot.className = "fig-modal__plot";
+        bar.appendChild(title); bar.appendChild(close);
+        body.appendChild(plot); panel.appendChild(bar); panel.appendChild(body);
+        ov.appendChild(panel); document.body.appendChild(ov);
+        document.body.style.overflow = "hidden";
+
+        var onResize = function () { try { Plotly.Plots.resize(plot); } catch (e) {} };
+        function destroy() {
+            document.removeEventListener("keydown", onKey);
+            window.removeEventListener("resize", onResize);
+            try { Plotly.purge(plot); } catch (e) {}
+            if (ov.parentNode) { ov.parentNode.removeChild(ov); }
+            document.body.style.overflow = "";
+        }
+        function onKey(e) { if (e.key === "Escape") { destroy(); } }
+        close.addEventListener("click", destroy);
+        ov.addEventListener("mousedown", function (e) { if (e.target === ov) { destroy(); } });
+        document.addEventListener("keydown", onKey);
+        window.addEventListener("resize", onResize);
+
+        // Shallow-clone traces (so Plotly's per-plot uid doesn't touch the
+        // original) but share the heavy data arrays by reference.
+        var data = (gd.data || []).map(function (t) {
+            var c = {}; for (var k in t) { if (t.hasOwnProperty(k)) { c[k] = t[k]; } } return c;
+        });
+        var layout = {}; var src = gd.layout || {};
+        for (var k in src) { if (src.hasOwnProperty(k)) { layout[k] = src[k]; } }
+        delete layout.width; delete layout.height; layout.autosize = true;
+
+        Plotly.newPlot(plot, data, layout,
+            config(name, { responsive: true, displaylogo: false }, { expand: false })
+        ).then(onResize);
+    }
+
     /* ---- modebar buttons + config helper -------------------------------- */
-    function buttons(name) {
+    function buttons(name, opts) {
+        opts = opts || {};
         var camera = (window.Plotly && window.Plotly.Icons && window.Plotly.Icons.camera);
-        return [
+        var arr = [
             {
                 name: "downloadPngHi", title: "Download PNG (high-resolution)",
                 icon: camera, click: function (gd) { downloadPng(gd, name); }
@@ -102,11 +176,18 @@
                 icon: PDF_ICON, click: function (gd) { downloadPdf(gd, name); }
             }
         ];
+        if (opts.expand !== false) {
+            arr.unshift({
+                name: "expandFig", title: "View full screen",
+                icon: EXPAND_ICON, click: function (gd) { expand(gd, name); }
+            });
+        }
+        return arr;
     }
 
     // Merge our download buttons into a base Plotly config, removing the
     // default low-res snapshot button.
-    function config(name, base) {
+    function config(name, base, opts) {
         base = base || {};
         var out = {};
         for (var k in base) { if (base.hasOwnProperty(k)) { out[k] = base[k]; } }
@@ -114,7 +195,7 @@
         if (rm.indexOf("toImage") < 0) { rm.push("toImage"); }
         out.displaylogo = false;
         out.modeBarButtonsToRemove = rm;
-        out.modeBarButtonsToAdd = (base.modeBarButtonsToAdd || []).slice().concat(buttons(name));
+        out.modeBarButtonsToAdd = (base.modeBarButtonsToAdd || []).slice().concat(buttons(name, opts));
         // toImageButtonOptions no longer applies (default button removed); drop it.
         delete out.toImageButtonOptions;
         return out;
@@ -124,6 +205,7 @@
         PNG_SCALE: PNG_SCALE,
         png: downloadPng,
         pdf: downloadPdf,
+        expand: expand,
         buttons: buttons,
         config: config
     };
