@@ -192,13 +192,20 @@
             animation: fadeInUp 0.8s ease 0.4s forwards;
         }
 
+        .hero__logo {
+            display: block;
+            width: auto;
+            height: clamp(7rem, 16vw, 11rem);
+            margin: 0 auto;
+        }
+
         .hero__title span {
             display: block;
-            font-size: 0.35em;
+            font-size: clamp(1.1rem, 2.6vw, 1.9rem);
             font-family: var(--font-body);
             font-weight: 300;
             letter-spacing: 0.05em;
-            margin-top: var(--space-md);
+            margin-top: var(--space-lg);
             color: rgba(255, 255, 255, 0.7);
         }
 
@@ -582,7 +589,7 @@
     <div class="hero__content">
         <span class="hero__eyebrow">Skin Single-Cell Transcriptomic Super Atlas</span>
         <h1 class="hero__title">
-            scSAID
+            <img src="images/scsaid-logo-white.svg" alt="scSAID" class="hero__logo" width="250" height="250">
             <span>Single-Cell <strong>S</strong>kin & <strong>A</strong>ppendages <strong>I</strong>ntegrated <strong>D</strong>atabase</span>
         </h1>
         <p class="hero__description">
