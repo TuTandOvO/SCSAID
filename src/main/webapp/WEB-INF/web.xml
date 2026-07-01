@@ -114,6 +114,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>SiteSearchServlet</servlet-name>
+        <servlet-class>Servlet.SiteSearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SiteSearchServlet</servlet-name>
+        <url-pattern>/site-search</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>GeneDetailsServlet</servlet-name>
         <servlet-class>Servlet.GeneDetailsServlet</servlet-class>
     </servlet>
