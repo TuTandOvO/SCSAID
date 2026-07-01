@@ -241,6 +241,14 @@
         <url-pattern>/enrichment</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ScorpionServlet</servlet-name>
+        <servlet-class>Servlet.ScorpionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ScorpionServlet</servlet-name>
+        <url-pattern>/scorpion</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>GeoMetaServlet</servlet-name>
         <servlet-class>Servlet.GeoMetaServlet</servlet-class>
     </servlet>
