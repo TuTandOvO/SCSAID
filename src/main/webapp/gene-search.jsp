@@ -27,10 +27,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701">
-    <link rel="stylesheet" href="CSS/search.css?v=20260701">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/search.css?v=20260701d">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown
@@ -118,12 +118,7 @@
 
         <!-- Loading state -->
         <article id="loading-state" class="panel panel--empty" hidden>
-            <div class="panel-body">
-                <div class="state-block">
-                    <span class="spinner spinner--lg" aria-label="Searching"></span>
-                    <p class="state-block__text">Searching across all datasets…</p>
-                </div>
-            </div>
+            <div class="panel-body panel-loader" role="status" aria-label="Loading"></div>
         </article>
 
         <!-- No results state -->
@@ -193,10 +188,7 @@
                 </header>
                 <div class="panel-body panel-body--flush">
                     <div id="viz-iframe-container" class="viz-panel__iframe-container" hidden>
-                        <div id="viz-loading" class="viz-panel__loading">
-                            <span class="spinner spinner--lg" aria-label="Loading"></span>
-                            <p class="state-block__text">Loading visualization…</p>
-                        </div>
+                        <div id="viz-loading" class="viz-panel__loading panel-loader" role="status" aria-label="Loading"></div>
                         <iframe id="viz-iframe" class="viz-panel__iframe" src="" title="Gene expression UMAP viewer"></iframe>
                     </div>
                 </div>

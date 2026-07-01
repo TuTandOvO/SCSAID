@@ -14,9 +14,9 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#1a2332">
     <title>Interactive Visualization - scSAID</title>
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
-    <link rel="stylesheet" href="CSS/visualization.css?v=20260701">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/visualization.css?v=20260701d">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -48,10 +48,10 @@
         </section>
 
         <!-- Status Banner -->
-        <div id="status-banner" class="status-banner">
+        <div id="status-banner" class="status-banner is-loading">
             <div class="status-content">
-                <div class="spinner"></div>
-                <span id="status-text">Initializing visualization server...</span>
+                <div class="spinner" aria-hidden="true"></div>
+                <span id="status-text"></span>
             </div>
         </div>
 
@@ -207,7 +207,6 @@
                     data: { action: 'status', dataset: datasetId },
                     success: function(response) {
                         if (response.running) {
-                            $('#status-text').text('Visualization server is running');
                             setTimeout(function() {
                                 $('#status-banner').fadeOut();
                             }, 2000);
@@ -215,6 +214,7 @@
                         } else {
                             checkAttempts++;
                             if (checkAttempts >= maxAttempts) {
+                                $('#status-banner').removeClass('is-loading').find('.spinner').remove();
                                 $('#status-text').text('Failed to start visualization server. Please refresh the page.');
                                 $('#status-banner').addClass('error');
                                 clearInterval(checkInterval);
@@ -224,6 +224,7 @@
                     error: function() {
                         checkAttempts++;
                         if (checkAttempts >= maxAttempts) {
+                            $('#status-banner').removeClass('is-loading').find('.spinner').remove();
                             $('#status-text').text('Error checking server status');
                             $('#status-banner').addClass('error');
                             clearInterval(checkInterval);

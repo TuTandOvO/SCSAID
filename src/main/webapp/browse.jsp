@@ -32,10 +32,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260624">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
-    <link rel="stylesheet" href="CSS/animations.css">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/animations.css?v=20260701d">
 
     <style>
         /* ==========================================================================
@@ -390,28 +390,7 @@
         /* Loading Indicator */
         .loading-indicator {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 3rem;
-        }
-
-        .loading-indicator__spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid #e5e0d8;
-            border-top-color: #e8927c;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-indicator__text {
-            font-size: 0.95rem;
-            color: #5a6473;
+            min-height: 12rem;
         }
 
         /* Error Message */
@@ -1004,10 +983,7 @@
 
         <!-- UMAP Result Container -->
         <div id="umap-result-container" class="umap-container" style="display: none;">
-            <div id="loading-indicator" class="loading-indicator">
-                <div class="loading-indicator__spinner"></div>
-                <p class="loading-indicator__text">Generating UMAP... This may take a few moments.</p>
-            </div>
+            <div id="loading-indicator" class="loading-indicator panel-loader" role="status" aria-label="Loading"></div>
             <img id="umap-image" src="" alt="Integrated UMAP plot" style="display: none;">
         </div>
 

@@ -17,8 +17,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details-SR001</title>
-    <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/details.css">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701d">
     <link rel="stylesheet" href="CSS/degtest.css">
 
     <meta charset="UTF-8"/>
@@ -151,9 +152,7 @@
 
 
     <div id="umap-result-container" style="text-align: center; margin-top: 20px;">
-        <div id="loading-indicator" style="display:none;">
-            <p>Generating UMAP... This may take a few moments.</p>
-        </div>
+        <div id="loading-indicator" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
         <img id="umap-image" src="" alt="Integrated UMAP plot" style="max-width: 100%; display: none; border: 1px solid #ccc;"/>
     </div>
     <div class="pagination">
@@ -240,11 +239,9 @@
                 beforeSend: function() {
                     $('#loading-indicator').show();
                     $('#umap-image').hide(); // Still hide previous image if any
-                    $('#umap-result-container').append('<p id="dash-link-message" style="color: blue;">Preparing UMAP plot in a new window...</p>');
                 },
                 success: function(response) {
                     $('#loading-indicator').hide();
-                    $('#dash-link-message').remove(); // Remove temporary message
 
                     if (response.redirectUrl) {
                         window.open(response.redirectUrl, '_blank'); // Open Dash app in a new tab/window
@@ -256,7 +253,6 @@
                 },
                 error: function(xhr, status, error) {
                     $('#loading-indicator').hide();
-                    $('#dash-link-message').remove(); // Remove temporary message
                     alert('AJAX error: ' + error + '\n' + xhr.responseText);
                     console.error("AJAX Error:", status, error, xhr.responseText);
                 }

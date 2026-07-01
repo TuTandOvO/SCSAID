@@ -864,23 +864,19 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
 }
 .empty-state::before { display: none; }
 
-/* Spinner — unified */
+/* Legacy spinner selectors resolve to the canonical design-system loader. */
 .spinner {
-    width: 18px;
-    height: 18px;
-    border: 2.5px solid rgba(232, 146, 124, 0.2);
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+    border: 3px solid rgba(232, 146, 124, 0.2);
     border-top-color: var(--color-secondary);
     border-radius: 50%;
-    animation: spin 0.9s linear infinite;
+    animation: scsaid-loader-spin 800ms linear infinite;
     flex-shrink: 0;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 
 .progress-box .spinner {
-    width: 20px;
-    height: 20px;
-    border-color: rgba(212, 165, 116, 0.25);
-    border-top-color: var(--color-accent);
     margin: 0 !important;
 }
 
@@ -1237,44 +1233,7 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     font-weight: 300;
 }
 
-.cpdb-progress {
-    padding: var(--space-xl);
-    text-align: center;
-    background: #fdf6e9;
-    border: 1px solid #f0dba4;
-    border-radius: var(--control-radius);
-}
-.cpdb-progress-bar {
-    width: 100%;
-    max-width: 320px;
-    height: 4px;
-    background: rgba(212, 165, 116, 0.2);
-    border-radius: var(--radius-full);
-    margin: 0 auto var(--space-md);
-    overflow: hidden;
-}
-.cpdb-progress-fill {
-    width: 30%;
-    height: 100%;
-    background: var(--color-accent);
-    border-radius: var(--radius-full);
-    animation: indeterminate 1.8s ease-in-out infinite;
-}
-@keyframes indeterminate {
-    0% { margin-left: -30%; }
-    100% { margin-left: 100%; }
-}
-.cpdb-progress-text {
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: #7c5a17;
-    margin: 0;
-}
-.cpdb-progress-hint {
-    font-size: 0.8rem;
-    color: #a07a29;
-    margin: 0.35rem 0 0;
-}
+.cpdb-progress { min-height: 8rem; }
 
 .cpdb-plot-container {
     background: #fff;
@@ -1328,12 +1287,11 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     justify-content: center;
 }
 #umap-loading {
-    color: var(--text-muted);
-    font-size: 0.88rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: var(--space-sm);
+    justify-content: center;
+    width: 100%;
+    min-height: 8rem;
 }
 #umap-loading .spinner { margin: 0 !important; }
 
@@ -1355,21 +1313,6 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .proportion-chart { min-width: 0; }
 .proportion-chart > div { width: 100%; min-height: clamp(20rem, 52dvh, 25rem); }
 #enrichChart { width: 100%; min-height: clamp(22rem, 62dvh, 31.25rem); }
-.gss-progress-track {
-    width: min(100%, 12.5rem);
-    height: 4px;
-    margin: 0 auto;
-    overflow: hidden;
-    background: var(--border-light);
-    border-radius: var(--radius-full);
-}
-#gssProgressBar {
-    width: 30%;
-    height: 100%;
-    background: var(--color-secondary);
-    border-radius: inherit;
-    transition: width var(--transition-slow);
-}
 
 
 /* --------------------------------------------------------------------------

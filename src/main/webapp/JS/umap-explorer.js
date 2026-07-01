@@ -387,9 +387,11 @@
     function setLoadingGene(on) {
         if (on) {
             $input.classList.add("is-loading");
-            showGeneStatus('<span class="spinner"></span> Loading expression…', "loading");
+            hideGeneStatus();
+            show($loading);
         } else {
             $input.classList.remove("is-loading");
+            hide($loading);
             hideGeneStatus();
         }
     }

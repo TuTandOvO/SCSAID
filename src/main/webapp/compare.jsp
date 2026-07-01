@@ -21,7 +21,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=<%= System.currentTimeMillis() %>">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
     <link rel="stylesheet" href="CSS/details.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="CSS/compare.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
@@ -114,10 +114,7 @@
                 <div id="compareAdvisory" class="compare-advisory" hidden></div>
 
                 <div id="runSummary" class="run-summary" hidden></div>
-                <div id="runProgress" class="progress-box" hidden>
-                    <span class="spinner"></span>
-                    <span id="runProgressText">Queued…</span>
-                </div>
+                <div id="runProgress" class="panel-loader" role="status" aria-label="Loading" hidden></div>
                 <div id="runError" class="status-error" hidden></div>
             </div>
         </section>
@@ -248,10 +245,7 @@
                             </div>
                         </div>
 
-                        <div id="gseaProgress" class="progress-box" hidden>
-                            <span class="spinner"></span>
-                            <span id="gseaProgressText">Running pre-ranked GSEA…</span>
-                        </div>
+                        <div id="gseaProgress" class="panel-loader" role="status" aria-label="Loading" hidden></div>
                         <div id="gseaError" class="status-error" hidden></div>
 
                         <div class="gsea-chart-scroll">

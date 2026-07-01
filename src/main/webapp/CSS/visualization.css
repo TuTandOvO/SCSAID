@@ -67,13 +67,14 @@
 }
 
 .status-content {
-    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
-    color: var(--text-inverse);
+    background: var(--bg-surface);
+    color: var(--text-primary);
     padding: 16px 24px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     gap: 16px;
+    min-height: 8rem;
     overflow-wrap: anywhere;
     box-shadow: 0 2px 8px rgba(232, 146, 124, 0.3);
 }
@@ -82,18 +83,8 @@
     background: linear-gradient(135deg, var(--color-danger) 0%, var(--color-danger-dark) 100%);
 }
 
-.spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: var(--text-inverse);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+.status-banner.is-loading .status-content { justify-content: center; }
+.status-banner.is-loading #status-text { display: none; }
 
 #status-text {
     font-weight: 600;

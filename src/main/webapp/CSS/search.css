@@ -385,7 +385,7 @@ body { background-color: var(--bg-body); }
     width: 44px;
     height: 44px;
     border-width: 3px;
-    margin: 0 auto var(--space-sm);
+    margin: 0 auto;
 }
 
 
@@ -479,10 +479,8 @@ body { background-color: var(--bg-body); }
     inset: 0;
     background: rgba(250, 248, 245, 0.96);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-sm);
     z-index: 5;
 }
 

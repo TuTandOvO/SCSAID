@@ -77,4 +77,4 @@
     </div>
 </header>
 <button class="nav-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
-<script src="JS/site-header.js?v=20260701b" defer></script>
+<script src="JS/site-header.js?v=20260701d" defer></script>

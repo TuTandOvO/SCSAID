@@ -50,6 +50,7 @@
             results = items;
             activeIndex = -1;
             list.textContent = '';
+            status.classList.remove('is-loading');
 
             if (!items.length) {
                 status.textContent = 'No matching function or dataset found.';
@@ -94,7 +95,8 @@
         function performSearch(query, navigateWhenReady) {
             if (requestController) requestController.abort();
             requestController = new AbortController();
-            status.textContent = 'Searching…';
+            status.textContent = '';
+            status.classList.add('is-loading');
             list.textContent = '';
             openSearch();
 
@@ -116,6 +118,7 @@
                     if (error.name === 'AbortError') return;
                     results = [];
                     list.textContent = '';
+                    status.classList.remove('is-loading');
                     status.textContent = 'Search is temporarily unavailable. Please try again.';
                     openSearch();
                 });

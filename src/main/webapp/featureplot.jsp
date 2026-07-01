@@ -46,7 +46,7 @@
 
     <!-- Design System + reused page styles -->
     <link rel="stylesheet" href="CSS/design-system.css?v=<%= System.currentTimeMillis() %>">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
     <link rel="stylesheet" href="CSS/details.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="CSS/compare.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="CSS/umap-explorer.css?v=<%= System.currentTimeMillis() %>">
@@ -125,10 +125,7 @@
                 <div class="umap-stage">
                     <div id="umapPlot" class="umap-plot"></div>
                     <div id="umapLegend" class="umap-legend"></div>
-                    <div id="umapLoading" class="umap-overlay-state">
-                        <span class="spinner"></span>
-                        <span>Loading atlas…</span>
-                    </div>
+                    <div id="umapLoading" class="umap-overlay-state panel-loader" role="status" aria-label="Loading"></div>
                     <div id="umapError" class="umap-overlay-state umap-overlay-state--error" hidden></div>
                 </div>
             </div>

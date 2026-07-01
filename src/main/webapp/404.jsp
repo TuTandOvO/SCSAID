@@ -20,8 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
     <link rel="stylesheet" href="CSS/404.css?v=20260701">
 </head>
 <body>

@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Something went wrong - scSAID</title>
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
     <style>
         body { background:#faf8f5; font-family:'Montserrat',Arial,sans-serif; color:#1a2332;
                display:flex; min-height:100vh; min-height:100dvh; align-items:center; justify-content:center; margin:0; padding:1rem; }

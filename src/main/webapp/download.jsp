@@ -27,8 +27,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
 
     <style>
         body {
@@ -332,19 +332,6 @@
             line-height: 1.5;
         }
 
-        /* Loading State */
-        .loading-placeholder {
-            background: linear-gradient(90deg, var(--bg-muted) 25%, var(--border-light) 50%, var(--bg-muted) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .page-header {
@@ -510,7 +497,7 @@
                         </div>
                         <div class="download-card__detail">
                             <span class="download-card__detail-label">Size</span>
-                            <span class="download-card__detail-value" id="browse-size">Loading...</span>
+                            <span class="download-card__detail-value" id="browse-size">—</span>
                         </div>
                     </div>
                     <a href="download-file?file=browse" class="download-card__btn">
@@ -550,7 +537,7 @@
                         </div>
                         <div class="download-card__detail">
                             <span class="download-card__detail-label">Size</span>
-                            <span class="download-card__detail-value" id="all-size">Loading...</span>
+                            <span class="download-card__detail-value" id="all-size">—</span>
                         </div>
                     </div>
                     <a href="download-file?file=all" class="download-card__btn">
@@ -589,7 +576,7 @@
                         </div>
                         <div class="download-card__detail">
                             <span class="download-card__detail-label">Size</span>
-                            <span class="download-card__detail-value" id="integrate-size">Loading...</span>
+                            <span class="download-card__detail-value" id="integrate-size">—</span>
                         </div>
                     </div>
                     <a href="download-file?file=integrate" class="download-card__btn">
@@ -634,7 +621,7 @@
                         </div>
                         <div class="download-card__detail">
                             <span class="download-card__detail-label">Size</span>
-                            <span class="download-card__detail-value" id="csv-size">Loading...</span>
+                            <span class="download-card__detail-value" id="csv-size">—</span>
                         </div>
                     </div>
                     <a href="download-file?file=csv" class="download-card__btn">

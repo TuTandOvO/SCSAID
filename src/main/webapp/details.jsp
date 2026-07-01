@@ -427,9 +427,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701d">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
@@ -603,10 +603,7 @@
                 </div>
             </div>
             <div class="panel-body" style="padding:1.5rem;">
-                <div id="proportion-loading" class="progress-box">
-                    <div class="spinner" style="margin:0 auto 10px;"></div>
-                    Loading cell proportion data...
-                </div>
+                <div id="proportion-loading" class="panel-loader" role="status" aria-label="Loading"></div>
                 <div id="proportion-error" class="status-error" style="display:none;"></div>
                 <div id="proportion-charts" style="display:none;">
                     <div class="proportion-charts-layout">
@@ -629,7 +626,7 @@
                         <div class="umap-controls control-row" style="align-items:center; gap:12px;">
                             <label class="panel-label" style="margin:0;">Color by</label>
                             <select id="umapColorBy" class="form-select elegant-select" style="min-width:160px;">
-                                <option value="">Loading...</option>
+                                <option value="">—</option>
                             </select>
                             <button id="downloadUmapPdf" class="export-btn btn-ghost" title="Download PDF">
                                 <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -643,10 +640,7 @@
                     </div>
                 </div>
                 <div id="umap-container">
-                    <div id="umap-loading" style="text-align:center; color:#999;">
-                        <div class="spinner" style="margin:0 auto 10px;"></div>
-                        Loading UMAP...
-                    </div>
+                    <div id="umap-loading" class="panel-loader" role="status" aria-label="Loading"></div>
                     <img id="umap-image" src="" alt="UMAP plot" style="display:none; max-width:100%; height:auto;">
                 </div>
             </div>
@@ -681,10 +675,7 @@
                         </div>
                     </div>
                     <div id="degCompareStatus" class="info-bar" style="display:none;"></div>
-                    <div id="degProgress" class="progress-box" style="display:none;">
-                        <div class="spinner" style="margin:0 auto 10px;"></div>
-                        <span id="degProgressText">Running comparison…</span>
-                    </div>
+                    <div id="degProgress" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="degError" class="status-error" style="display:none;"></div>
                     <div class="deg-controls">
                         <div class="filter-grid">
@@ -772,7 +763,7 @@
                             <div class="control-group control-group--library">
                                 <label class="panel-label">Library</label>
                                 <select id="gssLibrary" class="form-select">
-                                    <option value="">Loading...</option>
+                                    <option value="">—</option>
                                 </select>
                             </div>
                             <div class="control-group" style="flex:1; min-width:250px;">
@@ -830,10 +821,7 @@
                         </button>
                     </div>
                     <div id="gssGeneInfo" class="help-text" style="margin-bottom:1rem; display:none;"></div>
-                    <div id="gssProgress" class="progress-box" style="display:none;">
-                        <div id="gssProgressText" style="margin-bottom:0.5rem;">Running scoring...</div>
-                        <div class="gss-progress-track"><div id="gssProgressBar"></div></div>
-                    </div>
+                    <div id="gssProgress" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="gssError" class="status-error" style="display:none; margin-bottom:1rem;"></div>
                     <div id="gssViolinPlot" style="min-height:200px;"></div>
                 </div>
@@ -886,7 +874,7 @@
                         <div id="cpdbAllControls">
                             <p class="cpdb-section-desc">Select 2 or more cell types to analyze ligand-receptor interactions</p>
                             <div id="cpdbCellTypeList" class="list-panel" style="max-height:300px;">
-                                <div class="help-text">Loading cell types...</div>
+                                <div class="panel-loader" role="status" aria-label="Loading"></div>
                             </div>
                             <div class="help-text" style="margin-top:6px;">
                                 <span id="cpdbSelectedCount">0</span> cell types selected
@@ -924,13 +912,7 @@
                     </div>
 
                     <!-- Progress Section -->
-                    <div id="cpdbProgressSection" class="cpdb-progress" style="display:none;">
-                        <div class="cpdb-progress-bar">
-                            <div class="cpdb-progress-fill"></div>
-                        </div>
-                        <p class="cpdb-progress-text">Running CellPhoneDB analysis...</p>
-                        <p class="cpdb-progress-hint">This may take several minutes for large datasets</p>
-                    </div>
+                    <div id="cpdbProgressSection" class="cpdb-progress panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
 
                     <!-- Results Section -->
                     <div id="cpdbResultsSection" style="display:none;">
@@ -1000,7 +982,7 @@
                         <div class="control-group" style="min-width:220px;">
                             <label class="panel-label">Gene Set</label>
                             <select id="enrichGeneSet" class="form-select elegant-select">
-                                <option value="">Loading...</option>
+                                <option value="">—</option>
                             </select>
                         </div>
                         <div class="control-group" style="min-width:180px; display:none;" id="enrichCellTypeWrap">
@@ -1032,10 +1014,7 @@
                         over-represent a pathway (hypergeometric test). They answer different questions —
                         try both.
                     </div>
-                    <div id="enrich-loading" class="progress-box" style="display:none;">
-                        <div class="spinner" style="margin:0 auto 10px;"></div>
-                        Loading enrichment data...
-                    </div>
+                    <div id="enrich-loading" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="enrich-empty" class="progress-box" style="display:none;">
                         No enrichment data available for this dataset.
                     </div>
@@ -1124,7 +1103,6 @@
                     // instant.
                     legacyReady = false;
                     $('#degProgress').show();
-                    $('#degProgressText').text('Preparing DEG results…');
                     $.ajax({
                         url: contextPath + '/deg-per-celltype',
                         method: 'POST',
@@ -1154,7 +1132,6 @@
                                 $('#degProgress').hide();
                                 $('#degError').show().text('DEG job failed: ' + (s.error || 'unknown'));
                             } else {
-                                $('#degProgressText').text('Computing DEGs… ' + (s.cellTypesDone || 0) + '/' + (s.cellTypesTotal || '?') + ' cell types');
                                 setTimeout(function(){ pollLegacyStatus(jobId); }, 2000);
                             }
                         })
@@ -1252,7 +1229,6 @@
                                 $('#degError').show().text('Comparison failed: ' + (s.error || 'unknown error'));
                                 $('#degRunCompareBtn').prop('disabled', false);
                             } else {
-                                $('#degProgressText').text('Running comparison… ' + (s.cellTypesDone || 0) + '/' + (s.cellTypesTotal || '?') + ' cell types');
                                 setTimeout(function(){ pollCompareStatus(jobId); }, 2000);
                             }
                         })
@@ -1353,7 +1329,7 @@
                         $('#umap-loading').hide();
                     };
                     img.onerror = function() {
-                        $('#umap-loading').html('<p style="color:#c00;">Failed to load UMAP image.</p>');
+                        $('#umap-loading').removeClass('panel-loader').html('<p style="color:#c00;">Failed to load UMAP image.</p>');
                     };
                     img.src = imgUrl;
                 }
@@ -1660,7 +1636,7 @@
 
                 function initCpdbCellTypes() {
                     var level = currentCpdbLevel();
-                    $('#cpdbCellTypeList').html('<div class="help-text">Loading ' + level + '-level cell types…</div>');
+                    $('#cpdbCellTypeList').html('<div class="panel-loader" role="status" aria-label="Loading"></div>');
                     $('#cpdbSenderList, #cpdbReceiverList').html('');
                     $.getJSON(contextPath + '/cpdb-api?action=cell-types', { said: said, level: level })
                         .done(function(data) {
@@ -1740,7 +1716,6 @@
                     // Show progress
                     $('#cpdbProgressSection').show();
                     $('#cpdbResultsSection').hide();
-                    $('.cpdb-progress-fill').css('width', '10%');
 
                     console.log("📡 Starting CPDB analysis:", params);
 
@@ -1782,11 +1757,6 @@
                             } else if (data.status === 'failed') {
                                 clearInterval(poll);
                                 showCpdbError(data.error || 'Analysis failed');
-                            } else {
-                                // Update progress bar if available
-                                if (data.progress) {
-                                    $('.cpdb-progress-fill').css('width', data.progress + '%');
-                                }
                             }
                         }).fail(function() {
                             clearInterval(poll);
@@ -2092,7 +2062,7 @@
                 function loadGmtCatalog() {
                     var sel = $('#gssLibrary');
                     if (sel.data('loaded')) return;
-                    sel.html('<option value="">Loading...</option>');
+                    sel.html('<option value="">—</option>');
                     $.getJSON('/cpdb-api/gmt-catalog', { species: datasetSpecies })
                         .done(function(data) {
                             sel.empty();
@@ -2165,7 +2135,7 @@
                     $('.gss-set-item').removeClass('selected');
                     $(this).addClass('selected');
                     gssSelectedMsigdbName = name;
-                    $('#gssSelectedSetInfo').html('Loading genes for <strong>' + name.replace(/_/g, ' ') + '</strong>...').show();
+                    $('#gssSelectedSetInfo').html('<div class="panel-loader" role="status" aria-label="Loading"></div>').show();
                     $.getJSON('/cpdb-api/gmt-genes', { file: file, set_name: name })
                         .done(function(data) {
                             gssSelectedMsigdbGenes = data.genes;
@@ -2306,7 +2276,6 @@
                     var setName = getSelectedSetName();
                     var btn = $(this);
                     btn.prop('disabled', true).css('opacity', '0.6');
-                    $('#gssProgressText').text('Running ' + methodLabel + ' scoring...');
                     $('#gssProgress').show();
                     $('#gssError').hide();
                     $('#gssGeneInfo').hide();

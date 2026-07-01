@@ -24,8 +24,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
     <link rel="stylesheet" href="CSS/help.css?v=20260701">
 </head>
 <body>
@@ -77,9 +77,7 @@
                 </nav>
             </aside>
 
-            <article class="help-content" id="help-content">
-                <p class="help-content__loading">Loading help content...</p>
-            </article>
+            <article class="help-content panel-loader" id="help-content" role="status" aria-label="Loading"></article>
         </div>
     </section>
 </main>
@@ -201,11 +199,17 @@
             return response.text();
         })
         .then((markdown) => {
+            contentEl.classList.remove("panel-loader");
+            contentEl.removeAttribute("role");
+            contentEl.removeAttribute("aria-label");
             contentEl.innerHTML = marked.parse(markdown);
             buildSubTOC();
             setupScrollHighlighting();
         })
         .catch(() => {
+            contentEl.classList.remove("panel-loader");
+            contentEl.removeAttribute("role");
+            contentEl.removeAttribute("aria-label");
             contentEl.innerHTML = "<p class=\"help-content__error\">Unable to load help content. Please try again later.</p>";
         });
 </script>

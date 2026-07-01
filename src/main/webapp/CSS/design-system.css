@@ -136,6 +136,57 @@ div {
 }
 
 /* --------------------------------------------------------------------------
+   Canonical loading state
+   One centered circular indicator is used in every loading panel.
+   -------------------------------------------------------------------------- */
+.spinner,
+.loading-circle {
+    display: block;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border: 3px solid rgba(232, 146, 124, 0.2);
+    border-top-color: var(--color-secondary);
+    border-radius: 50%;
+    animation: scsaid-loader-spin 800ms linear infinite;
+}
+
+.panel-loader {
+    position: relative;
+    width: 100%;
+    min-height: 8rem;
+    padding: var(--space-xl);
+}
+
+.panel-loader::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    border: 3px solid rgba(232, 146, 124, 0.2);
+    border-top-color: var(--color-secondary);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: scsaid-panel-loader-spin 800ms linear infinite;
+}
+
+@keyframes scsaid-loader-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes scsaid-panel-loader-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner,
+    .loading-circle,
+    .panel-loader::after { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
    Typography
    -------------------------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
@@ -576,35 +627,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
     background-color: var(--color-secondary);
     margin-top: var(--space-lg);
     border-radius: var(--radius-full);
-}
-
-/* --------------------------------------------------------------------------
-   Loading States
-   -------------------------------------------------------------------------- */
-.loader {
-    width: 48px;
-    height: 48px;
-    border: 3px solid var(--border-light);
-    border-top-color: var(--color-secondary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: var(--space-2xl) auto;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.skeleton {
-    background: linear-gradient(90deg, var(--bg-muted) 25%, var(--bg-surface) 50%, var(--bg-muted) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    border-radius: var(--radius-sm);
-}
-
-@keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
 }
 
 /* --------------------------------------------------------------------------

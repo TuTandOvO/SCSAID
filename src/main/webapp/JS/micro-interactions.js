@@ -197,33 +197,6 @@
         },
 
         /* ====================================================================
-           5. Skeleton Loading States
-           ==================================================================== */
-
-        createSkeleton: function(type = 'card') {
-            const skeleton = document.createElement('div');
-            skeleton.className = `skeleton skeleton-${type}`;
-            return skeleton;
-        },
-
-        showSkeletons: function(container, count = 3, type = 'card') {
-            container.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                container.appendChild(this.createSkeleton(type));
-            }
-        },
-
-        hideSkeletons: function(container) {
-            const skeletons = container.querySelectorAll('.skeleton');
-            skeletons.forEach((skeleton, index) => {
-                setTimeout(() => {
-                    skeleton.style.opacity = '0';
-                    setTimeout(() => skeleton.remove(), 300);
-                }, index * 50);
-            });
-        },
-
-        /* ====================================================================
            6. Data Table Animations
            ==================================================================== */
 

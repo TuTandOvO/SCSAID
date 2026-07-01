@@ -28,81 +28,6 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Skeleton Screen Shimmer - Loading States
-   -------------------------------------------------------------------------- */
-.skeleton {
-    background: linear-gradient(
-        90deg,
-        #f5f2ed 0%,
-        #e5e0d8 20%,
-        #f5f2ed 40%,
-        #f5f2ed 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.8s ease-in-out infinite;
-    border-radius: 8px;
-    position: relative;
-    overflow: hidden;
-}
-
-.skeleton::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.6) 50%,
-        transparent 100%
-    );
-    animation: shimmer-highlight 2s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
-    }
-}
-
-@keyframes shimmer-highlight {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 200%;
-    }
-}
-
-/* Skeleton Variants */
-.skeleton-text {
-    height: 1em;
-    margin-bottom: 0.5em;
-}
-
-.skeleton-title {
-    height: 2em;
-    width: 60%;
-    margin-bottom: 1em;
-}
-
-.skeleton-card {
-    height: 200px;
-    border-radius: 16px;
-}
-
-.skeleton-button {
-    height: 44px;
-    width: 120px;
-    border-radius: 8px;
-}
-
-/* --------------------------------------------------------------------------
    2. Staggered Entrance Animations - Lists, Cards, Panels
    -------------------------------------------------------------------------- */
 
@@ -197,18 +122,6 @@
 
 .btn-morph.is-processing {
     pointer-events: none;
-    animation: buttonPulse 1.5s var(--anim-ease-standard) infinite;
-}
-
-@keyframes buttonPulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(0.98);
-        opacity: 0.85;
-    }
 }
 
 /* Success morph */
@@ -329,20 +242,6 @@
     75% { transform: rotate(5deg); }
 }
 
-/* Progress indicator */
-.feedback-progress {
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #e8927c 0%, #d4a574 100%);
-    animation: progressGrow var(--anim-duration-slowest) var(--anim-ease-standard) forwards;
-}
-
-@keyframes progressGrow {
-    to {
-        width: 100%;
-    }
-}
-
 /* Success glow pulse */
 .feedback-glow-success {
     animation: glowSuccess 1.2s var(--anim-ease-standard);
@@ -433,10 +332,6 @@
         transition-duration: 0.01ms !important;
     }
 
-    .skeleton,
-    .skeleton::after {
-        animation: none !important;
-    }
 }
 
 /* Animation state utilities */
@@ -517,40 +412,6 @@
     100% {
         transform: scale(1);
         opacity: 1;
-    }
-}
-
-/* --------------------------------------------------------------------------
-   8. Loading Spinner - Scientific Precision
-   -------------------------------------------------------------------------- */
-.spinner-precision {
-    width: 48px;
-    height: 48px;
-    border: 3px solid #e5e0d8;
-    border-top-color: #e8927c;
-    border-right-color: #d4a574;
-    border-radius: 50%;
-    animation: spinnerRotate 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    position: relative;
-}
-
-.spinner-precision::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 28px;
-    height: 28px;
-    border: 2px solid transparent;
-    border-top-color: #e8927c;
-    border-radius: 50%;
-    animation: spinnerRotate 0.8s linear infinite reverse;
-}
-
-@keyframes spinnerRotate {
-    to {
-        transform: rotate(360deg);
     }
 }
 

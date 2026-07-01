@@ -169,7 +169,6 @@
         $("#runError").prop("hidden", true);
         $("#runSummary").prop("hidden", true).empty();
         $("#runProgress").prop("hidden", false);
-        $("#runProgressText").text("Queued…");
         $("#runBtn").prop("disabled", true);
         clearResults();
 
@@ -194,13 +193,6 @@
         if (!state.degJobId) return;
         $.getJSON("condition-compare/status", { jobId: state.degJobId })
             .done(function (s) {
-                var phase = s.phase ? " · " + s.phase : "";
-                var ctInfo = (s.cellTypesTotal && s.cellTypesTotal > 0)
-                    ? " · " + (s.cellTypesDone || 0) + "/" + s.cellTypesTotal + " cell types"
-                    : "";
-                var pct = s.progress ? " · " + s.progress + "%" : "";
-                $("#runProgressText").text("Running" + phase + ctInfo + pct);
-
                 if (s.state === "done") {
                     $("#runProgress").prop("hidden", true);
                     state.cellTypes = s.cellTypes || [];
@@ -326,7 +318,6 @@
 
         $("#gseaError").prop("hidden", true);
         $("#gseaProgress").prop("hidden", false);
-        $("#gseaProgressText").text("Running pre-ranked GSEA…");
         $("#runGseaBtn").prop("disabled", true);
         $("#gseaChart").empty();
         if (gseaTable) gseaTable.clear().draw();
@@ -382,8 +373,6 @@
                         gseaPollTicks = 0;
                         return;
                     }
-                    $("#gseaProgressText").text("Running GSEA… " + (s.progress || 0) + "%"
-                                               + (s.phase ? " · " + s.phase : ""));
                     setTimeout(pollGseaStatus, GSEA_POLL_INTERVAL_MS);
                 }
             })
