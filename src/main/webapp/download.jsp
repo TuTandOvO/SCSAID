@@ -27,8 +27,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
-    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701">
 
     <style>
         body {

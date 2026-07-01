@@ -14,9 +14,9 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#1a2332">
     <title>Interactive Visualization - scSAID</title>
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260624">
-    <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/visualization.css?v=20260624">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701">
+    <link rel="stylesheet" href="CSS/visualization.css?v=20260701">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">

@@ -427,9 +427,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css">
-    <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/details.css">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->

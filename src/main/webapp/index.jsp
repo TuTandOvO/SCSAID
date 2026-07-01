@@ -107,12 +107,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css">
-    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701">
 
 
     <!-- Composition Charts -->
-    <link rel="stylesheet" href="CSS/composition-charts.css">
+    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701">
 
     <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
@@ -789,7 +789,7 @@
 
 <!-- Composition Charts -->
 <script src="JS/cell-count-data.js"></script>
-<script src="JS/composition-charts.js"></script>
+<script src="JS/composition-charts.js?v=20260701"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof CompositionCharts !== 'undefined') {
