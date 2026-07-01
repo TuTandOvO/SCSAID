@@ -552,6 +552,12 @@
                 </svg>
                 Enrichment Analysis
             </a>
+            <a href="#RegulatoryNetwork" class="nav-item">
+                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="5" r="2"></circle><circle cx="5" cy="16" r="2"></circle><circle cx="12" cy="16" r="2"></circle><circle cx="19" cy="16" r="2"></circle><line x1="12" y1="7" x2="12" y2="14"></line><line x1="12" y1="7" x2="5" y2="14"></line><line x1="12" y1="7" x2="19" y2="14"></line>
+                </svg>
+                Regulatory Network
+            </a>
         </nav>
     </aside>
 
@@ -1019,6 +1025,67 @@
                         No enrichment data available for this dataset.
                     </div>
                     <div id="enrichChart"></div>
+                </div>
+            </div>
+
+            <div class="cluster" id="RegulatoryNetwork">
+                <div class="header">
+                    <div class="header-content">
+                        <div><div class="header-title">Gene Regulatory Network (SCORPION)</div></div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="info-bar">
+                        Transcription-factor regulatory network reconstructed for this dataset with
+                        <strong>SCORPION</strong> (PANDA message passing on the single-cell co-expression
+                        network), integrating a <strong>CollecTRI</strong> regulatory prior and a
+                        <strong>STRING</strong> protein&ndash;protein interaction network.
+                    </div>
+                    <div id="scorpionMethodNote" class="help-text" style="margin:0 0 12px; font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">
+                        Each transcription factor (TF) is scored by its total regulatory strength across
+                        the network. <strong>Master regulators</strong> are the TFs with the strongest,
+                        most widespread targeting in this dataset; the <strong>targetome</strong> shows a
+                        selected TF's top predicted target genes; the <strong>network</strong> view maps
+                        the leading regulators to their top targets.
+                    </div>
+
+                    <div id="scorpion-loading" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
+                    <div id="scorpion-empty" class="progress-box" style="display:none;">
+                        The regulatory network for this dataset is being prepared and is not yet available.
+                    </div>
+
+                    <div id="scorpionContent" style="display:none;">
+                        <div class="control-row toolbar-row" style="margin-bottom:0.5rem;">
+                            <div class="control-group" style="min-width:120px;">
+                                <label class="panel-label">Top regulators</label>
+                                <select id="scorpionTopN" class="form-select elegant-select">
+                                    <option value="15">15</option>
+                                    <option value="20" selected>20</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="scorpionRegChart"></div>
+
+                        <div class="control-row toolbar-row" style="margin:1.5rem 0 0.5rem;">
+                            <div class="control-group" style="min-width:220px;">
+                                <label class="panel-label">Targetome of TF</label>
+                                <select id="scorpionTfSelect" class="form-select elegant-select"></select>
+                            </div>
+                        </div>
+                        <div id="scorpionTargetChart"></div>
+
+                        <div style="margin-top:1.5rem;">
+                            <label class="panel-label">Regulator &rarr; target network (top regulators)</label>
+                            <div id="scorpionNetwork"></div>
+                        </div>
+
+                        <p id="scorpionProvenance" class="help-text"
+                           style="margin:1rem 0 0; font-size:0.78rem; color:var(--text-secondary); line-height:1.5;">
+                            Method: Osorio D. <em>et al.</em>, SCORPION (Kuijjer Lab).
+                            Regulatory prior: CollecTRI. Protein interactions: STRING v12.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1602,6 +1669,166 @@
                     if ($('#enrichMethod').val() === 'ora') { loadEnrichData(); }
                     else { renderEnrichChart(); }
                 });
+
+                // =========================================================================
+                // SECTION C2: SCORPION GENE REGULATORY NETWORK (precomputed)
+                // =========================================================================
+                var scorpionRegulators = [];
+                var ACCENT = '#337ab7';
+
+                function scorpionLayout(extra) {
+                    return Object.assign({
+                        font: { family: 'Nunito, sans-serif', size: 12, color: '#333' },
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        margin: { l: 110, r: 24, t: 24, b: 44 }
+                    }, extra || {});
+                }
+
+                function loadScorpion() {
+                    $('#scorpion-loading').show();
+                    $('#scorpion-empty').hide();
+                    $('#scorpionContent').hide();
+                    var topN = parseInt($('#scorpionTopN').val()) || 20;
+                    $.getJSON(contextPath + '/scorpion', { said: said, action: 'activity', top: topN })
+                        .done(function(data) {
+                            $('#scorpion-loading').hide();
+                            if (!data || !data.available || !data.regulators || data.regulators.length === 0) {
+                                $('#scorpion-empty').show();
+                                return;
+                            }
+                            scorpionRegulators = data.regulators;
+                            $('#scorpionContent').show();
+                            renderScorpionRegChart();
+                            populateScorpionTfSelect();
+                            loadScorpionNetwork();
+                            var firstTf = scorpionRegulators[0] && scorpionRegulators[0].tf;
+                            if (firstTf) { $('#scorpionTfSelect').val(firstTf); loadScorpionTargets(firstTf); }
+                        })
+                        .fail(function() {
+                            $('#scorpion-loading').hide();
+                            $('#scorpion-empty').show().text('Error loading regulatory network.');
+                        });
+                }
+
+                function renderScorpionRegChart() {
+                    var rows = scorpionRegulators.slice().sort(function(a, b) {
+                        return parseFloat(a.total_score) - parseFloat(b.total_score); // ascending -> top of bar chart is largest
+                    });
+                    var trace = {
+                        type: 'bar', orientation: 'h',
+                        x: rows.map(function(r) { return parseFloat(r.total_score); }),
+                        y: rows.map(function(r) { return r.tf; }),
+                        marker: { color: ACCENT },
+                        hovertemplate: '<b>%{y}</b><br>Regulatory score: %{x:.2f}<br>Targets: %{customdata}<extra></extra>',
+                        customdata: rows.map(function(r) { return r.out_degree; })
+                    };
+                    var layout = scorpionLayout({
+                        height: Math.max(320, rows.length * 22 + 80),
+                        xaxis: { title: 'Total regulatory score', zeroline: false },
+                        yaxis: { automargin: true }
+                    });
+                    Plotly.newPlot('scorpionRegChart', [trace], layout,
+                        figConfig('SCORPION_master_regulators_' + said, { responsive: true, displayModeBar: true }));
+                }
+
+                function populateScorpionTfSelect() {
+                    var sel = $('#scorpionTfSelect').empty();
+                    scorpionRegulators.forEach(function(r) {
+                        sel.append('<option value="' + r.tf + '">' + r.tf + '</option>');
+                    });
+                }
+
+                function loadScorpionTargets(tf) {
+                    if (!tf) return;
+                    $.getJSON(contextPath + '/scorpion', { said: said, action: 'targets', tf: tf, top: 20 })
+                        .done(function(data) {
+                            var targets = (data && data.targets) || [];
+                            if (targets.length === 0) {
+                                Plotly.purge('scorpionTargetChart');
+                                $('#scorpionTargetChart').html('<div class="help-text" style="padding:0.5rem 0;">No target genes recorded for ' + tf + '.</div>');
+                                return;
+                            }
+                            var rows = targets.slice().sort(function(a, b) { return parseFloat(a.weight) - parseFloat(b.weight); });
+                            var trace = {
+                                type: 'bar', orientation: 'h',
+                                x: rows.map(function(r) { return parseFloat(r.weight); }),
+                                y: rows.map(function(r) { return r.target; }),
+                                marker: { color: '#5a91c0' },
+                                hovertemplate: '<b>%{y}</b><br>Edge weight: %{x:.2f}<extra></extra>'
+                            };
+                            var layout = scorpionLayout({
+                                height: Math.max(280, rows.length * 22 + 70),
+                                xaxis: { title: 'Regulatory edge weight (' + tf + ' → target)', zeroline: false },
+                                yaxis: { automargin: true }
+                            });
+                            Plotly.newPlot('scorpionTargetChart', [trace], layout,
+                                figConfig('SCORPION_targetome_' + tf + '_' + said, { responsive: true, displayModeBar: true }));
+                        })
+                        .fail(function() {
+                            $('#scorpionTargetChart').html('<div class="help-text" style="padding:0.5rem 0;">Error loading targets.</div>');
+                        });
+                }
+
+                function loadScorpionNetwork() {
+                    $.getJSON(contextPath + '/scorpion', { said: said, action: 'network', topTf: 10, topTarget: 6 })
+                        .done(function(data) {
+                            if (!data || !data.available || !data.nodes) { Plotly.purge('scorpionNetwork'); return; }
+                            renderScorpionNetwork(data.nodes, data.links);
+                        });
+                }
+
+                // Deterministic bipartite layout: regulators on the left, targets on the right.
+                function renderScorpionNetwork(nodes, links) {
+                    var tfs = nodes.filter(function(n) { return n.type === 'tf'; });
+                    var tgs = nodes.filter(function(n) { return n.type === 'target'; });
+                    var pos = {};
+                    function place(arr, x) {
+                        arr.forEach(function(n, i) {
+                            var y = arr.length === 1 ? 0.5 : 1 - (i / (arr.length - 1));
+                            pos[n.id] = { x: x, y: y };
+                        });
+                    }
+                    place(tfs, 0); place(tgs, 1);
+
+                    var edgeX = [], edgeY = [];
+                    links.forEach(function(l) {
+                        var s = pos[l.source], t = pos[l.target];
+                        if (!s || !t) return;
+                        edgeX.push(s.x, t.x, null);
+                        edgeY.push(s.y, t.y, null);
+                    });
+                    var edgeTrace = {
+                        type: 'scatter', mode: 'lines', x: edgeX, y: edgeY,
+                        line: { color: 'rgba(51,122,183,0.22)', width: 1 }, hoverinfo: 'none'
+                    };
+                    function nodeTrace(arr, color, size, anchor, dx) {
+                        return {
+                            type: 'scatter', mode: 'markers+text',
+                            x: arr.map(function(n) { return pos[n.id].x; }),
+                            y: arr.map(function(n) { return pos[n.id].y; }),
+                            text: arr.map(function(n) { return n.id; }),
+                            textposition: anchor, textfont: { size: 11, color: '#333' },
+                            marker: { color: color, size: size, line: { color: '#fff', width: 1 } },
+                            hovertemplate: '%{text}<extra></extra>'
+                        };
+                    }
+                    var tfTrace = nodeTrace(tfs, ACCENT, 14, 'middle left');
+                    var tgTrace = nodeTrace(tgs, '#9aa7b3', 9, 'middle right');
+                    var layout = scorpionLayout({
+                        height: Math.max(360, Math.max(tfs.length, tgs.length) * 34 + 80),
+                        showlegend: false,
+                        margin: { l: 90, r: 90, t: 20, b: 20 },
+                        xaxis: { visible: false, range: [-0.35, 1.35] },
+                        yaxis: { visible: false, range: [-0.1, 1.1] }
+                    });
+                    Plotly.newPlot('scorpionNetwork', [edgeTrace, tfTrace, tgTrace], layout,
+                        figConfig('SCORPION_network_' + said, { responsive: true, displayModeBar: true }));
+                }
+
+                loadScorpion();
+                $('#scorpionTopN').on('change', loadScorpion);
+                $('#scorpionTfSelect').on('change', function() { loadScorpionTargets($(this).val()); });
 
                 // =========================================================================
                 // SECTION D: CELLPHONEDB DYNAMIC ANALYSIS
