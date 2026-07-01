@@ -42,13 +42,13 @@
 
 .breadcrumb .current {
     color: var(--text-primary);
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .page-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 4vw, 2.5rem);
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     margin: 0 0 12px;
 }
@@ -87,7 +87,7 @@
 .status-banner.is-loading #status-text { display: none; }
 
 #status-text {
-    font-weight: 600;
+    font-weight: 300;
     font-size: 0.95rem;
 }
 
@@ -127,7 +127,7 @@
     border: 1px solid var(--border-light);
     border-radius: 6px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     cursor: pointer;
     transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base);
@@ -195,7 +195,7 @@
 .instructions-panel h2 {
     font-family: var(--font-display);
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     margin: 0 0 24px;
 }
@@ -228,7 +228,7 @@
 .tool-card h3 {
     font-family: var(--font-display);
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     margin: 0 0 8px;
 }
@@ -250,7 +250,7 @@
 .tips-section h2 {
     font-family: var(--font-display);
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     margin: 0 0 24px;
 }
@@ -281,13 +281,13 @@
     position: absolute;
     left: 0;
     color: var(--color-accent);
-    font-weight: 700;
+    font-weight: 300;
     font-size: 1.2rem;
 }
 
 .tips-list li strong {
     color: var(--text-primary);
-    font-weight: 600;
+    font-weight: 300;
 }
 
 /* Footer */

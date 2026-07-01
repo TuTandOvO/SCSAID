@@ -19,7 +19,7 @@
     transform: translate(-50%);/* 使文字水平居中 */
     z-index: 9;
     font-size: 80px;
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .index_welcome .description{
@@ -60,7 +60,7 @@
     align-content: center;
     /*padding: 20px;*/
     font-size: 26px;
-    font-weight: 800;
+    font-weight: 300;
     padding: 0 20px;
 }
 

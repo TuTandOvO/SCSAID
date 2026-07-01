@@ -148,7 +148,7 @@
 .construction-modal__title {
     font-family: var(--font-display, 'Cormorant Garamond', Georgia, serif);
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary, #333333);
     text-align: center;
     margin: 0;
@@ -171,7 +171,7 @@
 
 .construction-modal__message strong {
     color: var(--color-secondary, #337ab7);
-    font-weight: 600;
+    font-weight: 300;
 }
 
 /* Feature List */
@@ -185,7 +185,7 @@
 .construction-modal__features-title {
     font-family: var(--font-body, 'Montserrat', sans-serif);
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-accent, #337ab7);
@@ -255,7 +255,7 @@
     padding: var(--space-md, 1rem) var(--space-2xl, 3rem);
     font-family: var(--font-body, 'Montserrat', sans-serif);
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 300;
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--text-inverse, #ffffff);

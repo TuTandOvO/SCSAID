@@ -22,7 +22,7 @@ body {
 .page-header__eyebrow {
     display: inline-block;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -32,7 +32,7 @@ body {
 .page-header__title {
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 500;
+    font-weight: 300;
     color: var(--text-inverse);
     margin: 0 0 1rem;
 }
@@ -92,7 +92,7 @@ body {
     display: block;
     padding: 0.6rem 0.85rem;
     border-radius: 10px;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     transition: background 0.2s ease, color 0.2s ease;
 }
@@ -127,7 +127,7 @@ body {
 
 .help-sidebar__sublink--active {
     color: var(--color-secondary);
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .help-sidebar__empty {
@@ -181,7 +181,7 @@ body {
 .help-content a {
     color: var(--color-secondary);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .help-content a:hover {

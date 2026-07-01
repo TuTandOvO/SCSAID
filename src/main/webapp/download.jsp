@@ -24,11 +24,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
 
     <style>
         body {
@@ -56,7 +56,7 @@
         .page-header__eyebrow {
             display: inline-block;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-accent);
@@ -66,7 +66,7 @@
         .page-header__title {
             font-family: var(--font-display);
             font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-inverse);
             margin: 0 0 1rem;
         }
@@ -88,7 +88,7 @@
         .section-title {
             font-family: var(--font-display);
             font-size: 1.75rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-primary);
             margin: 0 0 2rem;
         }
@@ -113,7 +113,7 @@
             display: inline-block;
             font-family: var(--font-mono);
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 300;
             letter-spacing: 0.04em;
             color: var(--color-secondary-dark);
             background: rgba(51, 122, 183, 0.12);
@@ -177,7 +177,7 @@
         .download-card__title {
             font-family: var(--font-display);
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 300;
             color: var(--text-primary);
             margin: 0 0 0.25rem;
         }
@@ -185,7 +185,7 @@
         .download-card__format {
             font-family: var(--font-mono);
             font-size: 0.75rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -219,7 +219,7 @@
 
         .download-card__detail-label {
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
@@ -227,7 +227,7 @@
 
         .download-card__detail-value {
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-primary);
         }
 
@@ -242,7 +242,7 @@
             color: var(--text-inverse);
             font-family: var(--font-body);
             font-size: 0.95rem;
-            font-weight: 600;
+            font-weight: 300;
             border: none;
             border-radius: var(--radius-control);
             cursor: pointer;
@@ -277,7 +277,7 @@
         .info-section__title {
             font-family: var(--font-display);
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-primary);
             margin: 0 0 1.5rem;
         }
@@ -320,7 +320,7 @@
 
         .info-item__text h4 {
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 300;
             color: var(--text-primary);
             margin: 0 0 0.25rem;
         }

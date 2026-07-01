@@ -17,12 +17,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/404.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/404.css?v=20260701g">
 </head>
 <body>
 
@@ -119,7 +119,7 @@
                     <!-- Annotation pointing to the lost cell -->
                     <line class="annotation-line" x1="105" y1="55" x2="145" y2="42"/>
                     <text class="annotation-text" x="148" y="38">PAGE NOT FOUND</text>
-                    <text class="annotation-text" x="148" y="52" style="font-weight: 400; font-size: 9px;">This cell has left the cluster</text>
+                    <text class="annotation-text" x="148" y="52" style="font-weight: 300; font-size: 9px;">This cell has left the cluster</text>
 
                 </svg>
             </div>

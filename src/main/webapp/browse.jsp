@@ -29,13 +29,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/buttons.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/animations.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/buttons.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/animations.css?v=20260701g">
 
     <style>
         /* ==========================================================================
@@ -68,7 +68,7 @@
         .page-header__eyebrow {
             display: inline-block;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: #337ab7;
@@ -78,7 +78,7 @@
         .page-header__title {
             font-family: 'Nunito', sans-serif;
             font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 500;
+            font-weight: 300;
             color: #ffffff;
             margin: 0 0 1rem;
         }
@@ -116,7 +116,7 @@
         .table-card__title {
             font-family: 'Nunito', sans-serif;
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: 300;
             color: #333333;
             margin: 0;
         }
@@ -175,7 +175,7 @@
         .browse-table th {
             padding: 0.6rem 1.25rem;
             text-align: left;
-            font-weight: 700;
+            font-weight: 300;
             font-size: 0.8rem;
             text-transform: none;
             letter-spacing: 0;
@@ -223,12 +223,12 @@
             font-family: 'Nunito', sans-serif;
             font-size: 0.85rem;
             color: #333333;
-            font-weight: 500;
+            font-weight: 300;
         }
 
         .browse-table .cell-link {
             color: #337ab7;
-            font-weight: 600;
+            font-weight: 300;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -256,7 +256,7 @@
             align-items: center;
             padding: 0.25rem 0.75rem;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             border-radius: 20px;
@@ -315,7 +315,7 @@
             padding: 0 1rem;
             font-family: 'Nunito', sans-serif;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 300;
             color: #555555;
             background: #ffffff;
             border: 1px solid #dddddd;
@@ -377,7 +377,7 @@
         .umap-container__title {
             font-family: 'Nunito', sans-serif;
             font-size: 1.25rem;
-            font-weight: 500;
+            font-weight: 300;
             color: #333333;
             margin-bottom: 1rem;
         }
@@ -425,7 +425,7 @@
 
         .filter-group__label {
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 300;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: #555555;
@@ -468,7 +468,7 @@
             padding: 0.65rem 1.25rem;
             font-family: 'Nunito', sans-serif;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 300;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.15s ease;
@@ -493,7 +493,7 @@
 
         .filter-count strong {
             color: #337ab7;
-            font-weight: 600;
+            font-weight: 300;
         }
 
         /* Hidden row (filtered out) */
@@ -598,7 +598,7 @@
                 content: attr(data-label);
                 color: var(--text-muted);
                 font-size: 0.68rem;
-                font-weight: 700;
+                font-weight: 300;
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
             }
@@ -1057,7 +1057,7 @@ $(document).ready(function() {
 
     // Add badge next to the Generate button
     $('#integrate-button').after(
-        '<span id="selection-badge" style="display:none; margin-left:12px; background:var(--color-primary); color:var(--text-inverse); padding:4px 12px; border-radius:var(--radius-lg); font-size:0.85rem; font-weight:500;"></span>' +
+        '<span id="selection-badge" style="display:none; margin-left:12px; background:var(--color-primary); color:var(--text-inverse); padding:4px 12px; border-radius:var(--radius-lg); font-size:0.85rem; font-weight:300;"></span>' +
         '<button id="clear-selection-btn" class="btn-danger" style="margin-left:8px; display:none;" title="Clear all selections">Clear All</button>'
     );
 

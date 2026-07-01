@@ -104,15 +104,15 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
 
 
     <!-- Composition Charts -->
-    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701g">
 
     <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
@@ -170,7 +170,7 @@
             padding: var(--space-sm) var(--space-lg);
             margin-bottom: var(--space-lg);
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-accent);
@@ -183,7 +183,7 @@
         .hero__title {
             font-family: var(--font-display);
             font-size: clamp(3.25rem, 8vw, 6rem);
-            font-weight: 400;
+            font-weight: 300;
             color: var(--text-inverse);
             letter-spacing: -0.03em;
             line-height: 1;
@@ -195,7 +195,7 @@
         .hero__logo {
             display: block;
             width: auto;
-            height: clamp(7rem, 16vw, 11rem);
+            height: clamp(11rem, 26vw, 18rem);
             margin: 0 auto;
         }
 
@@ -315,7 +315,7 @@
         .quick-nav__label {
             font-family: var(--font-display);
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-primary);
         }
 
@@ -375,7 +375,7 @@
         .overview__image-title {
             font-family: var(--font-display);
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 300;
             color: var(--text-primary);
             margin-bottom: var(--space-xs);
         }
@@ -393,7 +393,7 @@
         .overview__section-label {
             display: inline-block;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-secondary);
@@ -403,7 +403,7 @@
         .overview__heading {
             font-family: var(--font-display);
             font-size: 2.5rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-primary);
             margin-bottom: var(--space-xl);
             line-height: 1.2;
@@ -418,7 +418,7 @@
 
         .overview__text strong {
             color: var(--color-secondary);
-            font-weight: 600;
+            font-weight: 300;
         }
 
         /* Statistics Section */
@@ -449,7 +449,7 @@
         .stats__number {
             font-family: var(--font-display);
             font-size: 3rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--color-secondary);
             line-height: 1;
             margin-bottom: var(--space-sm);
@@ -457,7 +457,7 @@
 
         .stats__label {
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 300;
             color: rgba(255, 255, 255, 0.6);
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -477,7 +477,7 @@
         .site-footer__logo {
             font-family: var(--font-display);
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: 300;
             color: var(--color-accent);
             margin-bottom: var(--space-md);
         }

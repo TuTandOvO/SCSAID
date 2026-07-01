@@ -63,7 +63,7 @@ body { background-color: var(--bg-body); }
     gap: var(--space-sm);
     font-family: var(--font-body);
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-accent);
@@ -81,7 +81,7 @@ body { background-color: var(--bg-body); }
 .page-hero__title {
     font-family: var(--font-display);
     font-size: clamp(2.25rem, 5vw, 3.25rem);
-    font-weight: 500;
+    font-weight: 300;
     color: var(--text-primary);
     line-height: 1.1;
     letter-spacing: -0.015em;
@@ -162,7 +162,7 @@ body { background-color: var(--bg-body); }
     padding: 0.4rem 1.1rem;
     font-family: var(--font-body);
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 300;
     letter-spacing: 0;
     color: var(--text-secondary);
     border-radius: var(--radius-sm);
@@ -217,7 +217,7 @@ body { background-color: var(--bg-body); }
 .panel-empty__title {
     font-family: var(--font-display);
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 300;
     color: var(--text-primary);
     margin: 0;
 }
@@ -261,14 +261,14 @@ body { background-color: var(--bg-body); }
 .run-summary__item { display: inline-flex; align-items: baseline; gap: var(--space-xs); }
 .run-summary__label {
     font-size: 0.68rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-accent);
 }
 .run-summary__value {
     font-family: var(--font-mono);
-    font-weight: 500;
+    font-weight: 300;
     color: var(--text-primary);
 }
 .run-summary__skipped {
@@ -345,7 +345,7 @@ body { background-color: var(--bg-body); }
 .compare-guidance > summary {
     cursor: pointer;
     padding: 0.7rem var(--space-lg);
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     list-style: none;
     display: flex;
@@ -356,7 +356,7 @@ body { background-color: var(--bg-body); }
 .compare-guidance > summary::before {
     content: "ⓘ";
     color: var(--color-accent);
-    font-weight: 700;
+    font-weight: 300;
 }
 .compare-guidance[open] > summary { border-bottom: 1px solid var(--border-light); }
 .compare-guidance__body {
@@ -382,7 +382,7 @@ body { background-color: var(--bg-body); }
     line-height: 1.6;
 }
 .compare-advisory__title {
-    font-weight: 700;
+    font-weight: 300;
     color: #8a5a00;
     margin-bottom: var(--space-sm);
     display: flex;

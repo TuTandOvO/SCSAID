@@ -50,7 +50,7 @@ body { background-color: var(--bg-body); }
 .umap-control { display: flex; flex-direction: column; gap: var(--space-sm); min-width: 0; }
 .umap-control .filter-name {
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -180,14 +180,14 @@ body { background-color: var(--bg-body); }
 .umap-legend__title {
     font-family: var(--font-display);
     font-size: 1.05rem;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--text-primary);
     margin-bottom: var(--space-xs);
     word-break: break-word;
 }
 .umap-legend__sub {
     font-size: 0.68rem;
-    font-weight: 700;
+    font-weight: 300;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);

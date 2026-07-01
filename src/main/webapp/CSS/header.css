@@ -52,7 +52,7 @@
     color: #337ab7;
     font-family: var(--font-display, 'Nunito', sans-serif);
     font-size: clamp(1.15rem, 1.6vw, 1.4rem);
-    font-weight: 800;
+    font-weight: 300;
     letter-spacing: -0.01em;
     line-height: 1;
     text-decoration: none;
@@ -81,7 +81,7 @@
     border-radius: 0;
     font-family: var(--font-body, 'Nunito', sans-serif);
     font-size: clamp(0.8rem, 0.85vw, 0.9rem);
-    font-weight: 700;
+    font-weight: 300;
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
@@ -145,7 +145,7 @@
     padding: 0.65rem 1.05rem;
     color: #4b5563;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 300;
     transition: color 150ms ease, background-color 150ms ease;
 }
 
@@ -220,7 +220,7 @@
     background: transparent;
     border: 0;
     outline: 0;
-    font: 500 0.82rem/1.2 var(--font-body, 'Nunito', sans-serif);
+    font: 300 0.82rem/1.2 var(--font-body, 'Nunito', sans-serif);
 }
 
 .site-search__input::placeholder { color: #999; opacity: 1; }
@@ -264,7 +264,7 @@
     padding: 0.8rem 1rem;
     color: var(--text-secondary, #555555);
     font-size: 0.78rem;
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .site-search__status.is-loading {
@@ -311,8 +311,8 @@
     background: var(--bg-muted, #f5f5f5);
 }
 
-.site-search__result-title { min-width: 0; overflow-wrap: anywhere; font-size: 0.88rem; font-weight: 700; }
-.site-search__result-category { color: var(--color-secondary-dark, #23527c); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+.site-search__result-title { min-width: 0; overflow-wrap: anywhere; font-size: 0.88rem; font-weight: 300; }
+.site-search__result-category { color: var(--color-secondary-dark, #23527c); font-size: 0.7rem; font-weight: 300; text-transform: uppercase; }
 .site-search__result-description { grid-column: 1 / -1; color: var(--text-secondary, #555555); font-size: 0.75rem; line-height: 1.35; }
 
 .nav-toggle {
@@ -362,7 +362,7 @@
     color: var(--text-primary, #333);
     font-family: var(--font-display, 'Nunito', sans-serif);
     font-size: clamp(1.5rem, 3vw, 1.85rem);
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .theme-btn {
@@ -373,7 +373,7 @@
     border: 0;
     border-radius: 4px;
     cursor: pointer;
-    font: 600 0.9rem var(--font-body, sans-serif);
+    font: 300 0.9rem var(--font-body, sans-serif);
     transition: background-color 150ms ease, transform 150ms ease;
 }
 
@@ -390,12 +390,12 @@
 .table-style-1 thead { color: var(--text-primary, #333); background: var(--bg-muted, #f5f5f5); border-bottom: 2px solid var(--border-medium, #ccc); }
 .table-style-1 th,
 .table-style-1 td { padding: 0.6rem clamp(0.75rem, 2vw, 1.25rem); text-align: left; vertical-align: middle; }
-.table-style-1 th { font-size: 0.8rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.table-style-1 th { font-size: 0.8rem; font-weight: 300; letter-spacing: 0; text-transform: none; }
 .table-style-1 td { border-bottom: 1px solid var(--border-light, #ddd); overflow-wrap: anywhere; }
 .table-style-1 tbody tr { transition: background-color 150ms ease; }
 .table-style-1 tbody tr:hover { background: var(--bg-muted, #f5f5f5); }
 .table-style-1 tbody tr:last-child td { border-bottom: 0; }
-.table-style-1 td a { color: var(--color-secondary-dark, #23527c); font-weight: 600; }
+.table-style-1 td a { color: var(--color-secondary-dark, #23527c); font-weight: 300; }
 .table-style-1 td a:hover { text-decoration: underline; }
 .table-style-1 .selected-row { background: rgba(51, 122, 183, 0.08); }
 .table-style-1 input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--color-secondary, #337ab7); cursor: pointer; }
@@ -416,7 +416,7 @@
 .pagination input[type="number"] {
     min-width: 44px;
     min-height: 44px;
-    font: 500 0.9rem var(--font-body, sans-serif);
+    font: 300 0.9rem var(--font-body, sans-serif);
 }
 
 .pagination a,
@@ -486,7 +486,7 @@
         border-bottom: 1px solid var(--border-light, #dddddd);
     }
 
-    .nav-drawer__title { color: var(--text-primary, #333333); font-family: var(--font-display, Georgia, serif); font-size: 1.35rem; font-weight: 600; }
+    .nav-drawer__title { color: var(--text-primary, #333333); font-family: var(--font-display, Georgia, serif); font-size: 1.35rem; font-weight: 300; }
     .nav-drawer__close { color: var(--text-primary, #333333); background: transparent; border: 0; border-radius: 50%; cursor: pointer; font-size: 2rem; line-height: 1; }
     .nav-drawer__close:hover { background: var(--bg-muted, #f5f5f5); }
 

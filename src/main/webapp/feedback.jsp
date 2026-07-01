@@ -16,11 +16,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
 
     <% if (gateEnabled) { %>
     <!-- Cloudflare Turnstile (gates the feedback form against over-submission) -->
@@ -52,7 +52,7 @@
         .page-header__eyebrow {
             display: inline-block;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 300;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-accent);
@@ -62,7 +62,7 @@
         .page-header__title {
             font-family: var(--font-display);
             font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 500;
+            font-weight: 300;
             color: var(--text-inverse);
             margin: 0 0 1rem;
         }
