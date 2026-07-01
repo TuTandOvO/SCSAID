@@ -118,7 +118,7 @@
     </section>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="lib/marked.min.js?v=20260701"></script>
 <script>
     const activeTopic = "<%= topic %>";
     const contentEl = document.getElementById("help-content");
