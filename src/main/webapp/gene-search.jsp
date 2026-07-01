@@ -27,10 +27,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701g">
-    <link rel="stylesheet" href="CSS/search.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/search.css?v=20260701h">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown

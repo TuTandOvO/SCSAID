@@ -414,9 +414,9 @@
 .pagination span,
 .pagination button,
 .pagination input[type="number"] {
-    min-width: 44px;
-    min-height: 44px;
-    font: 300 0.9rem var(--font-body, sans-serif);
+    min-width: 32px;
+    min-height: 32px;
+    font: 300 0.85rem var(--font-body, sans-serif);
 }
 
 .pagination a,

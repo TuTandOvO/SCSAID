@@ -1198,12 +1198,12 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     position: relative;
     display: inline-flex;
     align-items: center;
-    padding: 0.4rem 0.9rem;
+    padding: 0.3rem 0.85rem;
     font-size: 0.82rem;
     color: var(--text-secondary);
     border-radius: var(--radius-sm);
     cursor: pointer;
-    min-height: 44px;
+    min-height: 28px;
     transition: color var(--transition-fast), background-color var(--transition-fast);
     font-weight: 300;
 }

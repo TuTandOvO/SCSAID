@@ -211,15 +211,17 @@
 }
 
 .btn-primary {
-    display: inline-block;
-    padding: 14px 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
     background: var(--color-secondary);
     color: var(--text-inverse);
     text-decoration: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     font-weight: 300;
-    font-size: 1rem;
-    min-height: 44px;
+    font-size: 0.9rem;
+    min-height: 34px;
     transition: color var(--transition-slow), background-color var(--transition-slow), transform var(--transition-slow), box-shadow var(--transition-slow);
     border: none;
     cursor: pointer;

@@ -107,12 +107,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701g">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701h">
 
 
     <!-- Composition Charts -->
-    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701g">
+    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701h">
 
     <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
@@ -127,14 +127,14 @@
         /* Hero Section */
         .hero {
             position: relative;
-            min-height: min(85vh, 60rem);
+            min-height: min(72vh, 40rem);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             background: var(--bg-dark);
             margin-top: var(--header-height);
-            padding-block: clamp(4rem, 10vh, 8rem);
+            padding-block: clamp(2rem, 5vh, 4rem);
         }
 
         .hero__background {
@@ -187,7 +187,7 @@
             color: var(--text-inverse);
             letter-spacing: -0.03em;
             line-height: 1;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-md);
             opacity: 1;
             animation: fadeInUp 0.8s ease 0.4s forwards;
         }
@@ -195,7 +195,7 @@
         .hero__logo {
             display: block;
             width: auto;
-            height: clamp(11rem, 26vw, 18rem);
+            height: clamp(9rem, 20vw, 14rem);
             margin: 0 auto;
         }
 
@@ -205,15 +205,15 @@
             font-family: var(--font-body);
             font-weight: 300;
             letter-spacing: 0.05em;
-            margin-top: var(--space-lg);
+            margin-top: var(--space-sm);
             color: rgba(255, 255, 255, 0.7);
         }
 
         .hero__description {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.7);
             max-width: 600px;
-            margin: 0 auto var(--space-2xl);
+            margin: 0 auto var(--space-xl);
             opacity: 1;
             animation: fadeInUp 0.8s ease 0.6s forwards;
         }
@@ -228,8 +228,22 @@
         }
 
         .hero__btn {
-            padding: var(--space-md) var(--space-2xl);
+            padding: 0.5rem 1.35rem;
             font-size: 0.9rem;
+        }
+
+        /* Outline button sits on the dark hero: keep it transparent with
+           legible white text (avoids white-on-white from the global default). */
+        .hero__btn.btn--outline {
+            background: transparent;
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.55);
+        }
+
+        .hero__btn.btn--outline:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.85);
         }
 
         .hero__scroll-indicator {
@@ -597,7 +611,7 @@
         </p>
         <div class="hero__actions">
             <a href="browse.jsp" class="btn btn--primary hero__btn">Browse Datasets</a>
-            <a href="featureplot.jsp" class="btn btn--outline hero__btn" style="border-color: rgba(255,255,255,0.3); color: white;">Search Genes</a>
+            <a href="featureplot.jsp" class="btn btn--outline hero__btn">Search Genes</a>
         </div>
     </div>
 </section>
