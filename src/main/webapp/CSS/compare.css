@@ -145,10 +145,10 @@ body { background-color: var(--bg-body); }
    -------------------------------------------------------------------------- */
 .species-toggle {
     display: inline-flex;
-    padding: 4px;
-    background: var(--bg-muted);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-full);
+    padding: 3px;
+    background: #fff;
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
     gap: 2px;
 }
 
@@ -159,13 +159,13 @@ body { background-color: var(--bg-body); }
 }
 
 .species-toggle__option {
-    padding: 0.45rem 1.1rem;
+    padding: 0.4rem 1.1rem;
     font-family: var(--font-body);
     font-size: 0.82rem;
     font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--text-muted);
-    border-radius: var(--radius-full);
+    letter-spacing: 0;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: color var(--transition-fast), background var(--transition-fast);
     user-select: none;
@@ -174,9 +174,8 @@ body { background-color: var(--bg-body); }
 .species-toggle__option:hover { color: var(--text-primary); }
 
 .species-toggle input[type="radio"]:checked + .species-toggle__option {
-    background: var(--bg-surface);
-    color: var(--color-primary);
-    box-shadow: var(--shadow-sm);
+    background: rgba(51, 122, 183, 0.12);
+    color: #337ab7;
 }
 
 

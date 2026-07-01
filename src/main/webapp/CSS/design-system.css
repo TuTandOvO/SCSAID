@@ -54,6 +54,18 @@
     --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.12);
 
+    /* Bootstrap-3 form + button fidelity (HumanBase) */
+    --input-border: #ccc;
+    --input-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    --focus-border: #66afe9;
+    --focus-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    --btn-primary-border: #2e6da4;
+    --btn-primary-hover: #286090;
+    --btn-primary-hover-border: #204d74;
+    --btn-default-hover: #e6e6e6;
+    --btn-default-hover-border: #adadad;
+    --dropdown-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+
     /* Spacing Scale */
     --space-xs: 0.25rem;
     --space-sm: 0.5rem;
@@ -244,11 +256,11 @@ a {
    -------------------------------------------------------------------------- */
 .card {
     background: var(--bg-surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     border: 1px solid var(--border-light);
     overflow: hidden;
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    transition: box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
 /* .card:hover {
@@ -287,54 +299,47 @@ a {
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-lg);
+    padding: 6px 12px;
     font-family: var(--font-body);
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 400;
+    line-height: 1.428;
     letter-spacing: 0;
     text-transform: none;
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    min-height: 34px;
-    transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
     text-decoration: none;
 }
 
 .btn--primary {
     background-color: var(--color-secondary);
     color: var(--text-inverse);
-    border-color: var(--color-secondary);
+    border-color: var(--btn-primary-border);
 }
 
-/* .btn--primary:hover {
-    background-color: var(--color-secondary-dark);
-    border-color: var(--color-secondary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-} */
-
-.btn--outline {
-    background-color: transparent;
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-/* .btn--outline:hover {
-    background-color: var(--color-primary);
+.btn--primary:hover {
+    background-color: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover-border);
     color: var(--text-inverse);
-} */
-
-.btn--ghost {
-    background-color: transparent;
-    color: var(--text-secondary);
-    border-color: var(--border-light);
+    text-decoration: none;
 }
 
-/* .btn--ghost:hover {
-    border-color: var(--color-secondary);
-    color: var(--color-secondary);
-} */
+.btn--outline,
+.btn--ghost {
+    background-color: #fff;
+    color: var(--text-primary);
+    border-color: var(--input-border);
+}
+
+.btn--outline:hover,
+.btn--ghost:hover {
+    background-color: var(--btn-default-hover);
+    border-color: var(--btn-default-hover-border);
+    color: var(--text-primary);
+    text-decoration: none;
+}
 
 /* --------------------------------------------------------------------------
    Table Component
@@ -387,9 +392,9 @@ a {
     font-weight: 600;
 }
 
-/* .data-table a:hover {
+.data-table a:hover {
     text-decoration: underline;
-} */
+}
 
 /* Selected row state */
 .data-table tbody tr.selected-row {
@@ -403,28 +408,30 @@ a {
 .form-input,
 .form-select {
     width: 100%;
-    padding: var(--space-md);
+    padding: 6px 12px;
     font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.428;
+    color: #555;
     background-color: var(--bg-surface);
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
+    box-shadow: var(--input-shadow);
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .form-input:focus,
 .form-select:focus {
     outline: none;
-    border-color: var(--color-secondary);
-    box-shadow: 0 0 0 3px rgba(51, 122, 183, 0.2);
+    border-color: var(--focus-border);
+    box-shadow: var(--focus-shadow);
 }
 
 .form-label {
     display: block;
-    margin-bottom: var(--space-sm);
+    margin-bottom: 5px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--text-secondary);
     text-transform: none;
     letter-spacing: 0;
@@ -445,13 +452,14 @@ a {
     cursor: pointer;
 }
 
-/* Range Slider */
+/* Range Slider - HumanBase handle (white + grey border) on inset track */
 input[type="range"] {
     -webkit-appearance: none;
     width: 100%;
-    height: 4px;
-    background: var(--border-light);
-    border-radius: var(--radius-full);
+    height: 8px;
+    background: #e6e6e6;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-sm);
     outline: none;
 }
 
@@ -459,14 +467,24 @@ input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
-    background: var(--color-secondary);
+    background: #fff;
+    border: 1px solid #888;
     border-radius: 50%;
     cursor: pointer;
     transition: transform var(--transition-fast);
 }
 
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+    transform: scale(1.12);
 }
 
 /* --------------------------------------------------------------------------

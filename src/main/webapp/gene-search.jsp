@@ -27,20 +27,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/search.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/search.css?v=20260701f">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown
            lives in a non-clipping wrapper that matches the form's width. */
         .search-box-wrap { position: relative; max-width: 640px; margin: 0 auto; }
         .search-suggest {
-            position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 60;
-            margin: 0; padding: 6px; list-style: none; text-align: left;
-            background: var(--bg-surface); border: 1px solid var(--border-light);
-            border-radius: var(--radius-control); box-shadow: var(--shadow-lg);
+            position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 60;
+            margin: 0; padding: 5px 0; list-style: none; text-align: left;
+            background: var(--bg-surface); border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: var(--radius-sm); box-shadow: var(--dropdown-shadow);
             max-height: 300px; overflow-y: auto;
         }
         .search-suggest__item {

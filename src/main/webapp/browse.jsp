@@ -32,10 +32,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/buttons.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/animations.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/buttons.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/animations.css?v=20260701f">
 
     <style>
         /* ==========================================================================
@@ -168,17 +168,18 @@
             color: var(--color-secondary);
         }
         .browse-table thead {
-            background: var(--color-primary);
+            background: #f5f5f5;
+            border-bottom: 2px solid #cccccc;
         }
 
         .browse-table th {
-            padding: 1rem 1.25rem;
+            padding: 0.6rem 1.25rem;
             text-align: left;
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: none;
+            letter-spacing: 0;
+            color: #333333;
             white-space: nowrap;
         }
 
@@ -359,8 +360,8 @@
         }
 
         .pagination__input:focus {
-            border-color: #337ab7;
-            box-shadow: 0 0 0 3px rgba(51, 122, 183, 0.15);
+            border-color: #66afe9;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
         }
 
         /* UMAP Result Container */
@@ -452,8 +453,8 @@
 
         .filter-group__select:focus {
             outline: none;
-            border-color: #337ab7;
-            box-shadow: 0 0 0 3px rgba(51, 122, 183, 0.15);
+            border-color: #66afe9;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
         }
 
         .filter-bar__actions {

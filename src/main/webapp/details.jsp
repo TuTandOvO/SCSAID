@@ -427,9 +427,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701f">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701f">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->

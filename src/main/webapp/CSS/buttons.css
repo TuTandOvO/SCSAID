@@ -21,32 +21,31 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    padding: 0.6rem 1.15rem;
+    padding: 6px 12px;
     font-family: var(--font-body);
     font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.428;
     border-radius: var(--radius-control);
     border: 1px solid transparent;
     cursor: pointer;
     text-decoration: none;
     white-space: nowrap;
     transition: background-color var(--transition-fast), color var(--transition-fast),
-                border-color var(--transition-fast), box-shadow var(--transition-fast),
-                transform var(--transition-fast);
+                border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-/* Primary — coral call to action */
+/* Primary — Bootstrap blue with darker border, darkens on hover */
 .btn-primary {
     background: var(--color-secondary);
     color: var(--text-inverse);
-    border-color: var(--color-secondary);
+    border-color: var(--btn-primary-border);
 }
 .btn-primary:hover:not(:disabled) {
-    background: var(--color-secondary-dark);
-    border-color: var(--color-secondary-dark);
-    box-shadow: var(--shadow-md);
+    background: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover-border);
+    color: var(--text-inverse);
 }
 .btn-primary:disabled {
     background: var(--bg-muted);
@@ -55,31 +54,22 @@
     cursor: not-allowed;
 }
 
-/* Outline — navy outline that fills on hover */
-.btn-outline {
-    background: transparent;
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-.btn-outline:hover:not(:disabled) {
-    background: var(--color-primary);
-    color: var(--text-inverse);
-}
-
-/* Secondary / ghost / export — quiet surface controls */
+/* Default — white with grey border, greys on hover (Bootstrap btn-default) */
+.btn-outline,
 .btn-ghost,
 .btn-secondary,
 .export-btn {
-    background: var(--bg-surface);
-    color: var(--text-secondary);
-    border-color: var(--border-light);
+    background: #fff;
+    color: var(--text-primary);
+    border-color: var(--input-border);
 }
+.btn-outline:hover:not(:disabled),
 .btn-ghost:hover:not(:disabled),
 .btn-secondary:hover:not(:disabled),
 .export-btn:hover:not(:disabled) {
-    background: var(--bg-muted);
+    background: var(--btn-default-hover);
     color: var(--text-primary);
-    border-color: var(--border-medium);
+    border-color: var(--btn-default-hover-border);
 }
 
 /* Danger — destructive actions (e.g. clear selection) */
