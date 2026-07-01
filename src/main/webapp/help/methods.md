@@ -1,11 +1,31 @@
-## Sample inclusion
-Datasets are screened for relevance to skin or appendage tissues, with clear experimental metadata and reproducible processing steps.
+scSAID is built from public skin single-cell RNA-seq data with one consistent workflow per species. This page summarises how the atlas was assembled and how each analysis on the site is computed.
 
-## Quality control
-Cells are filtered using standard thresholds for gene counts, mitochondrial content, and library complexity to reduce technical artifacts.
+## Data collection and categorization
+Droplet-based skin scRNA-seq datasets were collected from the Gene Expression Omnibus (GEO) and the Genome Sequence Archive (GSA). Where raw FASTQ files were available, reads were quantified with `cellranger count` against the 10x Genomics human reference (GRCh38-2020-A) or mouse reference (mm10-2020-A). Otherwise the filtered gene-barcode matrices from the original publications were used. Each dataset was labelled with species, condition, sex, age (post-natal day for mouse), anatomical site, and per-sample cell count from the original metadata, then saved as a standardised AnnData object.
 
-## Normalization
-Expression values are normalized to account for sequencing depth and batch effects before downstream analysis and visualization.
+## Preprocessing and quality control
+Each sample was loaded into Scanpy and gene names were made unique. Mitochondrial, ribosomal, and haemoglobin genes were flagged, and per-cell quality metrics were computed. A cell was kept when its total counts, log total counts, and detected gene number fell between the 1st and 99th percentiles within its sample, and when its mitochondrial, ribosomal, and haemoglobin transcript fractions were below 15%, 20%, and 5%. Likely doublets were detected with Scrublet and removed. Raw counts were preserved in a `counts` layer, then values were normalised by library size and log1p transformed.
 
-## Integration strategy
-Datasets are integrated using a consistent workflow to enable cross-study comparisons while preserving biological variation.
+## Species-wise integration with scVI
+Samples were merged per species with an outer join, and batches with fewer than 350 cells were dropped. Highly variable genes were reselected with the Seurat v3 method on the count layer using `batch` as the stratifier, keeping 8,000 genes per species. Integration used scVI with `batch` as the batch key, the counts layer as input, `GSE` as a categorical covariate, and mitochondrial fraction as a continuous covariate. The model used two hidden layers, 30 latent dimensions, a negative-binomial likelihood, and dropout 0.1, and was trained for up to 600 epochs with early stopping. The latent space was used to build the neighbour graph and the UMAP that the site displays. Leiden clustering was run across resolutions from 0.05 to 1.0, and very small clusters (fewer than 10 cells) were removed before annotation.
+
+## Cell-type annotation
+Cell identities combined differential expression with review of canonical lineage markers. Markers were computed per resolution with the Wilcoxon test (`rank_genes_groups`) and kept when adjusted P < 0.05, log fold change > 0.5, and detection fraction > 0.1. Final labels were set at the resolution that gave the clearest biological partition (leiden_scVI_0_8 for human, leiden_scVI_0_7 for mouse). Two label levels were curated and stored: a broad level (`Gross_Map`) and a fine level (`Fine_Map`). The annotated objects were exported as h5ad files, which back the atlas and every per-sample view on the site.
+
+## Cross-condition differential expression and pathway enrichment
+Differential expression on the site uses pseudobulk. Cells are aggregated per sample and cell type with decoupler, then modelled with PyDESeq2 (negative-binomial GLM with apeglm shrinkage), using `batch` as the donor stratifier and `condition` as the contrast. Genes are called significant at adjusted P < 0.05. For cross-species work, mouse symbols were mapped to one-to-one human orthologues with Ensembl biomaRt, and genes without a one-to-one match were set aside. Pre-ranked GSEA uses `gseapy.prerank` against MSigDB Hallmark (minimum set 15, maximum set 500, 1,000 permutations, seed 42), with a rank metric of signed -log10(adjusted P) times the absolute log2 fold change. Over-representation analysis (ORA) uses a hypergeometric (Fisher) test with Benjamini-Hochberg correction, keeping terms at adjusted P < 0.05 with an overlap of at least 5 genes.
+
+## Cell-cell communication
+Ligand-receptor signalling was inferred with CellChat v2 for each species and condition, using the species-matched CellChatDB. Communication probabilities were computed with the triMean method (trim 0.1), filtered to interactions supported by at least 10 cells, then aggregated into per-pathway networks. On the site, cell-cell communication is computed on demand with CellPhoneDB v5 statistical analysis and reported at permutation P < 0.05.
+
+## Gene regulatory networks
+Regulatory networks were built per species and condition with SCORPION, which combines a transcription-factor binding prior (DoRothEA, confidence levels A to C), a protein-protein prior (STRING, combined score at least 200), and a co-expression edge weight. Per-condition transcription-factor activity was read out from the edge weights and compared between species to find shared and divergent regulators.
+
+## Perturbation scoring
+To rank which cell compartments shift most under disease, Augur was run per species (Healthy versus psoriasis in human, Healthy versus IMQ-induced psoriasis in mouse) at both label levels. Augur trains a random-forest classifier per cell type and reports a cell-type AUC that measures the size of the disease-associated transcriptomic change. Cell types with fewer than 50 cells per condition were left out.
+
+## Diagnostic gene panel and target validation
+A compact classifier was trained per species to separate psoriatic from healthy cells. A supervised effect score ranked genes, redundant genes (absolute correlation at least 0.90) were pruned, and stability selection with ElasticNet logistic regression retained a 50-gene panel, used together with age-bin and sex covariates. Candidate targets were then tested in silico with Geneformer knockout (measuring the shift of cell embeddings toward the healthy state) and with LINCS L1000 connectivity scoring, and genes supported by both lines of evidence were flagged.
+
+## Software and statistics
+All p-values are two-sided. Pseudobulk differential expression and pathway enrichment use the Benjamini-Hochberg correction; Augur permutation tests use the Bonferroni correction. Core package versions include Python 3.10, anndata 0.11, scanpy 1.11, scrublet 0.2.3, scikit-learn 1.7, scipy 1.15, numpy 1.26, pandas 2.2, and scvi-tools 1.3. The full environment is pinned in the project `environment.yml`.
