@@ -142,7 +142,7 @@
             return base;
         }
         slugCounts[base] += 1;
-        return `${base}-${slugCounts[base]}`;
+        return base + "-" + slugCounts[base];
     };
 
     const renderer = new marked.Renderer();
@@ -154,7 +154,7 @@
             depth = text.depth || level;
         }
         const id = slugifyUnique(headingText);
-        return `<h${depth} id="${id}">${headingText}</h${depth}>`;
+        return "<h" + depth + " id=\"" + id + "\">" + headingText + "</h" + depth + ">";
     };
 
     marked.setOptions({
@@ -179,12 +179,12 @@
         }
         headings.forEach((heading, index) => {
             if (!heading.id) {
-                heading.id = slugifyUnique(heading.textContent || `section-${index + 1}`);
+                heading.id = slugifyUnique(heading.textContent || "section-" + (index + 1));
             }
             const link = document.createElement("a");
             link.className = "help-sidebar__sublink";
-            link.href = `#${heading.id}`;
-            link.textContent = heading.textContent || `Section ${index + 1}`;
+            link.href = "#" + heading.id;
+            link.textContent = heading.textContent || "Section " + (index + 1);
             tocEl.appendChild(link);
         });
     };
@@ -203,7 +203,7 @@
 
         const setActive = (id) => {
             links.forEach((link) => {
-                link.classList.toggle("help-sidebar__sublink--active", link.getAttribute("href") === `#${id}`);
+                link.classList.toggle("help-sidebar__sublink--active", link.getAttribute("href") === "#" + id);
             });
         };
 
@@ -227,7 +227,7 @@
         }
     };
 
-    fetch(`help/${activeTopic}.md`)
+    fetch("help/" + activeTopic + ".md")
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Failed to load help content");
