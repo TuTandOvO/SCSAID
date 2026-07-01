@@ -7,52 +7,52 @@
    CSS Custom Properties (Design Tokens)
    -------------------------------------------------------------------------- */
 :root {
-    /* Typography */
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    /* Typography - Nunito (HumanBase) */
+    --font-display: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    /* Color Palette - Warm Scientific */
-    --color-primary: #1a2332;
-    --color-primary-light: #2d3a4f;
-    --color-secondary: #e8927c;
-    --color-secondary-dark: #d4755d;
-    --color-accent: #d4a574;
-    --color-accent-light: #e8c9a8;
+    /* Color Palette - HumanBase (clean scientific blue on white) */
+    --color-primary: #337ab7;
+    --color-primary-light: #4a90c7;
+    --color-secondary: #337ab7;
+    --color-secondary-dark: #23527c;
+    --color-accent: #24a4d3;
+    --color-accent-light: #b3d4fc;
 
     /* Status / Semantic colors (single home for previously-hardcoded states) */
     --color-danger: #c0392b;
     --color-danger-dark: #a93226;
     --color-success: #2e7d52;
-    --color-info: #3498db;
+    --color-info: #337ab7;
     --color-warning-bg: #fff3cd;
     --color-warning-border: #ffc107;
     --color-warning-text: #856404;
 
     /* Backgrounds */
-    --bg-body: #faf8f5;
+    --bg-body: #ffffff;
     --bg-surface: #ffffff;
     --bg-elevated: #ffffff;
-    --bg-muted: #f5f2ed;
-    --bg-dark: #1a2332;
+    --bg-muted: #f5f5f5;
+    --bg-dark: #333333;
 
     /* Text Colors */
-    --text-primary: #1a2332;
-    --text-secondary: #5a6473;
-    --text-muted: #8b95a5;
+    --text-primary: #333333;
+    --text-secondary: #555555;
+    --text-muted: #777777;
     --text-inverse: #ffffff;
-    --text-link: #c4725e;
+    --text-link: #337ab7;
 
     /* Borders */
-    --border-light: #e5e0d8;
-    --border-medium: #d1c9bd;
-    --border-dark: #1a2332;
+    --border-light: #dddddd;
+    --border-medium: #cccccc;
+    --border-dark: #adadad;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(26, 35, 50, 0.08);
-    --shadow-md: 0 4px 12px rgba(26, 35, 50, 0.1);
-    --shadow-lg: 0 8px 30px rgba(26, 35, 50, 0.12);
-    --shadow-xl: 0 20px 60px rgba(26, 35, 50, 0.15);
+    /* Shadows - flattened neutral grey */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 4px 12px rgba(0, 0, 0, 0.12);
 
     /* Spacing Scale */
     --space-xs: 0.25rem;
@@ -64,13 +64,13 @@
     --space-3xl: 4rem;
     --space-4xl: 6rem;
 
-    /* Border Radius */
+    /* Border Radius - square-ish (HumanBase / Bootstrap) */
     --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 20px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --radius-xl: 8px;
     --radius-full: 9999px;
-    --radius-control: 10px; /* compact analysis-tool controls (mirrors details.css) */
+    --radius-control: 4px; /* compact analysis-tool controls (mirrors details.css) */
 
     /* Transitions */
     --transition-fast: 150ms ease;
@@ -79,7 +79,7 @@
     --anim-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Layout */
-    --header-height: 72px;
+    --header-height: 50px;
     --sidebar-width: 240px;
     --container-max: 1400px;
 }
@@ -101,9 +101,9 @@ html {
 
 body {
     font-family: var(--font-body);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.428;
     color: var(--text-primary);
     background-color: var(--bg-body);
     min-width: 0;
@@ -145,7 +145,7 @@ div {
     width: 44px;
     height: 44px;
     flex: 0 0 44px;
-    border: 3px solid rgba(232, 146, 124, 0.2);
+    border: 3px solid rgba(51, 122, 183, 0.2);
     border-top-color: var(--color-secondary);
     border-radius: 50%;
     animation: scsaid-loader-spin 800ms linear infinite;
@@ -165,7 +165,7 @@ div {
     left: 50%;
     width: 44px;
     height: 44px;
-    border: 3px solid rgba(232, 146, 124, 0.2);
+    border: 3px solid rgba(51, 122, 183, 0.2);
     border-top-color: var(--color-secondary);
     border-radius: 50%;
     transform: translate(-50%, -50%);
@@ -198,12 +198,12 @@ h1, h2, h3, h4, h5, h6 {
     overflow-wrap: anywhere;
 }
 
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 500; }
-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
-h3 { font-size: clamp(1.25rem, 2vw, 1.75rem); }
-h4 { font-size: 1.25rem; }
-h5 { font-size: 1.1rem; }
-h6 { font-size: 1rem; }
+h1 { font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700; }
+h2 { font-size: clamp(1.35rem, 2.2vw, 1.6rem); font-weight: 700; }
+h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
+h4 { font-size: 1.1rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.9rem; }
 
 p {
     margin-bottom: var(--space-md);
@@ -287,16 +287,16 @@ a {
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    padding: var(--space-md) var(--space-xl);
+    padding: var(--space-sm) var(--space-lg);
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    border: 2px solid transparent;
+    letter-spacing: 0;
+    text-transform: none;
+    border: 1px solid transparent;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    min-height: 44px;
+    min-height: 34px;
     transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
     text-decoration: none;
 }
@@ -350,17 +350,18 @@ a {
 }
 
 .data-table thead {
-    background-color: var(--bg-dark);
-    color: var(--text-inverse);
+    background-color: var(--bg-muted);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-medium);
 }
 
 .data-table th {
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-sm) var(--space-lg);
     text-align: left;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .data-table td {
@@ -392,7 +393,7 @@ a {
 
 /* Selected row state */
 .data-table tbody tr.selected-row {
-    background-color: rgba(232, 146, 124, 0.1);
+    background-color: rgba(51, 122, 183, 0.1);
     border-left: 3px solid var(--color-secondary);
 }
 
@@ -416,7 +417,7 @@ a {
 .form-select:focus {
     outline: none;
     border-color: var(--color-secondary);
-    box-shadow: 0 0 0 3px rgba(232, 146, 124, 0.15);
+    box-shadow: 0 0 0 3px rgba(51, 122, 183, 0.2);
 }
 
 .form-label {
@@ -425,8 +426,8 @@ a {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 /* Custom Checkbox */
@@ -572,14 +573,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
     align-items: center;
     justify-content: center;
     min-width: 140px;
-    padding: var(--space-lg) var(--space-xl);
+    padding: var(--space-md) var(--space-xl);
     font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
     color: var(--text-primary);
     background: var(--bg-surface);
-    border: 2px solid var(--border-light);
-    border-radius: var(--radius-full);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-sm);
     text-decoration: none;
     min-height: 44px;
     transition: color var(--transition-base), border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);

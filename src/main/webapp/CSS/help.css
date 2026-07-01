@@ -98,11 +98,11 @@ body {
 }
 
 .help-sidebar__topic:hover {
-    background: rgba(26, 35, 50, 0.06);
+    background: rgba(0, 0, 0, 0.06);
 }
 
 .help-sidebar__topic--active {
-    background: rgba(232, 146, 124, 0.15);
+    background: rgba(51, 122, 183, 0.15);
     color: var(--color-secondary);
 }
 

@@ -14,7 +14,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a2332">
+    <meta name="theme-color" content="#333333">
     <title>Gene Search - scSAID</title>
     <meta name="description" content="Search a gene across all differential expression (DEG) results in the scSAID skin atlas. Find in which dataset and cell population your gene of interest is up/down-regulated.">
     <meta name="keywords" content="gene DEG search, scSAID gene, differential expression skin, scRNA-seq gene search, skin marker gene, keratinocyte DEG">
@@ -24,13 +24,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/search.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/search.css?v=20260701e">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown

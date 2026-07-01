@@ -61,12 +61,12 @@ td a:hover {
 }
 
 .species-badge--human {
-    background: rgba(232, 146, 124, 0.15);
+    background: rgba(51, 122, 183, 0.15);
     color: var(--color-secondary-dark);
 }
 
 .species-badge--mouse {
-    background: rgba(212, 165, 116, 0.2);
+    background: rgba(51, 122, 183, 0.2);
     color: #b8864a;
 }
 

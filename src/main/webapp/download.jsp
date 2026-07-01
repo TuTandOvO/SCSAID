@@ -14,7 +14,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a2332">
+    <meta name="theme-color" content="#333333">
     <title>Download Center - scSAID</title>
     <meta name="description" content="Download scRNA-seq processed data from scSAID: 252 curated datasets as h5ad / zarr files, with cleaned obs metadata (condition, age, sex, tissue location, cell-type annotation). Free to use under CC-BY-4.0.">
     <meta name="keywords" content="download scRNA-seq, h5ad download, scSAID download, skin atlas download, AnnData download">
@@ -24,11 +24,11 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
 
     <style>
         body {
@@ -116,7 +116,7 @@
             font-weight: 600;
             letter-spacing: 0.04em;
             color: var(--color-secondary-dark);
-            background: rgba(232, 146, 124, 0.12);
+            background: rgba(51, 122, 183, 0.12);
             border-radius: 999px;
             padding: 0.2rem 0.6rem;
             margin-left: 0.5rem;
@@ -304,7 +304,7 @@
         .info-item__icon {
             width: 44px;
             height: 44px;
-            background: rgba(232, 146, 124, 0.1);
+            background: rgba(51, 122, 183, 0.1);
             border-radius: 10px;
             display: flex;
             align-items: center;

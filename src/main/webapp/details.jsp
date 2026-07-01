@@ -404,7 +404,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a2332">
+    <meta name="theme-color" content="#333333">
     <title><%= pageTitle.replace("<","&lt;").replace(">","&gt;") %></title>
 
     <!-- SEO: per-SAID meta tags + JSON-LD Dataset schema -->
@@ -424,12 +424,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701e">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
@@ -782,14 +782,14 @@
                     <div id="gssUploadPanel" class="gss-input-panel" style="display:none;">
                         <div id="gssDropZone" class="drop-zone" style="margin-bottom:0.8rem;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px; height:36px; margin-bottom:0.5rem; color:var(--ink-mute);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            <div style="font-family:'Source Sans 3',sans-serif; font-size:0.9rem; color:var(--ink-soft);">
+                            <div style="font-family:'Nunito', sans-serif; font-size:0.9rem; color:var(--ink-soft);">
                                 Drag & drop a <strong>.gmt</strong> file here, or
                                 <label class="action-link" style="cursor:pointer; text-decoration:underline;">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
                             </div>
                             <div class="help-text" style="margin-top:0.3rem;">GMT format: name &lt;tab&gt; description &lt;tab&gt; gene1 &lt;tab&gt; gene2 &lt;tab&gt; ...</div>
                         </div>
                         <div id="gssUploadResult" style="display:none;">
-                            <div id="gssSpeciesWarning" style="display:none; padding:0.6rem 0.8rem; background:#fff8e1; border:1px solid #ffe082; border-radius:var(--radius-sm); font-family:'Source Sans 3',sans-serif; font-size:0.82rem; color:#8d6e00; margin-bottom:0.5rem;">
+                            <div id="gssSpeciesWarning" style="display:none; padding:0.6rem 0.8rem; background:#fff8e1; border:1px solid #ffe082; border-radius:var(--radius-sm); font-family:'Nunito', sans-serif; font-size:0.82rem; color:#8d6e00; margin-bottom:0.5rem;">
                                 <strong>&#9888; Species mismatch:</strong> <span id="gssSpeciesWarningText"></span>
                             </div>
                             <div id="gssUploadSetList" class="list-panel" style="max-height:180px; padding:4px 0;"></div>
@@ -1522,7 +1522,7 @@
                         height: chartHeight,
                         plot_bgcolor: '#fff',
                         paper_bgcolor: '#fff',
-                        font: { family: 'Montserrat, sans-serif' },
+                        font: { family: 'Nunito, sans-serif' },
                         shapes: [{
                             type: 'line', x0: 0, x1: 0,
                             y0: -0.5, y1: selected.length - 0.5,
@@ -1587,7 +1587,7 @@
                         yaxis: { automargin: true, tickfont: { size: 11 } },
                         height: chartHeight,
                         plot_bgcolor: '#fff', paper_bgcolor: '#fff',
-                        font: { family: 'Montserrat, sans-serif' }
+                        font: { family: 'Nunito, sans-serif' }
                     };
                     Plotly.newPlot('enrichChart', [trace], layout, figConfig('ORA_' + said, {
                         responsive: true, displayModeBar: true,
@@ -1804,8 +1804,8 @@
                         y: heatmapData.y,
                         type: 'heatmap',
                         colorscale: [
-                            [0, '#faf8f5'],
-                            [0.5, '#e8927c'],
+                            [0, '#ffffff'],
+                            [0.5, '#337ab7'],
                             [1, '#8B0000']
                         ],
                         hoverongaps: false,
@@ -1818,7 +1818,7 @@
 
                     var layout = {
                         title: 'Significant Interactions Between Cell Types',
-                        font: { family: 'Montserrat, sans-serif' },
+                        font: { family: 'Nunito, sans-serif' },
                         width: w,
                         height: h,
                         xaxis: {
@@ -1894,7 +1894,7 @@
 
                     var layout = {
                         title: 'Top Ligand-Receptor Interactions (Dot Plot)',
-                        font: { family: 'Montserrat, sans-serif' },
+                        font: { family: 'Nunito, sans-serif' },
                         width: w,
                         height: h,
                         xaxis: {
@@ -2329,7 +2329,7 @@
 
                     var traces = [];
                     var colors = [
-                        '#e8927c','#5b86e5','#36d1dc','#f5a623','#7b68ee',
+                        '#337ab7','#5b86e5','#36d1dc','#f5a623','#7b68ee',
                         '#2ecc71','#e74c3c','#9b59b6','#1abc9c','#f39c12',
                         '#3498db','#e67e22','#2c3e50','#16a085','#d35400',
                         '#8e44ad','#27ae60','#c0392b','#2980b9','#f1c40f'
@@ -2360,7 +2360,7 @@
 
                     var h = Math.max(500, 50 + cellTypes.length * 8);
                     var layout = {
-                        title: { text: methodLabel + ' Gene Set Score by Cell Type', font: { family: 'Montserrat, sans-serif', size: 15 } },
+                        title: { text: methodLabel + ' Gene Set Score by Cell Type', font: { family: 'Nunito, sans-serif', size: 15 } },
                         yaxis: { title: methodLabel + ' Score', zeroline: false },
                         xaxis: { tickangle: -45, tickfont: { size: 8 }, automargin: true },
                         margin: { l: 60, r: 30, t: 50, b: 200 },
@@ -2377,7 +2377,7 @@
                 // Cell Proportion Charts
                 // =========================================================================
                 var proportionColors = [
-                    '#e8927c','#5b86e5','#36d1dc','#f5a623','#7b68ee',
+                    '#337ab7','#5b86e5','#36d1dc','#f5a623','#7b68ee',
                     '#2ecc71','#e74c3c','#9b59b6','#1abc9c','#f39c12',
                     '#3498db','#e67e22','#2c3e50','#16a085','#d35400',
                     '#8e44ad','#27ae60','#c0392b','#2980b9','#f1c40f',
@@ -2433,14 +2433,14 @@
 
                     var barHeight = Math.max(400, labels.length > 15 ? 500 : 400);
                     var barLayout = {
-                        title: { text: 'Absolute Cell Count (' + mapType.replace('_', ' ') + ')', font: { family: 'Montserrat, sans-serif', size: 14 } },
+                        title: { text: 'Absolute Cell Count (' + mapType.replace('_', ' ') + ')', font: { family: 'Nunito, sans-serif', size: 14 } },
                         xaxis: { tickangle: -45, tickfont: { size: labels.length > 20 ? 7 : 9 }, automargin: true },
                         yaxis: { title: 'Number of Cells', tickformat: ',d' },
                         margin: { l: 70, r: 20, t: 50, b: 180 },
                         height: barHeight,
                         plot_bgcolor: '#fff',
                         paper_bgcolor: '#fff',
-                        font: { family: 'Montserrat, sans-serif' }
+                        font: { family: 'Nunito, sans-serif' }
                     };
 
                     Plotly.newPlot('proportionBarChart', [barTrace], barLayout, figConfig('cell_proportion_bar_' + said, {
@@ -2464,16 +2464,16 @@
                     };
 
                     var donutLayout = {
-                        title: { text: 'Relative Proportion', font: { family: 'Montserrat, sans-serif', size: 14 } },
+                        title: { text: 'Relative Proportion', font: { family: 'Nunito, sans-serif', size: 14 } },
                         height: barHeight,
                         margin: { l: 20, r: 20, t: 50, b: 20 },
                         showlegend: false,
                         paper_bgcolor: '#fff',
-                        font: { family: 'Montserrat, sans-serif' },
+                        font: { family: 'Nunito, sans-serif' },
                         annotations: [{
                             text: '<b>' + total.toLocaleString() + '</b><br>cells',
                             showarrow: false,
-                            font: { size: 13, family: 'Montserrat, sans-serif', color: '#555' },
+                            font: { size: 13, family: 'Nunito, sans-serif', color: '#555' },
                             x: 0.5, y: 0.5
                         }]
                     };

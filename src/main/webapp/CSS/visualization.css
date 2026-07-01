@@ -76,7 +76,7 @@
     gap: 16px;
     min-height: 8rem;
     overflow-wrap: anywhere;
-    box-shadow: 0 2px 8px rgba(232, 146, 124, 0.3);
+    box-shadow: 0 2px 8px rgba(51, 122, 183, 0.3);
 }
 
 .status-banner.error .status-content {

@@ -99,7 +99,7 @@ body { background-color: var(--bg-body); }
 
 .search-box:focus-within {
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.12), var(--shadow-md);
+    box-shadow: 0 0 0 4px rgba(51, 122, 183, 0.12), var(--shadow-md);
 }
 
 .search-box__input {
@@ -272,7 +272,7 @@ body { background-color: var(--bg-body); }
 .cell-checkbox { text-align: center; width: 40px; }
 .cell-gene { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; color: var(--color-primary); }
 .cell-gene mark {
-    background: rgba(232, 146, 124, 0.25);
+    background: rgba(51, 122, 183, 0.25);
     color: var(--color-primary);
     padding: 0.1em 0.2em;
     border-radius: 2px;

@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a2332">
+    <meta name="theme-color" content="#333333">
     <title>scSAID — Single-Cell Skin & Appendages Integrated Database</title>
 
     <!-- SEO: descriptive meta tags -->
@@ -104,15 +104,15 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
 
 
     <!-- Composition Charts -->
-    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701">
+    <link rel="stylesheet" href="CSS/composition-charts.css?v=20260701e">
 
     <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>

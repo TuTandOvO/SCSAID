@@ -35,7 +35,7 @@
 }
 
 .species-badge {
-    background: rgba(212, 165, 116, 0.2);
+    background: rgba(51, 122, 183, 0.2);
     color: var(--color-accent);
     padding: 6px 16px;
     border-radius: var(--radius-xl);
@@ -99,7 +99,7 @@
 .link-card:hover {
     border-color: var(--color-accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.2);
+    box-shadow: 0 4px 12px rgba(51, 122, 183, 0.2);
 }
 
 .link-icon {
@@ -228,7 +228,7 @@
 .btn-primary:hover {
     background: var(--color-secondary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(232, 146, 124, 0.3);
+    box-shadow: 0 4px 12px rgba(51, 122, 183, 0.3);
 }
 
 /* Quick Actions Section */

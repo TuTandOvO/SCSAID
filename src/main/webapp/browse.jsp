@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#1a2332">
+    <meta name="theme-color" content="#333333">
     <title>Browse Datasets - scSAID</title>
     <meta name="description" content="Browse 252 curated single-cell RNA-seq datasets of human and mouse skin on scSAID. Filter by species, condition, tissue location, and number of cells. Generate integrated UMAP atlases across multiple studies.">
     <meta name="keywords" content="browse scRNA-seq datasets, skin atlas browser, single-cell skin, scSAID browse, GSM, GSE, skin single-cell, skin tissue single-cell">
@@ -29,13 +29,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/buttons.css?v=20260624">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/animations.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/buttons.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/animations.css?v=20260701e">
 
     <style>
         /* ==========================================================================
@@ -43,7 +43,7 @@
            ========================================================================== */
 
         body {
-            background-color: #faf8f5;
+            background-color: #ffffff;
         }
 
         /* Page Layout */
@@ -54,7 +54,7 @@
 
         /* Page Header */
         .page-header {
-            background: #1a2332;
+            background: #333333;
             padding: 4rem 0;
             margin-bottom: 3rem;
         }
@@ -71,12 +71,12 @@
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #d4a574;
+            color: #337ab7;
             margin-bottom: 1rem;
         }
 
         .page-header__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: 'Nunito', sans-serif;
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 500;
             color: #ffffff;
@@ -101,7 +101,7 @@
         .table-card {
             background: #ffffff;
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             overflow: hidden;
         }
 
@@ -110,14 +110,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 2rem;
-            border-bottom: 1px solid #e5e0d8;
+            border-bottom: 1px solid #dddddd;
         }
 
         .table-card__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 1.5rem;
             font-weight: 500;
-            color: #1a2332;
+            color: #333333;
             margin: 0;
         }
 
@@ -137,7 +137,7 @@
         .browse-table {
             width: 100%;
             border-collapse: collapse;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 0.9rem;
         }
 
@@ -192,8 +192,8 @@
 
         .browse-table td {
             padding: 1rem 1.25rem;
-            border-bottom: 1px solid #e5e0d8;
-            color: #5a6473;
+            border-bottom: 1px solid #dddddd;
+            color: #555555;
             vertical-align: middle;
         }
 
@@ -210,7 +210,7 @@
         }
 
         .browse-table tbody tr:hover {
-            background-color: #faf8f5;
+            background-color: #ffffff;
         }
 
         .browse-table tbody tr:last-child td {
@@ -219,14 +219,14 @@
 
         /* Cell styling */
         .browse-table .cell-id {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Nunito', sans-serif;
             font-size: 0.85rem;
-            color: #1a2332;
+            color: #333333;
             font-weight: 500;
         }
 
         .browse-table .cell-link {
-            color: #e8927c;
+            color: #337ab7;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
@@ -236,7 +236,7 @@
         }
 
         .browse-table .cell-link:hover {
-            color: #d4755d;
+            color: #23527c;
         }
 
         .browse-table .cell-link svg {
@@ -262,12 +262,12 @@
         }
 
         .species-badge--human {
-            background: rgba(232, 146, 124, 0.15);
-            color: #d4755d;
+            background: rgba(51, 122, 183, 0.15);
+            color: #23527c;
         }
 
         .species-badge--mouse {
-            background: rgba(212, 165, 116, 0.2);
+            background: rgba(51, 122, 183, 0.2);
             color: #b8864a;
         }
 
@@ -275,17 +275,17 @@
         .browse-table input[type="checkbox"] {
             width: 18px;
             height: 18px;
-            accent-color: #e8927c;
+            accent-color: #337ab7;
             cursor: pointer;
         }
 
         /* Selected row */
         .browse-table tbody tr.selected-row {
-            background-color: rgba(232, 146, 124, 0.08);
+            background-color: rgba(51, 122, 183, 0.08);
         }
 
         .browse-table tbody tr.selected-row td:first-child {
-            box-shadow: inset 3px 0 0 #e8927c;
+            box-shadow: inset 3px 0 0 #337ab7;
         }
 
         /* Pagination */
@@ -294,8 +294,8 @@
             justify-content: center;
             align-items: center;
             padding: 1.5rem 2rem;
-            border-top: 1px solid #e5e0d8;
-            background: #faf8f5;
+            border-top: 1px solid #dddddd;
+            background: #ffffff;
         }
 
         .pagination {
@@ -312,12 +312,12 @@
             min-width: 40px;
             height: 40px;
             padding: 0 1rem;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 0.9rem;
             font-weight: 500;
-            color: #5a6473;
+            color: #555555;
             background: #ffffff;
-            border: 1px solid #e5e0d8;
+            border: 1px solid #dddddd;
             border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
@@ -325,8 +325,8 @@
         }
 
         .pagination__btn:hover:not(.pagination__btn--disabled) {
-            color: #e8927c;
-            border-color: #e8927c;
+            color: #337ab7;
+            border-color: #337ab7;
         }
 
         .pagination__btn--disabled {
@@ -343,24 +343,24 @@
 
         .pagination__label {
             font-size: 0.9rem;
-            color: #5a6473;
+            color: #555555;
         }
 
         .pagination__input {
             width: 60px;
             height: 40px;
             text-align: center;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 0.9rem;
-            border: 1px solid #e5e0d8;
+            border: 1px solid #dddddd;
             border-radius: 8px;
             outline: none;
             transition: all 0.15s ease;
         }
 
         .pagination__input:focus {
-            border-color: #e8927c;
-            box-shadow: 0 0 0 3px rgba(232, 146, 124, 0.15);
+            border-color: #337ab7;
+            box-shadow: 0 0 0 3px rgba(51, 122, 183, 0.15);
         }
 
         /* UMAP Result Container */
@@ -369,22 +369,22 @@
             padding: 2rem;
             background: #ffffff;
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(26, 35, 50, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             text-align: center;
         }
 
         .umap-container__title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 1.25rem;
             font-weight: 500;
-            color: #1a2332;
+            color: #333333;
             margin-bottom: 1rem;
         }
 
         .umap-container img {
             max-width: 100%;
             border-radius: 8px;
-            border: 1px solid #e5e0d8;
+            border: 1px solid #dddddd;
         }
 
         /* Loading Indicator */
@@ -427,18 +427,18 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #5a6473;
+            color: #555555;
         }
 
         .filter-group__select {
             width: 100%;
             min-width: 0;
             padding: 0.65rem 2.5rem 0.65rem 1rem;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 0.9rem;
-            color: #1a2332;
+            color: #333333;
             background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a6473' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 1rem center;
-            border: 1px solid #e5e0d8;
+            border: 1px solid #dddddd;
             border-radius: 8px;
             cursor: pointer;
             appearance: none;
@@ -447,13 +447,13 @@
         }
 
         .filter-group__select:hover {
-            border-color: #d4a574;
+            border-color: #337ab7;
         }
 
         .filter-group__select:focus {
             outline: none;
-            border-color: #e8927c;
-            box-shadow: 0 0 0 3px rgba(232, 146, 124, 0.15);
+            border-color: #337ab7;
+            box-shadow: 0 0 0 3px rgba(51, 122, 183, 0.15);
         }
 
         .filter-bar__actions {
@@ -465,7 +465,7 @@
 
         .filter-bar__btn {
             padding: 0.65rem 1.25rem;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Nunito', sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             border-radius: 8px;
@@ -475,23 +475,23 @@
 
         .filter-bar__btn--clear {
             background: transparent;
-            color: #5a6473;
-            border: 1px solid #e5e0d8;
+            color: #555555;
+            border: 1px solid #dddddd;
         }
 
         .filter-bar__btn--clear:hover {
-            color: #1a2332;
-            border-color: #5a6473;
+            color: #333333;
+            border-color: #555555;
         }
 
         .filter-count {
             font-size: 0.9rem;
-            color: #5a6473;
+            color: #555555;
             padding: 0.65rem 0;
         }
 
         .filter-count strong {
-            color: #e8927c;
+            color: #337ab7;
             font-weight: 600;
         }
 

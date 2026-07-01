@@ -17,9 +17,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Details-SR001</title>
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/header.css?v=20260701d">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701d">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/header.css?v=20260701e">
+    <link rel="stylesheet" href="CSS/details.css?v=20260701e">
     <link rel="stylesheet" href="CSS/degtest.css">
 
     <meta charset="UTF-8"/>
