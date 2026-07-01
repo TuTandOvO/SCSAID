@@ -127,13 +127,14 @@
         /* Hero Section */
         .hero {
             position: relative;
-            min-height: 85vh;
+            min-height: min(85vh, 60rem);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             background: var(--bg-dark);
             margin-top: var(--header-height);
+            padding-block: clamp(4rem, 10vh, 8rem);
         }
 
         .hero__background {
@@ -175,19 +176,19 @@
             color: var(--color-accent);
             border: 1px solid var(--color-accent);
             border-radius: var(--radius-full);
-            opacity: 0;
+            opacity: 1;
             animation: fadeInUp 0.8s ease 0.2s forwards;
         }
 
         .hero__title {
             font-family: var(--font-display);
-            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-size: clamp(3.25rem, 8vw, 6rem);
             font-weight: 400;
             color: var(--text-inverse);
             letter-spacing: -0.03em;
             line-height: 1;
             margin-bottom: var(--space-lg);
-            opacity: 0;
+            opacity: 1;
             animation: fadeInUp 0.8s ease 0.4s forwards;
         }
 
@@ -206,7 +207,7 @@
             color: rgba(255, 255, 255, 0.7);
             max-width: 600px;
             margin: 0 auto var(--space-2xl);
-            opacity: 0;
+            opacity: 1;
             animation: fadeInUp 0.8s ease 0.6s forwards;
         }
 
@@ -215,7 +216,7 @@
             gap: var(--space-md);
             justify-content: center;
             flex-wrap: wrap;
-            opacity: 0;
+            opacity: 1;
             animation: fadeInUp 0.8s ease 0.8s forwards;
         }
 
@@ -236,7 +237,7 @@
             font-size: 0.75rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            opacity: 0;
+            opacity: 1;
             animation: fadeIn 1s ease 1.2s forwards;
         }
 
@@ -262,7 +263,7 @@
 
         .quick-nav__grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: var(--space-lg);
             max-width: 900px;
             margin: 0 auto;
@@ -277,7 +278,7 @@
             border: 1px solid var(--border-light);
             border-radius: var(--radius-lg);
             text-decoration: none;
-            transition: all var(--transition-base);
+            transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
         }
 
         /* .quick-nav__item:hover {
@@ -350,13 +351,14 @@
 
         .overview__image-card img {
             width: 100%;
-            height: 200px;
+            height: auto;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
             display: block;
         }
 
         .overview__image-card:first-child img {
-            height: 280px;
+            aspect-ratio: 16 / 7;
         }
 
         .overview__image-caption {
@@ -541,6 +543,7 @@
         }
 
         @media (max-width: 480px) {
+            .quick-nav__grid,
             .stats__grid {
                 grid-template-columns: 1fr;
             }
@@ -548,53 +551,31 @@
             .hero__title {
                 font-size: 3rem;
             }
+
+            .hero__content { padding-inline: var(--space-md); }
+            .hero__actions { align-items: stretch; flex-direction: column; }
+            .site-footer__links { flex-wrap: wrap; }
+            .site-footer__counter { align-items: stretch; flex-direction: column; border-radius: var(--radius-lg); }
+            .site-footer__counter-divider { width: 100%; height: 1px; }
+        }
+
+        @media (max-height: 650px) {
+            .hero { min-height: auto; padding-block: 3rem; }
+            .hero__eyebrow { margin-bottom: var(--space-md); }
+            .hero__title { font-size: clamp(2.75rem, 10vw, 4.5rem); }
+            .hero__description { margin-bottom: var(--space-lg); }
+            .hero__scroll-indicator { display: none; }
         }
     </style>
 </head>
 <body>
 
-<!-- Header -->
-<header class="site-header">
-    <div class="container">
-        <a href="index.jsp" class="site-logo">scSAID</a>
-
-        <nav class="main-nav">
-            <a href="index.jsp" class="main-nav__link main-nav__link--active">Home</a>
-            <a href="browse.jsp" class="main-nav__link">Browse</a>
-            <a href="gene-search.jsp" class="main-nav__link">Search</a>
-            <a href="featureplot.jsp" class="main-nav__link">Expression</a>
-            <a href="compare.jsp" class="main-nav__link">Compare</a>
-            <a href="download.jsp" class="main-nav__link">Download</a>
-            <div class="main-nav__item">
-                <a href="help?topic=faq" class="main-nav__link">Help</a>
-                <div class="main-nav__dropdown">
-                    <a href="help?topic=faq" class="main-nav__dropdown-link">FAQ</a>
-                    <a href="help?topic=methods" class="main-nav__dropdown-link">Methods</a>
-                    <a href="help?topic=markers" class="main-nav__dropdown-link">Markers</a>
-                    <a href="help?topic=pipeline" class="main-nav__dropdown-link">Pipeline</a>
-                    <a href="help?topic=usage" class="main-nav__dropdown-link">Usage</a>
-                </div>
-            </div>
-            <a href="feedback" class="main-nav__link">Feedback</a>
-        </nav>
-
-        <div class="header-icons">
-            <a href="https://github.com/TuTandOvO/SCSAID" target="_blank" class="header-icon-link" title="View on GitHub">
-                <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
-            <a href="https://zje.zju.edu.cn/zje/main.htm" target="_blank" class="header-icon-link" title="ZJE - Zhejiang University">
-                <img src="images/ZJE_Logo.png" alt="ZJE - Zhejiang University" class="university-logo">
-            </a>
-        </div>
-    </div>
-</header>
+<%@ include file="includes/header.jsp" %>
 
 <!-- Hero Section -->
-<section class="hero">
+<section class="hero" id="main-content" tabindex="-1">
     <div class="hero__background">
-        <img src="images/campus.jpg" alt="">
+        <img src="images/campus.jpg" alt="" width="1920" height="1080" fetchpriority="high">
         <div class="hero__overlay"></div>
     </div>
 
@@ -717,9 +698,9 @@
             <p class="composition__subtitle">
                 Interactive breakdown of cell counts across cell types, conditions, demographics, and batches.
             </p>
-            <div class="composition__toggle">
-                <button class="composition__toggle-btn composition__toggle-btn--active" data-species="human">Human</button>
-                <button class="composition__toggle-btn" data-species="mouse">Mouse</button>
+            <div class="composition__toggle" role="group" aria-label="Species shown in composition charts">
+                <button type="button" class="composition__toggle-btn composition__toggle-btn--active" data-species="human" aria-pressed="true">Human</button>
+                <button type="button" class="composition__toggle-btn" data-species="mouse" aria-pressed="false">Mouse</button>
             </div>
         </div>
 

@@ -76,6 +76,7 @@ body { background-color: var(--bg-body); }
     left: 0;
     width: var(--rail-width);
     height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
     background: var(--bg-surface);
     border-right: 1px solid var(--border-light);
     padding: var(--space-2xl) 0 var(--space-xl);
@@ -579,7 +580,11 @@ body { background-color: var(--bg-body); }
     gap: 0.4rem;
     min-width: 160px;
     flex: 1 1 180px;
+    min-width: 0;
 }
+
+.control-group--wide { flex: 1 1 17.5rem; }
+.control-group--library { flex: 0 1 16rem; }
 
 .panel-label,
 .control-label,
@@ -939,6 +944,8 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
    -------------------------------------------------------------------------- */
 .table-wrapper {
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--border-light);
     border-radius: var(--control-radius);
     background: var(--bg-surface);
@@ -1027,7 +1034,7 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     color: var(--text-secondary) !important;
     font-size: 0.8rem !important;
     font-weight: 500 !important;
-    transition: all var(--transition-fast) !important;
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast) !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background: var(--bg-muted) !important;
@@ -1205,7 +1212,8 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     color: var(--text-secondary);
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    min-height: 44px;
+    transition: color var(--transition-fast), background-color var(--transition-fast);
     font-weight: 500;
 }
 .cpdb-radio input { position: absolute; opacity: 0; pointer-events: none; }
@@ -1313,6 +1321,11 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     border: 1px solid var(--border-light);
     border-radius: var(--control-radius);
     overflow: hidden;
+    width: 100%;
+    min-height: clamp(24rem, 70dvh, 37.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #umap-loading {
     color: var(--text-muted);
@@ -1330,6 +1343,32 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 
 .umap-controls {
     align-items: center !important;
+}
+
+.proportion-map-select { min-width: 0; width: min(100%, 13rem); }
+.proportion-charts-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.55fr);
+    gap: var(--space-lg);
+    align-items: start;
+}
+.proportion-chart { min-width: 0; }
+.proportion-chart > div { width: 100%; min-height: clamp(20rem, 52dvh, 25rem); }
+#enrichChart { width: 100%; min-height: clamp(22rem, 62dvh, 31.25rem); }
+.gss-progress-track {
+    width: min(100%, 12.5rem);
+    height: 4px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--border-light);
+    border-radius: var(--radius-full);
+}
+#gssProgressBar {
+    width: 30%;
+    height: 100%;
+    background: var(--color-secondary);
+    border-radius: inherit;
+    transition: width var(--transition-slow);
 }
 
 
@@ -1353,7 +1392,7 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     .header-title { font-size: 1.35rem; }
     .control-row,
     .toolbar-row { gap: 0.65rem; }
-    .control-group { min-width: 140px; }
+    .control-group { min-width: 0; }
 }
 
 @media (max-width: 600px) {
@@ -1362,6 +1401,29 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     .dataset-hero__inner { padding: 0 var(--space-md); }
     .filter-grid { grid-template-columns: 1fr; }
     .detail_container_1 { grid-template-columns: 1fr; gap: 0.25rem; }
+    .control-row,
+    .toolbar-row,
+    .comparison-bar { align-items: stretch; flex-direction: column; }
+    .control-group,
+    .control-group--wide,
+    .control-group--library { width: 100%; flex-basis: auto; }
+    .proportion-map-select { width: 100%; }
+    .proportion-charts-layout { grid-template-columns: 1fr; }
+    .btn-primary,
+    .btn-secondary,
+    .btn-ghost,
+    .btn-outline,
+    .export-btn { width: 100%; min-height: 44px; white-space: normal; }
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate { float: none !important; width: 100%; text-align: left !important; }
+}
+
+@media (max-height: 560px) and (min-width: 1200px) {
+    .sidebar { padding-top: var(--space-md); }
+    .sidebar__nav { gap: 0; }
+    .nav-item { padding-block: 0.5rem; }
 }
 
 

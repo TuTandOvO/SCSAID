@@ -17,6 +17,8 @@
     align-items: center;
     justify-content: center;
     padding: var(--space-md, 1rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     opacity: 0;
     animation: modalOverlayFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -37,6 +39,9 @@
     box-shadow: 0 10px 30px rgba(26, 35, 50, 0.2);
     border: 1px solid var(--border-light, #e5e0d8);
     overflow: hidden;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
     opacity: 0;
     transform: scale(0.95) translateY(10px);
     animation: modalEnter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
@@ -144,7 +149,7 @@
     border: 2px solid transparent;
     border-radius: var(--radius-sm, 4px);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 3px 8px rgba(232, 146, 124, 0.3);
 }
 
@@ -165,13 +170,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 44px;
+    height: 44px;
     background: transparent;
     border: none;
     border-radius: var(--radius-sm, 4px);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease;
     color: var(--text-muted, #8b95a5);
 }
 
@@ -187,6 +192,7 @@
 
 /* Responsive Design */
 @media (max-width: 640px) {
+    .construction-modal-overlay { align-items: flex-start; padding: 0.5rem; }
     .construction-modal {
         max-width: 100%;
         margin: var(--space-sm, 0.5rem);

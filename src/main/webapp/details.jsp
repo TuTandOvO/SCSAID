@@ -444,42 +444,8 @@
 </head>
 <body style="background: var(--bg-body);">
 
-<!-- Header -->
-<header class="site-header">
-    <div class="container">
-        <a href="index.jsp" class="site-logo">scSAID</a>
-        <nav class="main-nav">
-            <a href="index.jsp" class="main-nav__link">Home</a>
-            <a href="browse.jsp" class="main-nav__link main-nav__link--active">Browse</a>
-            <a href="gene-search.jsp" class="main-nav__link">Search</a>
-            <a href="featureplot.jsp" class="main-nav__link">Expression</a>
-            <a href="compare.jsp" class="main-nav__link">Compare</a>
-            <a href="download.jsp" class="main-nav__link">Download</a>
-            <div class="main-nav__item">
-                <a href="help?topic=faq" class="main-nav__link">Help</a>
-                <div class="main-nav__dropdown">
-                    <a href="help?topic=faq" class="main-nav__dropdown-link">FAQ</a>
-                    <a href="help?topic=methods" class="main-nav__dropdown-link">Methods</a>
-                    <a href="help?topic=markers" class="main-nav__dropdown-link">Markers</a>
-                    <a href="help?topic=pipeline" class="main-nav__dropdown-link">Pipeline</a>
-                    <a href="help?topic=usage" class="main-nav__dropdown-link">Usage</a>
-                </div>
-            </div>
-            <a href="feedback" class="main-nav__link">Feedback</a>
-        </nav>
-        <div class="header-icons">
-            <a href="https://github.com/TuTandOvO/SCSAID" target="_blank" class="header-icon-link" title="View on GitHub">
-                <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
-            <a href="https://zje.zju.edu.cn/zje/main.htm" target="_blank" class="header-icon-link" title="ZJE - Zhejiang University">
-                <img src="images/ZJE_Logo.png" alt="ZJE - Zhejiang University" class="university-logo">
-            </a>
-        </div>
-    </div>
-</header>
-<div class="details-box">
+<%@ include file="includes/header.jsp" %>
+<div class="details-box" id="main-content" tabindex="-1">
 
     <!-- Dataset Hero — editorial header that carries the homepage language
          (dark navy, gold eyebrow, serif title, JetBrains-Mono meta chips). -->
@@ -629,7 +595,7 @@
                     <div><div class="header-title">Cell Proportion</div></div>
                     <div class="umap-controls control-row" style="align-items:center; gap:12px;">
                         <label class="panel-label" style="margin:0;">Annotation</label>
-                        <select id="proportionMapType" class="form-select elegant-select" style="min-width:140px;">
+                        <select id="proportionMapType" class="form-select elegant-select proportion-map-select">
                             <option value="Gross_Map" selected>Gross Map</option>
                             <option value="Fine_Map">Fine Map</option>
                         </select>
@@ -643,12 +609,12 @@
                 </div>
                 <div id="proportion-error" class="status-error" style="display:none;"></div>
                 <div id="proportion-charts" style="display:none;">
-                    <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
-                        <div style="flex:1; min-width:400px;">
-                            <div id="proportionBarChart" style="width:100%; min-height:400px;"></div>
+                    <div class="proportion-charts-layout">
+                        <div class="proportion-chart proportion-chart--bar">
+                            <div id="proportionBarChart"></div>
                         </div>
-                        <div style="flex:0 0 380px; min-width:320px;">
-                            <div id="proportionDonutChart" style="width:100%; min-height:400px;"></div>
+                        <div class="proportion-chart proportion-chart--donut">
+                            <div id="proportionDonutChart"></div>
                         </div>
                     </div>
                 </div>
@@ -676,7 +642,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="umap-container" style="width:100%; min-height:600px; display:flex; justify-content:center; align-items:center; background:#fff;">
+                <div id="umap-container">
                     <div id="umap-loading" style="text-align:center; color:#999;">
                         <div class="spinner" style="margin:0 auto 10px;"></div>
                         Loading UMAP...
@@ -703,7 +669,7 @@
                 </div>
                 <div class="panel-body section-stack">
                     <div class="comparison-bar control-row">
-                        <div class="control-group" style="min-width:280px; flex:1;">
+                        <div class="control-group control-group--wide">
                             <label class="panel-label" for="degCompareSelect">Compare with</label>
                             <select id="degCompareSelect" class="form-select elegant-select">
                                 <option value="">— No comparison (cluster vs rest of this sample)</option>
@@ -803,7 +769,7 @@
                     <!-- Mode 2: MSigDB predefined gene sets -->
                     <div id="gssMsigdbPanel" class="gss-input-panel" style="display:none;">
                         <div class="control-row" style="margin-bottom:0.8rem;">
-                            <div class="control-group" style="min-width:200px; flex:0 0 auto;">
+                            <div class="control-group control-group--library">
                                 <label class="panel-label">Library</label>
                                 <select id="gssLibrary" class="form-select">
                                     <option value="">Loading...</option>
@@ -842,14 +808,14 @@
 
                     <!-- Controls row: Group By, Method, Run button -->
                     <div class="control-row" style="margin:1rem 0;">
-                        <div class="control-group" style="min-width:140px;">
+                        <div class="control-group">
                             <label class="panel-label">Group By</label>
                             <select id="gssGroupBy" class="form-select">
                                 <option value="Fine_Map">Fine_Map</option>
                                 <option value="Gross_Map">Gross_Map</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:140px;">
+                        <div class="control-group">
                             <label class="panel-label">Method</label>
                             <select id="gssMethod" class="form-select">
                                 <option value="aucell" selected>AUCell</option>
@@ -866,7 +832,7 @@
                     <div id="gssGeneInfo" class="help-text" style="margin-bottom:1rem; display:none;"></div>
                     <div id="gssProgress" class="progress-box" style="display:none;">
                         <div id="gssProgressText" style="margin-bottom:0.5rem;">Running scoring...</div>
-                        <div style="width:200px; height:4px; background:var(--line); border-radius:2px; margin:0 auto;"><div id="gssProgressBar" style="width:30%; height:100%; background:var(--accent); border-radius:2px; transition:width var(--dur-slow) var(--ease);"></div></div>
+                        <div class="gss-progress-track"><div id="gssProgressBar"></div></div>
                     </div>
                     <div id="gssError" class="status-error" style="display:none; margin-bottom:1rem;"></div>
                     <div id="gssViolinPlot" style="min-height:200px;"></div>
@@ -1051,7 +1017,7 @@
                                 <option value="30">30</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:140px;">
+                        <div class="control-group">
                             <label class="panel-label">Filter</label>
                             <select id="enrichFilter" class="form-select elegant-select">
                                 <option value="all" selected>All results</option>
@@ -1073,7 +1039,7 @@
                     <div id="enrich-empty" class="progress-box" style="display:none;">
                         No enrichment data available for this dataset.
                     </div>
-                    <div id="enrichChart" style="width:100%; min-height:500px;"></div>
+                    <div id="enrichChart"></div>
                 </div>
             </div>
         </div>

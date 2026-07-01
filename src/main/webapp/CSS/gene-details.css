@@ -3,16 +3,16 @@
    design tokens so this page reads as a natural extension of the home page. */
 
 .gene-details-container {
-    max-width: 1400px;
-    margin: 80px auto 40px;
-    padding: 0 40px;
+    width: min(100%, 1400px);
+    margin: calc(var(--header-height) + 2rem) auto 2.5rem;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 /* Gene Header Section */
 .gene-header {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
     color: var(--text-inverse);
-    padding: 40px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
     border-radius: var(--radius-lg);
     margin-bottom: 40px;
     box-shadow: var(--shadow-lg);
@@ -52,6 +52,8 @@
     padding: 6px 16px;
     border-radius: var(--radius-sm);
     font-size: 0.9rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .gene-description p {
@@ -76,7 +78,7 @@
 
 .links-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(15.625rem, 100%), 1fr));
     gap: 16px;
 }
 
@@ -90,7 +92,7 @@
     border-radius: var(--radius-md);
     text-decoration: none;
     color: var(--text-primary);
-    transition: all var(--transition-slow);
+    transition: border-color var(--transition-slow), transform var(--transition-slow), box-shadow var(--transition-slow);
     cursor: pointer;
 }
 
@@ -110,11 +112,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    min-width: 0;
 }
 
 .link-name {
     font-weight: 600;
     font-size: 1rem;
+    overflow-wrap: anywhere;
 }
 
 .link-arrow {
@@ -142,7 +146,7 @@
 
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(18.75rem, 100%), 1fr));
     gap: 20px;
 }
 
@@ -171,6 +175,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-primary);
+    overflow-wrap: anywhere;
 }
 
 .info-value.mono {
@@ -185,7 +190,7 @@
 /* Expression Section */
 .expression-section {
     background: linear-gradient(135deg, var(--bg-muted) 0%, var(--border-light) 100%);
-    padding: 40px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
     border-radius: var(--radius-lg);
     margin-bottom: 40px;
     text-align: center;
@@ -214,7 +219,8 @@
     border-radius: var(--radius-md);
     font-weight: 600;
     font-size: 1rem;
-    transition: all var(--transition-slow);
+    min-height: 44px;
+    transition: color var(--transition-slow), background-color var(--transition-slow), transform var(--transition-slow), box-shadow var(--transition-slow);
     border: none;
     cursor: pointer;
 }
@@ -240,7 +246,7 @@
 
 .actions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(12.5rem, 100%), 1fr));
     gap: 16px;
 }
 
@@ -254,7 +260,7 @@
     border: 2px solid var(--border-light);
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all var(--transition-slow);
+    transition: border-color var(--transition-slow), transform var(--transition-slow), box-shadow var(--transition-slow);
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
@@ -287,8 +293,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .gene-details-container {
-        padding: 0 20px;
-        margin-top: 60px;
+        margin-top: calc(var(--header-height) + 1.25rem);
     }
 
     .gene-name {
@@ -310,6 +315,13 @@
     .actions-grid {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 480px) {
+    .gene-header { margin-bottom: 2rem; }
+    .gene-title-section { align-items: flex-start; flex-direction: column; }
+    .link-card { align-items: flex-start; padding: 1rem; }
+    .expression-section .btn-primary { width: 100%; }
 }
 
 /* Print Styles */

@@ -190,6 +190,12 @@ body { background-color: var(--bg-body); }
 }
 
 .results-section > .panel { margin: 0; }
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+}
 
 
 /* --------------------------------------------------------------------------
@@ -253,6 +259,7 @@ body { background-color: var(--bg-body); }
     border-bottom: 1px solid var(--border-light);
     color: var(--text-secondary);
     vertical-align: middle;
+    overflow-wrap: anywhere;
 }
 
 .results-table tbody tr { transition: background var(--transition-fast); }
@@ -454,7 +461,8 @@ body { background-color: var(--bg-body); }
 .viz-panel__iframe-container {
     position: relative;
     width: 100%;
-    height: 820px;
+    height: clamp(32rem, calc(100dvh - 8rem), 51.25rem);
+    min-height: 0;
     background: var(--bg-muted);
     border-top: 1px solid var(--border-light);
 }
@@ -497,5 +505,73 @@ body { background-color: var(--bg-body); }
         bottom: var(--space-md);
     }
     .selection-bar__genes { flex: 1 1 100%; order: 3; }
-    .viz-panel__iframe-container { height: 600px; }
+    .viz-panel__iframe-container { height: clamp(28rem, calc(100dvh - 6rem), 42rem); }
+}
+
+@media (max-width: 639px) {
+    .search-hero { margin-bottom: var(--space-lg); }
+    .search-box__input { width: 100%; min-height: 48px; }
+    .search-box__btn { min-height: 48px; }
+    .search-examples__label { flex-basis: 100%; margin-right: 0; }
+    .panel-header--split { align-items: flex-start; }
+    .table-wrapper { overflow: visible; }
+    .results-table,
+    .results-table tbody,
+    .results-table tr,
+    .results-table td { display: block; width: 100%; }
+    .results-table thead { display: block; padding: 1rem 1rem 0; background: transparent; }
+    .results-table thead tr { display: block; }
+    .results-table thead th { display: none; }
+    .results-table thead th:first-child {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        width: 100%;
+        min-height: 44px;
+        padding: 0.65rem 0.9rem;
+        color: var(--text-primary);
+        background: var(--bg-muted);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+    }
+    .results-table thead th:first-child::after { content: "Select all genes"; font-size: 0.82rem; letter-spacing: 0; text-transform: none; }
+    .results-table tbody { display: grid; gap: 1rem; padding: 1rem; }
+    .results-table tbody tr {
+        padding: 0.75rem 0.9rem;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-lg);
+    }
+    .results-table td {
+        display: grid;
+        grid-template-columns: minmax(6.5rem, 38%) minmax(0, 1fr);
+        align-items: start;
+        gap: 0.65rem;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+    .results-table td:last-child { border-bottom: 0; }
+    .results-table td::before {
+        content: attr(data-label);
+        color: var(--text-muted);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .results-table .cell-checkbox { width: 100%; text-align: left; }
+    .selection-bar {
+        align-items: stretch;
+        gap: 0.65rem;
+        max-height: calc(100dvh - var(--header-height) - 2rem);
+        padding: 0.8rem;
+        overflow-y: auto;
+    }
+    .selection-bar__count { white-space: normal; }
+    .selection-bar__actions { display: grid; grid-template-columns: 1fr; width: 100%; }
+    .selection-bar__actions button { width: 100%; min-height: 44px; }
+}
+
+@media (max-height: 560px) {
+    .selection-bar { position: relative; bottom: auto; }
 }

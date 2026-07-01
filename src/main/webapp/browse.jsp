@@ -130,6 +130,8 @@
         /* Enhanced Table */
         .data-table-wrapper {
             overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            -webkit-overflow-scrolling: touch;
         }
 
         .browse-table {
@@ -204,7 +206,7 @@
         }
 
         .browse-table tbody tr {
-            transition: all 0.15s ease;
+            transition: background-color 0.15s ease;
         }
 
         .browse-table tbody tr:hover {
@@ -437,6 +439,8 @@
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
+            flex: 1 1 10rem;
+            min-width: 0;
         }
 
         .filter-group__label {
@@ -448,7 +452,8 @@
         }
 
         .filter-group__select {
-            min-width: 160px;
+            width: 100%;
+            min-width: 0;
             padding: 0.65rem 2.5rem 0.65rem 1rem;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
@@ -547,57 +552,91 @@
             }
 
             .filter-group__select {
-                min-width: 140px;
+                min-width: 0;
             }
 
             .filter-bar__actions {
                 width: 100%;
                 margin-left: 0;
                 margin-top: 0.5rem;
+                flex-wrap: wrap;
             }
+        }
+
+        @media (max-width: 639px) {
+            .page-header__content { padding-inline: 1rem; }
+            .page-header { margin-bottom: 1.5rem; }
+            .table-card { background: transparent; box-shadow: none; overflow: visible; }
+            .table-card__header,
+            .filter-bar,
+            .table-card__footer { background: var(--bg-surface); }
+            .table-card__header { border-radius: 12px 12px 0 0; padding: 1.25rem; }
+            .filter-group { flex-basis: 100%; }
+            .filter-bar__actions { align-items: stretch; flex-direction: column; }
+            .filter-bar__btn { min-height: 44px; text-align: center; }
+            .filter-count { padding-block: 0.25rem; }
+            .data-table-wrapper { overflow: visible; padding-block: 1rem; }
+            .browse-table,
+            .browse-table tbody,
+            .browse-table tr,
+            .browse-table td { display: block; width: 100%; }
+            .browse-table thead { display: block; margin-bottom: 0.75rem; background: transparent; }
+            .browse-table thead tr { display: block; }
+            .browse-table thead th { display: none; }
+            .browse-table thead th:first-child {
+                display: flex;
+                align-items: center;
+                gap: 0.65rem;
+                min-height: 44px;
+                padding: 0.65rem 1rem;
+                color: var(--text-primary);
+                background: var(--bg-surface);
+                border: 1px solid var(--border-light);
+                border-radius: 10px;
+            }
+            .browse-table thead th:first-child::after { content: "Select all datasets on this page"; font-size: 0.82rem; letter-spacing: 0; text-transform: none; }
+            .browse-table tbody { display: grid; gap: 1rem; }
+            .browse-table tbody tr {
+                padding: 0.85rem 1rem;
+                background: var(--bg-surface);
+                border: 1px solid var(--border-light);
+                border-radius: 12px;
+            }
+            .browse-table td,
+            .browse-table td:first-child,
+            .browse-table td:last-child {
+                display: grid;
+                grid-template-columns: minmax(6.5rem, 38%) minmax(0, 1fr);
+                align-items: start;
+                gap: 0.75rem;
+                padding: 0.58rem 0;
+                border-bottom: 1px solid var(--border-light);
+                overflow-wrap: anywhere;
+            }
+            .browse-table td:last-child { border-bottom: 0; }
+            .browse-table td::before {
+                content: attr(data-label);
+                color: var(--text-muted);
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+            .browse-table td:first-child { grid-template-columns: minmax(6.5rem, 38%) 1fr; }
+            .browse-table tbody tr.selected-row td:first-child { box-shadow: none; }
+            .table-card__footer { border-radius: 12px; padding: 1rem; }
+            .pagination,
+            .pagination__input-group,
+            .pagination__input-group form { flex-wrap: wrap; justify-content: center; }
         }
     </style>
     <script src="JS/micro-interactions.js"></script>
 </head>
 <body class="content-fade-in">
 
-<!-- Header -->
-<header class="site-header">
-    <div class="container">
-        <a href="index.jsp" class="site-logo">scSAID</a>
-        <nav class="main-nav">
-            <a href="index.jsp" class="main-nav__link">Home</a>
-            <a href="browse.jsp" class="main-nav__link main-nav__link--active">Browse</a>
-            <a href="gene-search.jsp" class="main-nav__link">Search</a>
-            <a href="featureplot.jsp" class="main-nav__link">Expression</a>
-            <a href="compare.jsp" class="main-nav__link">Compare</a>
-            <a href="download.jsp" class="main-nav__link">Download</a>
-            <div class="main-nav__item">
-                <a href="help?topic=faq" class="main-nav__link">Help</a>
-                <div class="main-nav__dropdown">
-                    <a href="help?topic=faq" class="main-nav__dropdown-link">FAQ</a>
-                    <a href="help?topic=methods" class="main-nav__dropdown-link">Methods</a>
-                    <a href="help?topic=markers" class="main-nav__dropdown-link">Markers</a>
-                    <a href="help?topic=pipeline" class="main-nav__dropdown-link">Pipeline</a>
-                    <a href="help?topic=usage" class="main-nav__dropdown-link">Usage</a>
-                </div>
-            </div>
-            <a href="feedback" class="main-nav__link">Feedback</a>
-        </nav>
-        <div class="header-icons">
-            <a href="https://github.com/TuTandOvO/SCSAID" target="_blank" class="header-icon-link" title="View on GitHub">
-                <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
-            <a href="https://zje.zju.edu.cn/zje/main.htm" target="_blank" class="header-icon-link" title="ZJE - Zhejiang University">
-                <img src="images/ZJE_Logo.png" alt="ZJE - Zhejiang University" class="university-logo">
-            </a>
-        </div>
-    </div>
-</header>
+<%@ include file="includes/header.jsp" %>
 
-<main class="browse-page">
+<main class="browse-page" id="main-content" tabindex="-1">
     <!-- Page Header -->
     <div class="page-header">
         <div class="page-header__content">
@@ -846,7 +885,7 @@
                 <table class="browse-table">
                     <thead>
                     <tr>
-                        <th><input type="checkbox" id="select-all" title="Select all"></th>
+                        <th><input type="checkbox" id="select-all" aria-label="Select all datasets"></th>
                         <%
                             String[][] sortCols = {
                                 {"said", "SAID"}, {"gse", "GSE"}, {"gsm", "GSM"},
@@ -888,19 +927,19 @@
                             String tissueLower = tissue.toLowerCase().trim();
                     %>
                     <tr data-species="<%= speciesLower %>" data-disease="<%= conditionLower %>" data-tissue="<%= tissueLower %>" data-stagger-item>
-                        <td><input type="checkbox" name="dataset_checkbox" value="<%= said_display %>"></td>
-                        <td class="cell-id"><%= said_display %></td>
-                        <td><%= gse %></td>
-                        <td><%= gsm_value %></td>
-                        <td>
+                        <td data-label="Select"><input type="checkbox" name="dataset_checkbox" value="<%= said_display %>" aria-label="Select dataset <%= said_display %>"></td>
+                        <td class="cell-id" data-label="SAID"><%= said_display %></td>
+                        <td data-label="GSE"><%= gse %></td>
+                        <td data-label="GSM"><%= gsm_value %></td>
+                        <td data-label="Species">
                             <span class="species-badge <%= speciesLower.contains("human") ? "species-badge--human" : "species-badge--mouse" %>">
                                 <%= species %>
                             </span>
                         </td>
-                        <td><%= n_cells %></td>
-                        <td><%= condition %></td>
-                        <td><%= tissue %></td>
-                        <td>
+                        <td data-label="Cells"><%= n_cells %></td>
+                        <td data-label="Condition"><%= condition %></td>
+                        <td data-label="Tissue"><%= tissue %></td>
+                        <td data-label="Details">
                             <a href="details.jsp?said=<%= java.net.URLEncoder.encode(said_display, "UTF-8") %>" class="cell-link">
                                 View
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

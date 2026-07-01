@@ -20,9 +20,13 @@
         extraCssText: 'border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);'
     };
 
-    var ANIMATION = { animationDuration: 800, animationEasing: 'cubicOut' };
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ANIMATION = reduceMotion
+        ? { animation: false }
+        : { animationDuration: 800, animationEasing: 'cubicOut' };
 
     var charts = [];
+    var resizeObservers = [];
     var currentSpecies = 'human';
 
     function formatNumber(n) {
@@ -36,6 +40,10 @@
     }
 
     function destroyCharts() {
+        for (var r = 0; r < resizeObservers.length; r++) {
+            resizeObservers[r].disconnect();
+        }
+        resizeObservers = [];
         for (var i = 0; i < charts.length; i++) {
             charts[i].dispose();
         }
@@ -48,8 +56,13 @@
         var chart = echarts.init(el);
         charts.push(chart);
 
-        var ro = new ResizeObserver(function () { chart.resize(); });
-        ro.observe(el);
+        if (window.ResizeObserver) {
+            var ro = new ResizeObserver(function () {
+                if (!chart.isDisposed()) chart.resize();
+            });
+            ro.observe(el);
+            resizeObservers.push(ro);
+        }
 
         return chart;
     }
@@ -339,12 +352,24 @@
                     // Update active button
                     for (var j = 0; j < btns.length; j++) {
                         btns[j].classList.remove('composition__toggle-btn--active');
+                        btns[j].setAttribute('aria-pressed', 'false');
                     }
                     this.classList.add('composition__toggle-btn--active');
+                    this.setAttribute('aria-pressed', 'true');
 
                     renderCharts(species);
                 });
             }
+
+            var resizeFrame = 0;
+            window.addEventListener('resize', function () {
+                window.cancelAnimationFrame(resizeFrame);
+                resizeFrame = window.requestAnimationFrame(function () {
+                    for (var k = 0; k < charts.length; k++) {
+                        if (!charts[k].isDisposed()) charts[k].resize();
+                    }
+                });
+            }, { passive: true });
         }
     };
 })();

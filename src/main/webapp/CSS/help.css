@@ -4,19 +4,19 @@ body {
 
 .help-page {
     min-height: 100vh;
-    padding-top: 72px;
+    padding-top: var(--header-height);
 }
 
 .page-header {
     background: var(--color-primary);
-    padding: 4.5rem 0;
+    padding: clamp(3rem, 9vh, 4.5rem) 0;
     text-align: center;
 }
 
 .page-header__content {
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 clamp(1rem, 4vw, 2rem);
 }
 
 .page-header__eyebrow {
@@ -45,7 +45,7 @@ body {
 }
 
 .help-content-section {
-    padding: 3rem 2rem 4rem;
+    padding: 3rem clamp(1rem, 4vw, 2rem) 4rem;
 }
 
 .help-layout {
@@ -57,15 +57,15 @@ body {
 }
 
 .help-sidebar {
-    width: 260px;
-    flex: 0 0 260px;
+    width: clamp(14rem, 22vw, 16.25rem);
+    flex: 0 0 clamp(14rem, 22vw, 16.25rem);
     background: var(--bg-surface);
     border-radius: 16px;
     box-shadow: var(--shadow-md);
     padding: 1.5rem;
     position: sticky;
-    top: calc(72px + 2rem);
-    max-height: calc(100vh - 72px - 4rem);
+    top: calc(var(--header-height) + 1.5rem);
+    max-height: calc(100dvh - var(--header-height) - 3rem);
     overflow-y: auto;
 }
 
@@ -143,6 +143,7 @@ body {
     box-shadow: var(--shadow-md);
     padding: 2.5rem;
     color: var(--text-primary);
+    overflow-wrap: anywhere;
 }
 
 .help-content__loading,
@@ -156,7 +157,7 @@ body {
     font-size: 1.6rem;
     margin: 2rem 0 0.75rem;
     color: var(--text-primary);
-    scroll-margin-top: calc(72px + 1.5rem);
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
 }
 
 .help-content h3 {
@@ -211,7 +212,7 @@ body {
     color: inherit;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .page-header {
         padding: 3.5rem 0;
     }
@@ -233,4 +234,21 @@ body {
     .help-content {
         padding: 2rem 1.5rem;
     }
+}
+
+@media (max-width: 520px) {
+    .page-header { padding-block: 2.5rem; }
+    .page-header__title { font-size: clamp(2.1rem, 12vw, 2.75rem); }
+    .page-header__description { font-size: 1rem; }
+    .help-content-section { padding: 1.25rem 0.75rem 2.5rem; }
+    .help-layout { gap: 1rem; }
+    .help-sidebar,
+    .help-content { padding: 1.25rem; border-radius: 12px; }
+    .help-sidebar__topics { gap: 0.4rem; }
+    .help-content ul,
+    .help-content ol { margin-left: 1.1rem; }
+}
+
+@media (max-height: 560px) and (min-width: 901px) {
+    .help-sidebar { position: static; max-height: none; }
 }

@@ -153,7 +153,7 @@ body { background-color: var(--bg-body); }
 .umap-stage {
     position: relative;
     width: 100%;
-    height: clamp(440px, 70vh, 760px);
+    height: clamp(27.5rem, 70dvh, 47.5rem);
     border-radius: var(--control-radius);
     overflow: hidden;
     background: var(--bg-surface);
@@ -237,6 +237,19 @@ body { background-color: var(--bg-body); }
 .umap-overlay-state--error { color: var(--color-danger-dark, #b91c1c); }
 
 @media (max-width: 720px) {
-    .umap-legend { width: 150px; font-size: 0.72rem; }
-    .umap-stage { height: clamp(360px, 60vh, 560px); }
+    .umap-legend {
+        top: auto;
+        right: var(--space-sm);
+        bottom: var(--space-sm);
+        left: var(--space-sm);
+        width: auto;
+        max-height: 34%;
+        font-size: 0.72rem;
+    }
+    .umap-stage { height: clamp(24rem, 68dvh, 35rem); }
+    .umap-plot-body { padding: var(--space-xs) !important; }
+}
+
+@media (max-height: 560px) {
+    .umap-stage { height: 28rem; }
 }

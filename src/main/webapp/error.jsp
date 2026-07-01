@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="CSS/design-system.css">
     <style>
         body { background:#faf8f5; font-family:'Montserrat',Arial,sans-serif; color:#1a2332;
-               display:flex; min-height:100vh; align-items:center; justify-content:center; margin:0; }
-        .err { text-align:center; padding:2rem; max-width:520px; }
-        .err h1 { font-size:3rem; margin:0 0 .5rem; color:#1a2332; }
+               display:flex; min-height:100vh; min-height:100dvh; align-items:center; justify-content:center; margin:0; padding:1rem; }
+        .err { width:min(100%,520px); text-align:center; padding:clamp(1rem,5vw,2rem); }
+        .err h1 { font-size:clamp(2rem,10vw,3rem); margin:0 0 .5rem; color:#1a2332; }
         .err p { color:#6b7280; line-height:1.7; }
         .err a { color:#d4a574; text-decoration:none; font-weight:600; }
     </style>

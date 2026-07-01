@@ -48,6 +48,7 @@
 }
 
 .composition__toggle-btn {
+    min-height: 44px;
     padding: var(--space-sm) var(--space-xl);
     font-family: var(--font-body);
     font-size: 0.9rem;
@@ -56,7 +57,7 @@
     border: none;
     border-radius: var(--radius-full);
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: color var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base);
     background: transparent;
     color: var(--text-muted);
 }
@@ -78,6 +79,7 @@
         "fine      fine"
         "batch     batch";
     gap: var(--space-lg);
+    min-width: 0;
 }
 
 .composition__chart-card {
@@ -85,7 +87,7 @@
     border: 1px solid var(--border-light);
     border-radius: var(--radius-lg);
     padding: var(--space-xl);
-    min-height: 380px;
+    min-height: clamp(20rem, 45vh, 24rem);
     display: flex;
     flex-direction: column;
 }
@@ -95,8 +97,8 @@
 .composition__chart-card--sex       { grid-area: sex; }
 .composition__chart-card--age       { grid-area: age; }
 .composition__chart-card--skin      { grid-area: skin; }
-.composition__chart-card--fine      { grid-area: fine; min-height: 600px; }
-.composition__chart-card--batch     { grid-area: batch; min-height: 500px; }
+.composition__chart-card--fine      { grid-area: fine; min-height: clamp(24rem, 65vh, 37.5rem); }
+.composition__chart-card--batch     { grid-area: batch; min-height: clamp(22rem, 55vh, 31.25rem); }
 
 .composition__chart-title {
     font-family: var(--font-display);
@@ -115,6 +117,8 @@
 .composition__chart-container {
     flex: 1;
     min-height: 0;
+    min-width: 0;
+    width: 100%;
 }
 
 /* Responsive */
@@ -131,17 +135,9 @@
             "batch";
     }
 
-    .composition__chart-card {
-        min-height: 350px;
-    }
-
-    .composition__chart-card--fine {
-        min-height: 550px;
-    }
-
-    .composition__chart-card--batch {
-        min-height: 450px;
-    }
+    .composition__chart-card { min-height: clamp(20rem, 48vh, 23rem); }
+    .composition__chart-card--fine { min-height: clamp(23rem, 62vh, 34rem); }
+    .composition__chart-card--batch { min-height: clamp(22rem, 55vh, 28rem); }
 }
 
 @media (max-width: 768px) {
@@ -151,14 +147,14 @@
 
     .composition__chart-card {
         padding: var(--space-lg);
-        min-height: 320px;
+        min-height: clamp(18rem, 52vh, 22rem);
     }
 
     .composition__chart-card--fine {
-        min-height: 500px;
+        min-height: clamp(22rem, 65vh, 30rem);
     }
 
     .composition__chart-card--batch {
-        min-height: 420px;
+        min-height: clamp(20rem, 58vh, 26rem);
     }
 }

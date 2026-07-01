@@ -5,14 +5,14 @@
 .visualization-container {
     min-height: 100vh;
     background: var(--bg-body);
-    padding-top: 80px;
+    padding-top: calc(var(--header-height) + 1.5rem);
 }
 
 /* Page Header */
 .viz-page-header {
     max-width: 1400px;
     margin: 0 auto 40px;
-    padding: 0 40px;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 .breadcrumb {
@@ -22,6 +22,7 @@
     font-size: 0.9rem;
     margin-bottom: 16px;
     color: var(--text-secondary);
+    flex-wrap: wrap;
 }
 
 .breadcrumb a {
@@ -62,7 +63,7 @@
 .status-banner {
     max-width: 1400px;
     margin: 0 auto 24px;
-    padding: 0 40px;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 .status-content {
@@ -73,6 +74,7 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    overflow-wrap: anywhere;
     box-shadow: 0 2px 8px rgba(232, 146, 124, 0.3);
 }
 
@@ -102,7 +104,7 @@
 .viz-frame-section {
     max-width: 1400px;
     margin: 0 auto 40px;
-    padding: 0 40px;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 .viz-toolbar {
@@ -114,12 +116,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .toolbar-left,
 .toolbar-right {
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .toolbar-btn {
@@ -134,7 +139,7 @@
     font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: color var(--transition-base), background-color var(--transition-base), border-color var(--transition-base);
     text-decoration: none;
 }
 
@@ -178,20 +183,22 @@
 
 #viz-frame {
     width: 100%;
-    height: 800px;
+    height: clamp(28rem, calc(100dvh - 10rem), 50rem);
+    border: 0;
     display: block;
     background: var(--bg-body);
 }
 
 .viz-frame-wrapper:fullscreen #viz-frame {
     height: 100vh;
+    height: 100dvh;
 }
 
 /* Instructions Panel */
 .instructions-panel {
     max-width: 1400px;
     margin: 0 auto 40px;
-    padding: 0 40px;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 .instructions-panel h2 {
@@ -204,7 +211,7 @@
 
 .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(18.75rem, 100%), 1fr));
     gap: 20px;
 }
 
@@ -213,7 +220,7 @@
     border: 1px solid var(--border-light);
     border-radius: 8px;
     padding: 24px;
-    transition: all var(--transition-slow);
+    transition: border-color var(--transition-slow), transform var(--transition-slow), box-shadow var(--transition-slow);
 }
 
 .tool-card:hover {
@@ -246,7 +253,7 @@
 .tips-section {
     max-width: 1400px;
     margin: 0 auto 60px;
-    padding: 0 40px;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
 }
 
 .tips-section h2 {
@@ -309,7 +316,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .visualization-container {
-        padding-top: 60px;
+        padding-top: calc(var(--header-height) + 1rem);
     }
 
     .viz-page-header,
@@ -335,9 +342,7 @@
         justify-content: center;
     }
 
-    #viz-frame {
-        height: 600px;
-    }
+    #viz-frame { height: clamp(26rem, calc(100dvh - 8rem), 40rem); }
 
     .tools-grid {
         grid-template-columns: 1fr;
@@ -346,6 +351,15 @@
     .tips-list {
         padding: 24px;
     }
+}
+
+@media (max-width: 480px) {
+    .viz-toolbar { align-items: stretch; }
+    .toolbar-left,
+    .toolbar-right { display: grid; grid-template-columns: 1fr; }
+    .toolbar-btn { justify-content: center; min-height: 44px; }
+    .status-content { align-items: flex-start; padding: 1rem; }
+    .tips-list { padding: 1.25rem; }
 }
 
 /* Print Styles */
