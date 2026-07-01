@@ -71,12 +71,19 @@ load_priors <- function(species) {
   p
 }
 
-# Derive the per-GSM directory (and species) from the mapping's csv_path, so
-# this script and the servlet resolve the exact same location.
-#   csv_path = SkinDB_New/10X/<species>/<GSE>/<GSM>/DEG_results/<...>.csv
-gsm_dir_of <- function(csv_path) dirname(dirname(csv_path))          # -> .../<GSM>
+# Paths use fixed roots keyed by species/GSE/GSM (the mapping's csv_path only
+# carries the species tag; its directory prefix is nominal and not on disk):
+#   matrix : <data_root>/download_data/<species>/<GSE>/<GSM>/*.h5ad
+#   output : <data_root>/SCORPION/<species>/<GSE>/<GSM>/   (what the servlet reads)
 species_of <- function(csv_path) {
-  if (grepl("/mouse/", csv_path)) "mouse" else "human"
+  if (!is.null(csv_path) && grepl("/mouse/", csv_path)) "mouse" else "human"
+}
+# Pick the dataset's h5ad: prefer <GSE>_<GSM>.h5ad, else any .h5ad in the folder.
+find_h5ad <- function(dir, gse, gsm) {
+  preferred <- file.path(dir, sprintf("%s_%s.h5ad", gse, gsm))
+  if (file.exists(preferred)) return(preferred)
+  hits <- list.files(dir, pattern = "\\.h5ad$", full.names = TRUE)
+  if (length(hits) == 0) NA_character_ else hits[1]
 }
 
 read_counts <- function(h5ad_path) {
@@ -99,16 +106,16 @@ run_one <- function(said) {
   if (is.null(meta$csv_path)) { message(sprintf("[%s] no csv_path, skip", said)); return(invisible()) }
   species <- species_of(meta$csv_path)
   gse <- meta$GSE; gsm <- meta$GSM
-  gsm_dir <- file.path(opt$data_root, gsm_dir_of(meta$csv_path))
-  out_dir <- file.path(gsm_dir, "SCORPION")
+  in_dir  <- file.path(opt$data_root, "download_data", species, gse, gsm)
+  out_dir <- file.path(opt$data_root, "SCORPION", species, gse, gsm)
 
   done_flag <- file.path(out_dir, "meta.json")
   if (file.exists(done_flag) && !opt$overwrite) {
     message(sprintf("[%s] already done, skip (use --overwrite)", said)); return(invisible())
   }
 
-  h5ad <- file.path(gsm_dir, sprintf("%s_%s.h5ad", gse, gsm))
-  if (!file.exists(h5ad)) { message(sprintf("[%s] h5ad missing: %s", said, h5ad)); return(invisible()) }
+  h5ad <- find_h5ad(in_dir, gse, gsm)
+  if (is.na(h5ad)) { message(sprintf("[%s] no h5ad in %s", said, in_dir)); return(invisible()) }
 
   message(sprintf("[%s] %s  reading counts ...", said, species))
   gex <- tryCatch(read_counts(h5ad), error = function(e) { message("  read error: ", conditionMessage(e)); NULL })

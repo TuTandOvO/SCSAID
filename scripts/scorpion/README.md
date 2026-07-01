@@ -33,7 +33,8 @@ in `meta.json` for reproducibility.
 ## Outputs (what the servlet serves)
 
 Written next to each dataset at
-`<dataRoot>/SkinDB_New/10X/<species>/<GSE>/<GSM>/SCORPION/`:
+`<dataRoot>/SCORPION/<species>/<GSE>/<GSM>/` (matrices are read from
+`<dataRoot>/download_data/<species>/<GSE>/<GSM>/*.h5ad`):
 
 - `tf_activity.csv` — `tf,out_degree,total_score,mean_weight,rank`
   (per-TF regulator ranking; `total_score` = summed positive edge weight).

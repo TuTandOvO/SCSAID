@@ -67,7 +67,7 @@ public class ScorpionServlet extends HttpServlet {
             return;
         }
 
-        File dir = resolveScorpionDir(meta.get("csv_path"));
+        File dir = resolveScorpionDir(meta);
         File activityFile = new File(dir, "tf_activity.csv");
         File targetsFile  = new File(dir, "tf_targets.csv");
         File metaFile     = new File(dir, "meta.json");
@@ -99,15 +99,17 @@ public class ScorpionServlet extends HttpServlet {
         }
     }
 
-    // csv_path = SkinDB_New/10X/<sp>/<GSE>/<GSM>/DEG_results/<...>.csv
-    // -> <dataRoot>/SkinDB_New/10X/<sp>/<GSE>/<GSM>/SCORPION
-    private File resolveScorpionDir(String csvPath) {
-        String norm = csvPath.replace('\\', '/');
-        int lastSlash = norm.lastIndexOf('/');                 // strip filename
-        String degDir = lastSlash > 0 ? norm.substring(0, lastSlash) : norm;
-        int prevSlash = degDir.lastIndexOf('/');               // strip DEG_results
-        String gsmDir = prevSlash > 0 ? degDir.substring(0, prevSlash) : degDir;
-        return DataPathResolver.resolveReadableFile(getServletContext(), gsmDir + "/SCORPION");
+    // Precomputed networks live under a fixed root keyed by species/GSE/GSM,
+    // exactly like EnrichmentServlet roots GSEA under GSM_enrich/<sp>/<GSE>/<GSM>.
+    // (The mapping's csv_path is only used to read the species tag.)
+    //   -> <dataRoot>/SCORPION/<species>/<GSE>/<GSM>
+    private File resolveScorpionDir(Map<String, String> meta) {
+        String csvPath = meta.get("csv_path");
+        String species = (csvPath != null && csvPath.contains("/mouse/")) ? "mouse" : "human";
+        String gse = meta.get("GSE");
+        String gsm = meta.get("GSM");
+        String rel = "SCORPION/" + species + "/" + gse + "/" + gsm;
+        return DataPathResolver.resolveReadableFile(getServletContext(), rel);
     }
 
     private void handleActivity(PrintWriter out, File activityFile, File metaFile, int top)
