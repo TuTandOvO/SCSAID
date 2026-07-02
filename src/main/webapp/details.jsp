@@ -819,8 +819,9 @@
                             <div style="font-family:'Nunito', sans-serif; font-size:0.9rem; color:var(--ink-soft);">
                                 Drag & drop a <strong>.gmt</strong> file here, or
                                 <label class="action-link" style="cursor:pointer; text-decoration:underline;">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
+                                <button type="button" class="analysis-help" aria-label="About GMT file format" aria-describedby="help-gmt-format" aria-expanded="false" data-help-target="help-gmt-format">?</button>
                             </div>
-                            <div class="help-text" style="margin-top:0.3rem;">GMT format: name &lt;tab&gt; description &lt;tab&gt; gene1 &lt;tab&gt; gene2 &lt;tab&gt; ...</div>
+                            <span id="help-gmt-format" class="visually-hidden">GMT rows contain a set name, description, and gene symbols separated by tabs.</span>
                         </div>
                         <div id="gssUploadResult" style="display:none;">
                             <div id="gssSpeciesWarning" style="display:none; padding:0.6rem 0.8rem; background:#fff8e1; border:1px solid #ffe082; border-radius:var(--radius-sm); font-family:'Nunito', sans-serif; font-size:0.82rem; color:#8d6e00; margin-bottom:0.5rem;">
