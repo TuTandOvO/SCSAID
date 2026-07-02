@@ -54,6 +54,21 @@ jobs:
             # Wait for port 8080 to actually be released before starting, else the
             # new JVM hits BindException and dies silently.
             for i in $(seq 1 20); do ss -tln | grep -q ':8080 ' || break; sleep 1; done
+            # Persist mutable runtime state outside the replaced WAR. On the
+            # first deployment after this fix, migrate the live counter written
+            # by the old application before deleting its exploded directory.
+            COUNTER_DIR=/opt/SkinDB/runtime
+            COUNTER_FILE="$COUNTER_DIR/access-counter.properties"
+            OLD_COUNTER=/opt/tomcat/webapps/ROOT/WEB-INF/counter.properties
+            install -d -o tomcat -g tomcat "$COUNTER_DIR"
+            if [ ! -f "$COUNTER_FILE" ] && [ -f "$OLD_COUNTER" ]; then
+              cp "$OLD_COUNTER" "$COUNTER_FILE"
+            fi
+            if [ ! -f "$COUNTER_FILE" ]; then
+              printf 'currentDate=%s\ndailyCount=0\ntotalCount=0\n' "$(date +%F)" > "$COUNTER_FILE"
+            fi
+            chown tomcat:tomcat "$COUNTER_FILE"
+            chmod 640 "$COUNTER_FILE"
             # Clear old app, compiled-JSP cache and stale PID before swapping in.
             rm -rf /opt/tomcat/webapps/ROOT \
                    /opt/tomcat/webapps/ROOT.war \

@@ -792,11 +792,11 @@
                 <%
                     Object totalObj = application.getAttribute("totalCount");
                     Object dailyObj = application.getAttribute("dailyCount");
-                    int totalCountValue = (totalObj instanceof java.util.concurrent.atomic.AtomicInteger)
-                            ? ((java.util.concurrent.atomic.AtomicInteger) totalObj).get()
+                    long totalCountValue = (totalObj instanceof java.util.concurrent.atomic.AtomicLong)
+                            ? ((java.util.concurrent.atomic.AtomicLong) totalObj).get()
                             : 0;
-                    int dailyCountValue = (dailyObj instanceof java.util.concurrent.atomic.AtomicInteger)
-                            ? ((java.util.concurrent.atomic.AtomicInteger) dailyObj).get()
+                    long dailyCountValue = (dailyObj instanceof java.util.concurrent.atomic.AtomicLong)
+                            ? ((java.util.concurrent.atomic.AtomicLong) dailyObj).get()
                             : 0;
                 %>
                 <span>Total Visits: <%= totalCountValue %></span>
