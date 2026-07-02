@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page import="Entity.GeneInfo" %>
 <%@ page import="java.util.Map" %>
 <!DOCTYPE html>
