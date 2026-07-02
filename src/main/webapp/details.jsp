@@ -427,7 +427,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260702b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702c">
     <link rel="stylesheet" href="CSS/header.css?v=20260701h">
     <link rel="stylesheet" href="CSS/details.css?v=20260701h">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
@@ -1054,9 +1054,10 @@
                         <div>
                             <div class="header-title title-with-help">
                                 <button type="button" class="analysis-help" aria-label="About the SCORPION regulatory network" aria-describedby="help-scorpion" aria-expanded="false" data-help-target="help-scorpion">Gene Regulatory Network (SCORPION)</button>
+                                <span class="feature-status" aria-label="Beta feature">Beta</span>
                             </div>
                             <div id="help-scorpion" class="visually-hidden">
-                                Transcription-factor regulatory network reconstructed with SCORPION using PANDA message passing on the single-cell co-expression network, a CollecTRI regulatory prior, and STRING v12 protein interactions. Regulators are ranked by total network strength; targetome and network views show leading predicted targets. Method: Osorio D. et al., SCORPION, Kuijjer Lab.
+                                Beta feature. Transcription-factor regulatory network reconstructed with SCORPION using PANDA message passing on the single-cell co-expression network, a CollecTRI regulatory prior, and STRING v12 protein interactions. Regulators are ranked by total network strength; targetome and network views show leading predicted targets. Method: Osorio D. et al., SCORPION, Kuijjer Lab.
                             </div>
                         </div>
                     </div>

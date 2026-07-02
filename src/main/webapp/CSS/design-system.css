@@ -224,6 +224,25 @@ div {
     font-size: 0.82rem;
 }
 
+.feature-status {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    padding: 0.08rem 0.4rem;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    background: var(--bg-muted);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 300;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    vertical-align: 0.2em;
+    white-space: nowrap;
+}
+
 .analysis-help-popover {
     position: fixed;
     z-index: var(--z-tooltip);
