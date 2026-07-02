@@ -22,8 +22,8 @@ SCORPION integrates three sources into one GRN via the PANDA framework:
 | Input | Source | Notes |
 |-------|--------|-------|
 | Single-cell co-expression | the dataset's own `.h5ad` counts | genes × cells; SCORPION builds metacells internally |
-| Regulatory prior (TF → target, `W0`) | **DoRothEA** (Garcia-Alonso et al., 2019), confidence A/B/C | curated regulons bundled in the `dorothea` package — no network needed |
-| TF ↔ TF interactions | **STRING v12** (Szklarczyk et al., 2023) | combined score ≥ 700, rescaled to [0,1] |
+| Regulatory prior (TF → target, `W0`) | **CollecTRI** (Müller-Dott et al., 2023) via the OmniPath static export | curated TF→target pairs, species-cased symbols |
+| TF ↔ TF interactions | **STRING v12** (Szklarczyk et al., 2023), score ≥ 700, via the STRING network API | self-loops added so every TF is retained (SCORPION intersects the TF set with the PPI) |
 
 The priors are species-level, so they are built **once per species** and reused
 for every dataset of that species — which is what makes regulator rankings
@@ -46,26 +46,32 @@ Written next to each dataset at
 are absent the page shows a graceful "being prepared" message, so deploying the
 UI before the pipeline has run is safe.
 
-## How to run (on the server, where the data + R live)
+## How it was set up on the server
+
+R is provided by a dedicated conda env (`/root/miniconda3/envs/scorpion`) with
+`r-base`, **SCORPION** (installed from `kuijjerlab/SCORPION` — note the package
+is named `SCORPION`, its function is `scorpion()`), `r-anndata` + a Python with
+`anndata` (reticulate), and the deps `RANN`, `irlba`, `RSpectra`, `furrr`,
+`RhpcBLASctl`, `matrixStats`.
 
 ```bash
-# 1. install once
-Rscript -e 'install.packages(c("scorpion","anndata","jsonlite","optparse","Matrix"))'
-Rscript -e 'if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager"); \
-            BiocManager::install(c("dorothea","STRINGdb"))'
-# anndata needs a Python with the `anndata` package (reticulate) — the project's
-# scrna conda env already has it: reticulate::use_python(".../envs/scrna/bin/python")
+# 1. build the two priors per species — run on ANY machine with internet
+#    (the deployment host cannot reach omnipathdb.org / string-db.org), then
+#    copy the four files to the server's --priors directory:
+OUT=./SCORPION_priors ./build_priors.sh
+scp SCORPION_priors/*.txt root@<server>:/opt/SkinDB/SCORPION_priors/
 
-# 2. build the species priors once
-Rscript build_priors.R --species human --out /opt/SkinDB/SCORPION_priors
-Rscript build_priors.R --species mouse --out /opt/SkinDB/SCORPION_priors
-
-# 3. reconstruct every dataset's network (resumable; skips finished ones)
-Rscript run_scorpion.R \
-    --mapping /opt/tomcat/webapps/ROOT/WEB-INF/classes/mapping.csv.json \
-    --data_root /opt/SkinDB \
-    --priors /opt/SkinDB/SCORPION_priors \
-    --cores 4
+# 2. reconstruct every dataset's network (resumable; skips finished ones).
+#    Run single-threaded workers in parallel with a virtual-memory backstop
+#    (the box has 14 GB RAM, no swap, Tomcat ~4.7 GB):
+export RETICULATE_PYTHON=/root/miniconda3/envs/scorpion/bin/python
+grep -oE '"SAID[0-9]+"' /opt/tomcat/webapps/ROOT/WEB-INF/classes/mapping.csv.json \
+  | tr -d '"' | sort -u \
+  | xargs -P 3 -I{} bash -c '
+      ulimit -v 12582912; export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+      /root/miniconda3/envs/scorpion/bin/Rscript run_scorpion.R \
+        --mapping /opt/tomcat/webapps/ROOT/WEB-INF/classes/mapping.csv.json \
+        --data_root /opt/SkinDB --priors /opt/SkinDB/SCORPION_priors --said {} --cores 1'
 
 # single dataset / force recompute:
 Rscript run_scorpion.R --mapping ... --said SAID001 --overwrite
@@ -80,4 +86,4 @@ unless `--overwrite` is given.
 
 Osorio D., et al. *SCORPION: single-cell oriented reconstruction of PANDA
 individual optimized gene regulatory networks.* Kuijjer Lab.
-Prior: DoRothEA (Garcia-Alonso et al., Genome Research 2019). Interactions: STRING v12.
+Prior: CollecTRI (Müller-Dott et al., 2023). Interactions: STRING v12 (Szklarczyk et al., 2023).

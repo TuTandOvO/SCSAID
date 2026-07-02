@@ -1038,9 +1038,8 @@
                     <div class="info-bar">
                         Transcription-factor regulatory network reconstructed for this dataset with
                         <strong>SCORPION</strong> (PANDA message passing on the single-cell co-expression
-                        network), integrating a <strong>DoRothEA</strong> curated regulatory prior
-                        (and, where available, a <strong>STRING</strong> protein&ndash;protein
-                        interaction network).
+                        network), integrating a <strong>CollecTRI</strong> curated regulatory prior
+                        and a <strong>STRING</strong> protein&ndash;protein interaction network.
                     </div>
                     <div id="scorpionMethodNote" class="help-text" style="margin:0 0 12px; font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">
                         Each transcription factor (TF) is scored by its total regulatory strength across
@@ -1084,7 +1083,7 @@
                         <p id="scorpionProvenance" class="help-text"
                            style="margin:1rem 0 0; font-size:0.78rem; color:var(--text-secondary); line-height:1.5;">
                             Method: Osorio D. <em>et al.</em>, SCORPION (Kuijjer Lab).
-                            Regulatory prior: DoRothEA (A/B/C). Protein interactions: STRING v12.
+                            Regulatory prior: CollecTRI. Protein interactions: STRING v12.
                         </p>
                     </div>
                 </div>

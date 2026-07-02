@@ -43,6 +43,8 @@ opt <- parse_args(OptionParser(option_list = list(
   make_option("--said",      type = "character", default = NULL),
   make_option("--overwrite", action = "store_true", default = FALSE),
   make_option("--cores",     type = "integer", default = 1L),
+  make_option("--min_cells", type = "integer", default = 10L,
+              help = "drop genes detected in fewer than this many cells (removes zero-variance genes that make coexpression NaN)"),
   # network-summary parameters (documented in meta.json for every run):
   make_option("--edge_quantile", type = "double", default = 0.99,
               help = "an edge counts toward a TF's out-degree if its weight is above this within-network quantile"),
@@ -124,6 +126,14 @@ run_one <- function(said) {
   gex <- tryCatch(read_counts(h5ad), error = function(e) { message("  read error: ", conditionMessage(e)); NULL })
   if (is.null(gex) || nrow(gex) < 100) { message(sprintf("[%s] too few genes, skip", said)); return(invisible()) }
 
+  # Drop genes detected in too few cells. All-zero / near-constant genes have zero
+  # variance, which makes the coexpression correlations (and SCORPION's hamming
+  # distance) NaN. This is standard scRNA preprocessing.
+  keep <- Matrix::rowSums(gex > 0) >= opt$min_cells
+  gex <- gex[keep, , drop = FALSE]
+  message(sprintf("[%s] %d genes pass min_cells=%d filter", said, nrow(gex), opt$min_cells))
+  if (nrow(gex) < 100) { message(sprintf("[%s] too few expressed genes, skip", said)); return(invisible()) }
+
   pr <- load_priors(species)
   # Keep only prior edges whose genes/TFs are measured in this dataset.
   measured <- rownames(gex)
@@ -173,7 +183,7 @@ run_one <- function(said) {
     edge_threshold = round(thr, 4), edge_quantile = opt$edge_quantile,
     targets_per_tf = k,
     method = "SCORPION (PANDA message passing on single-cell coexpression)",
-    regulatory_prior = "DoRothEA (confidence A/B/C)",
+    regulatory_prior = "CollecTRI (via OmniPath)",
     ppi = if (is.null(ppi)) "none" else "STRING v12 (score>=700)",
     scorpion_version = scorpion_version,
     run_date = format(Sys.time(), "%Y-%m-%d")
