@@ -28,7 +28,8 @@
 #     [--overwrite]           # recompute even if outputs already exist
 #     [--cores 4]
 #
-# Requires: scorpion, anndata (reticulate), jsonlite, Matrix, optparse.
+# Requires: SCORPION, anndata (reticulate), jsonlite, Matrix, optparse.
+#   (the CRAN/GitHub package is named SCORPION; its main function is scorpion())
 # ==========================================================================
 
 suppressWarnings(suppressMessages({
@@ -50,11 +51,11 @@ opt <- parse_args(OptionParser(option_list = list(
 )))
 
 stopifnot(!is.null(opt$mapping))
-suppressWarnings(suppressMessages({ library(scorpion); library(anndata) }))
+suppressWarnings(suppressMessages({ library(SCORPION); library(anndata) }))
 
 mapping <- jsonlite::fromJSON(opt$mapping, simplifyVector = FALSE)
 saids <- if (is.null(opt$said)) names(mapping) else opt$said
-scorpion_version <- as.character(utils::packageVersion("scorpion"))
+scorpion_version <- as.character(utils::packageVersion("SCORPION"))
 
 # Cache the two priors per species so we read them at most once each.
 prior_cache <- new.env()
@@ -62,10 +63,12 @@ load_priors <- function(species) {
   if (!is.null(prior_cache[[species]])) return(prior_cache[[species]])
   mf <- file.path(opt$priors, sprintf("motif_prior_%s.txt", species))
   pf <- file.path(opt$priors, sprintf("ppi_%s.txt", species))
-  if (!file.exists(mf) || !file.exists(pf))
-    stop(sprintf("missing priors for %s — run build_priors.R first (%s / %s)", species, mf, pf))
+  if (!file.exists(mf))
+    stop(sprintf("missing regulatory prior for %s — run build_priors.R first (%s)", species, mf))
   motif <- read.table(mf, header = TRUE, sep = "\t", stringsAsFactors = FALSE, quote = "")
-  ppi   <- read.table(pf, header = TRUE, sep = "\t", stringsAsFactors = FALSE, quote = "")
+  # PPI is optional: SCORPION runs with motif + expression only if it is absent.
+  ppi <- if (file.exists(pf))
+    read.table(pf, header = TRUE, sep = "\t", stringsAsFactors = FALSE, quote = "") else NULL
   p <- list(motif = motif, ppi = ppi)
   prior_cache[[species]] <- p
   p
@@ -126,12 +129,13 @@ run_one <- function(said) {
   measured <- rownames(gex)
   motif <- pr$motif[pr$motif$tf %in% measured & pr$motif$target %in% measured, ]
   if (nrow(motif) < 50) { message(sprintf("[%s] prior overlap too small, skip", said)); return(invisible()) }
-  ppi <- pr$ppi[pr$ppi$tf1 %in% motif$tf & pr$ppi$tf2 %in% motif$tf, ]
+  ppi <- if (is.null(pr$ppi)) NULL else
+    pr$ppi[pr$ppi$tf1 %in% motif$tf & pr$ppi$tf2 %in% motif$tf, ]
 
   message(sprintf("[%s] SCORPION: %d genes x %d cells, %d prior edges, %d TFs ...",
                   said, nrow(gex), ncol(gex), nrow(motif), length(unique(motif$tf))))
   net <- tryCatch(
-    scorpion::scorpion(tfMotifs = motif, gexMatrix = gex, ppiNet = ppi, nCores = opt$cores),
+    SCORPION::scorpion(tfMotifs = motif, gexMatrix = gex, ppiNet = ppi, nCores = opt$cores),
     error = function(e) { message("  scorpion error: ", conditionMessage(e)); NULL })
   if (is.null(net) || is.null(net$regNet)) { message(sprintf("[%s] no regNet, skip", said)); return(invisible()) }
 
@@ -169,7 +173,8 @@ run_one <- function(said) {
     edge_threshold = round(thr, 4), edge_quantile = opt$edge_quantile,
     targets_per_tf = k,
     method = "SCORPION (PANDA message passing on single-cell coexpression)",
-    regulatory_prior = "CollecTRI", ppi = "STRING v12 (score>=700)",
+    regulatory_prior = "DoRothEA (confidence A/B/C)",
+    ppi = if (is.null(ppi)) "none" else "STRING v12 (score>=700)",
     scorpion_version = scorpion_version,
     run_date = format(Sys.time(), "%Y-%m-%d")
   ), file.path(out_dir, "meta.json"), auto_unbox = TRUE, pretty = TRUE)

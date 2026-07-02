@@ -22,7 +22,7 @@ SCORPION integrates three sources into one GRN via the PANDA framework:
 | Input | Source | Notes |
 |-------|--------|-------|
 | Single-cell co-expression | the dataset's own `.h5ad` counts | genes × cells; SCORPION builds metacells internally |
-| Regulatory prior (TF → target, `W0`) | **CollecTRI** (Müller-Dott et al., 2023) via `decoupleR` | literature-curated, human + mouse |
+| Regulatory prior (TF → target, `W0`) | **DoRothEA** (Garcia-Alonso et al., 2019), confidence A/B/C | curated regulons bundled in the `dorothea` package — no network needed |
 | TF ↔ TF interactions | **STRING v12** (Szklarczyk et al., 2023) | combined score ≥ 700, rescaled to [0,1] |
 
 The priors are species-level, so they are built **once per species** and reused
@@ -52,7 +52,7 @@ UI before the pipeline has run is safe.
 # 1. install once
 Rscript -e 'install.packages(c("scorpion","anndata","jsonlite","optparse","Matrix"))'
 Rscript -e 'if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager"); \
-            BiocManager::install(c("decoupleR","STRINGdb"))'
+            BiocManager::install(c("dorothea","STRINGdb"))'
 # anndata needs a Python with the `anndata` package (reticulate) — the project's
 # scrna conda env already has it: reticulate::use_python(".../envs/scrna/bin/python")
 
@@ -80,4 +80,4 @@ unless `--overwrite` is given.
 
 Osorio D., et al. *SCORPION: single-cell oriented reconstruction of PANDA
 individual optimized gene regulatory networks.* Kuijjer Lab.
-Prior: CollecTRI. Interactions: STRING v12.
+Prior: DoRothEA (Garcia-Alonso et al., Genome Research 2019). Interactions: STRING v12.
