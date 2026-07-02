@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Something went wrong - scSAID</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702b">
     <style>
         body { background:#ffffff; font-family:'Nunito', sans-serif; color:#333333;
                display:flex; min-height:100vh; min-height:100dvh; align-items:center; justify-content:center; margin:0; padding:1rem; }

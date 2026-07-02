@@ -70,8 +70,7 @@
         <div class="page-hero__inner">
             <span class="page-hero__eyebrow">Integrated atlas · gene expression</span>
             <h1 class="page-hero__title title-with-help">
-                Expression
-                <button type="button" class="analysis-help" aria-label="About integrated expression" aria-describedby="help-expression" aria-expanded="false" data-help-target="help-expression">?</button>
+                <button type="button" class="analysis-help" aria-label="About integrated expression" aria-describedby="help-expression" aria-expanded="false" data-help-target="help-expression">Expression</button>
             </h1>
             <span id="help-expression" class="visually-hidden">Overlay a gene's expression intensity on the integrated human or mouse skin UMAP. Gene-symbol matching is case-insensitive.</span>
         </div>

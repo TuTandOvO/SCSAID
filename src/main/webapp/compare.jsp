@@ -47,8 +47,7 @@
         <div class="page-hero__inner">
             <span class="page-hero__eyebrow">Cross-condition analysis</span>
             <h1 class="page-hero__title title-with-help">
-                Condition comparison
-                <button type="button" class="analysis-help" aria-label="About condition comparison" aria-describedby="help-condition-comparison" aria-expanded="false" data-help-target="help-condition-comparison">?</button>
+                <button type="button" class="analysis-help" aria-label="About condition comparison" aria-describedby="help-condition-comparison" aria-expanded="false" data-help-target="help-condition-comparison">Condition comparison</button>
             </h1>
             <span id="help-condition-comparison" class="visually-hidden">Differential expression with pseudobulk DESeq2 and pre-ranked GSEA between two conditions, per cell type. Biological samples, rather than individual cells, are the statistical replicates.</span>
         </div>
@@ -63,8 +62,7 @@
             <header class="panel-header">
                 <span class="panel-eyebrow">Step 1</span>
                 <h2 class="panel-title title-with-help" id="setup-title">
-                    Choose conditions
-                    <button type="button" class="analysis-help" aria-label="About choosing a comparison" aria-describedby="help-choose-conditions" aria-expanded="false" data-help-target="help-choose-conditions">?</button>
+                    <button type="button" class="analysis-help" aria-label="About choosing a comparison" aria-describedby="help-choose-conditions" aria-expanded="false" data-help-target="help-choose-conditions">Choose conditions</button>
                 </h2>
                 <span id="help-choose-conditions" class="visually-hidden">Only conditions with at least two samples are listed. A disease-versus-Healthy contrast provides a shared baseline. Disease-versus-disease contrasts can be confounded by skin region, cohort, or study batch. Comparisons with two or three samples are underpowered, and cell types with insufficient cells are skipped.</span>
             </header>
@@ -120,8 +118,7 @@
                 <header class="panel-header">
                     <span class="panel-eyebrow">Step 2 · Differential expression</span>
                     <h2 class="panel-title title-with-help" id="deg-title">
-                        DEG results
-                        <button type="button" class="analysis-help" aria-label="About condition-comparison DEG results" aria-describedby="help-compare-deg" aria-expanded="false" data-help-target="help-compare-deg">?</button>
+                        <button type="button" class="analysis-help" aria-label="About condition-comparison DEG results" aria-describedby="help-compare-deg" aria-expanded="false" data-help-target="help-compare-deg">DEG results</button>
                     </h2>
                     <span id="help-compare-deg" class="visually-hidden">Per-cell-type log2 fold change of condition A relative to condition B. Results can be filtered by adjusted p-value, absolute effect size, cell type, and pseudogene status.</span>
                 </header>
@@ -194,8 +191,7 @@
                 <header class="panel-header">
                     <span class="panel-eyebrow">Step 2 · Gene-set enrichment</span>
                     <h2 class="panel-title title-with-help" id="gsea-title">
-                        Pre-ranked GSEA
-                        <button type="button" class="analysis-help" aria-label="About pre-ranked GSEA" aria-describedby="help-compare-gsea" aria-expanded="false" data-help-target="help-compare-gsea">?</button>
+                        <button type="button" class="analysis-help" aria-label="About pre-ranked GSEA" aria-describedby="help-compare-gsea" aria-expanded="false" data-help-target="help-compare-gsea">Pre-ranked GSEA</button>
                     </h2>
                     <span id="help-compare-gsea" class="visually-hidden">Genes are ranked by signed negative log10 adjusted p-value for leading-edge enrichment analysis against the selected curated gene-set library.</span>
                 </header>

@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702b">
     <link rel="stylesheet" href="CSS/header.css?v=20260701h">
     <link rel="stylesheet" href="CSS/details.css?v=20260701h">
     <link rel="stylesheet" href="CSS/search.css?v=20260701h">
@@ -66,8 +66,7 @@
     <section class="search-hero">
         <span class="search-hero__eyebrow">Gene explorer</span>
         <h1 class="search-hero__title title-with-help">
-            Search genes across all datasets
-            <button type="button" class="analysis-help" aria-label="About cross-dataset gene search" aria-describedby="help-gene-search" aria-expanded="false" data-help-target="help-gene-search">?</button>
+            <button type="button" class="analysis-help" aria-label="About cross-dataset gene search" aria-describedby="help-gene-search" aria-expanded="false" data-help-target="help-gene-search">Search genes across all datasets</button>
         </h1>
         <span id="help-gene-search" class="visually-hidden">Query differential-expression results across all scSAID datasets and cell types to locate the populations and effect sizes associated with a gene.</span>
 
@@ -184,8 +183,7 @@
                 <header class="panel-header">
                     <span class="panel-eyebrow">Expression visualization</span>
                     <h2 class="panel-title title-with-help">
-                        Gene expression on integrated UMAP
-                        <button type="button" class="analysis-help" aria-label="About integrated UMAP visualization" aria-describedby="help-search-umap" aria-expanded="false" data-help-target="help-search-umap">?</button>
+                        <button type="button" class="analysis-help" aria-label="About integrated UMAP visualization" aria-describedby="help-search-umap" aria-expanded="false" data-help-target="help-search-umap">Gene expression on integrated UMAP</button>
                     </h2>
                     <span id="help-search-umap" class="visually-hidden">Selected genes are displayed on the integrated UMAP for cross-dataset expression comparison.</span>
                     <p class="panel-description" id="viz-gene-count">Select genes above, then press <em>Visualize on UMAP</em>.</p>

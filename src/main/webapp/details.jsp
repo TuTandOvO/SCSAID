@@ -427,7 +427,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702b">
     <link rel="stylesheet" href="CSS/header.css?v=20260701h">
     <link rel="stylesheet" href="CSS/details.css?v=20260701h">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
@@ -600,8 +600,7 @@
                 <div class="header-content">
                     <div>
                         <div class="header-title title-with-help">
-                            Cell Proportion
-                            <button type="button" class="analysis-help" aria-label="About cell proportion" aria-describedby="help-cell-proportion" aria-expanded="false" data-help-target="help-cell-proportion">?</button>
+                            <button type="button" class="analysis-help" aria-label="About cell proportion" aria-describedby="help-cell-proportion" aria-expanded="false" data-help-target="help-cell-proportion">Cell Proportion</button>
                         </div>
                         <span id="help-cell-proportion" class="visually-hidden">Cell counts and relative abundance across the selected annotation level, shown as bar and composition charts.</span>
                     </div>
@@ -636,8 +635,7 @@
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                Cell Clustering
-                                <button type="button" class="analysis-help" aria-label="About cell clustering" aria-describedby="help-cell-clustering" aria-expanded="false" data-help-target="help-cell-clustering">?</button>
+                                <button type="button" class="analysis-help" aria-label="About cell clustering" aria-describedby="help-cell-clustering" aria-expanded="false" data-help-target="help-cell-clustering">Cell Clustering</button>
                             </div>
                             <span id="help-cell-clustering" class="visually-hidden">UMAP embedding of this sample. Color by available cell annotations or metadata fields.</span>
                         </div>
@@ -668,8 +666,7 @@
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                Differentially Expressed Genes
-                                <button type="button" class="analysis-help" aria-label="About differentially expressed genes" aria-describedby="help-deg" aria-expanded="false" data-help-target="help-deg">?</button>
+                                <button type="button" class="analysis-help" aria-label="About differentially expressed genes" aria-describedby="help-deg" aria-expanded="false" data-help-target="help-deg">Differentially Expressed Genes</button>
                             </div>
                             <span id="help-deg" class="visually-hidden">Cluster-marker results for this sample, or an on-demand comparison against another sample. Use the controls to filter by adjusted p-value, effect size, cell type, and pseudogene status.</span>
                         </div>
@@ -704,8 +701,7 @@
                             <div class="filter-card">
                                 <div class="filter-label">
                                     <span class="filter-name label-with-help">
-                                        p-value threshold
-                                        <button type="button" class="analysis-help" aria-label="About the p-value threshold" aria-describedby="help-deg-pvalue" aria-expanded="false" data-help-target="help-deg-pvalue">?</button>
+                                        <button type="button" class="analysis-help" aria-label="About the p-value threshold" aria-describedby="help-deg-pvalue" aria-expanded="false" data-help-target="help-deg-pvalue">p-value threshold</button>
                                     </span>
                                     <span class="filter-value" id="pvalLabel">0.05</span>
                                 </div>
@@ -715,8 +711,7 @@
                             <div class="filter-card">
                                 <div class="filter-label">
                                     <span class="filter-name label-with-help">
-                                        Log fold change
-                                        <button type="button" class="analysis-help" aria-label="About the log fold-change threshold" aria-describedby="help-deg-logfc" aria-expanded="false" data-help-target="help-deg-logfc">?</button>
+                                        <button type="button" class="analysis-help" aria-label="About the log fold-change threshold" aria-describedby="help-deg-logfc" aria-expanded="false" data-help-target="help-deg-logfc">Log fold change</button>
                                     </span>
                                     <span class="filter-value" id="fcLabel">1.0</span>
                                 </div>
@@ -734,8 +729,7 @@
                             <div class="filter-card">
                                 <div class="filter-label">
                                     <span class="filter-name label-with-help">
-                                        Pseudogenes
-                                        <button type="button" class="analysis-help" aria-label="About the pseudogene filter" aria-describedby="help-deg-pseudogenes" aria-expanded="false" data-help-target="help-deg-pseudogenes">?</button>
+                                        <button type="button" class="analysis-help" aria-label="About the pseudogene filter" aria-describedby="help-deg-pseudogenes" aria-expanded="false" data-help-target="help-deg-pseudogenes">Pseudogenes</button>
                                     </span>
                                 </div>
                                 <label class="checkbox-item" style="padding-top:0.25rem;">
@@ -768,8 +762,7 @@
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                Gene Set Scoring
-                                <button type="button" class="analysis-help" aria-label="About gene set scoring" aria-describedby="help-gene-set-scoring" aria-expanded="false" data-help-target="help-gene-set-scoring">?</button>
+                                <button type="button" class="analysis-help" aria-label="About gene set scoring" aria-describedby="help-gene-set-scoring" aria-expanded="false" data-help-target="help-gene-set-scoring">Gene Set Scoring</button>
                             </div>
                             <span id="help-gene-set-scoring" class="visually-hidden">Score a custom, MSigDB, or uploaded GMT gene set across cells and summarize scores by the selected annotation using AUCell, Scanpy score_genes, UCell, ssGSEA, or GSVA.</span>
                         </div>
@@ -867,8 +860,7 @@
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                CellPhoneDB Cell-Cell Communication Analysis
-                                <button type="button" class="analysis-help" aria-label="About CellPhoneDB communication analysis" aria-describedby="help-cellphonedb" aria-expanded="false" data-help-target="help-cellphonedb">?</button>
+                                <button type="button" class="analysis-help" aria-label="About CellPhoneDB communication analysis" aria-describedby="help-cellphonedb" aria-expanded="false" data-help-target="help-cellphonedb">CellPhoneDB Cell-Cell Communication Analysis</button>
                             </div>
                             <span id="help-cellphonedb" class="visually-hidden">CellPhoneDB ligand-receptor inference across selected cell types. Analyze all selected combinations or define directed sender and receiver groups at fine or broad annotation resolution.</span>
                         </div>
@@ -1002,8 +994,7 @@
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                Enrichment Analysis
-                                <button type="button" class="analysis-help" aria-label="About enrichment analysis" aria-describedby="help-enrichment" aria-expanded="false" data-help-target="help-enrichment">?</button>
+                                <button type="button" class="analysis-help" aria-label="About enrichment analysis" aria-describedby="help-enrichment" aria-expanded="false" data-help-target="help-enrichment">Enrichment Analysis</button>
                             </div>
                             <div id="help-enrichment" class="visually-hidden">
                                 <span id="enrichSource">Source: cluster markers of this sample.</span>
@@ -1062,8 +1053,7 @@
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                Gene Regulatory Network (SCORPION)
-                                <button type="button" class="analysis-help" aria-label="About the SCORPION regulatory network" aria-describedby="help-scorpion" aria-expanded="false" data-help-target="help-scorpion">?</button>
+                                <button type="button" class="analysis-help" aria-label="About the SCORPION regulatory network" aria-describedby="help-scorpion" aria-expanded="false" data-help-target="help-scorpion">Gene Regulatory Network (SCORPION)</button>
                             </div>
                             <div id="help-scorpion" class="visually-hidden">
                                 Transcription-factor regulatory network reconstructed with SCORPION using PANDA message passing on the single-cell co-expression network, a CollecTRI regulatory prior, and STRING v12 protein interactions. Regulators are ranked by total network strength; targetome and network views show leading predicted targets. Method: Osorio D. et al., SCORPION, Kuijjer Lab.

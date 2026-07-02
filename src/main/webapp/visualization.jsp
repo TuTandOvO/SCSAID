@@ -14,7 +14,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#333333">
     <title>Interactive Visualization - scSAID</title>
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702b">
     <link rel="stylesheet" href="CSS/header.css?v=20260701h">
     <link rel="stylesheet" href="CSS/visualization.css?v=20260701h">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,8 +42,7 @@
             </div>
 
             <h1 class="page-title title-with-help">
-                Interactive Visualization Suite
-                <button type="button" class="analysis-help" aria-label="About the visualization suite" aria-describedby="help-visualization-suite" aria-expanded="false" data-help-target="help-visualization-suite">?</button>
+                <button type="button" class="analysis-help" aria-label="About the visualization suite" aria-describedby="help-visualization-suite" aria-expanded="false" data-help-target="help-visualization-suite">Interactive Visualization Suite</button>
             </h1>
             <span id="help-visualization-suite" class="visually-hidden">Interactive dimensionality-reduction, expression, distribution, relationship, and composition views for dataset <%= datasetId %>.</span>
         </section>
@@ -103,67 +102,67 @@
             <div class="tools-grid">
                 <div class="tool-card">
                     <div class="tool-icon">🌐</div>
-                    <h3 class="title-with-help">3D UMAP <button type="button" class="analysis-help" aria-label="About 3D UMAP" aria-describedby="help-viz-umap3d" aria-expanded="false" data-help-target="help-viz-umap3d">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About 3D UMAP" aria-describedby="help-viz-umap3d" aria-expanded="false" data-help-target="help-viz-umap3d">3D UMAP</button></h3>
                     <span id="help-viz-umap3d" class="visually-hidden">Three-dimensional UMAP embedding with interactive rotation and zoom.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🧭</div>
-                    <h3 class="title-with-help">3D tSNE <button type="button" class="analysis-help" aria-label="About 3D tSNE" aria-describedby="help-viz-tsne3d" aria-expanded="false" data-help-target="help-viz-tsne3d">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About 3D tSNE" aria-describedby="help-viz-tsne3d" aria-expanded="false" data-help-target="help-viz-tsne3d">3D tSNE</button></h3>
                     <span id="help-viz-tsne3d" class="visually-hidden">Three-dimensional t-SNE embedding for nonlinear structure.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">⚫</div>
-                    <h3 class="title-with-help">Dot Plot <button type="button" class="analysis-help" aria-label="About dot plots" aria-describedby="help-viz-dotplot" aria-expanded="false" data-help-target="help-viz-dotplot">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About dot plots" aria-describedby="help-viz-dotplot" aria-expanded="false" data-help-target="help-viz-dotplot">Dot Plot</button></h3>
                     <span id="help-viz-dotplot" class="visually-hidden">Gene-expression magnitude and fraction of expressing cells across groups.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🎻</div>
-                    <h3 class="title-with-help">Violin Plot <button type="button" class="analysis-help" aria-label="About violin plots" aria-describedby="help-viz-violin" aria-expanded="false" data-help-target="help-viz-violin">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About violin plots" aria-describedby="help-viz-violin" aria-expanded="false" data-help-target="help-viz-violin">Violin Plot</button></h3>
                     <span id="help-viz-violin" class="visually-hidden">Gene-expression distributions with density and box summaries.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🎼</div>
-                    <h3 class="title-with-help">Split Violin <button type="button" class="analysis-help" aria-label="About split violin plots" aria-describedby="help-viz-split-violin" aria-expanded="false" data-help-target="help-viz-split-violin">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About split violin plots" aria-describedby="help-viz-split-violin" aria-expanded="false" data-help-target="help-viz-split-violin">Split Violin</button></h3>
                     <span id="help-viz-split-violin" class="visually-hidden">Mirrored expression distributions for two subgroups within each group.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🧵</div>
-                    <h3 class="title-with-help">Stacked Violin <button type="button" class="analysis-help" aria-label="About stacked violin plots" aria-describedby="help-viz-stacked-violin" aria-expanded="false" data-help-target="help-viz-stacked-violin">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About stacked violin plots" aria-describedby="help-viz-stacked-violin" aria-expanded="false" data-help-target="help-viz-stacked-violin">Stacked Violin</button></h3>
                     <span id="help-viz-stacked-violin" class="visually-hidden">Compact stacked expression distributions for multiple genes.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🔥</div>
-                    <h3 class="title-with-help">Heatmap <button type="button" class="analysis-help" aria-label="About expression heatmaps" aria-describedby="help-viz-heatmap" aria-expanded="false" data-help-target="help-viz-heatmap">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About expression heatmaps" aria-describedby="help-viz-heatmap" aria-expanded="false" data-help-target="help-viz-heatmap">Heatmap</button></h3>
                     <span id="help-viz-heatmap" class="visually-hidden">Hierarchical clustering and average expression patterns across cell types.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🗺️</div>
-                    <h3 class="title-with-help">Feature Plot <button type="button" class="analysis-help" aria-label="About feature plots" aria-describedby="help-viz-feature" aria-expanded="false" data-help-target="help-viz-feature">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About feature plots" aria-describedby="help-viz-feature" aria-expanded="false" data-help-target="help-viz-feature">Feature Plot</button></h3>
                     <span id="help-viz-feature" class="visually-hidden">Gene-expression intensity overlaid on UMAP coordinates.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">📊</div>
-                    <h3 class="title-with-help">Gene Expression <button type="button" class="analysis-help" aria-label="About gene-expression comparisons" aria-describedby="help-viz-expression" aria-expanded="false" data-help-target="help-viz-expression">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About gene-expression comparisons" aria-describedby="help-viz-expression" aria-expanded="false" data-help-target="help-viz-expression">Gene Expression</button></h3>
                     <span id="help-viz-expression" class="visually-hidden">Mean expression of selected genes compared across groups.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🔀</div>
-                    <h3 class="title-with-help">Sankey <button type="button" class="analysis-help" aria-label="About Sankey plots" aria-describedby="help-viz-sankey" aria-expanded="false" data-help-target="help-viz-sankey">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About Sankey plots" aria-describedby="help-viz-sankey" aria-expanded="false" data-help-target="help-viz-sankey">Sankey</button></h3>
                     <span id="help-viz-sankey" class="visually-hidden">Cell-type proportions and flows across datasets or metadata categories.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">📈</div>
-                    <h3 class="title-with-help">Correlation <button type="button" class="analysis-help" aria-label="About correlation plots" aria-describedby="help-viz-correlation" aria-expanded="false" data-help-target="help-viz-correlation">?</button></h3>
+                    <h3 class="title-with-help"><button type="button" class="analysis-help" aria-label="About correlation plots" aria-describedby="help-viz-correlation" aria-expanded="false" data-help-target="help-viz-correlation">Correlation</button></h3>
                     <span id="help-viz-correlation" class="visually-hidden">Pairwise gene-expression relationships in an interactive scatter plot.</span>
                 </div>
             </div>
@@ -172,8 +171,7 @@
         <!-- Tips Section -->
         <section class="tips-section">
             <h2 class="title-with-help">
-                Visualization controls
-                <button type="button" class="analysis-help" aria-label="About visualization controls" aria-describedby="help-viz-controls" aria-expanded="false" data-help-target="help-viz-controls">?</button>
+                <button type="button" class="analysis-help" aria-label="About visualization controls" aria-describedby="help-viz-controls" aria-expanded="false" data-help-target="help-viz-controls">Visualization controls</button>
             </h2>
             <ul class="tips-list visually-hidden" id="help-viz-controls">
                 <li><strong>Color by:</strong> Change the coloring scheme to highlight different aspects of your data (cell type, cluster, sample, etc.)</li>

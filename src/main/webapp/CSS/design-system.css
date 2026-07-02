@@ -163,33 +163,32 @@ div {
    -------------------------------------------------------------------------- */
 .title-with-help,
 .label-with-help {
-    position: relative;
     display: inline-block;
     max-width: 100%;
-    padding-right: 1.35rem;
     min-width: 0;
     color: var(--text-primary);
 }
 
 .analysis-help {
     appearance: none;
-    position: absolute;
-    inset: -0.18rem -0.08rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    position: static;
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: flex-start;
     width: auto;
     height: auto;
+    gap: 0.42em;
     padding: 0;
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: 0;
     background: transparent;
     color: var(--text-primary);
     font: inherit;
-    font-size: 0;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: 0;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: left;
+    text-transform: inherit;
+    letter-spacing: inherit;
     cursor: pointer;
 }
 
@@ -209,23 +208,13 @@ div {
 
 .analysis-help:focus-visible {
     outline: 2px solid var(--focus-border);
-    outline-offset: 2px;
+    outline-offset: 3px;
 }
 
 /* Standalone method links (for example, GMT format) use the same vocabulary
    without stretching across a parent title. */
 .analysis-help--inline {
-    position: static;
-    inset: auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: auto;
-    height: auto;
-    gap: 0.35rem;
     margin-left: 0.35rem;
-    padding: 0;
-    color: var(--text-primary);
     font-size: 0.78rem;
     line-height: 1.2;
     vertical-align: baseline;
