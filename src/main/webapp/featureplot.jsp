@@ -69,12 +69,11 @@
     <section class="page-hero">
         <div class="page-hero__inner">
             <span class="page-hero__eyebrow">Integrated atlas · gene expression</span>
-            <h1 class="page-hero__title">Expression</h1>
-            <p class="page-hero__description">
-                Search a gene to paint its expression intensity onto the integrated skin UMAP.
-                Choose the human or mouse atlas; gene names are case-insensitive
-                (<em>COL1A1</em>, <em>Col1a1</em> both work).
-            </p>
+            <h1 class="page-hero__title title-with-help">
+                Expression
+                <button type="button" class="analysis-help" aria-label="About integrated expression" aria-describedby="help-expression" aria-expanded="false" data-help-target="help-expression">?</button>
+            </h1>
+            <span id="help-expression" class="visually-hidden">Overlay a gene's expression intensity on the integrated human or mouse skin UMAP. Gene-symbol matching is case-insensitive.</span>
         </div>
     </section>
 

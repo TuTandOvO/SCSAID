@@ -598,7 +598,13 @@
         <div class="cluster" id="CellProportion">
             <div class="header">
                 <div class="header-content">
-                    <div><div class="header-title">Cell Proportion</div></div>
+                    <div>
+                        <div class="header-title title-with-help">
+                            Cell Proportion
+                            <button type="button" class="analysis-help" aria-label="About cell proportion" aria-describedby="help-cell-proportion" aria-expanded="false" data-help-target="help-cell-proportion">?</button>
+                        </div>
+                        <span id="help-cell-proportion" class="visually-hidden">Cell counts and relative abundance across the selected annotation level, shown as bar and composition charts.</span>
+                    </div>
                     <div class="umap-controls control-row" style="align-items:center; gap:12px;">
                         <label class="panel-label" style="margin:0;">Annotation</label>
                         <select id="proportionMapType" class="form-select elegant-select proportion-map-select">
@@ -628,7 +634,13 @@
             <div class="cluster">
                 <div class="header">
                     <div class="header-content">
-                        <div><div class="header-title">Cell Clustering</div></div>
+                        <div>
+                            <div class="header-title title-with-help">
+                                Cell Clustering
+                                <button type="button" class="analysis-help" aria-label="About cell clustering" aria-describedby="help-cell-clustering" aria-expanded="false" data-help-target="help-cell-clustering">?</button>
+                            </div>
+                            <span id="help-cell-clustering" class="visually-hidden">UMAP embedding of this sample. Color by available cell annotations or metadata fields.</span>
+                        </div>
                         <div class="umap-controls control-row" style="align-items:center; gap:12px;">
                             <label class="panel-label" style="margin:0;">Color by</label>
                             <select id="umapColorBy" class="form-select elegant-select" style="min-width:160px;">
@@ -655,7 +667,11 @@
                 <div class="header">
                     <div class="header-content">
                         <div>
-                            <div class="header-title">Differentially Expressed Genes</div>
+                            <div class="header-title title-with-help">
+                                Differentially Expressed Genes
+                                <button type="button" class="analysis-help" aria-label="About differentially expressed genes" aria-describedby="help-deg" aria-expanded="false" data-help-target="help-deg">?</button>
+                            </div>
+                            <span id="help-deg" class="visually-hidden">Cluster-marker results for this sample, or an on-demand comparison against another sample. Use the controls to filter by adjusted p-value, effect size, cell type, and pseudogene status.</span>
                         </div>
                         <button id="exportExcelBtn" class="export-btn btn-ghost">
                             <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -687,19 +703,25 @@
                         <div class="filter-grid">
                             <div class="filter-card">
                                 <div class="filter-label">
-                                    <span class="filter-name">p-value threshold</span>
+                                    <span class="filter-name label-with-help">
+                                        p-value threshold
+                                        <button type="button" class="analysis-help" aria-label="About the p-value threshold" aria-describedby="help-deg-pvalue" aria-expanded="false" data-help-target="help-deg-pvalue">?</button>
+                                    </span>
                                     <span class="filter-value" id="pvalLabel">0.05</span>
                                 </div>
                                 <input type="range" id="pvalSlider" class="elegant-slider" min="0" max="0.1" step="0.001" value="0.05">
-                                <div class="filter-hint">Maximum adjusted p-value</div>
+                                <span id="help-deg-pvalue" class="visually-hidden">Maximum adjusted p-value retained in the DEG table.</span>
                             </div>
                             <div class="filter-card">
                                 <div class="filter-label">
-                                    <span class="filter-name">Log fold change</span>
+                                    <span class="filter-name label-with-help">
+                                        Log fold change
+                                        <button type="button" class="analysis-help" aria-label="About the log fold-change threshold" aria-describedby="help-deg-logfc" aria-expanded="false" data-help-target="help-deg-logfc">?</button>
+                                    </span>
                                     <span class="filter-value" id="fcLabel">1.0</span>
                                 </div>
                                 <input type="range" id="fcSlider" class="elegant-slider" min="0" max="10" step="0.1" value="1.0">
-                                <div class="filter-hint">Minimum log₂ fold change</div>
+                                <span id="help-deg-logfc" class="visually-hidden">Minimum log2 fold change retained in the DEG table.</span>
                             </div>
                             <div class="filter-card">
                                 <div class="filter-label">
@@ -708,17 +730,19 @@
                                 <select id="cellTypeSelect" class="elegant-select">
                                     <option value="">All cell types</option>
                                 </select>
-                                <div class="filter-hint">Filter by cell type</div>
                             </div>
                             <div class="filter-card">
                                 <div class="filter-label">
-                                    <span class="filter-name">Pseudogenes</span>
+                                    <span class="filter-name label-with-help">
+                                        Pseudogenes
+                                        <button type="button" class="analysis-help" aria-label="About the pseudogene filter" aria-describedby="help-deg-pseudogenes" aria-expanded="false" data-help-target="help-deg-pseudogenes">?</button>
+                                    </span>
                                 </div>
                                 <label class="checkbox-item" style="padding-top:0.25rem;">
                                     <input type="checkbox" id="hidePseudogenes" checked>
                                     <span class="checkbox-item__text">Hide pseudogenes</span>
                                 </label>
-                                <div class="filter-hint">Filter Gm####, -ps, Rik, ...Pn</div>
+                                <span id="help-deg-pseudogenes" class="visually-hidden">Filters common mouse pseudogene naming patterns, including Gm-numbered genes, -ps, Rik, and Pn suffixes.</span>
                             </div>
                         </div>
                     </div>
@@ -743,7 +767,11 @@
                 <div class="header">
                     <div class="header-content">
                         <div>
-                            <div class="header-title">Gene Set Scoring</div>
+                            <div class="header-title title-with-help">
+                                Gene Set Scoring
+                                <button type="button" class="analysis-help" aria-label="About gene set scoring" aria-describedby="help-gene-set-scoring" aria-expanded="false" data-help-target="help-gene-set-scoring">?</button>
+                            </div>
+                            <span id="help-gene-set-scoring" class="visually-hidden">Score a custom, MSigDB, or uploaded GMT gene set across cells and summarize scores by the selected annotation using AUCell, Scanpy score_genes, UCell, ssGSEA, or GSVA.</span>
                         </div>
                     </div>
                 </div>
@@ -837,7 +865,11 @@
                 <div class="header">
                     <div class="header-content">
                         <div>
-                            <div class="header-title">CellPhoneDB Cell-Cell Communication Analysis</div>
+                            <div class="header-title title-with-help">
+                                CellPhoneDB Cell-Cell Communication Analysis
+                                <button type="button" class="analysis-help" aria-label="About CellPhoneDB communication analysis" aria-describedby="help-cellphonedb" aria-expanded="false" data-help-target="help-cellphonedb">?</button>
+                            </div>
+                            <span id="help-cellphonedb" class="visually-hidden">CellPhoneDB ligand-receptor inference across selected cell types. Analyze all selected combinations or define directed sender and receiver groups at fine or broad annotation resolution.</span>
                         </div>
                     </div>
                 </div>
@@ -871,9 +903,6 @@
                                     <span>Gross_Map (broad)</span>
                                 </label>
                             </div>
-                            <span class="help-text" style="margin-left:8px;">
-                                Switch to refresh the cell-type lists at the chosen granularity.
-                            </span>
                         </div>
 
                         <!-- All Combinations mode: single checkbox list -->
@@ -970,13 +999,19 @@
             <div class="cluster" id="EnrichmentAnalysis">
                 <div class="header">
                     <div class="header-content">
-                        <div><div class="header-title">Enrichment Analysis</div></div>
+                        <div>
+                            <div class="header-title title-with-help">
+                                Enrichment Analysis
+                                <button type="button" class="analysis-help" aria-label="About enrichment analysis" aria-describedby="help-enrichment" aria-expanded="false" data-help-target="help-enrichment">?</button>
+                            </div>
+                            <div id="help-enrichment" class="visually-hidden">
+                                <span id="enrichSource">Source: cluster markers of this sample.</span>
+                                GSEA ranks the complete gene list and tests whether a pathway is shifted toward either end. ORA tests whether significantly up-regulated markers with adjusted p below 0.05 and log2 fold change at least 1 over-represent a pathway using a hypergeometric test.
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div id="enrichSource" class="enrich-source info-bar">
-                        Source: <strong>cluster markers of this sample</strong>
-                    </div>
                     <div class="control-row toolbar-row" style="margin-bottom:0.5rem;">
                         <div class="control-group" style="min-width:170px;">
                             <label class="panel-label">Method</label>
@@ -1013,13 +1048,6 @@
                             </select>
                         </div>
                     </div>
-                    <div id="enrichMethodNote" class="help-text" style="margin:0 0 12px; font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">
-                        <strong>GSEA</strong> ranks the whole gene list and tests whether a pathway is
-                        skewed toward the top or bottom. <strong>ORA</strong> tests whether the
-                        significant up-regulated markers (adj p &lt; 0.05, log<sub>2</sub>FC &ge; 1)
-                        over-represent a pathway (hypergeometric test). They answer different questions —
-                        try both.
-                    </div>
                     <div id="enrich-loading" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="enrich-empty" class="progress-box" style="display:none;">
                         No enrichment data available for this dataset.
@@ -1031,24 +1059,18 @@
             <div class="cluster" id="RegulatoryNetwork">
                 <div class="header">
                     <div class="header-content">
-                        <div><div class="header-title">Gene Regulatory Network (SCORPION)</div></div>
+                        <div>
+                            <div class="header-title title-with-help">
+                                Gene Regulatory Network (SCORPION)
+                                <button type="button" class="analysis-help" aria-label="About the SCORPION regulatory network" aria-describedby="help-scorpion" aria-expanded="false" data-help-target="help-scorpion">?</button>
+                            </div>
+                            <div id="help-scorpion" class="visually-hidden">
+                                Transcription-factor regulatory network reconstructed with SCORPION using PANDA message passing on the single-cell co-expression network, a CollecTRI regulatory prior, and STRING v12 protein interactions. Regulators are ranked by total network strength; targetome and network views show leading predicted targets. Method: Osorio D. et al., SCORPION, Kuijjer Lab.
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="info-bar">
-                        Transcription-factor regulatory network reconstructed for this dataset with
-                        <strong>SCORPION</strong> (PANDA message passing on the single-cell co-expression
-                        network), integrating a <strong>CollecTRI</strong> curated regulatory prior
-                        and a <strong>STRING</strong> protein&ndash;protein interaction network.
-                    </div>
-                    <div id="scorpionMethodNote" class="help-text" style="margin:0 0 12px; font-size:0.82rem; color:var(--text-secondary); line-height:1.5;">
-                        Each transcription factor (TF) is scored by its total regulatory strength across
-                        the network. <strong>Master regulators</strong> are the TFs with the strongest,
-                        most widespread targeting in this dataset; the <strong>targetome</strong> shows a
-                        selected TF's top predicted target genes; the <strong>network</strong> view maps
-                        the leading regulators to their top targets.
-                    </div>
-
                     <div id="scorpion-loading" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="scorpion-empty" class="progress-box" style="display:none;">
                         The regulatory network for this dataset is being prepared and is not yet available.
@@ -1080,11 +1102,6 @@
                             <div id="scorpionNetwork"></div>
                         </div>
 
-                        <p id="scorpionProvenance" class="help-text"
-                           style="margin:1rem 0 0; font-size:0.78rem; color:var(--text-secondary); line-height:1.5;">
-                            Method: Osorio D. <em>et al.</em>, SCORPION (Kuijjer Lab).
-                            Regulatory prior: CollecTRI. Protein interactions: STRING v12.
-                        </p>
                     </div>
                 </div>
             </div>

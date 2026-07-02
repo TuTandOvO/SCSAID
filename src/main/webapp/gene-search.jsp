@@ -65,11 +65,11 @@
          ============================================================ -->
     <section class="search-hero">
         <span class="search-hero__eyebrow">Gene explorer</span>
-        <h1 class="search-hero__title">Search genes across all datasets</h1>
-        <p class="search-hero__description">
-            Query differentially expressed genes across the entire scSAID single-cell RNA sequencing collection
-            — find where, in which population, and at what effect size your gene of interest is regulated.
-        </p>
+        <h1 class="search-hero__title title-with-help">
+            Search genes across all datasets
+            <button type="button" class="analysis-help" aria-label="About cross-dataset gene search" aria-describedby="help-gene-search" aria-expanded="false" data-help-target="help-gene-search">?</button>
+        </h1>
+        <span id="help-gene-search" class="visually-hidden">Query differential-expression results across all scSAID datasets and cell types to locate the populations and effect sizes associated with a gene.</span>
 
         <div class="search-box-wrap">
         <form class="search-box" role="search" onsubmit="return false;">
@@ -183,7 +183,11 @@
             <article id="viz-panel" class="panel viz-panel" hidden>
                 <header class="panel-header">
                     <span class="panel-eyebrow">Expression visualization</span>
-                    <h2 class="panel-title">Gene expression on integrated UMAP</h2>
+                    <h2 class="panel-title title-with-help">
+                        Gene expression on integrated UMAP
+                        <button type="button" class="analysis-help" aria-label="About integrated UMAP visualization" aria-describedby="help-search-umap" aria-expanded="false" data-help-target="help-search-umap">?</button>
+                    </h2>
+                    <span id="help-search-umap" class="visually-hidden">Selected genes are displayed on the integrated UMAP for cross-dataset expression comparison.</span>
                     <p class="panel-description" id="viz-gene-count">Select genes above, then press <em>Visualize on UMAP</em>.</p>
                 </header>
                 <div class="panel-body panel-body--flush">

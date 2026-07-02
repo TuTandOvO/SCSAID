@@ -78,3 +78,4 @@
 </header>
 <button class="nav-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
 <script src="JS/site-header.js?v=20260701d" defer></script>
+<script src="JS/analysis-help.js?v=20260702a" defer></script>

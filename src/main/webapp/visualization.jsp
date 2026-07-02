@@ -41,10 +41,11 @@
                 <span class="current">Interactive Visualization</span>
             </div>
 
-            <h1 class="page-title">Interactive Visualization Suite</h1>
-            <p class="page-description">
-                Explore dataset <strong><%= datasetId %></strong> with advanced interactive visualizations
-            </p>
+            <h1 class="page-title title-with-help">
+                Interactive Visualization Suite
+                <button type="button" class="analysis-help" aria-label="About the visualization suite" aria-describedby="help-visualization-suite" aria-expanded="false" data-help-target="help-visualization-suite">?</button>
+            </h1>
+            <span id="help-visualization-suite" class="visually-hidden">Interactive dimensionality-reduction, expression, distribution, relationship, and composition views for dataset <%= datasetId %>.</span>
         </section>
 
         <!-- Status Banner -->
@@ -102,76 +103,79 @@
             <div class="tools-grid">
                 <div class="tool-card">
                     <div class="tool-icon">🌐</div>
-                    <h3>3D UMAP</h3>
-                    <p>Explore your data in 3D space with interactive rotation and zoom controls</p>
+                    <h3 class="title-with-help">3D UMAP <button type="button" class="analysis-help" aria-label="About 3D UMAP" aria-describedby="help-viz-umap3d" aria-expanded="false" data-help-target="help-viz-umap3d">?</button></h3>
+                    <span id="help-viz-umap3d" class="visually-hidden">Three-dimensional UMAP embedding with interactive rotation and zoom.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🧭</div>
-                    <h3>3D tSNE</h3>
-                    <p>Alternative dimensionality reduction for exploring complex manifolds in 3D</p>
+                    <h3 class="title-with-help">3D tSNE <button type="button" class="analysis-help" aria-label="About 3D tSNE" aria-describedby="help-viz-tsne3d" aria-expanded="false" data-help-target="help-viz-tsne3d">?</button></h3>
+                    <span id="help-viz-tsne3d" class="visually-hidden">Three-dimensional t-SNE embedding for nonlinear structure.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">⚫</div>
-                    <h3>Dot Plot</h3>
-                    <p>Visualize gene expression levels and percentage of expressing cells across groups</p>
+                    <h3 class="title-with-help">Dot Plot <button type="button" class="analysis-help" aria-label="About dot plots" aria-describedby="help-viz-dotplot" aria-expanded="false" data-help-target="help-viz-dotplot">?</button></h3>
+                    <span id="help-viz-dotplot" class="visually-hidden">Gene-expression magnitude and fraction of expressing cells across groups.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🎻</div>
-                    <h3>Violin Plot</h3>
-                    <p>Display gene expression distributions with box plots and density curves</p>
+                    <h3 class="title-with-help">Violin Plot <button type="button" class="analysis-help" aria-label="About violin plots" aria-describedby="help-viz-violin" aria-expanded="false" data-help-target="help-viz-violin">?</button></h3>
+                    <span id="help-viz-violin" class="visually-hidden">Gene-expression distributions with density and box summaries.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🎼</div>
-                    <h3>Split Violin</h3>
-                    <p>Compare two subgroups within each group using mirrored violin plots</p>
+                    <h3 class="title-with-help">Split Violin <button type="button" class="analysis-help" aria-label="About split violin plots" aria-describedby="help-viz-split-violin" aria-expanded="false" data-help-target="help-viz-split-violin">?</button></h3>
+                    <span id="help-viz-split-violin" class="visually-hidden">Mirrored expression distributions for two subgroups within each group.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🧵</div>
-                    <h3>Stacked Violin</h3>
-                    <p>Stack gene expression distributions for multiple genes in a compact view</p>
+                    <h3 class="title-with-help">Stacked Violin <button type="button" class="analysis-help" aria-label="About stacked violin plots" aria-describedby="help-viz-stacked-violin" aria-expanded="false" data-help-target="help-viz-stacked-violin">?</button></h3>
+                    <span id="help-viz-stacked-violin" class="visually-hidden">Compact stacked expression distributions for multiple genes.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🔥</div>
-                    <h3>Heatmap</h3>
-                    <p>Show hierarchical clustering and average expression patterns across cell types</p>
+                    <h3 class="title-with-help">Heatmap <button type="button" class="analysis-help" aria-label="About expression heatmaps" aria-describedby="help-viz-heatmap" aria-expanded="false" data-help-target="help-viz-heatmap">?</button></h3>
+                    <span id="help-viz-heatmap" class="visually-hidden">Hierarchical clustering and average expression patterns across cell types.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🗺️</div>
-                    <h3>Feature Plot</h3>
-                    <p>Overlay gene expression on UMAP coordinates to identify spatial patterns</p>
+                    <h3 class="title-with-help">Feature Plot <button type="button" class="analysis-help" aria-label="About feature plots" aria-describedby="help-viz-feature" aria-expanded="false" data-help-target="help-viz-feature">?</button></h3>
+                    <span id="help-viz-feature" class="visually-hidden">Gene-expression intensity overlaid on UMAP coordinates.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">📊</div>
-                    <h3>Gene Expression</h3>
-                    <p>Compare mean expression levels of selected genes across different groups</p>
+                    <h3 class="title-with-help">Gene Expression <button type="button" class="analysis-help" aria-label="About gene-expression comparisons" aria-describedby="help-viz-expression" aria-expanded="false" data-help-target="help-viz-expression">?</button></h3>
+                    <span id="help-viz-expression" class="visually-hidden">Mean expression of selected genes compared across groups.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">🔀</div>
-                    <h3>Sankey</h3>
-                    <p>Visualize cell type proportions across datasets or metadata categories</p>
+                    <h3 class="title-with-help">Sankey <button type="button" class="analysis-help" aria-label="About Sankey plots" aria-describedby="help-viz-sankey" aria-expanded="false" data-help-target="help-viz-sankey">?</button></h3>
+                    <span id="help-viz-sankey" class="visually-hidden">Cell-type proportions and flows across datasets or metadata categories.</span>
                 </div>
 
                 <div class="tool-card">
                     <div class="tool-icon">📈</div>
-                    <h3>Correlation</h3>
-                    <p>Explore pairwise gene expression relationships with interactive scatter plots</p>
+                    <h3 class="title-with-help">Correlation <button type="button" class="analysis-help" aria-label="About correlation plots" aria-describedby="help-viz-correlation" aria-expanded="false" data-help-target="help-viz-correlation">?</button></h3>
+                    <span id="help-viz-correlation" class="visually-hidden">Pairwise gene-expression relationships in an interactive scatter plot.</span>
                 </div>
             </div>
         </section>
 
         <!-- Tips Section -->
         <section class="tips-section">
-            <h2>Tips for Using the Visualization Suite</h2>
-            <ul class="tips-list">
+            <h2 class="title-with-help">
+                Visualization controls
+                <button type="button" class="analysis-help" aria-label="About visualization controls" aria-describedby="help-viz-controls" aria-expanded="false" data-help-target="help-viz-controls">?</button>
+            </h2>
+            <ul class="tips-list visually-hidden" id="help-viz-controls">
                 <li><strong>Color by:</strong> Change the coloring scheme to highlight different aspects of your data (cell type, cluster, sample, etc.)</li>
                 <li><strong>Gene Selection:</strong> Use the gene dropdown to search and select genes of interest for dot plots, violin plots, and heatmaps</li>
                 <li><strong>Point Size & Opacity:</strong> Adjust these settings for better visualization of dense or sparse regions</li>

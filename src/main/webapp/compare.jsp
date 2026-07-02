@@ -46,11 +46,11 @@
     <section class="page-hero">
         <div class="page-hero__inner">
             <span class="page-hero__eyebrow">Cross-condition analysis</span>
-            <h1 class="page-hero__title">Condition comparison</h1>
-            <p class="page-hero__description">
-                Differential expression (pseudobulk DESeq2) and pre-ranked GSEA between two conditions,
-                per cell type. Samples are the statistical replicates — not individual cells.
-            </p>
+            <h1 class="page-hero__title title-with-help">
+                Condition comparison
+                <button type="button" class="analysis-help" aria-label="About condition comparison" aria-describedby="help-condition-comparison" aria-expanded="false" data-help-target="help-condition-comparison">?</button>
+            </h1>
+            <span id="help-condition-comparison" class="visually-hidden">Differential expression with pseudobulk DESeq2 and pre-ranked GSEA between two conditions, per cell type. Biological samples, rather than individual cells, are the statistical replicates.</span>
         </div>
     </section>
 
@@ -62,8 +62,11 @@
         <section class="panel setup-card" aria-labelledby="setup-title">
             <header class="panel-header">
                 <span class="panel-eyebrow">Step 1</span>
-                <h2 class="panel-title" id="setup-title">Choose conditions</h2>
-                <p class="panel-description">Pick a species, then the two conditions you want to contrast. Only conditions with at least two samples are listed.</p>
+                <h2 class="panel-title title-with-help" id="setup-title">
+                    Choose conditions
+                    <button type="button" class="analysis-help" aria-label="About choosing a comparison" aria-describedby="help-choose-conditions" aria-expanded="false" data-help-target="help-choose-conditions">?</button>
+                </h2>
+                <span id="help-choose-conditions" class="visually-hidden">Only conditions with at least two samples are listed. A disease-versus-Healthy contrast provides a shared baseline. Disease-versus-disease contrasts can be confounded by skin region, cohort, or study batch. Comparisons with two or three samples are underpowered, and cell types with insufficient cells are skipped.</span>
             </header>
             <div class="panel-body">
                 <div class="filter-grid">
@@ -99,18 +102,6 @@
 
                 </div>
 
-                <details class="compare-guidance">
-                    <summary>How to choose a valid comparison</summary>
-                    <div class="compare-guidance__body">
-                        <p>This tool runs <strong>pseudobulk DESeq2</strong> — each sample is one statistical replicate, so more samples per condition means more reliable results.</p>
-                        <ul>
-                            <li><strong>Cleanest comparison:</strong> a disease against <em>Healthy</em>. A shared baseline isolates disease-driven changes.</li>
-                            <li><strong>Disease vs disease</strong> has no shared control, so differences can reflect <strong>skin region, cohort or study (batch)</strong> as much as disease — comparisons across <strong>different body sites</strong> are especially confounded.</li>
-                            <li><strong>Small sample sizes</strong> (n = 2–3) are underpowered; treat marginal genes with caution.</li>
-                            <li>Cell types with too few cells in either condition are skipped automatically.</li>
-                        </ul>
-                    </div>
-                </details>
                 <div id="compareAdvisory" class="compare-advisory" hidden></div>
 
                 <div id="runSummary" class="run-summary" hidden></div>
@@ -128,8 +119,11 @@
             <article class="panel" id="degPanel" aria-labelledby="deg-title">
                 <header class="panel-header">
                     <span class="panel-eyebrow">Step 2 · Differential expression</span>
-                    <h2 class="panel-title" id="deg-title">DEG results</h2>
-                    <p class="panel-description">Log<sub>2</sub> fold-change of condition A over B, per cell type. Filter by significance, effect size, and cell type.</p>
+                    <h2 class="panel-title title-with-help" id="deg-title">
+                        DEG results
+                        <button type="button" class="analysis-help" aria-label="About condition-comparison DEG results" aria-describedby="help-compare-deg" aria-expanded="false" data-help-target="help-compare-deg">?</button>
+                    </h2>
+                    <span id="help-compare-deg" class="visually-hidden">Per-cell-type log2 fold change of condition A relative to condition B. Results can be filtered by adjusted p-value, absolute effect size, cell type, and pseudogene status.</span>
                 </header>
                 <div class="panel-body">
 
@@ -199,8 +193,11 @@
             <article class="panel" id="gseaPanel" data-locked="true" aria-labelledby="gsea-title">
                 <header class="panel-header">
                     <span class="panel-eyebrow">Step 2 · Gene-set enrichment</span>
-                    <h2 class="panel-title" id="gsea-title">Pre-ranked GSEA</h2>
-                    <p class="panel-description">Rank genes by signed −log₁₀(adj p) and run leading-edge analysis against curated libraries.</p>
+                    <h2 class="panel-title title-with-help" id="gsea-title">
+                        Pre-ranked GSEA
+                        <button type="button" class="analysis-help" aria-label="About pre-ranked GSEA" aria-describedby="help-compare-gsea" aria-expanded="false" data-help-target="help-compare-gsea">?</button>
+                    </h2>
+                    <span id="help-compare-gsea" class="visually-hidden">Genes are ranked by signed negative log10 adjusted p-value for leading-edge enrichment analysis against the selected curated gene-set library.</span>
                 </header>
                 <div class="panel-body">
 
