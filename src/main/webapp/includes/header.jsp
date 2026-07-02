@@ -27,44 +27,34 @@
 
         <svg class="site-icon-sprite" aria-hidden="true" focusable="false">
             <symbol id="nav-icon-home" viewBox="0 0 24 24">
-                <path d="M3.5 10.5 12 3.75l8.5 6.75"></path>
-                <path d="M5.5 9.25V20h13V9.25M9.5 20v-6h5v6"></path>
+                <path fill-rule="evenodd" d="M12 2.5 2 10.6v10.9h8v-6h4v6h8V10.6L12 2.5Zm0 3.15 7 5.67v7.18h-2v-6H7v6H5v-7.18l7-5.67Z"></path>
             </symbol>
             <symbol id="nav-icon-browse" viewBox="0 0 24 24">
-                <ellipse cx="12" cy="5.5" rx="7.5" ry="2.75"></ellipse>
-                <path d="M4.5 5.5v6c0 1.52 3.36 2.75 7.5 2.75s7.5-1.23 7.5-2.75v-6"></path>
-                <path d="M4.5 11.5v6c0 1.52 3.36 2.75 7.5 2.75s7.5-1.23 7.5-2.75v-6"></path>
+                <path d="M21 5.25c0 1.8-4.03 3.25-9 3.25S3 7.05 3 5.25 7.03 2 12 2s9 1.45 9 3.25Z"></path>
+                <path d="M3 8.55v3.7c0 1.8 4.03 3.25 9 3.25s9-1.45 9-3.25v-3.7C18.93 10.08 15.48 11 12 11s-6.93-.92-9-2.45Z"></path>
+                <path d="M3 15.55v3.2C3 20.55 7.03 22 12 22s9-1.45 9-3.25v-3.2C18.93 17.08 15.48 18 12 18s-6.93-.92-9-2.45Z"></path>
             </symbol>
             <symbol id="nav-icon-navigate" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="8.75"></circle>
-                <path d="m15.75 8.25-2.1 5.4-5.4 2.1 2.1-5.4 5.4-2.1Z"></path>
+                <path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14Z"></path>
+                <path d="m17.25 6.75-3.4 7.1-7.1 3.4 3.4-7.1 7.1-3.4Z"></path>
             </symbol>
             <symbol id="nav-icon-expression" viewBox="0 0 24 24">
-                <path d="M4 19.5h16M4.5 19V5"></path>
-                <path d="m6.5 15 3.25-4 3 2.5 4.75-6"></path>
-                <circle cx="6.5" cy="15" r="1"></circle>
-                <circle cx="9.75" cy="11" r="1"></circle>
-                <circle cx="12.75" cy="13.5" r="1"></circle>
-                <circle cx="17.5" cy="7.5" r="1"></circle>
+                <path d="M3 3h3v16h15v3H3V3Z"></path>
+                <path d="M8 13h3v4H8v-4ZM13 9h3v8h-3V9ZM18 5h3v12h-3V5Z"></path>
             </symbol>
             <symbol id="nav-icon-download" viewBox="0 0 24 24">
-                <path d="M12 3.5v11"></path>
-                <path d="m8 10.5 4 4 4-4"></path>
-                <path d="M4.5 16.5V20h15v-3.5"></path>
+                <path d="M10 2h4v9h4l-6 6-6-6h4V2ZM3 18h5v2h8v-2h5v4H3v-4Z"></path>
             </symbol>
             <symbol id="nav-icon-help" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="8.75"></circle>
-                <path d="M9.75 9a2.35 2.35 0 1 1 3.42 2.1c-.82.42-1.17.87-1.17 1.65v.5"></path>
-                <circle cx="12" cy="16.75" r=".75" fill="currentColor" stroke="none"></circle>
+                <path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14Z"></path>
+                <path d="M9.2 9a2.8 2.8 0 1 1 4.08 2.5c-.8.42-1.08.8-1.08 1.55v.55h-2v-.75c0-1.35.55-2.15 1.85-2.82.48-.25.75-.62.75-1.03a.8.8 0 0 0-1.6 0h-2ZM10.2 15.3h2v2h-2v-2Z"></path>
             </symbol>
             <symbol id="nav-icon-about" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="8.75"></circle>
-                <path d="M12 10.75v6"></path>
-                <circle cx="12" cy="7.25" r=".75" fill="currentColor" stroke="none"></circle>
+                <path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14Z"></path>
+                <path d="M10.5 10h3v7h-3v-7ZM10.5 6.75h3v2.5h-3v-2.5Z"></path>
             </symbol>
             <symbol id="nav-icon-feedback" viewBox="0 0 24 24">
-                <path d="M5 5.25h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-7.5L7 21v-3.25H5a2 2 0 0 1-2-2v-8.5a2 2 0 0 1 2-2Z"></path>
-                <path d="M7.5 9.25h9M7.5 13h6"></path>
+                <path fill-rule="evenodd" d="M4 3h16a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-7.7L6 23v-4H4a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Zm3 5h10v2H7V8Zm0 4h7v2H7v-2Z"></path>
             </symbol>
         </svg>
 

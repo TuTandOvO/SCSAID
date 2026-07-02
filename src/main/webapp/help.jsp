@@ -25,7 +25,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702n">
+    <link rel="stylesheet" href="CSS/header.css?v=20260702o">
     <link rel="stylesheet" href="CSS/help.css?v=20260701h">
 </head>
 <body>
