@@ -89,6 +89,7 @@
     --transition-base: 250ms ease;
     --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
     --anim-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
 
     /* Layout */
     --header-height: 50px;
@@ -156,50 +157,82 @@ div {
 
 /* --------------------------------------------------------------------------
    Context help
-   Expert-facing analysis pages keep method notes behind a quiet, keyboard-
-   accessible question mark. The popover is portalled to <body> by
+   Expert-facing analysis pages expose method notes through a quiet, keyboard-
+   accessible title link. The popover is portalled to <body> by
    JS/analysis-help.js so panel overflow cannot clip it.
    -------------------------------------------------------------------------- */
 .title-with-help,
 .label-with-help {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.22rem;
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    padding-right: 1.35rem;
     min-width: 0;
+    color: var(--text-primary);
 }
 
 .analysis-help {
     appearance: none;
-    display: inline-grid;
-    place-items: center;
-    width: 1rem;
-    height: 1rem;
-    flex: 0 0 1rem;
+    position: absolute;
+    inset: -0.18rem -0.08rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
+    height: auto;
     padding: 0;
     border: 0;
-    border-radius: 50%;
+    border-radius: var(--radius-sm);
     background: transparent;
-    color: var(--text-muted);
+    color: var(--text-primary);
     font: inherit;
-    font-size: 0.68rem;
+    font-size: 0;
     line-height: 1;
     text-transform: none;
     letter-spacing: 0;
-    cursor: help;
-    transform: translateY(-0.32em);
-    transition: color var(--transition-fast), background-color var(--transition-fast);
+    cursor: pointer;
 }
 
-.analysis-help:hover,
-.analysis-help[aria-expanded="true"] {
-    color: var(--color-secondary-dark);
-    background: var(--bg-muted);
+.analysis-help::after {
+    content: "\2192";
+    display: inline-block;
+    font-size: 0.9rem;
+    line-height: 1;
+    transform: translateX(0);
+    transition: transform 150ms var(--ease-out-quint);
+}
+
+.analysis-help:hover::after,
+.analysis-help[aria-expanded="true"]::after {
+    transform: translateX(3px);
 }
 
 .analysis-help:focus-visible {
-    color: var(--color-secondary-dark);
     outline: 2px solid var(--focus-border);
     outline-offset: 2px;
+}
+
+/* Standalone method links (for example, GMT format) use the same vocabulary
+   without stretching across a parent title. */
+.analysis-help--inline {
+    position: static;
+    inset: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto;
+    height: auto;
+    gap: 0.35rem;
+    margin-left: 0.35rem;
+    padding: 0;
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    line-height: 1.2;
+    vertical-align: baseline;
+}
+
+.analysis-help--inline::after {
+    font-size: 0.82rem;
 }
 
 .analysis-help-popover {
@@ -222,12 +255,30 @@ div {
     text-transform: none;
     letter-spacing: 0;
     overflow-wrap: anywhere;
+    transform-origin: top center;
+    animation: scsaid-help-card-in 180ms var(--ease-out-quint);
+}
+
+@keyframes scsaid-help-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(-3px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 @media (max-width: 480px) {
     .analysis-help-popover {
         width: calc(100vw - 1.5rem);
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .analysis-help::after { transition: none; }
+    .analysis-help-popover { animation: none; }
 }
 
 @media print {

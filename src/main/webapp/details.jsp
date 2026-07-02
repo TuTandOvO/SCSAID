@@ -819,7 +819,7 @@
                             <div style="font-family:'Nunito', sans-serif; font-size:0.9rem; color:var(--ink-soft);">
                                 Drag & drop a <strong>.gmt</strong> file here, or
                                 <label class="action-link" style="cursor:pointer; text-decoration:underline;">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
-                                <button type="button" class="analysis-help" aria-label="About GMT file format" aria-describedby="help-gmt-format" aria-expanded="false" data-help-target="help-gmt-format">?</button>
+                                <button type="button" class="analysis-help analysis-help--inline" aria-label="About GMT file format" aria-describedby="help-gmt-format" aria-expanded="false" data-help-target="help-gmt-format">GMT format</button>
                             </div>
                             <span id="help-gmt-format" class="visually-hidden">GMT rows contain a set name, description, and gene symbols separated by tabs.</span>
                         </div>
