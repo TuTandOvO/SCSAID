@@ -25,6 +25,7 @@ Adopt HumanBase's restrained scientific navigation grammar—flat grey tabs and 
 - Desktop dropdown cards that open by hover, focus, or click.
 - Navigate menu containing Search DEGs and Compare conditions.
 - About menu containing How to Cite and What's New.
+- Original monochrome line icons identify every top-level scSAID destination and inherit each tab's state color.
 - Mobile drawer keeps submenu destinations visible and touch-friendly.
 
 ## Fonts

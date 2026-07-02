@@ -21,7 +21,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=<%= System.currentTimeMillis() %>">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702m">
+    <link rel="stylesheet" href="CSS/header.css?v=20260702n">
     <link rel="stylesheet" href="CSS/details.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="CSS/compare.css?v=<%= System.currentTimeMillis() %>">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">

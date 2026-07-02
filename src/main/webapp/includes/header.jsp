@@ -25,6 +25,49 @@
     <div class="container">
         <a href="index.jsp" class="site-logo" aria-label="scSAID home">scSAID</a>
 
+        <svg class="site-icon-sprite" aria-hidden="true" focusable="false">
+            <symbol id="nav-icon-home" viewBox="0 0 24 24">
+                <path d="M3.5 10.5 12 3.75l8.5 6.75"></path>
+                <path d="M5.5 9.25V20h13V9.25M9.5 20v-6h5v6"></path>
+            </symbol>
+            <symbol id="nav-icon-browse" viewBox="0 0 24 24">
+                <ellipse cx="12" cy="5.5" rx="7.5" ry="2.75"></ellipse>
+                <path d="M4.5 5.5v6c0 1.52 3.36 2.75 7.5 2.75s7.5-1.23 7.5-2.75v-6"></path>
+                <path d="M4.5 11.5v6c0 1.52 3.36 2.75 7.5 2.75s7.5-1.23 7.5-2.75v-6"></path>
+            </symbol>
+            <symbol id="nav-icon-navigate" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8.75"></circle>
+                <path d="m15.75 8.25-2.1 5.4-5.4 2.1 2.1-5.4 5.4-2.1Z"></path>
+            </symbol>
+            <symbol id="nav-icon-expression" viewBox="0 0 24 24">
+                <path d="M4 19.5h16M4.5 19V5"></path>
+                <path d="m6.5 15 3.25-4 3 2.5 4.75-6"></path>
+                <circle cx="6.5" cy="15" r="1"></circle>
+                <circle cx="9.75" cy="11" r="1"></circle>
+                <circle cx="12.75" cy="13.5" r="1"></circle>
+                <circle cx="17.5" cy="7.5" r="1"></circle>
+            </symbol>
+            <symbol id="nav-icon-download" viewBox="0 0 24 24">
+                <path d="M12 3.5v11"></path>
+                <path d="m8 10.5 4 4 4-4"></path>
+                <path d="M4.5 16.5V20h15v-3.5"></path>
+            </symbol>
+            <symbol id="nav-icon-help" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8.75"></circle>
+                <path d="M9.75 9a2.35 2.35 0 1 1 3.42 2.1c-.82.42-1.17.87-1.17 1.65v.5"></path>
+                <circle cx="12" cy="16.75" r=".75" fill="currentColor" stroke="none"></circle>
+            </symbol>
+            <symbol id="nav-icon-about" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8.75"></circle>
+                <path d="M12 10.75v6"></path>
+                <circle cx="12" cy="7.25" r=".75" fill="currentColor" stroke="none"></circle>
+            </symbol>
+            <symbol id="nav-icon-feedback" viewBox="0 0 24 24">
+                <path d="M5 5.25h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-7.5L7 21v-3.25H5a2 2 0 0 1-2-2v-8.5a2 2 0 0 1 2-2Z"></path>
+                <path d="M7.5 9.25h9M7.5 13h6"></path>
+            </symbol>
+        </svg>
+
         <nav class="main-nav" id="site-navigation" aria-label="Primary navigation">
             <div class="nav-drawer__header">
                 <span class="nav-drawer__title">Menu</span>
@@ -32,19 +75,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <a href="index.jsp" class="main-nav__link<%= scsaidHome ? " main-nav__link--active" : "" %>"<%= scsaidHome ? " aria-current=\"page\"" : "" %>>Home</a>
-            <a href="browse.jsp" class="main-nav__link<%= scsaidBrowse ? " main-nav__link--active" : "" %>"<%= scsaidBrowse ? " aria-current=\"page\"" : "" %>>Browse</a>
+            <a href="index.jsp" class="main-nav__link<%= scsaidHome ? " main-nav__link--active" : "" %>"<%= scsaidHome ? " aria-current=\"page\"" : "" %>><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-home"></use></svg><span>Home</span></a>
+            <a href="browse.jsp" class="main-nav__link<%= scsaidBrowse ? " main-nav__link--active" : "" %>"<%= scsaidBrowse ? " aria-current=\"page\"" : "" %>><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-browse"></use></svg><span>Browse</span></a>
             <div class="main-nav__item">
-                <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidNavigate ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="navigate-menu">Navigate</button>
+                <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidNavigate ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="navigate-menu"><span class="main-nav__label"><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-navigate"></use></svg><span>Navigate</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--navigate" id="navigate-menu" role="menu" aria-label="Navigate">
                     <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>>Search DEGs</a>
                     <a href="compare.jsp" class="main-nav__dropdown-link<%= scsaidCompare ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCompare ? " aria-current=\"page\"" : "" %>>Compare conditions</a>
                 </div>
             </div>
-            <a href="featureplot.jsp" class="main-nav__link<%= scsaidExpression ? " main-nav__link--active" : "" %>"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>>Expression</a>
-            <a href="download.jsp" class="main-nav__link<%= scsaidDownload ? " main-nav__link--active" : "" %>"<%= scsaidDownload ? " aria-current=\"page\"" : "" %>>Download</a>
+            <a href="featureplot.jsp" class="main-nav__link<%= scsaidExpression ? " main-nav__link--active" : "" %>"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-expression"></use></svg><span>Expression</span></a>
+            <a href="download.jsp" class="main-nav__link<%= scsaidDownload ? " main-nav__link--active" : "" %>"<%= scsaidDownload ? " aria-current=\"page\"" : "" %>><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-download"></use></svg><span>Download</span></a>
             <div class="main-nav__item">
-                <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidHelp ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="help-menu">Help</button>
+                <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidHelp ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="help-menu"><span class="main-nav__label"><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-help"></use></svg><span>Help</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--help" id="help-menu" role="menu" aria-label="Help topics">
                     <a href="help?topic=faq" class="main-nav__dropdown-link" role="menuitem">FAQ</a>
                     <a href="help?topic=methods" class="main-nav__dropdown-link" role="menuitem">Methods</a>
@@ -54,13 +97,13 @@
                 </div>
             </div>
             <div class="main-nav__item">
-                <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidAbout ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu">About</button>
+                <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidAbout ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu"><span class="main-nav__label"><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-about"></use></svg><span>About</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--about" id="about-menu" role="menu" aria-label="About">
                     <a href="cite.jsp" class="main-nav__dropdown-link<%= scsaidCite ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCite ? " aria-current=\"page\"" : "" %>>How to Cite</a>
                     <a href="whats-new.jsp" class="main-nav__dropdown-link<%= scsaidWhatsNew ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidWhatsNew ? " aria-current=\"page\"" : "" %>>What’s New</a>
                 </div>
             </div>
-            <a href="feedback" class="main-nav__link<%= scsaidFeedback ? " main-nav__link--active" : "" %>"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>>Feedback</a>
+            <a href="feedback" class="main-nav__link<%= scsaidFeedback ? " main-nav__link--active" : "" %>"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-feedback"></use></svg><span>Feedback</span></a>
         </nav>
 
         <div class="header-actions">
