@@ -1,8 +1,8 @@
-# Style Translation — HumanBase-inspired scSAID navigation
+# Style Translation — HumanBase-inspired scSAID navigation and tables
 
 ## Direction
 
-Adopt HumanBase's restrained scientific navigation grammar—flat grey tabs and compact white dropdown cards—while retaining scSAID's name, blue accent, routes, search behavior, and responsive drawer.
+Adopt HumanBase's restrained scientific interface grammar—flat grey tabs, compact white dropdown cards, and dense hairline tables—while retaining scSAID's name, blue accent, routes, analysis behavior, and responsive adaptations.
 
 ## Token map (before → after)
 
@@ -18,6 +18,11 @@ Adopt HumanBase's restrained scientific navigation grammar—flat grey tabs and 
 | Search width | 17rem | 12rem desktop; 12.5rem tablet max | Requested ~30% reduction |
 | Brand accent | `#337ab7` | Retained | Protected scSAID equity |
 | Typography | Nunito | Retained | Already matches reference family |
+| Table base size | 12.6–14px depending on page | 13px | HumanBase 13px root / 1rem table text |
+| Table cell padding | 12–16px | 8px | HumanBase Tissue Networks table |
+| Table header | Uppercase light labels on varied muted fills | `#e9ecef`, normal case, 600 weight | HumanBase Tissue Networks table |
+| Table body rules | Per-row dividers | No body gridlines | HumanBase Tissue Networks table |
+| Table frame | Rounded/bordered on Details | Flat, square, borderless | HumanBase Tissue Networks table |
 
 ## New patterns
 
@@ -27,16 +32,18 @@ Adopt HumanBase's restrained scientific navigation grammar—flat grey tabs and 
 - About menu containing How to Cite and What's New.
 - Original monochrome cut-out glyphs identify every top-level scSAID destination and inherit each tab's state color.
 - Mobile drawer keeps submenu destinations visible and touch-friendly.
+- `humanbase-tables.css` provides one reusable `hb-table` / `hb-table-shell` layer for static and DataTables-driven results.
+- Wide Gene Search and Browse results retain accessible mobile record layouts, restyled with the same compact neutral vocabulary.
 
 ## Fonts
 
-No font is added. scSAID already uses the open Nunito family that matches the reference's navigation personality.
+Nunito remains the only family. The affected table pages now request its open 600 face in addition to 300 so header weight matches the reference without synthetic bolding.
 
 ## Decisions
 
 - Brand color: keep scSAID blue as the accent.
 - Boldness: faithful but restrained; transfer menu geometry, density, and interaction—not HumanBase assets or exact feature content.
-- Scope: header/navigation only.
+- Scope: header/navigation plus Gene Search, Browse, and Details DEG tables.
 
 ## IP cleanliness
 

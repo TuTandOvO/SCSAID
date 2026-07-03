@@ -2,7 +2,7 @@
 
 ## Study scope and evidence
 
-This profile is intentionally limited to HumanBase's global navigation and dropdown menus. It is based on the user-provided navigation screenshot and HumanBase's public server-rendered HTML/CSS. Browser automation was unavailable, so computed-style sampling and new desktop/mobile screenshots could not be captured.
+This profile covers HumanBase's global navigation and the Tissue Networks table on the public download page. It is based on the user-provided navigation screenshot and HumanBase's public server-rendered HTML/CSS. Browser automation was unavailable, so computed-style sampling and new desktop/mobile screenshots could not be captured.
 
 ## One-line vibe
 
@@ -31,12 +31,22 @@ Quiet scientific utility: translucent white navigation, neutral grey labels, com
 - Header height: approximately 50px.
 - Top-level navigation padding: approximately 15px vertically and 20px horizontally.
 - Dropdown item padding: compact vertical rhythm with approximately 20px left inset.
+- Tissue Networks table: 13px base text with 8px cell padding and a 1rem bottom margin.
 
 ## Shape language
 
 - Dropdown radius: 4px.
 - Border: 1px neutral hairline.
 - Tabs: rectangular, with a light-grey hover/active surface rather than pills.
+- Tables: square and flat, with collapsed borders, no enclosing radius, no body gridlines, and one header separator.
+
+## Table vocabulary
+
+- Table text: `#212529` on white, left aligned and vertically centered.
+- Header: `#e9ecef`, 600 weight, normal case, with a `1px solid #dee2e6` bottom rule.
+- Body: white rows without horizontal or vertical borders.
+- Exact measurements: `padding: 8px`, `font-size: 1rem` against HumanBase's 13px root size.
+- Adaptation for scSAID: preserve quiet row hover, selection, sorting, pagination, and narrow-screen label/value presentation where functionality requires them.
 
 ## Elevation
 
@@ -55,7 +65,7 @@ Quiet scientific utility: translucent white navigation, neutral grey labels, com
 
 ## Imagery treatment
 
-Not applicable to this scoped navigation transfer.
+Not applicable to the navigation and table transfer.
 
 ## Microcopy tone
 

@@ -1,0 +1,229 @@
+/* ============================================================================
+   scSAID compact scientific tables
+   Shared table vocabulary derived from the public HumanBase download table.
+   Keep this file loaded after page-specific and DataTables stylesheets.
+   ========================================================================== */
+
+:root {
+    --compact-table-ink: #212529;
+    --compact-table-muted: #6c757d;
+    --compact-table-head: #e9ecef;
+    --compact-table-rule: #dee2e6;
+    --compact-table-hover: #f8f9fa;
+    --compact-table-selected: #edf5fb;
+    --compact-table-cell-pad: 8px;
+    --compact-table-font-size: 13px;
+}
+
+/* HumanBase keeps the table itself flat: no card edge, radius, or shadow. */
+.hb-table-shell,
+.table-wrapper.hb-table-shell,
+.data-table-wrapper.hb-table-shell {
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+}
+
+table.hb-table,
+table.dataTable.hb-table {
+    width: 100% !important;
+    margin: 0 0 1rem !important;
+    border: 0 !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    background: #fff;
+    color: var(--compact-table-ink);
+    font-family: var(--font-body, "Nunito", sans-serif);
+    font-size: var(--compact-table-font-size);
+    line-height: 1.375;
+}
+
+table.hb-table thead,
+table.dataTable.hb-table thead {
+    background: transparent;
+    border: 0;
+}
+
+table.hb-table th,
+table.hb-table td,
+table.dataTable.hb-table th,
+table.dataTable.hb-table td {
+    padding: var(--compact-table-cell-pad) !important;
+    border: 0 !important;
+    text-align: left;
+    vertical-align: middle;
+    color: var(--compact-table-ink);
+    font-family: var(--font-body, "Nunito", sans-serif);
+    font-size: var(--compact-table-font-size);
+    line-height: 1.375;
+}
+
+table.hb-table thead th,
+table.dataTable.hb-table thead th {
+    background-color: var(--compact-table-head) !important;
+    border-bottom: 1px solid var(--compact-table-rule) !important;
+    color: var(--compact-table-ink);
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+table.hb-table tbody tr,
+table.dataTable.hb-table tbody tr {
+    border: 0;
+    background: #fff;
+    transition: background-color 120ms ease;
+}
+
+table.hb-table tbody tr:hover,
+table.dataTable.hb-table tbody tr:hover {
+    background: var(--compact-table-hover);
+}
+
+table.hb-table tbody tr.is-selected,
+table.hb-table tbody tr.selected-row,
+table.dataTable.hb-table tbody tr.selected {
+    background: var(--compact-table-selected);
+}
+
+/* Preserve useful states without adding badge-shaped decoration. */
+table.hb-table .species-badge,
+table.hb-table .expression-badge {
+    min-width: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+table.hb-table .expression-badge--up { color: #167d3d; }
+table.hb-table .expression-badge--down { color: #b91c1c; }
+
+table.hb-table input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    vertical-align: middle;
+}
+
+table.hb-table .cell-checkbox { width: 30px; text-align: center; }
+table.hb-table .cell-gene,
+table.hb-table .cell-id,
+table.hb-table .cell-pval,
+table.dataTable.hb-table td.num { font: inherit; }
+
+table.hb-table .cell-link,
+table.hb-table .gene-link {
+    gap: 4px;
+    color: var(--color-secondary, #337ab7);
+    font-weight: 400;
+}
+
+table.hb-table .cell-link svg { width: 13px; height: 13px; }
+
+/* DataTables controls around the DEG table use the same compact rhythm. */
+.hb-table-shell .dataTables_wrapper {
+    color: var(--compact-table-ink);
+    font-family: var(--font-body, "Nunito", sans-serif);
+    font-size: var(--compact-table-font-size);
+}
+
+.hb-table-shell .dataTables_wrapper .dataTables_length,
+.hb-table-shell .dataTables_wrapper .dataTables_filter,
+.hb-table-shell .dataTables_wrapper .dataTables_info,
+.hb-table-shell .dataTables_wrapper .dataTables_paginate {
+    padding: 8px 0;
+    font-size: var(--compact-table-font-size);
+}
+
+.hb-table-shell .dataTables_wrapper .dataTables_length select,
+.hb-table-shell .dataTables_wrapper .dataTables_filter input {
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: var(--compact-table-ink);
+    font-size: var(--compact-table-font-size);
+}
+
+.hb-table-shell .dataTables_wrapper .dataTables_paginate .paginate_button {
+    min-width: 30px;
+    margin: 0 1px !important;
+    padding: 4px 8px !important;
+    border: 1px solid transparent !important;
+    border-radius: 4px !important;
+    background: transparent !important;
+    color: #337ab7 !important;
+    font-size: var(--compact-table-font-size) !important;
+}
+
+.hb-table-shell .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border-color: var(--compact-table-rule) !important;
+    background: var(--compact-table-hover) !important;
+    color: #23527c !important;
+}
+
+.hb-table-shell .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.hb-table-shell .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border-color: #337ab7 !important;
+    background: #337ab7 !important;
+    color: #fff !important;
+}
+
+/* At narrow widths, the wide search/browse datasets retain their existing
+   accessible label/value card transformation, but use the same restrained
+   HumanBase palette and compact measurements. */
+@media (max-width: 639px) {
+    .hb-table-shell { background: transparent; }
+
+    table.hb-table { margin-bottom: 0 !important; }
+
+    table.hb-table thead th:first-child {
+        min-height: 40px;
+        padding: 8px !important;
+        border: 1px solid var(--compact-table-rule) !important;
+        border-radius: 0;
+        background: var(--compact-table-head) !important;
+        font-size: var(--compact-table-font-size);
+        font-weight: 600;
+    }
+
+    table.hb-table tbody {
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    table.hb-table tbody tr {
+        padding: 4px 8px;
+        border: 1px solid var(--compact-table-rule);
+        border-radius: 0;
+    }
+
+    table.hb-table td,
+    table.hb-table td:first-child,
+    table.hb-table td:last-child {
+        gap: 8px;
+        padding: 6px 0 !important;
+        border-bottom: 1px solid #f0f1f2 !important;
+    }
+
+    table.hb-table td:last-child { border-bottom: 0 !important; }
+
+    table.hb-table td::before {
+        color: var(--compact-table-muted);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+}

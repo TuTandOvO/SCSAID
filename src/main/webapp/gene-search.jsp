@@ -24,13 +24,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703g">
     <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="CSS/search.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703a">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown
@@ -146,8 +147,8 @@
                     <span id="results-count" class="panel-count"></span>
                 </header>
                 <div class="panel-body panel-body--flush">
-                    <div class="table-wrapper">
-                        <table class="results-table">
+                    <div class="table-wrapper hb-table-shell">
+                        <table class="results-table hb-table">
                             <thead>
                                 <tr>
                                     <th class="cell-checkbox">

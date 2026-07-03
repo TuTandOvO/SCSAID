@@ -424,13 +424,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703g">
     <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
+    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703a">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
     <script src="lib/jquery-3.7.1.min.js?v=20260416"></script>
@@ -695,8 +696,8 @@
                     <div id="degCompareStatus" class="info-bar" style="display:none;"></div>
                     <div id="degProgress" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="degError" class="status-error" style="display:none;"></div>
-                    <div class="table-wrapper">
-                        <table id="degTable" class="elegant-table" style="width:100%">
+                    <div class="table-wrapper hb-table-shell">
+                        <table id="degTable" class="elegant-table hb-table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Gene</th>

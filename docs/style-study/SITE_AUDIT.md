@@ -1,4 +1,4 @@
-# Site Audit — scSAID header
+# Site Audit — scSAID navigation and scientific tables
 
 ## Stack and styling layer
 
@@ -7,6 +7,7 @@
 - Shared header behavior: `src/main/webapp/JS/site-header.js`.
 - Shared header styling: `src/main/webapp/CSS/header.css`.
 - Global tokens: `src/main/webapp/CSS/design-system.css`.
+- Table surfaces: `gene-search.jsp` + `CSS/search.css`, `browse.jsp` + `CSS/browse.css`, and the DEG DataTable in `details.jsp` + `CSS/details.css`.
 
 ## Current design tokens and patterns
 
@@ -49,3 +50,5 @@
 - Fixed header with desktop-to-drawer breakpoint at 1179px.
 - Cloudflare caches versioned CSS/JS assets, so header asset URLs must be bumped.
 - Browser automation is unavailable in this session; QA must combine static inspection, build checks, production HTML, and endpoint checks.
+- Gene Search and Browse convert wide tables into labelled records below 640px; this responsive functionality must remain intact.
+- The details DEG table is enhanced at runtime by DataTables, so shared styling must load after the vendor stylesheet.
