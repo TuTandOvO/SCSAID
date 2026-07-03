@@ -210,6 +210,7 @@
 .main-nav__dropdown-link {
     display: flex;
     align-items: center;
+    gap: 0.65rem;
     min-height: 36px;
     padding: 0.42rem 1.25rem;
     color: #333;
@@ -220,10 +221,45 @@
     transition: color 150ms ease, background-color 150ms ease;
 }
 
+.main-nav__dropdown-icon {
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: 0 0 1.1rem;
+    color: #666;
+    background-color: currentColor;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: color 150ms ease;
+}
+
+.main-nav__dropdown-icon--search { -webkit-mask-image: url('../images/icons/phosphor-fill/magnifying-glass-fill.svg'); mask-image: url('../images/icons/phosphor-fill/magnifying-glass-fill.svg'); }
+.main-nav__dropdown-icon--compare { -webkit-mask-image: url('../images/icons/phosphor-fill/arrows-left-right-fill.svg'); mask-image: url('../images/icons/phosphor-fill/arrows-left-right-fill.svg'); }
+.main-nav__dropdown-icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
+.main-nav__dropdown-icon--faq { -webkit-mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); }
+.main-nav__dropdown-icon--methods { -webkit-mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); }
+.main-nav__dropdown-icon--markers { -webkit-mask-image: url('../images/icons/phosphor-fill/tag-fill.svg'); mask-image: url('../images/icons/phosphor-fill/tag-fill.svg'); }
+.main-nav__dropdown-icon--pipeline { -webkit-mask-image: url('../images/icons/phosphor-fill/flow-arrow-fill.svg'); mask-image: url('../images/icons/phosphor-fill/flow-arrow-fill.svg'); }
+.main-nav__dropdown-icon--usage { -webkit-mask-image: url('../images/icons/phosphor-fill/book-open-text-fill.svg'); mask-image: url('../images/icons/phosphor-fill/book-open-text-fill.svg'); }
+.main-nav__dropdown-icon--cite { -webkit-mask-image: url('../images/icons/phosphor-fill/quotes-fill.svg'); mask-image: url('../images/icons/phosphor-fill/quotes-fill.svg'); }
+.main-nav__dropdown-icon--news { -webkit-mask-image: url('../images/icons/phosphor-fill/sparkle-fill.svg'); mask-image: url('../images/icons/phosphor-fill/sparkle-fill.svg'); }
+.main-nav__dropdown-icon--privacy { -webkit-mask-image: url('../images/icons/phosphor-fill/shield-check-fill.svg'); mask-image: url('../images/icons/phosphor-fill/shield-check-fill.svg'); }
+.main-nav__dropdown-icon--feedback { -webkit-mask-image: url('../images/icons/phosphor-fill/chat-centered-text-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chat-centered-text-fill.svg'); }
+
 .main-nav__dropdown-link:hover,
 .main-nav__dropdown-link:focus-visible {
     color: #333;
     background: #f5f5f5;
+}
+
+.main-nav__dropdown-link:hover .main-nav__dropdown-icon,
+.main-nav__dropdown-link:focus-visible .main-nav__dropdown-icon,
+.main-nav__dropdown-link--active .main-nav__dropdown-icon {
+    color: #337ab7;
 }
 
 .main-nav__dropdown-link--active {

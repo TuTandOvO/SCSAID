@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703e">
     <link rel="stylesheet" href="CSS/privacy.css?v=20260703c">
 </head>
 <body>

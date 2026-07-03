@@ -28,7 +28,7 @@
 
     <!-- Design System — same primitives as Details / Compare -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703d">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703e">
     <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="CSS/search.css?v=20260702p">
     <style>

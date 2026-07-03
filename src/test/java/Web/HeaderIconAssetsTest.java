@@ -22,7 +22,10 @@ class HeaderIconAssetsTest {
         List<String> assets = List.of(
                 "house-fill.svg", "database-fill.svg", "compass-fill.svg",
                 "chart-bar-fill.svg", "download-simple-fill.svg", "question-fill.svg",
-                "info-fill.svg", "chat-centered-text-fill.svg");
+                "info-fill.svg", "chat-centered-text-fill.svg", "magnifying-glass-fill.svg",
+                "arrows-left-right-fill.svg", "flask-fill.svg", "tag-fill.svg",
+                "flow-arrow-fill.svg", "book-open-text-fill.svg", "quotes-fill.svg",
+                "sparkle-fill.svg", "shield-check-fill.svg");
 
         for (String asset : assets) {
             assertTrue(Files.isRegularFile(icons.resolve(asset)), "Missing Phosphor asset: " + asset);
@@ -32,7 +35,9 @@ class HeaderIconAssetsTest {
         assertTrue(Files.isRegularFile(icons.resolve("LICENSE.txt")));
         assertTrue(css.contains("background-color: currentColor"));
         assertTrue(css.contains("-webkit-mask-image"));
-        assertTrue(header.contains("main-nav__icon--feedback"));
+        assertTrue(header.contains("main-nav__icon--navigate"));
+        assertTrue(header.contains("main-nav__dropdown-icon--search"));
+        assertTrue(header.contains("main-nav__dropdown-icon--feedback"));
         assertFalse(header.contains("site-icon-sprite"));
         assertFalse(header.contains("<symbol id=\"nav-icon-"));
     }

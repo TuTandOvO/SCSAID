@@ -11,15 +11,21 @@
             || scsaidRelativePath.startsWith("/gene-details");
     boolean scsaidExpression = scsaidRelativePath.endsWith("/featureplot.jsp");
     boolean scsaidCompare = scsaidRelativePath.endsWith("/compare.jsp");
-    boolean scsaidNavigate = scsaidSearch || scsaidCompare;
+    boolean scsaidNavigate = scsaidSearch || scsaidCompare || scsaidExpression;
     boolean scsaidDownload = scsaidRelativePath.endsWith("/download.jsp");
     boolean scsaidHelp = scsaidRelativePath.startsWith("/help");
     boolean scsaidCite = scsaidRelativePath.endsWith("/cite.jsp");
     boolean scsaidWhatsNew = scsaidRelativePath.endsWith("/whats-new.jsp");
     boolean scsaidPrivacy = scsaidRelativePath.endsWith("/privacy.jsp");
-    boolean scsaidAbout = scsaidCite || scsaidWhatsNew || scsaidPrivacy;
     boolean scsaidFeedback = scsaidRelativePath.startsWith("/feedback")
             || scsaidRelativePath.startsWith("/contact");
+    boolean scsaidAbout = scsaidCite || scsaidWhatsNew || scsaidPrivacy || scsaidFeedback;
+    String scsaidHelpTopic = request.getParameter("topic");
+    boolean scsaidHelpFaq = scsaidHelp && (scsaidHelpTopic == null || "faq".equals(scsaidHelpTopic));
+    boolean scsaidHelpMethods = scsaidHelp && "methods".equals(scsaidHelpTopic);
+    boolean scsaidHelpMarkers = scsaidHelp && "markers".equals(scsaidHelpTopic);
+    boolean scsaidHelpPipeline = scsaidHelp && "pipeline".equals(scsaidHelpTopic);
+    boolean scsaidHelpUsage = scsaidHelp && "usage".equals(scsaidHelpTopic);
 %>
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <header class="site-header">
@@ -38,31 +44,31 @@
             <div class="main-nav__item">
                 <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidNavigate ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="navigate-menu"><span class="main-nav__label"><span class="main-nav__icon main-nav__icon--navigate" aria-hidden="true"></span><span>Navigate</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--navigate" id="navigate-menu" role="menu" aria-label="Navigate">
-                    <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>>Search DEGs</a>
-                    <a href="compare.jsp" class="main-nav__dropdown-link<%= scsaidCompare ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCompare ? " aria-current=\"page\"" : "" %>>Compare conditions</a>
+                    <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--search" aria-hidden="true"></span><span>Search DEGs</span></a>
+                    <a href="compare.jsp" class="main-nav__dropdown-link<%= scsaidCompare ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCompare ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--compare" aria-hidden="true"></span><span>Compare conditions</span></a>
+                    <a href="featureplot.jsp" class="main-nav__dropdown-link<%= scsaidExpression ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--expression" aria-hidden="true"></span><span>Expression</span></a>
                 </div>
             </div>
-            <a href="featureplot.jsp" class="main-nav__link<%= scsaidExpression ? " main-nav__link--active" : "" %>"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>><span class="main-nav__icon main-nav__icon--expression" aria-hidden="true"></span><span>Expression</span></a>
             <a href="download.jsp" class="main-nav__link<%= scsaidDownload ? " main-nav__link--active" : "" %>"<%= scsaidDownload ? " aria-current=\"page\"" : "" %>><span class="main-nav__icon main-nav__icon--download" aria-hidden="true"></span><span>Download</span></a>
             <div class="main-nav__item">
                 <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidHelp ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="help-menu"><span class="main-nav__label"><span class="main-nav__icon main-nav__icon--help" aria-hidden="true"></span><span>Help</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--help" id="help-menu" role="menu" aria-label="Help topics">
-                    <a href="help?topic=faq" class="main-nav__dropdown-link" role="menuitem">FAQ</a>
-                    <a href="help?topic=methods" class="main-nav__dropdown-link" role="menuitem">Methods</a>
-                    <a href="help?topic=markers" class="main-nav__dropdown-link" role="menuitem">Markers</a>
-                    <a href="help?topic=pipeline" class="main-nav__dropdown-link" role="menuitem">Pipeline</a>
-                    <a href="help?topic=usage" class="main-nav__dropdown-link" role="menuitem">Usage</a>
+                    <a href="help?topic=faq" class="main-nav__dropdown-link<%= scsaidHelpFaq ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidHelpFaq ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--faq" aria-hidden="true"></span><span>FAQ</span></a>
+                    <a href="help?topic=methods" class="main-nav__dropdown-link<%= scsaidHelpMethods ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidHelpMethods ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--methods" aria-hidden="true"></span><span>Methods</span></a>
+                    <a href="help?topic=markers" class="main-nav__dropdown-link<%= scsaidHelpMarkers ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidHelpMarkers ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--markers" aria-hidden="true"></span><span>Markers</span></a>
+                    <a href="help?topic=pipeline" class="main-nav__dropdown-link<%= scsaidHelpPipeline ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidHelpPipeline ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--pipeline" aria-hidden="true"></span><span>Pipeline</span></a>
+                    <a href="help?topic=usage" class="main-nav__dropdown-link<%= scsaidHelpUsage ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidHelpUsage ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--usage" aria-hidden="true"></span><span>Usage</span></a>
                 </div>
             </div>
             <div class="main-nav__item">
                 <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidAbout ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="about-menu"><span class="main-nav__label"><span class="main-nav__icon main-nav__icon--about" aria-hidden="true"></span><span>About</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--about" id="about-menu" role="menu" aria-label="About">
-                    <a href="cite.jsp" class="main-nav__dropdown-link<%= scsaidCite ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCite ? " aria-current=\"page\"" : "" %>>How to Cite</a>
-                    <a href="whats-new.jsp" class="main-nav__dropdown-link<%= scsaidWhatsNew ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidWhatsNew ? " aria-current=\"page\"" : "" %>>What’s New</a>
-                    <a href="privacy.jsp" class="main-nav__dropdown-link<%= scsaidPrivacy ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPrivacy ? " aria-current=\"page\"" : "" %>>Privacy</a>
+                    <a href="cite.jsp" class="main-nav__dropdown-link<%= scsaidCite ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCite ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--cite" aria-hidden="true"></span><span>How to Cite</span></a>
+                    <a href="whats-new.jsp" class="main-nav__dropdown-link<%= scsaidWhatsNew ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidWhatsNew ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--news" aria-hidden="true"></span><span>What’s New</span></a>
+                    <a href="privacy.jsp" class="main-nav__dropdown-link<%= scsaidPrivacy ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPrivacy ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--privacy" aria-hidden="true"></span><span>Privacy</span></a>
+                    <a href="feedback" class="main-nav__dropdown-link<%= scsaidFeedback ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--feedback" aria-hidden="true"></span><span>Feedback</span></a>
                 </div>
             </div>
-            <a href="feedback" class="main-nav__link<%= scsaidFeedback ? " main-nav__link--active" : "" %>"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>><span class="main-nav__icon main-nav__icon--feedback" aria-hidden="true"></span><span>Feedback</span></a>
         </nav>
 
         <div class="header-actions">
