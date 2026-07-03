@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260702c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702o">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
 </head>
 <body>
     <%@ include file="includes/header.jsp" %>

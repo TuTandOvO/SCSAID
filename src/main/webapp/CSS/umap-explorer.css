@@ -10,7 +10,7 @@ body { background-color: var(--bg-body); }
 
 .umap-page {
     /* Local layout tokens the inherited details.css .panel primitives read. */
-    --panel-radius: 16px;
+    --panel-radius: 4px;   /* HumanBase square corners (was 16px) */
     --control-radius: var(--radius-control);
     --panel-pad-x: var(--space-xl);
     --panel-pad-y: var(--space-xl);

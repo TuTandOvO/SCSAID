@@ -20,10 +20,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=<%= System.currentTimeMillis() %>">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702o">
-    <link rel="stylesheet" href="CSS/details.css?v=<%= System.currentTimeMillis() %>">
-    <link rel="stylesheet" href="CSS/compare.css?v=<%= System.currentTimeMillis() %>">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/details.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
 
     <!-- Third-party libs (same versions as details.jsp) -->
@@ -245,8 +245,8 @@
                             <div id="gseaChart" class="gsea-chart"></div>
                         </div>
 
-                        <div class="table-wrapper" style="margin-top:0.5rem;">
-                            <div style="display:flex; justify-content:flex-end; margin-bottom:0.5rem;">
+                        <div class="table-wrapper gsea-table-wrapper">
+                            <div class="gsea-export-toolbar">
                                 <button id="exportGseaBtn" class="btn-secondary" disabled>Export Excel</button>
                             </div>
                             <table id="gseaTable" class="display" style="width:100%">

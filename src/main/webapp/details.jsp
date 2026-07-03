@@ -427,9 +427,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260702c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702o">
-    <link rel="stylesheet" href="CSS/details.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/details.css?v=20260702p">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
@@ -604,8 +604,8 @@
                         </div>
                         <span id="help-cell-proportion" class="visually-hidden">Cell counts and relative abundance across the selected annotation level, shown as bar and composition charts.</span>
                     </div>
-                    <div class="umap-controls control-row" style="align-items:center; gap:12px;">
-                        <label class="panel-label" style="margin:0;">Annotation</label>
+                    <div class="umap-controls control-row control-row--center">
+                        <label class="panel-label">Annotation</label>
                         <select id="proportionMapType" class="form-select elegant-select proportion-map-select">
                             <option value="Gross_Map" selected>Gross Map</option>
                             <option value="Fine_Map">Fine Map</option>
@@ -613,7 +613,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body" style="padding:1.5rem;">
+            <div class="panel-body">
                 <div id="proportion-loading" class="panel-loader" role="status" aria-label="Loading"></div>
                 <div id="proportion-error" class="status-error" style="display:none;"></div>
                 <div id="proportion-charts" style="display:none;">
@@ -639,9 +639,9 @@
                             </div>
                             <span id="help-cell-clustering" class="visually-hidden">UMAP embedding of this sample. Color by available cell annotations or metadata fields.</span>
                         </div>
-                        <div class="umap-controls control-row" style="align-items:center; gap:12px;">
-                            <label class="panel-label" style="margin:0;">Color by</label>
-                            <select id="umapColorBy" class="form-select elegant-select" style="min-width:160px;">
+                        <div class="umap-controls control-row control-row--center">
+                            <label class="panel-label">Color by</label>
+                            <select id="umapColorBy" class="form-select elegant-select">
                                 <option value="">—</option>
                             </select>
                             <button id="downloadUmapPdf" class="export-btn btn-ghost" title="Download PDF">
@@ -655,9 +655,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="umap-container">
+                <div id="umap-container" class="panel-body">
                     <div id="umap-loading" class="panel-loader" role="status" aria-label="Loading"></div>
-                    <img id="umap-image" src="" alt="UMAP plot" style="display:none; max-width:100%; height:auto;">
+                    <img id="umap-image" src="" alt="UMAP plot" style="display:none;">
                 </div>
             </div>
 
@@ -688,8 +688,7 @@
                                 <option value="">— No comparison (cluster vs rest of this sample)</option>
                             </select>
                         </div>
-                        <div class="control-group" style="flex:0 0 auto;">
-                            <label class="panel-label">&nbsp;</label>
+                        <div class="control-group control-group--auto">
                             <button id="degRunCompareBtn" class="btn-primary" disabled>Run comparison</button>
                         </div>
                     </div>
@@ -722,7 +721,7 @@
                                 <div class="filter-label">
                                     <span class="filter-name">Cell type</span>
                                 </div>
-                                <select id="cellTypeSelect" class="elegant-select">
+                                <select id="cellTypeSelect" class="form-select elegant-select">
                                     <option value="">All cell types</option>
                                 </select>
                             </div>
@@ -732,7 +731,7 @@
                                         <button type="button" class="analysis-help" aria-label="About the pseudogene filter" aria-describedby="help-deg-pseudogenes" aria-expanded="false" data-help-target="help-deg-pseudogenes">Pseudogenes</button>
                                     </span>
                                 </div>
-                                <label class="checkbox-item" style="padding-top:0.25rem;">
+                                <label class="checkbox-item">
                                     <input type="checkbox" id="hidePseudogenes" checked>
                                     <span class="checkbox-item__text">Hide pseudogenes</span>
                                 </label>
@@ -768,9 +767,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-body" style="padding:1.5rem;">
+                <div class="panel-body">
                     <!-- Gene Set Input Mode Tabs -->
-                    <div class="tab-bar" style="margin-bottom:1rem;">
+                    <div class="tab-bar">
                         <button class="gss-input-tab tab-btn active" data-mode="custom">Custom Genes</button>
                         <button class="gss-input-tab tab-btn" data-mode="msigdb">MSigDB Library</button>
                         <button class="gss-input-tab tab-btn" data-mode="upload">Upload GMT</button>
@@ -778,55 +777,55 @@
 
                     <!-- Mode 1: Custom gene list (original) -->
                     <div id="gssCustomPanel" class="gss-input-panel">
-                        <div class="control-group" style="min-width:0; margin-bottom:1rem;">
+                        <div class="control-group">
                             <label class="panel-label">Gene Set (comma-separated)</label>
                             <textarea id="gssGeneInput" class="form-textarea" rows="2" placeholder="e.g. COL1A1, COL1A2, COL3A1, FN1, VIM, ACTA2"></textarea>
                         </div>
                     </div>
 
                     <!-- Mode 2: MSigDB predefined gene sets -->
-                    <div id="gssMsigdbPanel" class="gss-input-panel" style="display:none;">
-                        <div class="control-row" style="margin-bottom:0.8rem;">
+                    <div id="gssMsigdbPanel" class="gss-input-panel section-stack" style="display:none;">
+                        <div class="control-row">
                             <div class="control-group control-group--library">
                                 <label class="panel-label">Library</label>
                                 <select id="gssLibrary" class="form-select">
                                     <option value="">—</option>
                                 </select>
                             </div>
-                            <div class="control-group" style="flex:1; min-width:250px;">
+                            <div class="control-group control-group--grow">
                                 <label class="panel-label">Search Gene Sets</label>
                                 <input type="text" id="gssSetSearch" class="form-input" placeholder="Type to search (e.g. apoptosis, WNT, MAPK)...">
                             </div>
                         </div>
-                        <div id="gssSetList" class="list-panel" style="max-height:200px; padding:4px 0;">
-                            <div class="help-text" style="padding:12px;">Select a library to browse gene sets</div>
+                        <div id="gssSetList" class="list-panel list-panel--h-sm list-panel--padded">
+                            <div class="help-text list-panel__hint">Select a library to browse gene sets</div>
                         </div>
-                        <div id="gssSelectedSetInfo" class="info-bar" style="display:none; margin-top:0.5rem;">
+                        <div id="gssSelectedSetInfo" class="info-bar" style="display:none;">
                         </div>
                     </div>
 
                     <!-- Mode 3: Upload GMT file -->
-                    <div id="gssUploadPanel" class="gss-input-panel" style="display:none;">
-                        <div id="gssDropZone" class="drop-zone" style="margin-bottom:0.8rem;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px; height:36px; margin-bottom:0.5rem; color:var(--ink-mute);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            <div style="font-family:'Nunito', sans-serif; font-size:0.9rem; color:var(--ink-soft);">
+                    <div id="gssUploadPanel" class="gss-input-panel section-stack" style="display:none;">
+                        <div id="gssDropZone" class="drop-zone">
+                            <svg class="drop-zone__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <div class="drop-zone__hint">
                                 Drag & drop a <strong>.gmt</strong> file here, or
-                                <label class="action-link" style="cursor:pointer; text-decoration:underline;">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
+                                <label class="action-link">browse<input type="file" id="gssFileInput" accept=".gmt,.txt" style="display:none;"></label>
                                 <button type="button" class="analysis-help analysis-help--inline" aria-label="About GMT file format" aria-describedby="help-gmt-format" aria-expanded="false" data-help-target="help-gmt-format">GMT format</button>
                             </div>
                             <span id="help-gmt-format" class="visually-hidden">GMT rows contain a set name, description, and gene symbols separated by tabs.</span>
                         </div>
-                        <div id="gssUploadResult" style="display:none;">
-                            <div id="gssSpeciesWarning" style="display:none; padding:0.6rem 0.8rem; background:#fff8e1; border:1px solid #ffe082; border-radius:var(--radius-sm); font-family:'Nunito', sans-serif; font-size:0.82rem; color:#8d6e00; margin-bottom:0.5rem;">
+                        <div id="gssUploadResult" class="section-stack" style="display:none;">
+                            <div id="gssSpeciesWarning" class="gss-warning" style="display:none;">
                                 <strong>&#9888; Species mismatch:</strong> <span id="gssSpeciesWarningText"></span>
                             </div>
-                            <div id="gssUploadSetList" class="list-panel" style="max-height:180px; padding:4px 0;"></div>
-                            <div id="gssUploadSelectedInfo" class="info-bar" style="display:none; margin-top:0.5rem;"></div>
+                            <div id="gssUploadSetList" class="list-panel list-panel--h-xs list-panel--padded"></div>
+                            <div id="gssUploadSelectedInfo" class="info-bar" style="display:none;"></div>
                         </div>
                     </div>
 
                     <!-- Controls row: Group By, Method, Run button -->
-                    <div class="control-row" style="margin:1rem 0;">
+                    <div class="control-row">
                         <div class="control-group">
                             <label class="panel-label">Group By</label>
                             <select id="gssGroupBy" class="form-select">
@@ -848,10 +847,10 @@
                             Run Scoring
                         </button>
                     </div>
-                    <div id="gssGeneInfo" class="help-text" style="margin-bottom:1rem; display:none;"></div>
+                    <div id="gssGeneInfo" class="help-text" style="display:none;"></div>
                     <div id="gssProgress" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
-                    <div id="gssError" class="status-error" style="display:none; margin-bottom:1rem;"></div>
-                    <div id="gssViolinPlot" style="min-height:200px;"></div>
+                    <div id="gssError" class="status-error" style="display:none;"></div>
+                    <div id="gssViolinPlot"></div>
                 </div>
             </div>
 
@@ -868,8 +867,8 @@
                 </div>
                 <div class="panel-body">
                     <!-- Cell Type Selection -->
-                    <div class="cpdb-config-section">
-                        <div class="control-row" style="gap:16px; margin-bottom:12px;">
+                    <div class="cpdb-config-section section-stack">
+                        <div class="control-row">
                             <h3 class="cpdb-section-title">Cell-Cell Communication</h3>
                             <div class="cpdb-mode-toggle">
                                 <label class="cpdb-radio">
@@ -884,8 +883,8 @@
                         </div>
 
                         <!-- Annotation-granularity toggle (Fine_Map / Gross_Map) -->
-                        <div class="control-row" style="gap:16px; margin-bottom:12px; align-items:center;">
-                            <label class="panel-label" style="margin:0;">Annotation level</label>
+                        <div class="control-row control-row--center">
+                            <label class="panel-label">Annotation level</label>
                             <div class="cpdb-mode-toggle">
                                 <label class="cpdb-radio">
                                     <input type="radio" name="cpdbLevel" value="fine" checked>
@@ -901,37 +900,37 @@
                         <!-- All Combinations mode: single checkbox list -->
                         <div id="cpdbAllControls">
                             <p class="cpdb-section-desc">Select 2 or more cell types to analyze ligand-receptor interactions</p>
-                            <div id="cpdbCellTypeList" class="list-panel" style="max-height:300px;">
+                            <div id="cpdbCellTypeList" class="list-panel list-panel--h-lg">
                                 <div class="panel-loader" role="status" aria-label="Loading"></div>
                             </div>
-                            <div class="help-text" style="margin-top:6px;">
+                            <div class="help-text cpdb-list-footer">
                                 <span id="cpdbSelectedCount">0</span> cell types selected
-                                <a href="javascript:void(0)" id="cpdbSelectAll" class="action-link" style="margin-left:12px;">Select All</a>
-                                <a href="javascript:void(0)" id="cpdbClearAll" class="action-link action-link--danger" style="margin-left:8px;">Clear</a>
+                                <a href="javascript:void(0)" id="cpdbSelectAll" class="action-link action-link--spaced">Select All</a>
+                                <a href="javascript:void(0)" id="cpdbClearAll" class="action-link action-link--danger action-link--spaced">Clear</a>
                             </div>
                         </div>
 
                         <!-- Sender/Receiver mode: two checkbox lists side by side -->
                         <div id="cpdbDirectedControls" style="display:none;">
                             <p class="cpdb-section-desc">Assign cell types as senders (left) and receivers (right)</p>
-                            <div class="control-row" style="align-items:stretch; gap:16px;">
-                                <div class="control-group" style="flex:1; min-width:0;">
+                            <div class="control-row control-row--stretch">
+                                <div class="control-group">
                                     <label class="panel-label">Sender Cell Types</label>
-                                    <div id="cpdbSenderList" class="list-panel" style="max-height:280px;">
+                                    <div id="cpdbSenderList" class="list-panel list-panel--h-md">
                                     </div>
                                     <div class="help-text"><span id="cpdbSenderCount">0</span> selected</div>
                                 </div>
                                 <div class="arrow-separator">→</div>
-                                <div class="control-group" style="flex:1; min-width:0;">
+                                <div class="control-group">
                                     <label class="panel-label">Receiver Cell Types</label>
-                                    <div id="cpdbReceiverList" class="list-panel" style="max-height:280px;">
+                                    <div id="cpdbReceiverList" class="list-panel list-panel--h-md">
                                     </div>
                                     <div class="help-text"><span id="cpdbReceiverCount">0</span> selected</div>
                                 </div>
                             </div>
                         </div>
 
-                        <button id="runCpdbAnalysisBtn" class="btn-primary" style="margin-top:1rem;">
+                        <button id="runCpdbAnalysisBtn" class="btn-primary">
                             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
                             </svg>
@@ -959,7 +958,7 @@
                         </div>
 
                         <div id="cpdbTableTab" class="cpdb-tab-content">
-                            <div class="cpdb-table-toolbar" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:0.75rem;">
+                            <div class="cpdb-table-toolbar">
                                 <button id="cpdbExportExcelBtn" class="export-btn btn-ghost" disabled>
                                     <svg class="export-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1004,27 +1003,27 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="control-row toolbar-row" style="margin-bottom:0.5rem;">
-                        <div class="control-group" style="min-width:170px;">
+                    <div class="control-row toolbar-row">
+                        <div class="control-group">
                             <label class="panel-label">Method</label>
                             <select id="enrichMethod" class="form-select elegant-select">
                                 <option value="gsea" selected>GSEA (ranked)</option>
                                 <option value="ora">ORA (over-representation)</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:220px;">
+                        <div class="control-group control-group--wide">
                             <label class="panel-label">Gene Set</label>
                             <select id="enrichGeneSet" class="form-select elegant-select">
                                 <option value="">—</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:180px; display:none;" id="enrichCellTypeWrap">
+                        <div class="control-group" style="display:none;" id="enrichCellTypeWrap">
                             <label class="panel-label">Cell type</label>
                             <select id="enrichCellTypeSelect" class="form-select elegant-select">
                                 <option value="">All</option>
                             </select>
                         </div>
-                        <div class="control-group" style="min-width:80px;">
+                        <div class="control-group control-group--sm">
                             <label class="panel-label">Top</label>
                             <select id="enrichTopN" class="form-select elegant-select">
                                 <option value="10" selected>10</option>
@@ -1068,9 +1067,9 @@
                         The regulatory network for this dataset is being prepared and is not yet available.
                     </div>
 
-                    <div id="scorpionContent" style="display:none;">
-                        <div class="control-row toolbar-row" style="margin-bottom:0.5rem;">
-                            <div class="control-group" style="min-width:120px;">
+                    <div id="scorpionContent" class="section-stack" style="display:none;">
+                        <div class="control-row toolbar-row">
+                            <div class="control-group control-group--sm">
                                 <label class="panel-label">Top regulators</label>
                                 <select id="scorpionTopN" class="form-select elegant-select">
                                     <option value="15">15</option>
@@ -1081,15 +1080,15 @@
                         </div>
                         <div id="scorpionRegChart"></div>
 
-                        <div class="control-row toolbar-row" style="margin:1.5rem 0 0.5rem;">
-                            <div class="control-group" style="min-width:220px;">
+                        <div class="control-row toolbar-row">
+                            <div class="control-group control-group--wide">
                                 <label class="panel-label">Targetome of TF</label>
                                 <select id="scorpionTfSelect" class="form-select elegant-select"></select>
                             </div>
                         </div>
                         <div id="scorpionTargetChart"></div>
 
-                        <div style="margin-top:1.5rem;">
+                        <div class="scorpion-network-group">
                             <label class="panel-label">Regulator &rarr; target network (top regulators)</label>
                             <div id="scorpionNetwork"></div>
                         </div>

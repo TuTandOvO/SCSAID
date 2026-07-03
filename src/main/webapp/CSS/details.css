@@ -19,8 +19,8 @@
     --rail-width: 240px;
     --rail-collapsed: 60px;
     --panel-gap: 1.75rem;
-    --panel-radius: 16px;
-    --control-radius: 10px;
+    --panel-radius: 4px;   /* HumanBase square corners (was 16px) */
+    --control-radius: 4px; /* HumanBase square corners (was 10px) */
     --panel-pad-x: 2rem;
     --panel-pad-y: 1.75rem;
     --eyebrow-size: 0.72rem;
@@ -564,6 +564,13 @@ body { background-color: var(--bg-body); }
 
 .control-group--wide { flex: 1 1 17.5rem; }
 .control-group--library { flex: 0 1 16rem; }
+.control-group--grow { flex: 1 1 15.625rem; }
+.control-group--sm { flex: 0 1 6rem; }
+.control-group--auto { flex: 0 0 auto; }
+
+/* Row alignment modifiers (replace former inline align-items overrides) */
+.control-row--center { align-items: center; }
+.control-row--stretch { align-items: stretch; }
 
 .panel-label,
 .control-label,
@@ -1106,6 +1113,14 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .list-panel::-webkit-scrollbar { width: 6px; }
 .list-panel::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
 
+/* Scrollable pick-list height variants (replace former inline max-height) */
+.list-panel--h-xs { max-height: 180px; }
+.list-panel--h-sm { max-height: 200px; }
+.list-panel--h-md { max-height: 280px; }
+.list-panel--h-lg { max-height: 300px; }
+.list-panel--padded { padding-block: 4px; }
+.list-panel__hint { padding: var(--space-md); }
+
 .list-panel .checkbox-item {
     display: flex;
     padding: 0.5rem 0.85rem;
@@ -1122,6 +1137,42 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* --------------------------------------------------------------------------
+   H3. Per-card tidy — rules that absorb former inline styles so each card
+   reads consistently (see details.jsp). Vertical rhythm inside toggled
+   sub-panels is handled by the shared .section-stack helper.
+   -------------------------------------------------------------------------- */
+/* Cell Clustering */
+#umapColorBy { min-width: 160px; }
+#umap-image { max-width: 100%; height: auto; }
+
+/* DEG — pseudogene checkbox aligns with sibling slider / select controls */
+.deg-controls .filter-card .checkbox-item { padding-top: 0.25rem; }
+
+/* Gene Set Scoring */
+#gssViolinPlot { min-height: 200px; }
+.gss-warning {
+    padding: 0.6rem 0.8rem;
+    background: var(--color-warning-bg);
+    border: 1px solid var(--color-warning-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    color: var(--color-warning-text);
+}
+.drop-zone__icon { width: 36px; height: 36px; margin-bottom: 0.5rem; color: var(--text-muted); }
+.drop-zone__hint { font-size: 0.9rem; color: var(--text-secondary); }
+.drop-zone .action-link { cursor: pointer; text-decoration: underline; }
+
+/* CellPhoneDB */
+.cpdb-list-footer { margin-top: var(--space-xs); }
+.action-link--spaced { margin-left: var(--space-sm); }
+.cpdb-table-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: var(--space-sm);
 }
 
 .set-list-item__meta {
