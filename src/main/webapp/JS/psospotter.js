@@ -21,6 +21,8 @@
         crossDirection: document.getElementById("crossDirection"),
         panelK: document.getElementById("panelK"),
         geneList: document.getElementById("geneList"),
+        quickstartBtn: document.getElementById("quickstartBtn"),
+        quickstartChips: document.getElementById("quickstartChips"),
         singleH5ad: document.getElementById("singleH5ad"),
         trainH5ad: document.getElementById("trainH5ad"),
         testH5ad: document.getElementById("testH5ad"),
@@ -156,6 +158,33 @@
     function saveGeneText() {
         var prefs = preferences();
         if (prefs) prefs.set("psospotterGeneList", els.geneList.value);
+    }
+
+    function normalizeGenes(text) {
+        return (text || "")
+            .split(/[\s,;]+/)
+            .map(function (gene) { return gene.trim(); })
+            .filter(function (gene, index, arr) {
+                return gene && arr.indexOf(gene) === index;
+            });
+    }
+
+    function setGeneList(text) {
+        els.geneList.value = text;
+        saveGeneText();
+    }
+
+    function appendGene(gene) {
+        var genes = normalizeGenes(els.geneList.value);
+        if (genes.indexOf(gene) < 0) genes.push(gene);
+        setGeneList(genes.join(", "));
+        els.geneList.focus();
+        els.geneList.setSelectionRange(els.geneList.value.length, els.geneList.value.length);
+    }
+
+    function loadExampleGenes() {
+        setGeneList("KRT14, COL1A1, ACTA2, PECAM1, CD3E");
+        els.geneList.focus();
     }
 
     function selectedFiles() {
@@ -553,6 +582,17 @@
             var prefs = preferences();
             if (prefs) prefs.set("psospotterPanelK", els.panelK.value);
         });
+        if (els.quickstartBtn) {
+            els.quickstartBtn.addEventListener("click", loadExampleGenes);
+        }
+        if (els.quickstartChips) {
+            var chips = els.quickstartChips.querySelectorAll("[data-gene]");
+            for (var i = 0; i < chips.length; i++) {
+                chips[i].addEventListener("click", function () {
+                    appendGene(this.getAttribute("data-gene"));
+                });
+            }
+        }
     }
 
     function restoreState() {

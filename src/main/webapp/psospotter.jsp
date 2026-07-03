@@ -36,6 +36,23 @@
             <p class="page-hero__description">
                 Upload raw-count h5ad files, provide a candidate gene list, and run the panel-selection pipeline on the backend.
             </p>
+            <div class="psospotter-quickstart" aria-label="Example gene shortcuts">
+                <button id="quickstartBtn" class="psospotter-quickstart__button" type="button" title="Load an example gene list" aria-label="Load an example gene list">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M9 21h6" />
+                        <path d="M10 17h4" />
+                        <path d="M6.5 9.25a5.5 5.5 0 1 1 11 0c0 1.83-.8 3.12-2.12 4.28-.58.51-1.01 1.14-1.25 1.82H9.87c-.24-.68-.67-1.31-1.25-1.82C7.3 12.37 6.5 11.08 6.5 9.25Z" />
+                    </svg>
+                </button>
+                <span class="psospotter-quickstart__label">Try</span>
+                <div class="psospotter-quickstart__chips" id="quickstartChips">
+                    <button type="button" class="psospotter-quickstart__chip" data-gene="KRT14">KRT14</button>
+                    <button type="button" class="psospotter-quickstart__chip" data-gene="COL1A1">COL1A1</button>
+                    <button type="button" class="psospotter-quickstart__chip" data-gene="ACTA2">ACTA2</button>
+                    <button type="button" class="psospotter-quickstart__chip" data-gene="PECAM1">PECAM1</button>
+                    <button type="button" class="psospotter-quickstart__chip" data-gene="CD3E">CD3E</button>
+                </div>
+            </div>
         </div>
     </section>
 
