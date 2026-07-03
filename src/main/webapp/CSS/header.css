@@ -62,13 +62,6 @@
 
 .site-logo:hover { color: #23527c; }
 
-.site-icon-sprite {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-}
-
 .main-nav {
     display: flex;
     align-items: center;
@@ -99,12 +92,27 @@
 }
 
 .main-nav__icon {
+    display: inline-block;
     width: 1.15rem;
     height: 1.15rem;
     flex: 0 0 1.15rem;
-    fill: currentColor;
-    stroke: none;
+    background-color: currentColor;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
 }
+
+.main-nav__icon--home { -webkit-mask-image: url('../images/icons/phosphor-fill/house-fill.svg'); mask-image: url('../images/icons/phosphor-fill/house-fill.svg'); }
+.main-nav__icon--browse { -webkit-mask-image: url('../images/icons/phosphor-fill/database-fill.svg'); mask-image: url('../images/icons/phosphor-fill/database-fill.svg'); }
+.main-nav__icon--navigate { -webkit-mask-image: url('../images/icons/phosphor-fill/compass-fill.svg'); mask-image: url('../images/icons/phosphor-fill/compass-fill.svg'); }
+.main-nav__icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
+.main-nav__icon--download { -webkit-mask-image: url('../images/icons/phosphor-fill/download-simple-fill.svg'); mask-image: url('../images/icons/phosphor-fill/download-simple-fill.svg'); }
+.main-nav__icon--help { -webkit-mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); }
+.main-nav__icon--about { -webkit-mask-image: url('../images/icons/phosphor-fill/info-fill.svg'); mask-image: url('../images/icons/phosphor-fill/info-fill.svg'); }
+.main-nav__icon--feedback { -webkit-mask-image: url('../images/icons/phosphor-fill/chat-centered-text-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chat-centered-text-fill.svg'); }
 
 .main-nav__label {
     display: inline-flex;

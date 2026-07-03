@@ -109,7 +109,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703d">
 
 
     <!-- Composition Charts -->
