@@ -28,9 +28,12 @@ class ResponsivePolishTest {
         String css = read("src/main/webapp/CSS/details.css");
 
         assertTrue(jsp.contains("control-row gss-controls-row"));
-        assertTrue(css.contains("#GeneSetScoring .panel-body { gap: 0.65rem; }"));
+        assertTrue(css.contains("#GeneSetScoring > .header { padding-bottom: 0.25rem; }"));
+        assertTrue(css.contains("gap: 0.5rem;"));
+        assertTrue(css.contains("padding-bottom: 0.75rem;"));
         assertTrue(css.contains("#GeneSetScoring .tab-bar { margin-bottom: 0; }"));
         assertTrue(css.contains("#gssGeneInput"));
         assertTrue(css.contains("min-height: 44px"));
+        assertTrue(css.contains("#gssViolinPlot { min-height: 0; }"));
     }
 }

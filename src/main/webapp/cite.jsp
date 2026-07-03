@@ -6,14 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,follow">
     <title>How to Cite - scSAID</title>
+    <meta name="description" content="Citation guidance and method references for scSAID.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=20260703a">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=20260703a">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703h">
+    <link rel="stylesheet" href="CSS/about-pages.css?v=20260703a">
 </head>
 <body>
     <%@ include file="includes/header.jsp" %>
-    <main class="blank-page" id="main-content" tabindex="-1" aria-label="How to Cite"></main>
+    <main class="about-page" id="main-content" tabindex="-1" aria-label="How to Cite">
+        <header class="about-page__header">
+            <h1>How to Cite scSAID</h1>
+            <p class="about-page__intro">Citation information for the atlas and the analysis methods used in a study.</p>
+        </header>
+
+        <section class="about-section" aria-labelledby="cite-scsaid-title">
+            <h2 id="cite-scsaid-title">Citing scSAID</h2>
+            <div class="template-note">Template: replace the bracketed fields with the final manuscript citation and DOI.</div>
+            <p>If scSAID contributed data, analysis, or visualizations to your research, please cite:</p>
+            <blockquote class="citation-template">
+                <span class="template-placeholder">[Authors]. scSAID: [manuscript title]. [Journal] ([Year]). https://doi.org/[DOI]</span>
+            </blockquote>
+            <p>Citations help document use of the resource and support its continued maintenance.</p>
+        </section>
+
+        <section class="about-section" aria-labelledby="additional-references-title">
+            <h2 id="additional-references-title">Additional references</h2>
+            <p>When reporting a specific analysis, also cite the corresponding method or source dataset.</p>
+            <ul>
+                <li><strong>Source datasets:</strong> <span class="template-placeholder">[Add the GEO study and primary publication used in the analysis.]</span></li>
+                <li><strong>Analysis methods:</strong> <span class="template-placeholder">[Add references for CellPhoneDB, SCORPION, AUCell, UCell, GSVA, GSEA, DESeq2, or other methods used.]</span></li>
+                <li><strong>External resources:</strong> <span class="template-placeholder">[Add references for MSigDB, STRING, CollecTRI, or other databases used.]</span></li>
+            </ul>
+        </section>
+    </main>
 </body>
 </html>

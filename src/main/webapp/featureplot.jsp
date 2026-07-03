@@ -22,13 +22,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicons / PWA icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png?v=20260703a">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=20260703a">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png?v=20260703a">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png?v=20260703a">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=20260703a">
+    <link rel="manifest" href="/site.webmanifest?v=20260703a">
     <meta name="theme-color" content="#333333">
     <title>Expression - scSAID</title>
     <meta name="description" content="Interactive gene expression feature plots on the integrated human and mouse skin atlas. Enter any gene symbol to visualise its expression on the UMAP. Choose human or mouse; case-insensitive (COL1A1, Col1a1 both work).">
@@ -47,7 +47,7 @@
     <!-- Design System + reused page styles -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703h">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703c">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703d">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260702p">
 

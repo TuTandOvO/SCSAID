@@ -1,0 +1,103 @@
+/* HumanBase-inspired editorial utility pages for scSAID About content. */
+.about-page {
+    width: min(100% - 2rem, 62.5rem);
+    margin-inline: auto;
+    padding: calc(var(--header-height, 50px) + 3rem) 0 4rem;
+    color: var(--text-primary);
+}
+
+.about-page__header {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.about-page h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.about-page__intro {
+    max-width: 70ch;
+    margin: 0.75rem 0 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.about-section,
+.release {
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.about-section:last-child,
+.release:last-child { border-bottom: 0; }
+
+.about-page h2 {
+    margin: 0 0 0.8rem;
+    font-size: 1.45rem;
+    font-weight: 300;
+    line-height: 1.3;
+}
+
+.about-page h3 {
+    margin: 1.1rem 0 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.about-page p,
+.about-page li {
+    max-width: 75ch;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.about-page p { margin: 0 0 0.85rem; }
+.about-page ul { margin: 0.5rem 0 0 1.25rem; }
+.about-page li + li { margin-top: 0.5rem; }
+
+.citation-template {
+    margin: 1rem 0;
+    padding: 1rem 1.15rem;
+    background: #f8f9fa;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    line-height: 1.65;
+}
+
+.template-note {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem 0.9rem;
+    background: #f8f9fa;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.template-placeholder {
+    color: #666;
+    font-style: italic;
+}
+
+.release__date {
+    margin-bottom: 0.2rem;
+    color: var(--text-primary);
+}
+
+.release-entry + .release-entry { margin-top: 1.25rem; }
+
+@media (max-width: 600px) {
+    .about-page {
+        width: min(100% - 1.5rem, 62.5rem);
+        padding-top: calc(var(--header-height, 50px) + 2rem);
+    }
+
+    .about-page h1 { font-size: 1.75rem; }
+    .about-page h2 { font-size: 1.25rem; }
+}

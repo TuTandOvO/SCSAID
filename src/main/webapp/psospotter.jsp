@@ -11,6 +11,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=20260703a">
     <title>psoSpotter - scSAID</title>
     <meta name="description" content="Run the psoSpotter biomarker-panel selection algorithm on uploaded scRNA-seq h5ad files.">
 
@@ -21,7 +23,7 @@
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260703a">
     <link rel="stylesheet" href="CSS/header.css?v=20260703h">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703c">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703d">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="CSS/psospotter.css?v=20260703a">
 </head>

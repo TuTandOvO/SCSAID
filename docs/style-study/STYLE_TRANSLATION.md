@@ -34,6 +34,7 @@ Adopt HumanBase's restrained scientific interface grammar—flat grey tabs, comp
 - Mobile drawer keeps submenu destinations visible and touch-friendly.
 - `humanbase-tables.css` provides one reusable `hb-table` / `hb-table-shell` layer for static and DataTables-driven results.
 - Wide Gene Search and Browse results retain accessible mobile record layouts, restyled with the same compact neutral vocabulary.
+- About-page templates use HumanBase's text-led citation and chronological release-note rhythm while keeping scSAID copy and placeholders.
 
 ## Fonts
 

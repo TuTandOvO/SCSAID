@@ -11,6 +11,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=20260703a">
     <title>Feedback - scSAID</title>
 
     <!-- Google Fonts -->

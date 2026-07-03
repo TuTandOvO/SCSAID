@@ -1,7 +1,7 @@
 .privacy-page {
     width: min(100% - 2rem, 58rem);
     margin: 0 auto;
-    padding: 2.5rem 0 4rem;
+    padding: calc(var(--header-height, 50px) + 2.5rem) 0 4rem;
 }
 
 .privacy-page h1 {

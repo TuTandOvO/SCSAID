@@ -71,6 +71,12 @@ Not applicable to the navigation and table transfer.
 
 Direct scientific labels in title case; short, descriptive menu names.
 
+## Editorial utility pages
+
+- Citation pages use one dominant citation block followed by a short method-reference list.
+- Release notes are chronological, separated by horizontal rules, with a date heading and compact titled entries.
+- The presentation is flat and text-led: restrained blue links, neutral rules, and no decorative imagery.
+
 ## Do-not-copy list
 
 - HumanBase logo and wordmark.

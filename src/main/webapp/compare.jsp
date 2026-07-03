@@ -11,6 +11,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=20260703a">
     <title>Compare Conditions - scSAID</title>
     <meta name="description" content="Compare two conditions across the scSAID skin atlas. Pseudobulk DESeq2 differential expression and pre-ranked GSEA, per cell type.">
 
@@ -22,7 +24,7 @@
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703h">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703c">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703d">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
 

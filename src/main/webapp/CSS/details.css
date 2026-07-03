@@ -1157,7 +1157,12 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .deg-controls .filter-card .checkbox-item { padding-top: 0.25rem; }
 
 /* Gene Set Scoring */
-#GeneSetScoring .panel-body { gap: 0.65rem; }
+#GeneSetScoring > .header { padding-bottom: 0.25rem; }
+#GeneSetScoring .panel-body {
+    gap: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.75rem;
+}
 #GeneSetScoring .tab-bar { margin-bottom: 0; }
 #gssCustomPanel .control-group { gap: 0.25rem; }
 #gssGeneInput {
@@ -1165,8 +1170,8 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     min-height: 44px;
     padding-block: 0.45rem;
 }
-.gss-controls-row { margin-top: 0; }
-#gssViolinPlot { min-height: 200px; }
+.gss-controls-row { gap: 0.5rem; margin-top: 0; }
+#gssViolinPlot { min-height: 0; }
 .gss-warning {
     padding: 0.6rem 0.8rem;
     background: var(--color-warning-bg);

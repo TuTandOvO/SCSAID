@@ -397,13 +397,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicons / PWA icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png?v=20260703a">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=20260703a">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png?v=20260703a">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512.png?v=20260703a">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=20260703a">
+    <link rel="manifest" href="/site.webmanifest?v=20260703a">
     <meta name="theme-color" content="#333333">
     <title><%= pageTitle.replace("<","&lt;").replace(">","&gt;") %></title>
 
@@ -429,7 +429,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703h">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703c">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703d">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
 
@@ -852,7 +852,7 @@
                     <div id="gssGeneInfo" class="help-text" style="display:none;"></div>
                     <div id="gssProgress" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="gssError" class="status-error" style="display:none;"></div>
-                    <div id="gssViolinPlot"></div>
+                    <div id="gssViolinPlot" style="display:none;"></div>
                 </div>
             </div>
 
@@ -2545,7 +2545,7 @@
                     $('#gssProgress').show();
                     $('#gssError').hide();
                     $('#gssGeneInfo').hide();
-                    $('#gssViolinPlot').empty();
+                    $('#gssViolinPlot').empty().hide();
 
                     $.ajax({
                         url: contextPath + '/cpdb-api?action=geneset-score',
@@ -2589,7 +2589,7 @@
                     var violinData = data.violin_data;
 
                     if (!cellTypes || cellTypes.length === 0) {
-                        $('#gssViolinPlot').html('<div style="text-align:center; padding:2rem; color:#999;">No data to display</div>');
+                        $('#gssViolinPlot').show().html('<div style="text-align:center; padding:2rem; color:#777;">No data to display</div>');
                         return;
                     }
 
@@ -2636,6 +2636,7 @@
                         violinmode: 'group'
                     };
 
+                    $('#gssViolinPlot').show();
                     Plotly.newPlot('gssViolinPlot', traces, layout, figConfig('geneset_violin_' + said, { responsive: true }));
                 }
 
