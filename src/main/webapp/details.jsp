@@ -429,7 +429,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/header.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703a">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
@@ -1066,31 +1066,44 @@
                     </div>
 
                     <div id="scorpionContent" class="section-stack" style="display:none;">
-                        <div class="control-row toolbar-row">
-                            <div class="control-group control-group--sm">
-                                <label class="panel-label">Top regulators</label>
-                                <select id="scorpionTopN" class="form-select elegant-select">
-                                    <option value="15">15</option>
-                                    <option value="20" selected>20</option>
-                                    <option value="30">30</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="scorpionRegChart"></div>
+                        <div class="scorpion-overview-grid">
+                            <section class="scorpion-view" aria-labelledby="scorpion-regulators-title">
+                                <header class="scorpion-view__header">
+                                    <h3 id="scorpion-regulators-title" class="scorpion-view__title">Top TFs</h3>
+                                    <div class="scorpion-view__control">
+                                        <label class="panel-label" for="scorpionTopN">Show</label>
+                                        <select id="scorpionTopN" class="form-select elegant-select">
+                                            <option value="15">15</option>
+                                            <option value="20" selected>20</option>
+                                            <option value="30">30</option>
+                                        </select>
+                                    </div>
+                                </header>
+                                <div id="scorpionRegChart" class="scorpion-chart"></div>
+                            </section>
 
-                        <div class="control-row toolbar-row">
-                            <div class="control-group control-group--wide">
-                                <label class="panel-label">Targetome of TF</label>
-                                <select id="scorpionTfSelect" class="form-select elegant-select"></select>
-                            </div>
+                            <section class="scorpion-view" aria-labelledby="scorpion-targetome-title">
+                                <header class="scorpion-view__header">
+                                    <h3 id="scorpion-targetome-title" class="scorpion-view__title">Targetome of TF</h3>
+                                    <div class="scorpion-view__control scorpion-view__control--tf">
+                                        <label class="visually-hidden" for="scorpionTfSelect">Transcription factor</label>
+                                        <select id="scorpionTfSelect" class="form-select elegant-select"></select>
+                                    </div>
+                                </header>
+                                <div id="scorpionTargetChart" class="scorpion-chart"></div>
+                            </section>
                         </div>
-                        <div id="scorpionTargetChart"></div>
 
-                        <div class="scorpion-network-group">
-                            <label class="panel-label">Regulator &rarr; target network (top regulators)</label>
+                        <section class="scorpion-network-group" aria-labelledby="scorpion-network-title">
+                            <header class="scorpion-network-group__header">
+                                <h3 id="scorpion-network-title" class="scorpion-view__title">Regulator &rarr; target network</h3>
+                                <div class="scorpion-network-key" aria-label="Network legend">
+                                    <span><i class="scorpion-network-key__dot scorpion-network-key__dot--tf"></i>TF</span>
+                                    <span><i class="scorpion-network-key__dot scorpion-network-key__dot--target"></i>Target</span>
+                                </div>
+                            </header>
                             <div id="scorpionNetwork"></div>
-                        </div>
-
+                        </section>
                     </div>
                 </div>
             </div>
@@ -1730,12 +1743,14 @@
                         customdata: rows.map(function(r) { return r.out_degree; })
                     };
                     var layout = scorpionLayout({
-                        height: Math.max(320, rows.length * 22 + 80),
-                        xaxis: { title: 'Total regulatory score', zeroline: false },
-                        yaxis: { automargin: true }
+                        height: Math.min(400, Math.max(280, rows.length * 12 + 80)),
+                        margin: { l: 76, r: 16, t: 12, b: 42 },
+                        bargap: 0.28,
+                        xaxis: { title: 'Total regulatory score', zeroline: false, fixedrange: true },
+                        yaxis: { automargin: true, fixedrange: true }
                     });
                     Plotly.newPlot('scorpionRegChart', [trace], layout,
-                        figConfig('SCORPION_master_regulators_' + said, { responsive: true, displayModeBar: true }));
+                        figConfig('SCORPION_master_regulators_' + said, { responsive: true, displayModeBar: 'hover' }));
                 }
 
                 function populateScorpionTfSelect() {
@@ -1764,12 +1779,14 @@
                                 hovertemplate: '<b>%{y}</b><br>Edge weight: %{x:.2f}<extra></extra>'
                             };
                             var layout = scorpionLayout({
-                                height: Math.max(280, rows.length * 22 + 70),
-                                xaxis: { title: 'Regulatory edge weight (' + tf + ' → target)', zeroline: false },
-                                yaxis: { automargin: true }
+                                height: Math.min(400, Math.max(280, rows.length * 12 + 80)),
+                                margin: { l: 76, r: 16, t: 12, b: 42 },
+                                bargap: 0.28,
+                                xaxis: { title: 'Regulatory edge weight (' + tf + ' → target)', zeroline: false, fixedrange: true },
+                                yaxis: { automargin: true, fixedrange: true }
                             });
                             Plotly.newPlot('scorpionTargetChart', [trace], layout,
-                                figConfig('SCORPION_targetome_' + tf + '_' + said, { responsive: true, displayModeBar: true }));
+                                figConfig('SCORPION_targetome_' + tf + '_' + said, { responsive: true, displayModeBar: 'hover' }));
                         })
                         .fail(function() {
                             $('#scorpionTargetChart').html('<div class="help-text" style="padding:0.5rem 0;">Error loading targets.</div>');
@@ -1784,18 +1801,24 @@
                         });
                 }
 
-                // Deterministic bipartite layout: regulators on the left, targets on the right.
+                // Deterministic concentric layout: TFs form the inner ring and
+                // their targets form the outer ring.
                 function renderScorpionNetwork(nodes, links) {
                     var tfs = nodes.filter(function(n) { return n.type === 'tf'; });
                     var tgs = nodes.filter(function(n) { return n.type === 'target'; });
                     var pos = {};
-                    function place(arr, x) {
+                    function placeRing(arr, radius) {
                         arr.forEach(function(n, i) {
-                            var y = arr.length === 1 ? 0.5 : 1 - (i / (arr.length - 1));
-                            pos[n.id] = { x: x, y: y };
+                            var angle = -Math.PI / 2 + (2 * Math.PI * i / Math.max(1, arr.length));
+                            pos[n.id] = {
+                                x: radius * Math.cos(angle),
+                                y: radius * Math.sin(angle),
+                                angle: angle
+                            };
                         });
                     }
-                    place(tfs, 0); place(tgs, 1);
+                    placeRing(tfs, 0.47);
+                    placeRing(tgs, 1);
 
                     var edgeX = [], edgeY = [];
                     links.forEach(function(l) {
@@ -1808,28 +1831,37 @@
                         type: 'scatter', mode: 'lines', x: edgeX, y: edgeY,
                         line: { color: 'rgba(51,122,183,0.22)', width: 1 }, hoverinfo: 'none'
                     };
-                    function nodeTrace(arr, color, size, anchor, dx) {
+                    function tfLabelPosition(n) {
+                        var x = Math.cos(pos[n.id].angle);
+                        var y = Math.sin(pos[n.id].angle);
+                        if (Math.abs(x) > Math.abs(y)) return x > 0 ? 'middle right' : 'middle left';
+                        return y > 0 ? 'top center' : 'bottom center';
+                    }
+                    function nodeTrace(arr, color, size, showLabels) {
                         return {
-                            type: 'scatter', mode: 'markers+text',
+                            type: 'scatter', mode: showLabels ? 'markers+text' : 'markers',
                             x: arr.map(function(n) { return pos[n.id].x; }),
                             y: arr.map(function(n) { return pos[n.id].y; }),
                             text: arr.map(function(n) { return n.id; }),
-                            textposition: anchor, textfont: { size: 11, color: '#333' },
+                            textposition: showLabels ? arr.map(tfLabelPosition) : undefined,
+                            textfont: { size: 10, color: '#333' },
                             marker: { color: color, size: size, line: { color: '#fff', width: 1 } },
                             hovertemplate: '%{text}<extra></extra>'
                         };
                     }
-                    var tfTrace = nodeTrace(tfs, ACCENT, 14, 'middle left');
-                    var tgTrace = nodeTrace(tgs, '#9aa7b3', 9, 'middle right');
+                    var tfTrace = nodeTrace(tfs, ACCENT, 16, true);
+                    var tgTrace = nodeTrace(tgs, '#9aa7b3', 7, false);
+                    var networkWidth = $('#scorpionNetwork').width() || 720;
                     var layout = scorpionLayout({
-                        height: Math.max(360, Math.max(tfs.length, tgs.length) * 34 + 80),
+                        height: Math.max(360, Math.min(500, Math.round(networkWidth * 0.58))),
                         showlegend: false,
-                        margin: { l: 90, r: 90, t: 20, b: 20 },
-                        xaxis: { visible: false, range: [-0.35, 1.35] },
-                        yaxis: { visible: false, range: [-0.1, 1.1] }
+                        margin: { l: 24, r: 24, t: 16, b: 16 },
+                        hovermode: 'closest',
+                        xaxis: { visible: false, range: [-1.28, 1.28], fixedrange: true },
+                        yaxis: { visible: false, range: [-1.22, 1.22], fixedrange: true, scaleanchor: 'x', scaleratio: 1 }
                     });
                     Plotly.newPlot('scorpionNetwork', [edgeTrace, tfTrace, tgTrace], layout,
-                        figConfig('SCORPION_network_' + said, { responsive: true, displayModeBar: true }));
+                        figConfig('SCORPION_network_' + said, { responsive: true, displayModeBar: 'hover' }));
                 }
 
                 loadScorpion();

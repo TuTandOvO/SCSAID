@@ -29,7 +29,7 @@
     <!-- Design System — same primitives as Details / Compare -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/header.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703a">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="CSS/search.css?v=20260702p">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */

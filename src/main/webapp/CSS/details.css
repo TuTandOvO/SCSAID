@@ -1377,13 +1377,125 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 
 
 /* --------------------------------------------------------------------------
-   S. Scroll-spy smoothness + anchor offset
+   S. SCORPION compact analysis workspace
+   -------------------------------------------------------------------------- */
+.scorpion-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid var(--border-light);
+    border-radius: var(--control-radius);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+
+.scorpion-view {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.scorpion-view + .scorpion-view {
+    border-left: 1px solid var(--border-light);
+}
+
+.scorpion-view__header,
+.scorpion-network-group__header {
+    display: flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--bg-muted);
+}
+
+.scorpion-view__title {
+    margin: 0;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.3;
+}
+
+.scorpion-view__control {
+    display: flex;
+    flex: 0 1 7.5rem;
+    min-width: 0;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.scorpion-view__control--tf {
+    flex-basis: 10rem;
+}
+
+.scorpion-view__control .form-select {
+    min-width: 0;
+    padding-block: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.scorpion-chart {
+    width: 100%;
+    min-height: 17.5rem;
+    overflow: hidden;
+}
+
+.scorpion-network-group {
+    border: 1px solid var(--border-light);
+    border-radius: var(--control-radius);
+    background: var(--bg-surface);
+    overflow: hidden;
+}
+
+.scorpion-network-key {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.scorpion-network-key > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.scorpion-network-key__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #9aa7b3;
+}
+
+.scorpion-network-key__dot--tf { background: var(--color-secondary); }
+
+#scorpionNetwork {
+    width: 100%;
+    min-height: 22.5rem;
+    overflow: hidden;
+}
+
+@media (max-width: 1050px) {
+    .scorpion-overview-grid { grid-template-columns: 1fr; }
+    .scorpion-view + .scorpion-view {
+        border-top: 1px solid var(--border-light);
+        border-left: 0;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   T. Scroll-spy smoothness + anchor offset
    -------------------------------------------------------------------------- */
 [id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 
 
 /* --------------------------------------------------------------------------
-   T. Responsive
+   U. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
     :root {
@@ -1413,6 +1525,14 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     .control-group--library { width: 100%; flex-basis: auto; }
     .proportion-map-select { width: 100%; }
     .proportion-charts-layout { grid-template-columns: 1fr; }
+    .scorpion-view__header,
+    .scorpion-network-group__header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+    .scorpion-view__control,
+    .scorpion-view__control--tf { width: 100%; flex-basis: auto; }
+    .scorpion-network-key { align-self: flex-start; }
     .btn-primary,
     .btn-secondary,
     .btn-ghost,
@@ -1432,7 +1552,7 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 
 
 /* --------------------------------------------------------------------------
-   U. Print hardening — for screenshots only; not a primary use
+   V. Print hardening — for screenshots only; not a primary use
    -------------------------------------------------------------------------- */
 @media print {
     .sidebar, .site-header { display: none !important; }

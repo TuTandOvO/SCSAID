@@ -47,7 +47,7 @@
     <!-- Design System + reused page styles -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/header.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703a">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260702p">
 
