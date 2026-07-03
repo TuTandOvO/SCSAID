@@ -46,7 +46,7 @@
 
     <!-- Design System + reused page styles -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703c">
     <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260702p">
@@ -86,11 +86,11 @@
                         <span class="filter-name" id="umap-controls-title">Species</span>
                         <div class="species-toggle" role="radiogroup" aria-label="Species">
                             <label>
-                                <input type="radio" name="umap-species" value="human" checked>
+                                <input type="radio" name="umap-species" value="human" data-preference-key="species" checked>
                                 <span class="species-toggle__option">Human</span>
                             </label>
                             <label>
-                                <input type="radio" name="umap-species" value="mouse">
+                                <input type="radio" name="umap-species" value="mouse" data-preference-key="species">
                                 <span class="species-toggle__option">Mouse</span>
                             </label>
                         </div>

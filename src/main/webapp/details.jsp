@@ -428,7 +428,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703c">
     <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
@@ -747,7 +747,7 @@
                                     </span>
                                 </div>
                                 <label class="checkbox-item">
-                                    <input type="checkbox" id="hidePseudogenes" checked>
+                                    <input type="checkbox" id="hidePseudogenes" data-preference-key="hidePseudogenes" checked>
                                     <span class="checkbox-item__text">Hide pseudogenes</span>
                                 </label>
                                 <span id="help-deg-pseudogenes" class="visually-hidden">Filters common mouse pseudogene naming patterns, including Gm-numbered genes, -ps, Rik, and Pn suffixes.</span>

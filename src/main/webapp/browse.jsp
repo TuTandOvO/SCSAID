@@ -34,7 +34,7 @@
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703c">
     <link rel="stylesheet" href="CSS/animations.css?v=20260701h">
     <link rel="stylesheet" href="CSS/browse.css?v=20260702p">
 
@@ -284,7 +284,7 @@
                             Showing <strong><%= totalRows %></strong> filtered results
                             <% } %>
                         </span>
-                        <a href="browse.jsp" class="filter-bar__btn filter-bar__btn--clear">Clear Filters</a>
+                        <a href="browse.jsp" class="filter-bar__btn filter-bar__btn--clear" id="clear-filters">Clear Filters</a>
                     </div>
                 </form>
             </div>
@@ -562,6 +562,32 @@ $(document).ready(function() {
 
 
 
+<script>
+(function () {
+    "use strict";
+    var preferences = window.ScsaidPreferences;
+    var speciesSelect = document.getElementById("filter-species");
+    var clearFilters = document.getElementById("clear-filters");
+    if (!preferences || !speciesSelect) return;
+
+    var params = new URLSearchParams(window.location.search);
+    var savedSpecies = preferences.get("species", "");
+    if (!params.has("species") && (savedSpecies === "human" || savedSpecies === "mouse")) {
+        params.set("species", savedSpecies === "human" ? "Human" : "Mouse");
+        window.location.replace("browse.jsp?" + params.toString());
+        return;
+    }
+
+    speciesSelect.addEventListener("change", function () {
+        var value = this.value.toLowerCase();
+        if (value === "human" || value === "mouse") preferences.set("species", value);
+        else preferences.remove("species");
+    });
+    if (clearFilters) {
+        clearFilters.addEventListener("click", function () { preferences.remove("species"); });
+    }
+})();
+</script>
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
 </body>
 </html>

@@ -444,7 +444,13 @@
 
         var initialGene = (document.body.getAttribute("data-initial-gene") || "").trim();
         if (initialGene) { initDeepLink(initialGene); }
-        else { loadSpecies("human"); }
+        else {
+            var savedSpecies = window.ScsaidPreferences
+                ? window.ScsaidPreferences.get("species", "human") : "human";
+            if (savedSpecies !== "human" && savedSpecies !== "mouse") savedSpecies = "human";
+            setSpeciesRadio(savedSpecies);
+            loadSpecies(savedSpecies);
+        }
     }
 
     if (document.readyState === "loading") {

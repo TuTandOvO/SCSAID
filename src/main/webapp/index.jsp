@@ -109,7 +109,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703c">
 
 
     <!-- Composition Charts -->
@@ -785,7 +785,7 @@
 
             <div class="site-footer__links">
                 <a href="mailto:info@scsaid.org" class="site-footer__link">Contact</a>
-                <a href="#" class="site-footer__link">Privacy Policy</a>
+                <a href="privacy.jsp" class="site-footer__link">Privacy Policy</a>
                 <a href="#" class="site-footer__link">Terms of Use</a>
             </div>
 

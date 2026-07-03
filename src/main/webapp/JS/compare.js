@@ -520,6 +520,15 @@
 
     // -------- Wiring ----------------------------------------------------------
     $(function () {
+        var preferences = window.ScsaidPreferences;
+        var savedSpecies = preferences ? preferences.get("species", "human") : "human";
+        if (savedSpecies !== "human" && savedSpecies !== "mouse") savedSpecies = "human";
+        state.species = savedSpecies;
+        $('input[name="species"][value="' + savedSpecies + '"]').prop("checked", true);
+        if (preferences) {
+            $("#hidePseudogenes").prop("checked", preferences.get("hidePseudogenes", true) === true);
+        }
+
         loadConditions();
         loadGmtCatalog();
 

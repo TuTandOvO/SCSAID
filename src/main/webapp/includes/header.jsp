@@ -16,7 +16,8 @@
     boolean scsaidHelp = scsaidRelativePath.startsWith("/help");
     boolean scsaidCite = scsaidRelativePath.endsWith("/cite.jsp");
     boolean scsaidWhatsNew = scsaidRelativePath.endsWith("/whats-new.jsp");
-    boolean scsaidAbout = scsaidCite || scsaidWhatsNew;
+    boolean scsaidPrivacy = scsaidRelativePath.endsWith("/privacy.jsp");
+    boolean scsaidAbout = scsaidCite || scsaidWhatsNew || scsaidPrivacy;
     boolean scsaidFeedback = scsaidRelativePath.startsWith("/feedback")
             || scsaidRelativePath.startsWith("/contact");
 %>
@@ -91,6 +92,7 @@
                 <div class="main-nav__dropdown main-nav__dropdown--about" id="about-menu" role="menu" aria-label="About">
                     <a href="cite.jsp" class="main-nav__dropdown-link<%= scsaidCite ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCite ? " aria-current=\"page\"" : "" %>>How to Cite</a>
                     <a href="whats-new.jsp" class="main-nav__dropdown-link<%= scsaidWhatsNew ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidWhatsNew ? " aria-current=\"page\"" : "" %>>What’s New</a>
+                    <a href="privacy.jsp" class="main-nav__dropdown-link<%= scsaidPrivacy ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPrivacy ? " aria-current=\"page\"" : "" %>>Privacy</a>
                 </div>
             </div>
             <a href="feedback" class="main-nav__link<%= scsaidFeedback ? " main-nav__link--active" : "" %>"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>><svg class="main-nav__icon" aria-hidden="true"><use href="#nav-icon-feedback"></use></svg><span>Feedback</span></a>
@@ -126,5 +128,13 @@
     </div>
 </header>
 <button class="nav-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
+<aside class="storage-notice" id="storage-notice" aria-label="Privacy notice" hidden>
+    <p class="storage-notice__text">
+        scSAID uses first-party cookies for secure sessions and visit counting, and local storage to remember interface preferences. We do not use advertising or third-party tracking cookies.
+        <a href="privacy.jsp">Privacy details</a>
+    </p>
+    <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
+</aside>
+<script src="JS/site-preferences.js?v=20260703c"></script>
 <script src="JS/site-header.js?v=20260702e" defer></script>
 <script src="JS/analysis-help.js?v=20260702a" defer></script>

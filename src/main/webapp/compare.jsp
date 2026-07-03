@@ -21,7 +21,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703c">
     <link rel="stylesheet" href="CSS/details.css?v=20260703b">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
@@ -73,11 +73,11 @@
                         <span class="filter-name">Species</span>
                         <div class="species-toggle" role="radiogroup" aria-label="Species">
                             <label>
-                                <input type="radio" name="species" value="human" checked>
+                                <input type="radio" name="species" value="human" data-preference-key="species" checked>
                                 <span class="species-toggle__option">Human</span>
                             </label>
                             <label>
-                                <input type="radio" name="species" value="mouse">
+                                <input type="radio" name="species" value="mouse" data-preference-key="species">
                                 <span class="species-toggle__option">Mouse</span>
                             </label>
                         </div>
@@ -158,7 +158,7 @@
                             <div class="filter-card">
                                 <span class="filter-name">Filter</span>
                                 <label class="checkbox-item">
-                                    <input type="checkbox" id="hidePseudogenes" checked>
+                                    <input type="checkbox" id="hidePseudogenes" data-preference-key="hidePseudogenes" checked>
                                     <span class="checkbox-item__text">Hide pseudogenes</span>
                                 </label>
                             </div>

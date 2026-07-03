@@ -655,3 +655,66 @@
     .site-search__control { transition-duration: 0.01ms; }
     .site-search__status.is-loading::after { animation: none; }
 }
+
+/* First-party storage disclosure. This is informational rather than a consent
+   prompt because scSAID does not load optional advertising or tracking tools. */
+.storage-notice {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 64rem;
+    margin-inline: auto;
+    padding: 0.85rem 1rem;
+    color: var(--text-primary, #333333);
+    background: #ffffff;
+    border: 1px solid var(--border-medium, #cccccc);
+    border-radius: var(--radius-md, 4px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.storage-notice__text {
+    max-width: 75ch;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.storage-notice__text a {
+    margin-left: 0.35rem;
+    color: var(--text-link, #337ab7);
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+}
+
+.storage-notice__dismiss {
+    flex: 0 0 auto;
+    min-height: 2.25rem;
+    padding: 0.4rem 0.8rem;
+    color: #ffffff;
+    background: var(--color-primary, #337ab7);
+    border: 1px solid var(--btn-primary-border, #2e6da4);
+    border-radius: var(--radius-sm, 4px);
+    font: inherit;
+    cursor: pointer;
+}
+
+.storage-notice__dismiss:hover { background: var(--btn-primary-hover, #286090); }
+.storage-notice__dismiss:focus-visible {
+    outline: 2px solid var(--focus-border, #66afe9);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .storage-notice {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .storage-notice__dismiss { align-self: flex-end; }
+}
