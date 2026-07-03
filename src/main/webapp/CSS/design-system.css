@@ -440,6 +440,7 @@ a {
 }
 
 .page-hero__title {
+    display: block;
     font-family: var(--font-display);
     font-size: clamp(2.25rem, 5vw, 3.25rem);
     font-weight: 300;
@@ -447,6 +448,12 @@ a {
     line-height: 1.1;
     letter-spacing: -0.015em;
     margin: 0 0 var(--space-md);
+}
+
+/* Context-help titles are inline elsewhere, but hero headings must remain a
+   separate row below the eyebrow at every viewport width. */
+.page-hero__title.title-with-help {
+    display: block;
 }
 
 .page-hero__description {
