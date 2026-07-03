@@ -22,7 +22,7 @@
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/header.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/details.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703a">
     <link rel="stylesheet" href="CSS/compare.css?v=20260702p">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260420">
 

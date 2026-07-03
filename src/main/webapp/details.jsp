@@ -429,7 +429,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/header.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/details.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703a">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
@@ -695,6 +695,21 @@
                     <div id="degCompareStatus" class="info-bar" style="display:none;"></div>
                     <div id="degProgress" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
                     <div id="degError" class="status-error" style="display:none;"></div>
+                    <div class="table-wrapper">
+                        <table id="degTable" class="elegant-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Gene</th>
+                                    <th>logFC</th>
+                                    <th>p-value</th>
+                                    <th>Score</th>
+                                    <th>Cell type</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!-- Compact filter toolbar sits beneath the table -->
                     <div class="deg-controls">
                         <div class="filter-grid">
                             <div class="filter-card">
@@ -738,20 +753,6 @@
                                 <span id="help-deg-pseudogenes" class="visually-hidden">Filters common mouse pseudogene naming patterns, including Gm-numbered genes, -ps, Rik, and Pn suffixes.</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="table-wrapper">
-                        <table id="degTable" class="elegant-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Gene</th>
-                                    <th>logFC</th>
-                                    <th>p-value</th>
-                                    <th>Score</th>
-                                    <th>Cell type</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -868,7 +869,8 @@
                 <div class="panel-body">
                     <!-- Cell Type Selection -->
                     <div class="cpdb-config-section section-stack">
-                        <div class="control-row">
+                        <!-- Mode + annotation-level toggles on one compact line -->
+                        <div class="control-row control-row--center cpdb-toggle-row">
                             <h3 class="cpdb-section-title">Cell-Cell Communication</h3>
                             <div class="cpdb-mode-toggle">
                                 <label class="cpdb-radio">
@@ -880,10 +882,6 @@
                                     <span>Sender → Receiver</span>
                                 </label>
                             </div>
-                        </div>
-
-                        <!-- Annotation-granularity toggle (Fine_Map / Gross_Map) -->
-                        <div class="control-row control-row--center">
                             <label class="panel-label">Annotation level</label>
                             <div class="cpdb-mode-toggle">
                                 <label class="cpdb-radio">

@@ -19,7 +19,7 @@
     <title>Details-SR001</title>
     <link rel="stylesheet" href="CSS/design-system.css?v=20260702p">
     <link rel="stylesheet" href="CSS/header.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/details.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703a">
     <link rel="stylesheet" href="CSS/degtest.css">
 
     <meta charset="UTF-8"/>
