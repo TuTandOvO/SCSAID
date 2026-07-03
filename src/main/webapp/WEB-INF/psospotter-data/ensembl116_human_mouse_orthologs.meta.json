@@ -1,0 +1,14 @@
+{
+  "source": "Ensembl BioMart",
+  "release": 116,
+  "dataset": "hsapiens_gene_ensembl",
+  "orthology_type": "ortholog_one2one",
+  "rows": 17134,
+  "columns": [
+    "human_gene",
+    "mouse_gene",
+    "orthology_type",
+    "human_gene_id",
+    "mouse_gene_id"
+  ]
+}

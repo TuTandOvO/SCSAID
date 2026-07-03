@@ -11,7 +11,9 @@
             || scsaidRelativePath.startsWith("/gene-details");
     boolean scsaidExpression = scsaidRelativePath.endsWith("/featureplot.jsp");
     boolean scsaidCompare = scsaidRelativePath.endsWith("/compare.jsp");
+    boolean scsaidPsoSpotter = scsaidRelativePath.endsWith("/psospotter.jsp");
     boolean scsaidNavigate = scsaidSearch || scsaidCompare || scsaidExpression;
+    scsaidNavigate = scsaidNavigate || scsaidPsoSpotter;
     boolean scsaidDownload = scsaidRelativePath.endsWith("/download.jsp");
     boolean scsaidHelp = scsaidRelativePath.startsWith("/help");
     boolean scsaidCite = scsaidRelativePath.endsWith("/cite.jsp");
@@ -49,6 +51,7 @@
                     <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--search" aria-hidden="true"></span><span>Search DEGs</span></a>
                     <a href="compare.jsp" class="main-nav__dropdown-link<%= scsaidCompare ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCompare ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--compare" aria-hidden="true"></span><span>Compare conditions</span></a>
                     <a href="featureplot.jsp" class="main-nav__dropdown-link<%= scsaidExpression ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--expression" aria-hidden="true"></span><span>Expression</span></a>
+                    <a href="psospotter.jsp" class="main-nav__dropdown-link<%= scsaidPsoSpotter ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPsoSpotter ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--psospotter" aria-hidden="true"></span><span>psoSpotter</span></a>
                 </div>
             </div>
             <a href="download.jsp" class="main-nav__link<%= scsaidDownload ? " main-nav__link--active" : "" %>"<%= scsaidDownload ? " aria-current=\"page\"" : "" %>><span class="main-nav__icon main-nav__icon--download" aria-hidden="true"></span><span>Download</span></a>
@@ -110,6 +113,6 @@
     </p>
     <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
 </aside>
-<script src="JS/site-preferences.js?v=20260703c"></script>
+<script src="JS/site-preferences.js?v=20260703d"></script>
 <script src="JS/site-header.js?v=20260702e" defer></script>
 <script src="JS/analysis-help.js?v=20260702a" defer></script>

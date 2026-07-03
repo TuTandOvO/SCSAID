@@ -4,6 +4,11 @@
     var STORAGE_KEY = "scsaid.preferences.v1";
     var NOTICE_KEY = "scsaid.storage-notice.v1";
     var allowedKeys = { species: true, hidePseudogenes: true };
+    allowedKeys.psospotterMode = true;
+    allowedKeys.psospotterSpecies = true;
+    allowedKeys.psospotterDirection = true;
+    allowedKeys.psospotterPanelK = true;
+    allowedKeys.psospotterGeneList = true;
 
     function storageAvailable() {
         try {

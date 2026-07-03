@@ -308,6 +308,29 @@
     <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/gmt-catalog</url-pattern></servlet-mapping>
 
     <servlet>
+        <servlet-name>PsoSpotterServlet</servlet-name>
+        <servlet-class>Servlet.PsoSpotterServlet</servlet-class>
+        <multipart-config>
+            <location>/tmp</location>
+            <max-file-size>262144000</max-file-size>
+            <max-request-size>524288000</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PsoSpotterServlet</servlet-name>
+        <url-pattern>/psospotter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PsoSpotterServlet</servlet-name>
+        <url-pattern>/psospotter/status</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PsoSpotterServlet</servlet-name>
+        <url-pattern>/psospotter/result</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>compareJsp</servlet-name>
         <jsp-file>/compare.jsp</jsp-file>
     </servlet>

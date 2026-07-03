@@ -32,6 +32,7 @@ public class SiteSearchServlet extends HttpServlet {
         functions.add(new FunctionEntry("DEG search", "Find differentially expressed genes across datasets", "gene-search.jsp", "Analysis", "deg differential expression marker markers gene search"));
         functions.add(new FunctionEntry("Gene expression", "Visualize integrated gene expression", "featureplot.jsp", "Analysis", "expression feature plot featureplot umap gene visualization"));
         functions.add(new FunctionEntry("Compare conditions", "Compare cell populations between conditions", "compare.jsp", "Analysis", "compare comparison condition disease healthy"));
+        functions.add(new FunctionEntry("psoSpotter", "Run the biomarker panel selection pipeline on uploaded h5ad data", "psospotter.jsp", "Analysis", "psospotter biomarker panel selection uploaded h5ad gene list cross species ortholog"));
         functions.add(new FunctionEntry("Cell-cell communication", "Choose a dataset, then open communication inference", "browse.jsp", "Analysis", "ccc communication cell-cell cellphone cell phone ligand receptor interaction cpdb cellphonedb"));
         functions.add(new FunctionEntry("Cell clustering", "Choose a dataset to inspect clusters and UMAPs", "browse.jsp", "Analysis", "cell clustering cluster umap annotation"));
         functions.add(new FunctionEntry("Cell proportions", "Choose a dataset to inspect cell composition", "browse.jsp", "Analysis", "cell proportion proportions composition abundance"));
@@ -114,6 +115,7 @@ public class SiteSearchServlet extends HttpServlet {
         if (containsAny(query, "clustering", "cluster", "umap")) return "CellClustering";
         if (containsAny(query, "gene set", "scoring", "signature", "module score")) return "GeneSetScoring";
         if (containsAny(query, "enrichment", "pathway", "gsea", " ora ", "ontology")) return "EnrichmentAnalysis";
+        if (containsAny(query, "psospotter", "biomarker panel", "ortholog", "uploaded h5ad")) return "PsoSpotter";
         return "ExperimentInformation";
     }
 
@@ -178,6 +180,7 @@ public class SiteSearchServlet extends HttpServlet {
             sectionNames.put("GeneSetScoring", "Gene set scoring");
             sectionNames.put("CellPhoneDBAnalysis", "Cell-cell communication inference");
             sectionNames.put("EnrichmentAnalysis", "Enrichment analysis");
+            sectionNames.put("PsoSpotter", "psoSpotter");
             String sectionName = sectionNames.getOrDefault(section, "Dataset overview");
             String title = gsm + " — " + sectionName;
             String description = said + " · " + gse + (species.isEmpty() ? "" : " · " + species);
