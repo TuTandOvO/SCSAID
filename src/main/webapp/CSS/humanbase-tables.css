@@ -9,6 +9,7 @@
     --compact-table-muted: #6c757d;
     --compact-table-head: #e9ecef;
     --compact-table-rule: #dee2e6;
+    --compact-table-stripe: #f9f9f9;
     --compact-table-hover: #f8f9fa;
     --compact-table-selected: #edf5fb;
     --compact-table-cell-pad: 8px;
@@ -79,6 +80,11 @@ table.dataTable.hb-table tbody tr {
     border: 0;
     background: #fff;
     transition: background-color 120ms ease;
+}
+
+table.hb-table tbody tr:nth-child(odd),
+table.dataTable.hb-table tbody tr:nth-child(odd) {
+    background: var(--compact-table-stripe);
 }
 
 table.hb-table tbody tr:hover,

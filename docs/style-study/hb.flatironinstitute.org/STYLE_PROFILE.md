@@ -44,7 +44,7 @@ Quiet scientific utility: translucent white navigation, neutral grey labels, com
 
 - Table text: `#212529` on white, left aligned and vertically centered.
 - Header: `#e9ecef`, 600 weight, normal case, with a `1px solid #dee2e6` bottom rule.
-- Body: white rows without horizontal or vertical borders.
+- Body: alternating white and `#f9f9f9` rows without horizontal or vertical borders.
 - Exact measurements: `padding: 8px`, `font-size: 1rem` against HumanBase's 13px root size.
 - Adaptation for scSAID: preserve quiet row hover, selection, sorting, pagination, and narrow-screen label/value presentation where functionality requires them.
 

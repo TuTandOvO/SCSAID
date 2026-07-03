@@ -428,10 +428,10 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703g">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703b">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703h">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703c">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
-    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703a">
+    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
 
     <!-- Scripts (served from local lib/; ?v= busts any cached CDN-pointing copy) -->
     <script src="lib/jquery-3.7.1.min.js?v=20260416"></script>
@@ -827,7 +827,7 @@
                     </div>
 
                     <!-- Controls row: Group By, Method, Run button -->
-                    <div class="control-row">
+                    <div class="control-row gss-controls-row">
                         <div class="control-group">
                             <label class="panel-label">Group By</label>
                             <select id="gssGroupBy" class="form-select">

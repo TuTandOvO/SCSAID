@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CompactTableStyleTest {
@@ -21,8 +22,9 @@ class CompactTableStyleTest {
 
         assertTrue(geneSearch.contains("CSS/humanbase-tables.css"));
         assertTrue(geneSearch.contains("results-table hb-table"));
-        assertTrue(browse.contains("CSS/humanbase-tables.css"));
-        assertTrue(browse.contains("browse-table hb-table"));
+        assertFalse(browse.contains("CSS/humanbase-tables.css"));
+        assertFalse(browse.contains("browse-table hb-table"));
+        assertTrue(browse.contains("<table class=\"browse-table\">"));
         assertTrue(details.contains("CSS/humanbase-tables.css"));
         assertTrue(details.contains("elegant-table hb-table"));
     }
@@ -33,9 +35,11 @@ class CompactTableStyleTest {
 
         assertTrue(css.contains("--compact-table-head: #e9ecef"));
         assertTrue(css.contains("--compact-table-rule: #dee2e6"));
+        assertTrue(css.contains("--compact-table-stripe: #f9f9f9"));
         assertTrue(css.contains("--compact-table-cell-pad: 8px"));
         assertTrue(css.contains("--compact-table-font-size: 13px"));
         assertTrue(css.contains("font-weight: 600"));
         assertTrue(css.contains("border-bottom: 1px solid var(--compact-table-rule)"));
+        assertTrue(css.contains("tbody tr:nth-child(odd)"));
     }
 }

@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#333333">
     <title>Interactive Visualization - scSAID</title>
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703h">
     <link rel="stylesheet" href="CSS/visualization.css?v=20260701h">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

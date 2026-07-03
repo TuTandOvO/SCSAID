@@ -28,10 +28,10 @@
 
     <!-- Design System — same primitives as Details / Compare -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703g">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703b">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703h">
+    <link rel="stylesheet" href="CSS/details.css?v=20260703c">
     <link rel="stylesheet" href="CSS/search.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703a">
+    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
         /* The form itself uses overflow:hidden for its pill shape, so the dropdown

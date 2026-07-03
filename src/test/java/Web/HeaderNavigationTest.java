@@ -53,4 +53,11 @@ class HeaderNavigationTest {
         assertTrue(header.contains("<a href=\"index.jsp\" class=\"main-nav__link\"><span class=\"main-nav__icon main-nav__icon--home\""));
         assertTrue(header.contains("<a href=\"index.jsp\" class=\"site-logo\" aria-label=\"scSAID home\">scSAID</a>"));
     }
+
+    @Test
+    void globalSearchUsesTheRequestedPrompt() throws Exception {
+        String header = Files.readString(HEADER, StandardCharsets.UTF_8);
+
+        assertTrue(header.contains("placeholder=\"Search anything\""));
+    }
 }

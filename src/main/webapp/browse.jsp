@@ -29,15 +29,14 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260703g">
+    <link rel="stylesheet" href="CSS/header.css?v=20260703h">
     <link rel="stylesheet" href="CSS/animations.css?v=20260701h">
     <link rel="stylesheet" href="CSS/browse.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703a">
 
     <script src="JS/micro-interactions.js"></script>
 </head>
@@ -290,8 +289,8 @@
                 </form>
             </div>
 
-            <div class="data-table-wrapper hb-table-shell">
-                <table class="browse-table hb-table">
+            <div class="data-table-wrapper">
+                <table class="browse-table">
                     <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all" aria-label="Select all datasets"></th>

@@ -21,7 +21,7 @@ Adopt HumanBase's restrained scientific interface grammar—flat grey tabs, comp
 | Table base size | 12.6–14px depending on page | 13px | HumanBase 13px root / 1rem table text |
 | Table cell padding | 12–16px | 8px | HumanBase Tissue Networks table |
 | Table header | Uppercase light labels on varied muted fills | `#e9ecef`, normal case, 600 weight | HumanBase Tissue Networks table |
-| Table body rules | Per-row dividers | No body gridlines | HumanBase Tissue Networks table |
+| Table body rules | Per-row dividers | Alternating white / `#f9f9f9`, no body gridlines | HumanBase Tissue Networks table |
 | Table frame | Rounded/bordered on Details | Flat, square, borderless | HumanBase Tissue Networks table |
 
 ## New patterns
@@ -43,7 +43,7 @@ Nunito remains the only family. The affected table pages now request its open 60
 
 - Brand color: keep scSAID blue as the accent.
 - Boldness: faithful but restrained; transfer menu geometry, density, and interaction—not HumanBase assets or exact feature content.
-- Scope: header/navigation plus Gene Search, Browse, and Details DEG tables.
+- Scope: header/navigation plus Gene Search and Details DEG tables. Browse retains its original dataset-table treatment.
 
 ## IP cleanliness
 

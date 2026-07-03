@@ -84,7 +84,7 @@
                         <circle cx="11" cy="11" r="7"></circle>
                         <path d="m20 20-4-4"></path>
                     </svg>
-                    <input id="site-search-input" class="site-search__input" type="search" name="q" placeholder="Search functions or datasets" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="site-search-results" aria-describedby="site-search-hint">
+                    <input id="site-search-input" class="site-search__input" type="search" name="q" placeholder="Search anything" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="site-search-results" aria-describedby="site-search-hint">
                     <button class="site-search__submit" type="submit" aria-label="Open first search result">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                             <path d="m9 18 6-6-6-6"></path>
