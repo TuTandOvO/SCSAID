@@ -39,7 +39,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <a href="index.jsp" class="main-nav__link<%= scsaidHome ? " main-nav__link--active" : "" %>"<%= scsaidHome ? " aria-current=\"page\"" : "" %>><span class="main-nav__icon main-nav__icon--home" aria-hidden="true"></span><span>Home</span></a>
+            <% if (!scsaidHome) { %>
+            <a href="index.jsp" class="main-nav__link"><span class="main-nav__icon main-nav__icon--home" aria-hidden="true"></span><span>Home</span></a>
+            <% } %>
             <a href="browse.jsp" class="main-nav__link<%= scsaidBrowse ? " main-nav__link--active" : "" %>"<%= scsaidBrowse ? " aria-current=\"page\"" : "" %>><span class="main-nav__icon main-nav__icon--browse" aria-hidden="true"></span><span>Browse</span></a>
             <div class="main-nav__item">
                 <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidNavigate ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="navigate-menu"><span class="main-nav__label"><span class="main-nav__icon main-nav__icon--navigate" aria-hidden="true"></span><span>Navigate</span></span></button>

@@ -44,4 +44,13 @@ class HeaderNavigationTest {
         assertEquals(12, occurrences(header, "class=\"main-nav__dropdown-link"));
         assertEquals(12, occurrences(header, "main-nav__dropdown-icon main-nav__dropdown-icon--"));
     }
+
+    @Test
+    void homeTabIsHiddenOnlyOnTheHomePage() throws Exception {
+        String header = Files.readString(HEADER, StandardCharsets.UTF_8);
+
+        assertTrue(header.contains("<% if (!scsaidHome) { %>"));
+        assertTrue(header.contains("<a href=\"index.jsp\" class=\"main-nav__link\"><span class=\"main-nav__icon main-nav__icon--home\""));
+        assertTrue(header.contains("<a href=\"index.jsp\" class=\"site-logo\" aria-label=\"scSAID home\">scSAID</a>"));
+    }
 }
