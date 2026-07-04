@@ -436,6 +436,17 @@
             font-weight: 300;
         }
 
+        .overview__graphical-abstract {
+            width: 100%;
+            margin: var(--space-xl) 0 var(--space-2xl);
+        }
+
+        .overview__graphical-abstract img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
         /* Statistics Section */
         .stats {
             padding: var(--space-4xl) 0;
@@ -705,6 +716,12 @@
                 <p class="overview__text">
                     The database includes detailed annotations for each sample, including species, gender, age, anatomical region, and experimental conditions. All data has been processed through a standardized pipeline to ensure consistency and comparability across studies.
                 </p>
+                <figure class="overview__graphical-abstract">
+                    <img src="images/scsaid-graphical-abstract.png?v=20260704"
+                         width="7321" height="2596"
+                         loading="lazy" decoding="async"
+                         alt="Graphical abstract of the scSAID database and analysis workflow">
+                </figure>
                 <a href="browse.jsp" class="btn btn--primary">Explore Datasets</a>
             </div>
         </div>
