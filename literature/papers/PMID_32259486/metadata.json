@@ -31,6 +31,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "During embryonic and postnatal development, organs and tissues grow steadily to achieve their final size at the end of puberty. However, little is known about the cellular dynamics that mediate postnatal growth. By combining in vivo clonal lineage tracing, proliferation kinetics, single-cell transcriptomics, and in vitro micro-pattern experiments, we resolved the cellular dynamics taking place during postnatal skin epidermis expansion. Our data revealed that harmonious growth is engineered by a single population of developmental progenitors presenting a fixed fate imbalance of self-renewing divisions with an ever-decreasing proliferation rate. Single-cell RNA sequencing revealed that epidermal developmental progenitors form a more uniform population compared with adult stem and progenitor cells. Finally, we found that the spatial pattern of cell division orientation is dictated locally by the underlying collagen fiber orientation. Our results uncover a simple design principle of organ growth where progenitors and differentiated cells expand in harmony with their surrounding tissues.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/32259486/",
     "doi": "https://doi.org/10.1016/j.cell.2020.03.015",

@@ -35,6 +35,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "Regulatory T cells (Tregs) are essential for maintaining immune tolerance in both lymphoid and non-lymphoid tissues. We discovered that layilin, a C-type lectin receptor, is predominantly expressed on Tregs in skin. Layilin was highly expressed on a subset of clonally expanded 'effector' Tregs in both healthy and psoriatic human skin. Layilin-expressing Tregs exhibited a transcriptional profile indicative of enhanced adhesion. Deletion of layilin in Tregs in mice in vivo resulted in significantly attenuated skin inflammation. Mechanistically, layilin enhanced in vitro human Treg adhesion via modulation of lymphocyte function-associated antigen-1, resulting in distinct cytoskeletal alterations consistent with enhanced focal adhesion and lamellipodia formation. Taken together, we define layilin as a critical regulator of Treg-suppressive capacity by modulating motility and adhesion in a non-lymphoid tissue.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40690378/",
     "doi": "https://doi.org/10.7554/eLife.105277",

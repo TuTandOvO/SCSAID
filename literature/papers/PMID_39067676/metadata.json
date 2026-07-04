@@ -22,6 +22,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "Biological antibodies targeting key cytokines such as IL-17 and IL-23 have revolutionized psoriasis outcome. However, the recurrence remains an urgent challenge to be addressed. Currently, most of the descriptions of skin T-cell characteristics in psoriasis are derived from lesional and non-lesional skin, and their characteristics in resolved lesions (clinically healed lesions) remain vague. In order to further elucidate the cellular mechanism of recurrence, we performed single-cell sequencing and multiplexed immunohistochemical staining of T-cell subsets in autologous resolved lesion (RL), on-site recurrent psoriatic lesion (PL), and adjacent normal-appearing skin (NS) of psoriasis. By comparing with PL and NS tissues, we identified three potential cellular candidates for recurrence in clinically healed lesions: IL-17A/F double producing T cells, unstable Tregs and quiescent TRMs. Our results provide research clues for elucidating the immunological recurrence mechanism of psoriasis, and further work is needed to deepen our findings.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39067676/",
     "doi": "https://doi.org/10.1016/j.clim.2024.110328",

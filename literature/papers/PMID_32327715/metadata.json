@@ -26,6 +26,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Fibroblasts are an essential cell population for human skin architecture and function. While fibroblast heterogeneity is well established, this phenomenon has not been analyzed systematically yet. We have used single-cell RNA sequencing to analyze the transcriptomes of more than 5,000 fibroblasts from a sun-protected area in healthy human donors. Our results define four main subpopulations that can be spatially localized and show differential secretory, mesenchymal and pro-inflammatory functional annotations. Importantly, we found that this fibroblast 'priming' becomes reduced with age. We also show that aging causes a substantial reduction in the predicted interactions between dermal fibroblasts and other skin cells, including undifferentiated keratinocytes at the dermal-epidermal junction. Our work thus provides evidence for a functional specialization of human dermal fibroblasts and identifies the partial loss of cellular identity as an important age-related change in the human dermis. These findings have important implications for understanding human skin aging and its associated phenotypes.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/32327715/",
     "doi": "https://doi.org/10.1038/s42003-020-0922-4",

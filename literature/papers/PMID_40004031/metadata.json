@@ -24,6 +24,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "We have previously demonstrated that receptor-interacting serine threonine kinase 1 (RIPK1) is expressed in hair follicles and regulates the hair cycle. In a mouse model, RIPK1 inhibitors also accelerated the telogen-to-anagen transition and elongated the anagen period. Here, we first investigated the involvement of RIPK1 in alopecia areata (AA). The mRNA and protein expression of RIPK1 was increased in the skin of an AA mouse model. Single-cell RNA sequencing and immunohistochemistry showed that RIPK1 was highly increased in dendritic cells (DCs) and CD8+ T cells. RIPK1 inhibitors (i.e., Necrostatin-1s and GSK2982772) delayed the onset of AA in the mouse model and reduced the numbers of DCs and CD8+ T cells in AA skin. The RIPK1 inhibitors also increased the hair length in a mouse hair organ culture mimicking AA. Collectively, these results suggest that RIPK1 is involved in AA onset via modulating immune cells, and RIPK1 inhibitors could prevent AA onset.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40004031/",
     "doi": "https://doi.org/10.3390/ijms26041565",

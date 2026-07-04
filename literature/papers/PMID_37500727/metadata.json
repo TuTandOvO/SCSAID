@@ -27,6 +27,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Genome-wide association studies have identified many loci associated with hair and skin disease, but identification of causal variants requires deciphering of gene-regulatory networks in relevant cell types. We generated matched single-cell chromatin profiles and transcriptomes from scalp tissue from healthy controls and patients with alopecia areata, identifying diverse cell types of the hair follicle niche. By interrogating these datasets at multiple levels of cellular resolution, we infer 50-100% more enhancer-gene links than previous approaches and show that aggregate enhancer accessibility for highly regulated genes predicts expression. We use these gene-regulatory maps to prioritize cell types, genes and causal variants implicated in the pathobiology of androgenetic alopecia (AGA), eczema and other complex traits. AGA genome-wide association studies signals are enriched in dermal papilla regulatory regions, supporting the role of these cells as drivers of AGA pathogenesis. Finally, we train machine learning models to nominate single-nucleotide polymorphisms that affect gene expression through disruption of transcription factor binding, predicting candidate functional single-nucleotide polymorphism for AGA and eczema.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37500727/",
     "doi": "https://doi.org/10.1038/s41588-023-01445-4",

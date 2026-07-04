@@ -35,6 +35,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Dermal fibroblasts and cutaneous nerves are important players in skin diseases, while their reciprocal roles during skin inflammation have not been characterized. Here we identify an inflammation-induced subset of papillary fibroblasts that promotes aberrant neurite outgrowth and psoriasiform skin inflammation by secreting the extracellular matrix protein tenascin-C (TNC). Single-cell analysis of fibroblast lineages reveals a Tnc+ papillary fibroblast subset with pro-axonogenesis and neuro-regulation transcriptomic hallmarks. TNC overexpression in fibroblasts boosts neurite outgrowth in co-cultured neurons, while fibroblast-specific TNC ablation suppresses hyperinnervation and alleviates skin inflammation in male mice modeling psoriasis. Dermal γδT cells, the main producers of type 17 pathogenic cytokines, frequently contact nerve fibers in mouse psoriasiform lesions and are likely modulated by postsynaptic signals. Overall, our results highlight the role of an inflammation-responsive fibroblast subset in facilitating neuro-immune synapse formation and suggest potential avenues for future therapeutic research.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37037861/",
     "doi": "https://doi.org/10.1038/s41467-023-37798-x",

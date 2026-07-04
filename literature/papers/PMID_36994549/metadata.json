@@ -24,6 +24,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Blood vessels can play dual roles in tissue growth by transporting gases and nutrients and by regulating tissue stem cell activity via signaling. Correlative evidence implicates skin endothelial cells (ECs) as signaling niches of hair follicle stem cells (HFSCs), but functional demonstration from gene depletion of signaling molecules in ECs is missing to date. Here, we show that depletion of the vasculature-factor Alk1 increases BMP4 secretion from ECs, which delays HFSC activation. Furthermore, while previous evidence suggests a lymphatic vessel role in adult HFSC activation possibly through tissue drainage, a blood vessel role has not yet been addressed. Genetic perturbation of the ALK1-BMP4 axis in all ECs or the lymphatic ECs specifically unveils inhibition of HFSC activation by blood vessels. Our work suggests a broader relevance of blood vessels, adding adult HFSCs to the EC functional repertoire as signaling niches for the adult stem cells.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/36994549/",
     "doi": "https://doi.org/10.15252/embj.2022112196",

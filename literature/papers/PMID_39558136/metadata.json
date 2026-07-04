@@ -36,6 +36,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "Exacerbation of scarring can originate from a minority fibroblast population that has undergone inflammatory-mediated genetic changes within the wound microenvironment. The fundamental relationship between molecular and spatial organization of the repair process at the single-cell level remains unclear. We have developed a novel, high-resolution spatial multiomics method that integrates spatial transcriptomics with scRNA-Seq; we identified new characteristic features of cell-cell communication and signaling during the repair process. Data from PU.1-/- mice, which lack an inflammatory response, combined with scRNA-Seq and Visium transcriptomics, led to the identification of nine genes potentially involved in inflammation-related scarring, including integrin beta-like 1 (Itgbl1). Transgenic mouse experiments confirmed that Itgbl1-expressing fibroblasts are required for granulation tissue formation and drive fibrogenesis during skin repair. Additionally, we detected a minority population of Acta2high-expressing myofibroblasts with apparent involvement in scarring, in conjunction with Itgbl1 expression. IL1β signaling inhibited Itgbl1 expression in TGFβ1-treated primary fibroblasts from humans and mice. Our novel methodology reveal molecular mechanisms underlying fibroblast-inflammatory cell interactions that initiate wound scarring.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39558136/",
     "doi": "https://doi.org/10.1038/s44319-024-00322-3",

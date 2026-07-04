@@ -30,6 +30,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Delineating molecular and cellular events that precede appendage morphogenesis has been challenging due to the inability to distinguish quantitative molecular differences between cells that lack histological distinction. The hair follicle (HF) dermal condensate (DC) is a cluster of cells critical for HF development and regeneration. Events that presage emergence of this distinctive population are poorly understood. Using unbiased single-cell RNA sequencing and in vivo methods, we infer a sequence of transcriptional states through which DC cells pass that begins prior to HF morphogenesis. Our data indicate that Wnt/β-catenin signaling is required to progress into an intermediate stage that precedes quiescence and differentiation. Further, we provide evidence that quiescent DC cells are recent progeny of selectively proliferating cells present prior to morphogenesis and that are later identified in the peri-DC zone during DC expansion. Together, these findings provide an inferred path of molecular states that lead to DC cell differentiation.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/30595533/",
     "doi": "https://doi.org/10.1016/j.devcel.2018.11.032",

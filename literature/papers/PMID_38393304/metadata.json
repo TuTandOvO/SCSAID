@@ -28,6 +28,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "The skin provides an essential barrier for host defense through rapid action of multiple resident and recruited cell types, but the complex communication network governing these processes is incompletely understood. To define these cell-cell interactions more clearly, we performed an unbiased network analysis of mouse skin during invasive S. aureus infection and revealed a dominant role for CXCL12+ fibroblast subsets in neutrophil communication. These subsets predominantly reside in the reticular dermis, express adipocyte lineage markers, detect IL-17 and TNFα, and promote robust neutrophil recruitment through NFKBIZ-dependent release of CXCR2 ligands and CXCL12. Targeted deletion of Il17ra in mouse fibroblasts resulted in greatly reduced neutrophil recruitment and increased infection by S. aureus. Analogous human CXCL12+ fibroblast subsets abundantly express neutrophil chemotactic factors in psoriatic skin that are subsequently decreased upon therapeutic targeting of IL-17. These findings show that CXCL12+ dermal immune acting fibroblast subsets play a critical role in cutaneous neutrophil recruitment and host defense.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38393304/",
     "doi": "https://doi.org/10.1084/jem.20231425",

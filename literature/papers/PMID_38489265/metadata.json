@@ -36,6 +36,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Population genetics continues to identify genetic variants associated with diseases of the immune system and offers a unique opportunity to discover mechanisms of immune regulation. Multiple genetic variants linked to severe fungal infections and autoimmunity are associated with caspase recruitment domain-containing protein 9 (CARD9). We leverage the CARD9 R101C missense variant to uncover a biochemical mechanism of CARD9 activation essential for antifungal responses. We demonstrate that R101C disrupts a critical signaling switch whereby phosphorylation of S104 releases CARD9 from an autoinhibited state to promote inflammatory responses in myeloid cells. Furthermore, we show that CARD9 R101C exerts dynamic effects on the skin cellular contexture during fungal infection, corrupting inflammatory signaling and cell-cell communication circuits. Card9 R101C mice fail to control dermatophyte infection in the skin, resulting in high fungal burden, yet show minimal signs of inflammation. Together, we demonstrate how translational genetics reveals molecular and cellular mechanisms of innate immune regulation.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38489265/",
     "doi": "https://doi.org/10.1016/j.celrep.2024.113944",

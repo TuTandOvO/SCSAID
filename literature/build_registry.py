@@ -90,6 +90,13 @@ def parse_pubmed(path: Path) -> dict[str, dict]:
         journal = first(article.findtext(".//Journal/Title"))
         journal_abbrev = first(entry.findtext(".//MedlineJournalInfo/MedlineTA"))
         publication_types = [text(item) for item in article.findall(".//PublicationTypeList/PublicationType")]
+        abstract_parts = []
+        for abstract_node in article.findall(".//Abstract/AbstractText"):
+            value = text(abstract_node)
+            if not value:
+                continue
+            label = first(abstract_node.attrib.get("Label"), abstract_node.attrib.get("NlmCategory"))
+            abstract_parts.append(f"{label}: {value}" if label else value)
         record = {
             "paper_id": f"PMID_{pmid}",
             "pmid": pmid,
@@ -106,6 +113,7 @@ def parse_pubmed(path: Path) -> dict[str, dict]:
             "pages": first(article.findtext("Pagination/MedlinePgn"), article.findtext("ELocationID")),
             "publication_types": publication_types,
             "language": first(article.findtext("Language")),
+            "abstract": "\n\n".join(abstract_parts),
             "urls": {
                 "pubmed": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/",
                 "doi": f"https://doi.org/{article_ids['doi']}" if article_ids.get("doi") else "",
@@ -121,7 +129,11 @@ def load_datasets(path: Path) -> list[dict]:
     sheet = workbook.active
     headers = [str(value) for value in next(sheet.iter_rows(values_only=True))]
     positions = {name: index for index, name in enumerate(headers)}
-    required = {"SAID", "GSE", "GSM", "Title", "PubMed"}
+    required = {
+        "SAID", "GSE", "GSM", "species", "Cells", "Condition", "Age", "Sex",
+        "Tissue location", "Fine cell types", "Gross cell types", "Title", "Summary",
+        "Overall Design", "PubMed",
+    }
     missing = required - positions.keys()
     if missing:
         raise ValueError(f"Workbook lacks columns: {', '.join(sorted(missing))}")
@@ -131,7 +143,17 @@ def load_datasets(path: Path) -> list[dict]:
             "said": first(str(row[positions["SAID"]] or "")),
             "study_accession": first(str(row[positions["GSE"]] or "")),
             "sample_accession": first(str(row[positions["GSM"]] or "")),
+            "species": first(str(row[positions["species"]] or "")),
+            "cells": first(str(row[positions["Cells"]] or "")),
+            "condition": first(str(row[positions["Condition"]] or "")),
+            "age": first(str(row[positions["Age"]] or "")),
+            "sex": first(str(row[positions["Sex"]] or "")),
+            "tissue": first(str(row[positions["Tissue location"]] or "")),
+            "fine_cell_types": first(str(row[positions["Fine cell types"]] or "")),
+            "gross_cell_types": first(str(row[positions["Gross cell types"]] or "")),
             "study_title": first(str(row[positions["Title"]] or "")),
+            "study_summary": first(str(row[positions["Summary"]] or "")),
+            "overall_design": first(str(row[positions["Overall Design"]] or "")),
             "workbook_pmids": re.findall(r"\d+", str(row[positions["PubMed"]] or "")),
         })
     return datasets
@@ -276,6 +298,7 @@ def main() -> int:
             "doi": record["doi"], "title": record["title"], "authors": "; ".join(record["authors"]),
             "journal": record["journal"], "year": record["year"],
             "publication_types": "; ".join(record["publication_types"]),
+            "abstract": record["abstract"],
             "study_count": len({row["study_accession"] for row in links}),
             "dataset_count": len(links), "pubmed_url": record["urls"]["pubmed"],
             "full_text_url": record["urls"]["pmc"] or record["urls"]["doi"],
@@ -298,12 +321,16 @@ def main() -> int:
     write_tsv(output / "dataset_paper_index.tsv", dataset_rows, list(dataset_rows[0]))
     write_tsv(output / "unresolved_studies.tsv", unresolved, ["study_accession", "study_title", "dataset_count", "status", "checked_on"])
     registry = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_on": args.verified_on,
         "counts": {
             "datasets": len(datasets), "studies": len(studies), "papers": len(paper_rows),
             "dataset_paper_links": len(dataset_rows), "unresolved_studies": len(unresolved),
         },
+        "datasets": [
+            {key: value for key, value in dataset.items() if key != "workbook_pmids"}
+            for dataset in sorted(datasets, key=lambda item: item["said"])
+        ],
         "papers": paper_rows,
         "dataset_paper_links": dataset_rows,
         "unresolved_studies": unresolved,

@@ -43,6 +43,12 @@
         <p>scSAID does not use browser storage for advertising, cross-site profiling, or third-party behavioural analytics. Gene searches and analysis results are not placed in preference storage.</p>
     </section>
 
+    <section class="privacy-section" aria-labelledby="ai-processing-title">
+        <h2 id="ai-processing-title">Optional AI interpretation</h2>
+        <p>The beta AI Interpretation panel is inactive until you open it and accept its inline privacy statement. If you submit a request, your provider API key passes over HTTPS to scSAID, is used transiently to authorize that single OpenAI or DeepSeek call, and is not saved in a database, session, cookie, browser storage, cache, or application log.</p>
+        <p>The analysis results you select, this dataset’s metadata, and available publication abstract and study context are sent to the chosen provider. Their processing and retention are governed by your provider account and the provider’s terms. The returned interpretation is kept only in the current page and is lost when the page is refreshed.</p>
+    </section>
+
     <section class="privacy-section" aria-labelledby="controls-title">
         <h2 id="controls-title">Your controls</h2>
         <p>You can clear scSAID’s saved interface preferences here. Essential session behavior and the visit counter cookie are managed through your browser’s cookie controls.</p>

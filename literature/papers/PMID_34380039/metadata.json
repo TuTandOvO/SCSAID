@@ -28,6 +28,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "The immune system of skin develops in stages in mice. However, the developmental dynamics of immune cells in human skin remains elusive. Here, we perform transcriptome profiling of CD45+ hematopoietic cells in human fetal skin at an estimated gestational age of 10-17 weeks by single-cell RNA sequencing. A total of 13 immune cell types are identified. Skin macrophages show dynamic heterogeneity over the course of skin development. A major shift in lymphoid cell developmental states occurs from the first to the second trimester that implies an in situ differentiation process. Gene expression analysis reveals a typical developmental program in immune cells in accordance with their functional maturation, possibly involving metabolic reprogramming. Finally, we identify transcription factors (TFs) that potentially regulate cellular transitions by comparing TFs and TF target gene networks. These findings provide detailed insight into how the immune system of the human skin is established during development.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/34380039/",
     "doi": "https://doi.org/10.1016/j.celrep.2021.109524",

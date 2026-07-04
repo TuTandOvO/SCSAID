@@ -25,6 +25,7 @@
     "Research Support, U.S. Gov't, Non-P.H.S."
   ],
   "language": "eng",
+  "abstract": "Melanocyte stem cells (McSCs) of the hair follicle are a rare cell population within the skin and are notably underrepresented in whole-skin, single-cell RNA sequencing (scRNA-seq) datasets. Using a cell enrichment strategy to isolate KIT+/CD45- cells from the telogen skin of adult female C57BL/6J mice, we evaluated the transcriptional landscape of quiescent McSCs (qMcSCs) at high resolution. Through this evaluation, we confirmed existing molecular signatures for qMcCS subpopulations (e.g., Kit+, Cd34+/-, Plp1+, Cd274+/-, Thy1+, Cdh3+/-) and identified novel qMcSC subpopulations, including two that differentially regulate their immune privilege status. Within qMcSC subpopulations, we also predicted melanocyte differentiation potential, neural crest potential, and quiescence depth. Taken together, the results demonstrate that the qMcSC population is heterogeneous and future studies focused on investigating changes in qMcSCs should consider changes in subpopulation composition.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38613320/",
     "doi": "https://doi.org/10.1111/pcmr.13169",

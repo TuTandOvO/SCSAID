@@ -24,6 +24,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "The aim of this study is to examine the effects of ageing on dermal fibroblast heterogeneity based on samples obtained from the same donor. We used a dermal fibroblast lineage (named ASF-4 cell lines) isolated from the inner side of the upper arm of a healthy male donor over a 35-year period, beginning at 36 years of age. Because clonal analysis of ASF-4 cell lines demonstrated a donor age-dependent loss of proliferative capacity and acquisition of senescent traits at the single-cell level, cultured cells frozen at passage 10 at ages 36 and 72 years were subjected to single-cell RNA sequencing. Transcriptome analysis revealed an increase in senescent fibroblasts and downregulation of genes associated with extracellular matrix remodelling with ageing. In addition, two putative differentiation pathways, with one endpoint consisting of senescent fibroblasts and the other without, were speculated using a pseudo-time analysis. Knockdown of the characteristic gene of the non-senescent fibroblast cluster endpoint, EFEMP2, accelerated cellular senescence. This was also confirmed in two other normal human dermal fibroblast cell lines. The detection of a common cellular senescence-related gene from single-donor analysis is notable. This study provides new insights into the behaviour of dermal fibroblasts during skin ageing.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37727050/",
     "doi": "https://doi.org/10.1111/exd.14929",

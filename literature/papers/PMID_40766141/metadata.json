@@ -71,6 +71,7 @@
     "Preprint"
   ],
   "language": "eng",
+  "abstract": "We sought to identify clinically relevant regulators of hair follicle inflammation by conducting a human genetic study of hidradenitis suppurativa (HS), a prevalent, understudied, inflammatory disease with limited effective treatments. We performed a GWAS with 6,300 cases and identified 12 independent risk loci. Epigenetic and transcriptomic analyses of HS risk variants defined cell-specific gene regulatory programs. We experimentally validated a coherent gene module defined by upregulated SOX9, CXCR4, and CD74 co-expression that maps to aberrant epithelial structures in the skin. Pharmacological inhibition of CXCR4 implicates CD74 mediated regulation of PI3K/AKT and NF-κB signaling to calibrate inflammation, proliferation and apoptosis in keratinocytes. We next used genome-wide methods to interrogate shared polygenic architecture and identified new clinically and mechanistically relevant disease associations, including another condition that involves aberrant hair follicle remodeling, male pattern hair loss. Our results point towards CXCR4-CD74 signaling in HS and hair follicle homeostasis and suggest CXCR4 blockade as a new therapeutic strategy in HS.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40766141/",
     "doi": "https://doi.org/10.1101/2025.07.25.25332168",

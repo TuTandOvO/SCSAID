@@ -30,6 +30,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "Interleukin (IL)-23 is the master pathogenic cytokine in psoriasis and neutralization of IL-23 alleviates psoriasis. Psoriasis relapses after the withdrawal of anti-IL-23 antibodies, and the persistence of IL-23-producing cells potentially contributes to such recurrence, but the cellular source of IL-23 is unclear. Here we show that IL4I1+CD200+CCR7+ dendritic cells (CCR7+ DC) are the main producer of IL-23 by concomitantly expressing the IL-23A and IL-12B subunits in human psoriatic skin. Deletion of CCR7+ DC completely abrogates IL-23 production in a mouse model of psoriasis, while enforced expression of IL-23a in CCR7+ DC elicits not only αβT cell-driven psoriasis-like skin disease, but also arthritis. CCR7+ DC co-localize with CD161+ IL-17-producing T cells and KRT17+ keratinocytes, which are located in the outermost layers of psoriatic epidermis and exhibit IL-17 downstream signatures. Our data thus identify CCR7+ DC as the source of IL-23 in psoriasis, and paves the way for IL-23-targeting therapy for suppressing the relapse of chronic inflammatory disorders like psoriasis.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40817122/",
     "doi": "https://doi.org/10.1038/s41467-025-62874-9",

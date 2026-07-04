@@ -24,6 +24,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "We previously demonstrated that C-X-C Motif Chemokine Ligand 12 (CXCL12) is primarily secreted by dermal fibroblasts in response to androgens and induces hair miniaturization in the mouse androgenic alopecia (AGA) model. However, the direct effects of androgen-induced CXCL12 on dermal papilla cells (DPCs) and dermal sheath cup cells (DSCs) have not been demonstrated. First, we compared single-cell RNA sequencing data between mouse and human skin, and the results show that CXCL12 is highly co-expressed with the androgen receptor (AR) in the DPCs and DSCs of only human hair. Immunohistochemistry also showed that CXCL12 is co-expressed with the AR in the DPCs and DSCs of human hair follicles. In human hair organ culture, androgens also increased CXCL12 expression in DPCs and DSCs and reduced hair length, while the CXCL12 antibody increased hair length via AR inactivation. CXCL12 mRNA was upregulated by androgen treatment in primary human DPCs and DSCs. On the contrary, AR inhibitors or siRNA treatment reduced CXCL12 expression. Collectively, these results suggest that CXCL12 is co-expressed with the AR in the DPCs and DSCs of human hair follicles; therefore, inhibition of CXCL12 using antibodies is a promising strategy for AGA treatment.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39795953/",
     "doi": "https://doi.org/10.3390/ijms26010095",

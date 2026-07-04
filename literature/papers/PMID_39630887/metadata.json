@@ -36,6 +36,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Acral lentiginous melanoma (ALM) is the most common melanoma subtype in non-Caucasians. Despite advances in cancer immunotherapy, current immune checkpoint inhibitors remain unsatisfactory for ALM. Hence, we conducted comprehensive immune profiling using single-cell phenotyping with reactivity screening of the T cell receptors of tumor-infiltrating T lymphocytes (TILs) in ALM. Compared with cutaneous melanoma, ALM showed a lower frequency of tumor-reactive CD8 clusters and an enrichment of regulatory T cells with direct tumor recognition ability, suggesting a suppressive immune microenvironment in ALM. Tumor-reactive CD8 TILs showed heterogeneous expression of coinhibitory molecules, including KLRC1 (NKG2A), in subpopulations with therapeutic implications. Overall, our study provides a foundation for enhancing the efficacy of immunotherapy in ALM.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39630887/",
     "doi": "https://doi.org/10.1126/scitranslmed.adk8832",

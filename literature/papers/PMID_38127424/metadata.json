@@ -33,6 +33,7 @@
     "Research Support, N.I.H., Extramural"
   ],
   "language": "eng",
+  "abstract": "Apoptosis and clearance of apoptotic cells via efferocytosis are evolutionarily conserved processes that drive tissue repair. However, the mechanisms by which recognition and clearance of apoptotic cells regulate repair are not fully understood. Here, we use single-cell RNA sequencing to provide a map of the cellular dynamics during early inflammation in mouse skin wounds. We find that apoptotic pathways and efferocytosis receptors are elevated in fibroblasts and immune cells, including resident Lyve1+ macrophages, during inflammation. Interestingly, human diabetic foot wounds upregulate mRNAs for efferocytosis pathway genes and display altered efferocytosis signaling via the receptor Axl and its ligand Gas6. During early inflammation in mouse wounds, we detect upregulation of Axl in dendritic cells and fibroblasts via TLR3-independent mechanisms. Inhibition studies in vivo in mice reveal that Axl signaling is required for wound repair but is dispensable for efferocytosis. By contrast, inhibition of another efferocytosis receptor, Timd4, in mouse wounds decreases efferocytosis and abrogates wound repair. These data highlight the distinct mechanisms by which apoptotic cell detection coordinates tissue repair and provides potential therapeutic targets for chronic wounds in diabetic patients.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38127424/",
     "doi": "https://doi.org/10.7554/eLife.86269",

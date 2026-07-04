@@ -26,6 +26,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Morphogenesis of ectodermal organs, such as hair, tooth, and mammary gland, starts with the formation of local epithelial thickenings, or placodes, but it remains to be determined how distinct cell types and differentiation programs are established during ontogeny. Here, we use bulk and single-cell transcriptomics and pseudotime modeling to address these questions in developing hair follicles and epidermis and produce a comprehensive transcriptomic profile of cellular populations in the hair placode and interplacodal epithelium. We report previously unknown cell populations and marker genes, including early suprabasal and genuine interfollicular basal markers, and propose the identity of suprabasal progenitors. By uncovering four different hair placode cell populations organized in three spatially distinct areas, with fine gene expression gradients between them, we posit early biases in cell fate establishment. This work is accompanied by a readily accessible online tool to stimulate further research on skin appendages and their progenitors.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37318953/",
     "doi": "https://doi.org/10.1016/j.celrep.2023.112643",

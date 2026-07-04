@@ -28,6 +28,7 @@
     "Research Support, N.I.H., Intramural"
   ],
   "language": "eng",
+  "abstract": "The human red hair color (RHC) trait is caused by increased pheomelanin (red-yellow) and reduced eumelanin (black-brown) pigment in skin and hair due to diminished melanocortin 1 receptor (MC1R) function. In addition, individuals harboring the RHC trait are predisposed to melanoma development. While MC1R variants have been established as causative of RHC and are a well-defined risk factor for melanoma, it remains unclear mechanistically why decreased MC1R signaling alters pigmentation and increases melanoma susceptibility. Here, we use single-cell RNA sequencing (scRNA-seq) of melanocytes isolated from RHC mouse models to define a MC1R-inhibited Gene Signature (MiGS) comprising a large set of previously unidentified genes which may be implicated in melanogenesis and oncogenic transformation. We show that one of the candidate MiGS genes, TBX3, a well-known anti-senescence transcription factor implicated in melanoma progression, binds both E-box and T-box elements to regulate genes associated with melanogenesis and senescence bypass. Our results provide key insights into further mechanisms by which melanocytes with reduced MC1R signaling may regulate pigmentation and offer new candidates of study toward understanding how individuals with the RHC phenotype are predisposed to melanoma.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37972124/",
     "doi": "https://doi.org/10.1111/pcmr.13141",

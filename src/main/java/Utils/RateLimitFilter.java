@@ -27,6 +27,7 @@ public class RateLimitFilter implements Filter {
     // per-bucket request budget within one window
     private static final int LIMIT_PROCESS = 15;   // spawn Python / heavy compute
     private static final int LIMIT_SEARCH  = 60;    // CSV scans / lookups
+    private static final int LIMIT_AI = 5;          // user-funded external LLM calls
     private static final int LIMIT_DEFAULT = 90;
 
     // ip|bucket -> window state
@@ -110,6 +111,9 @@ public class RateLimitFilter implements Filter {
                 || path.startsWith("/deg")) {
             return "search";
         }
+        if (path.startsWith("/ai-interpretation")) {
+            return "ai";
+        }
         return "default";
     }
 
@@ -117,6 +121,7 @@ public class RateLimitFilter implements Filter {
         switch (bucket) {
             case "process": return LIMIT_PROCESS;
             case "search":  return LIMIT_SEARCH;
+            case "ai":      return LIMIT_AI;
             default:        return LIMIT_DEFAULT;
         }
     }

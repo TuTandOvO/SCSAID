@@ -391,6 +391,12 @@
        .append(jsonEscape(speciesVal)).append(" ").append(jsonEscape(tissueVal)).append("\"}");
     sbJ.append("}");
     String jsonLd = sbJ.toString();
+
+    String aiInterpretationCsrf = (String) session.getAttribute("aiInterpretationCsrf");
+    if (aiInterpretationCsrf == null) {
+        aiInterpretationCsrf = java.util.UUID.randomUUID().toString();
+        session.setAttribute("aiInterpretationCsrf", aiInterpretationCsrf);
+    }
 %>
 <html lang="en">
 <head>
@@ -429,7 +435,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260704a">
-    <link rel="stylesheet" href="CSS/details.css?v=20260704a">
+    <link rel="stylesheet" href="CSS/details.css?v=20260704b">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
 
@@ -442,6 +448,7 @@
     <script src="lib/jspdf.umd.min.js?v=20260630"></script>
     <script src="lib/svg2pdf.umd.min.js?v=20260630"></script>
     <script src="JS/figure-export.js?v=<%= System.currentTimeMillis() %>"></script>
+    <script defer src="JS/ai-interpretation.js?v=20260704a"></script>
 </head>
 <body style="background: var(--bg-body);">
 
@@ -558,6 +565,12 @@
                     <circle cx="12" cy="5" r="2"></circle><circle cx="5" cy="16" r="2"></circle><circle cx="12" cy="16" r="2"></circle><circle cx="19" cy="16" r="2"></circle><line x1="12" y1="7" x2="12" y2="14"></line><line x1="12" y1="7" x2="5" y2="14"></line><line x1="12" y1="7" x2="19" y2="14"></line>
                 </svg>
                 Regulatory Network
+            </a>
+            <a href="#AIInterpretation" class="nav-item">
+                <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3l1.5 4.2L18 9l-4.5 1.8L12 15l-1.5-4.2L6 9l4.5-1.8L12 3z"></path><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"></path>
+                </svg>
+                AI Interpretation
             </a>
         </nav>
     </aside>
@@ -1111,6 +1124,89 @@
                     </div>
                 </div>
             </div>
+
+            <div class="cluster ai-interpretation" id="AIInterpretation"
+                 data-said="<%= saidVal %>"
+                 data-endpoint="<%= request.getContextPath() %>/ai-interpretation"
+                 data-consent-version="2026-07-04"
+                 data-csrf="<%= aiInterpretationCsrf %>">
+                <div class="header">
+                    <div class="header-content">
+                        <div>
+                            <div class="header-title title-with-help">
+                                <span>AI Interpretation</span>
+                                <span class="feature-status" aria-label="Beta feature">Beta</span>
+                            </div>
+                            <p class="ai-interpretation__lede">Interpret selected scSAID analyses in the context of this dataset and its linked publication.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body ai-interpretation__body">
+                    <div class="ai-intro">
+                        <div>
+                            <span class="ai-kicker">Bring your own API key</span>
+                            <p>The request uses your OpenAI or DeepSeek account. scSAID does not save the key or interpretation.</p>
+                        </div>
+                        <button type="button" class="btn-primary" id="aiInterpretActivate">Activate AI interpretation</button>
+                    </div>
+
+                    <section class="ai-privacy" id="aiPrivacyGate" hidden aria-labelledby="aiPrivacyTitle">
+                        <h3 id="aiPrivacyTitle">Privacy statement</h3>
+                        <p>Your API key is sent over HTTPS to the scSAID server, held only for this request, and forwarded to the provider. It is not saved in a database, session, cookie, browser storage, cache, or application log, and the key field is cleared after submission.</p>
+                        <p>The selected analysis results, dataset metadata, linked publication abstract, and GEO study context are sent to the provider. Provider processing and retention follow your provider account and its terms. Charges may apply. AI output can be incorrect and is not medical advice.</p>
+                        <label class="ai-consent">
+                            <input type="checkbox" id="aiPrivacyConsent">
+                            <span>I understand what will be sent and agree to this one-page-session use.</span>
+                        </label>
+                    </section>
+
+                    <div id="aiInterpretWorkspace" class="ai-workspace" hidden>
+                        <fieldset class="ai-fieldset">
+                            <legend>1. Select analysis results</legend>
+                            <p class="help-text">A source becomes available after its result has loaded on this page.</p>
+                            <div class="ai-source-grid">
+                                <label class="ai-source"><input type="checkbox" value="cell_proportion" data-ai-source="cell_proportion" disabled><span><strong>Cell proportion</strong><small class="ai-source__status">Waiting for result</small></span></label>
+                                <label class="ai-source"><input type="checkbox" value="deg" data-ai-source="deg" disabled><span><strong>Differential expression</strong><small class="ai-source__status">Waiting for result</small></span></label>
+                                <label class="ai-source"><input type="checkbox" value="gene_set_scoring" data-ai-source="gene_set_scoring" disabled><span><strong>Gene set scoring</strong><small class="ai-source__status">Run analysis first</small></span></label>
+                                <label class="ai-source"><input type="checkbox" value="cell_communication" data-ai-source="cell_communication" disabled><span><strong>Cell-cell communication</strong><small class="ai-source__status">Run analysis first</small></span></label>
+                                <label class="ai-source"><input type="checkbox" value="enrichment" data-ai-source="enrichment" disabled><span><strong>Enrichment analysis</strong><small class="ai-source__status">Waiting for result</small></span></label>
+                                <label class="ai-source"><input type="checkbox" value="regulatory_network" data-ai-source="regulatory_network" disabled><span><strong>Regulatory network</strong><small class="ai-source__status">Waiting for result</small></span></label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="ai-fieldset">
+                            <legend>2. Choose provider</legend>
+                            <div class="ai-provider-options">
+                                <label><input type="radio" name="aiProvider" value="openai" checked><span>OpenAI<small>GPT-5 mini</small></span></label>
+                                <label><input type="radio" name="aiProvider" value="deepseek"><span>DeepSeek<small>V4 Flash</small></span></label>
+                            </div>
+                        </fieldset>
+
+                        <div class="ai-key-row">
+                            <div class="control-group ai-key-control">
+                                <label class="panel-label" for="aiProviderKey">3. Provider API key</label>
+                                <input class="form-input" id="aiProviderKey" type="password" autocomplete="new-password" spellcheck="false" inputmode="text" placeholder="Key is used once and then cleared">
+                            </div>
+                            <button type="button" class="btn-primary" id="aiInterpretRun">Generate interpretation</button>
+                        </div>
+                    </div>
+
+                    <div id="aiInterpretLoading" class="panel-loader ai-interpretation__loader" role="status" aria-label="Generating AI interpretation" hidden></div>
+                    <div id="aiInterpretError" class="status-error" role="alert" hidden></div>
+
+                    <section id="aiInterpretResult" class="ai-result" hidden aria-live="polite">
+                        <header class="ai-result__header">
+                            <div><span class="ai-result__eyebrow">AI interpretation</span><strong class="ai-result__provider"></strong></div>
+                            <span class="ai-result__time"></span>
+                        </header>
+                        <div class="ai-result__content"></div>
+                        <footer class="ai-result__footer">
+                            <div class="ai-result__references"></div>
+                            <button type="button" class="btn-ghost" id="aiInterpretReset">New interpretation</button>
+                        </footer>
+                    </section>
+                </div>
+            </div>
         </div>
 
         <script>
@@ -1274,11 +1370,19 @@
                         $.getJSON(contextPath + '/deg-compare/result', params)
                             .done(function(data){
                                 table.clear();
-                                (data || []).forEach(function(r){
+                                var visibleRows = (data || []).filter(function(r) {
+                                    return !(hidePseudo && isPseudogene(r.gene));
+                                });
+                                visibleRows.forEach(function(r){
                                     if (hidePseudo && isPseudogene(r.gene)) return;
                                     table.row.add([r.gene, r.logFC, r.pval_adj, r.score, r.cell_type]);
                                 });
                                 table.draw();
+                                window.ScsaidAIInterpretation.publish('deg', {
+                                    mode: 'condition_comparison', pval_max: pval, logfc_min: fc,
+                                    cell_type: cellType || 'all', comparison_dataset: comparisonSaidB,
+                                    pseudogenes_hidden: hidePseudo
+                                }, visibleRows.slice(0, 100));
                             })
                             .fail(function(xhr){ console.error("Comparison result load failed:", xhr.status); });
                         return;
@@ -1293,11 +1397,18 @@
                     $.getJSON(contextPath + '/deg-per-celltype/result', params)
                         .done(function(data){
                             table.clear();
-                            (data || []).forEach(function(r){
+                            var visibleRows = (data || []).filter(function(r) {
+                                return !(hidePseudo && isPseudogene(r.gene));
+                            });
+                            visibleRows.forEach(function(r){
                                 if (hidePseudo && isPseudogene(r.gene)) return;
                                 table.row.add([r.gene, r.logFC, r.pval_adj, r.score, r.cell_type]);
                             });
                             table.draw();
+                            window.ScsaidAIInterpretation.publish('deg', {
+                                mode: 'cluster_markers', pval_max: pval, logfc_min: fc,
+                                cell_type: cellType || 'all', pseudogenes_hidden: hidePseudo
+                            }, visibleRows.slice(0, 100));
                         })
                         .fail(function(xhr){ console.error("DEG data loading failed:", xhr.status); });
                 }
@@ -1501,6 +1612,10 @@
                                 }
                                 $('#enrich-empty').hide();
                                 enrichAllData = data;
+                                window.ScsaidAIInterpretation.publish('enrichment', {
+                                    method: 'ora', library: geneSet, filter: filter,
+                                    top_n: topN, source: 'cluster_markers'
+                                }, enrichAllData.slice(0, 100));
                                 renderOraChart();
                             })
                             .fail(function() {
@@ -1529,6 +1644,11 @@
                             }
                             $('#enrich-empty').hide();
                             enrichAllData = data;
+                            window.ScsaidAIInterpretation.publish('enrichment', {
+                                method: 'gsea', library: geneSet, filter: filter,
+                                source: currentComparisonJobId ? 'condition_comparison' : 'cluster_markers',
+                                cell_type: $('#enrichCellTypeSelect').val() || 'all'
+                            }, enrichAllData.slice(0, 100));
                             renderEnrichChart();
                         })
                         .fail(function() {
@@ -1697,7 +1817,14 @@
                 // SECTION C2: SCORPION GENE REGULATORY NETWORK (precomputed)
                 // =========================================================================
                 var scorpionRegulators = [];
+                var scorpionSnapshot = { regulators: [], targetome: {}, network: {} };
                 var ACCENT = '#337ab7';
+
+                function publishScorpion() {
+                    window.ScsaidAIInterpretation.publish('regulatory_network', {
+                        method: 'SCORPION', selected_tf: $('#scorpionTfSelect').val() || ''
+                    }, scorpionSnapshot);
+                }
 
                 function scorpionLayout(extra) {
                     return Object.assign({
@@ -1721,6 +1848,8 @@
                                 return;
                             }
                             scorpionRegulators = data.regulators;
+                            scorpionSnapshot.regulators = data.regulators.slice(0, 100);
+                            publishScorpion();
                             $('#scorpionContent').show();
                             renderScorpionRegChart();
                             populateScorpionTfSelect();
@@ -1774,6 +1903,8 @@
                                 $('#scorpionTargetChart').html('<div class="help-text" style="padding:0.5rem 0;">No target genes recorded for ' + tf + '.</div>');
                                 return;
                             }
+                            scorpionSnapshot.targetome = { transcription_factor: tf, targets: targets.slice(0, 100) };
+                            publishScorpion();
                             var rows = targets.slice().sort(function(a, b) { return parseFloat(a.weight) - parseFloat(b.weight); });
                             var trace = {
                                 type: 'bar', orientation: 'h',
@@ -1801,6 +1932,11 @@
                     $.getJSON(contextPath + '/scorpion', { said: said, action: 'network', topTf: 10, topTarget: 6 })
                         .done(function(data) {
                             if (!data || !data.available || !data.nodes) { Plotly.purge('scorpionNetwork'); return; }
+                            scorpionSnapshot.network = {
+                                nodes: (data.nodes || []).slice(0, 100),
+                                links: (data.links || []).slice(0, 100)
+                            };
+                            publishScorpion();
                             renderScorpionNetwork(data.nodes, data.links);
                         });
                 }
@@ -2042,6 +2178,13 @@
                         console.log("CPDB results loaded:", data);
                         $('#cpdbProgressSection').hide();
                         $('#cpdbResultsSection').show();
+                        window.ScsaidAIInterpretation.publish('cell_communication', {
+                            annotation_level: currentCpdbLevel(),
+                            mode: $('input[name="cpdbMode"]:checked').val() || 'all'
+                        }, {
+                            summary: data.summary || {},
+                            interactions: (data.interactions || []).slice(0, 100)
+                        });
 
                         // Ensure heatmap tab is active
                         $('.cpdb-tab').removeClass('active').first().addClass('active');
@@ -2576,6 +2719,29 @@
                             $('#gssGeneInfo').html(info).show();
 
                             var title = setName !== 'Custom' ? setName.replace(/_/g, ' ') : methodLabel;
+                            var scoreSummary = [];
+                            (data.cell_types || []).forEach(function(ct) {
+                                var group = data.violin_data && data.violin_data[ct];
+                                var values = group && group.values ? group.values.slice().map(Number).filter(Number.isFinite).sort(function(a,b){ return a-b; }) : [];
+                                if (!values.length) return;
+                                function quantile(q) {
+                                    var pos = (values.length - 1) * q;
+                                    var lo = Math.floor(pos), hi = Math.ceil(pos);
+                                    return lo === hi ? values[lo] : values[lo] + (values[hi] - values[lo]) * (pos - lo);
+                                }
+                                scoreSummary.push({
+                                    group: ct,
+                                    n_cells: group.n_cells || values.length,
+                                    mean: values.reduce(function(a,b){ return a+b; }, 0) / values.length,
+                                    median: quantile(0.5), q1: quantile(0.25), q3: quantile(0.75),
+                                    min: values[0], max: values[values.length - 1]
+                                });
+                            });
+                            window.ScsaidAIInterpretation.publish('gene_set_scoring', {
+                                method: methodLabel, gene_set: setName, group_by: data.group_by,
+                                genes_found: (data.genes_found || []).slice(0, 100),
+                                genes_not_found: (data.genes_not_found || []).slice(0, 100)
+                            }, scoreSummary);
                             renderGssViolin(data, title);
                         },
                         error: function(xhr) {
@@ -2678,6 +2844,14 @@
                             return;
                         }
                         $('#proportion-charts').show();
+                        var proportionTotal = Object.values(data.cell_types || {}).reduce(function(a, b) { return a + Number(b || 0); }, 0);
+                        var proportionRows = Object.keys(data.cell_types || {}).map(function(cellType) {
+                            var count = Number(data.cell_types[cellType] || 0);
+                            return { cell_type: cellType, cells: count, proportion: proportionTotal ? count / proportionTotal : 0 };
+                        });
+                        window.ScsaidAIInterpretation.publish('cell_proportion', {
+                            annotation_level: mapType
+                        }, proportionRows);
                         renderProportionCharts(data.cell_types, mapType);
                     }).fail(function(xhr) {
                         $('#proportion-loading').hide();

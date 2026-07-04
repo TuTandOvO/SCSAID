@@ -28,6 +28,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Adult T-cell Leukemia/Lymphoma (ATLL) is a rare aggressive T-cell malignancy caused by human T-cell leukemia virus type 1 (HTLV-1) infection. However, little is known about the underlying activated molecular pathways at the single cell level. Moreover, the intercellular communications between the tumor microenvironment (TME) and tumor cells in this malignancy are currently unknown. Difficulties in harvesting fresh tissue in a clinical setting have hampered our deeper understanding of this malignancy. Herein, we examined ATLL using archived fresh frozen tissue after biopsy using single-cell RNA sequencing (scRNA-seq) with T-cell receptor (TCR) clonal analysis. Highly clonal tumor cells showed multiple activating pathways, suggesting dynamic evolution of the malignancy. By dissecting diverse cell types comprising the TME, we identified a novel subset of cancer-associated fibroblast, which showed enriched epidermal growth factor receptor (EGFR)-related transcripts including early growth response 1 and 2 (EGR1 and EGR2). Cancer associated fibroblasts (CAFs) of ATLL play an important role for CD4 T-cell proliferation via FGF7-FGF1 and PDGFA-PDGFRA/B signaling, and CAFs, particularly EGR-enriched, are also associated with CD8 and NKT expansion by EGFR. These findings suggest a potential targeted therapeutic pathway to better treat this neoplasm.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35464471/",
     "doi": "https://doi.org/10.3389/fimmu.2022.856363",

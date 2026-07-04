@@ -41,8 +41,8 @@ class HeaderNavigationTest {
     void everyDropdownDestinationHasAnIcon() throws Exception {
         String header = Files.readString(HEADER, StandardCharsets.UTF_8);
 
-        assertEquals(13, occurrences(header, "class=\"main-nav__dropdown-link"));
-        assertEquals(13, occurrences(header, "main-nav__dropdown-icon main-nav__dropdown-icon--"));
+        assertEquals(14, occurrences(header, "class=\"main-nav__dropdown-link"));
+        assertEquals(14, occurrences(header, "main-nav__dropdown-icon main-nav__dropdown-icon--"));
     }
 
     @Test

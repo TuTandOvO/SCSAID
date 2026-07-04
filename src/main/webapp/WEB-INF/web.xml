@@ -43,6 +43,7 @@
         <url-pattern>/deg</url-pattern>
         <url-pattern>/gene-search</url-pattern>
         <url-pattern>/gene-details</url-pattern>
+        <url-pattern>/ai-interpretation</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -151,6 +152,15 @@
     <servlet-mapping>
         <servlet-name>VisualizationServlet</servlet-name>
         <url-pattern>/visualization</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AIInterpretationServlet</servlet-name>
+        <servlet-class>Servlet.AIInterpretationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AIInterpretationServlet</servlet-name>
+        <url-pattern>/ai-interpretation</url-pattern>
     </servlet-mapping>
 
     <servlet>

@@ -24,6 +24,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Vascular endothelial (VE)-cadherin is a well-recognized endothelial cell marker. One of its interacting partners, the TGF-β receptor Alk1, is essential in endothelial cells for adult skin vasculature remodeling during hair homeostasis. Using single-cell transcriptomics, lineage tracing and gene targeting in mice, we characterize the cellular and molecular dynamics of skin VE-cadherin+ cells during hair homeostasis. We describe dynamic changes of VE-cadherin+ endothelial cells specific to blood and lymphatic vessels and uncover an atypical VE-cadherin+ cell population. The latter is not a predicted adult endovascular progenitor, but rather a non-endothelial mesenchymal perineurial cell type, which forms nerve encapsulating tubular structures that undergo remodeling during hair homeostasis. Alk1 acts in the VE-cadherin+ perineurial cells to maintain proper homeostatic nerve branching by enforcing basement membrane and extracellular matrix molecular signatures. Our work implicates the VE-cadherin/Alk1 duo, classically known as endothelial-vascular specific, in perineurial-nerve homeostasis. This has broad implications in vascular and nerve disease.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37699906/",
     "doi": "https://doi.org/10.1038/s41467-023-40761-5",

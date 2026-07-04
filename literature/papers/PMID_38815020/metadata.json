@@ -32,6 +32,7 @@
     "Research Support, N.I.H., Extramural"
   ],
   "language": "eng",
+  "abstract": "Stem cells play a critical role in cancer development by contributing to cell heterogeneity, lineage plasticity, and drug resistance. We created gene expression networks from hundreds of mouse tissue samples (both normal and tumor) and integrated these with lineage tracing and single-cell RNA-seq, to identify convergence of cell states in premalignant tumor cells expressing markers of lineage plasticity and drug resistance. Two of these cell states representing multilineage plasticity or proliferation were inversely correlated, suggesting a mutually exclusive relationship. Treatment of carcinomas in vivo with chemotherapy repressed the proliferative state and activated multilineage plasticity whereas inhibition of differentiation repressed plasticity and potentiated responses to cell cycle inhibitors. Manipulation of this cell state transition point may provide a source of potential combinatorial targets for cancer therapy.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38815020/",
     "doi": "https://doi.org/10.1126/science.adi7453",

@@ -40,6 +40,11 @@ python3 literature/build_registry.py \
 `AllData.xlsx` remains the canonical SAID/study/sample mapping. The build fails
 if a referenced PMID is missing from the supplied XML.
 
+Registry schema version 2 also includes one canonical metadata record per SAID
+and author abstracts parsed from the supplied PubMed XML. Maven packages only
+`registry.json` into the application classpath; the TSV files and per-paper
+directories remain the human-auditable source registry.
+
 ## Full text policy
 
 The repository stores paper records, citations, and stable official links. It

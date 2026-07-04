@@ -65,7 +65,7 @@ Interpret an integrated UMAP as a visualization of the processed embedding. UMAP
 
 ## Dataset Details page
 
-Open a dataset through Browse or a direct `details.jsp?said=SAID...` link. The left analysis navigation moves between Overview, Cell Proportion, Cell Clustering, DEG Results, Gene Set Scoring, Cell-Cell Communication, Enrichment Analysis, and Regulatory Network.
+Open a dataset through Browse or a direct `details.jsp?said=SAID...` link. The left analysis navigation moves between Overview, Cell Proportion, Cell Clustering, DEG Results, Gene Set Scoring, Cell-Cell Communication, Enrichment Analysis, Regulatory Network, and AI Interpretation.
 
 ### Overview and study context
 
@@ -161,6 +161,21 @@ This beta section displays precomputed SCORPION/PANDA network summaries when the
 4. If the page reports that a network is being prepared, no precomputed SCORPION files are available for that dataset.
 
 Regulators are ranked from network strength summaries such as total score and out-degree. Edges are predictions from single-cell co-expression combined with the CollecTRI regulatory prior and STRING v12 protein interactions through PANDA message passing. An edge is not evidence of direct binding, directionally validated regulation, or activity in an individual cell. Treat the network as prioritization for downstream validation.
+
+### AI Interpretation — Beta
+
+This optional panel sends selected, already-loaded scSAID results and publication context to OpenAI or DeepSeek using your own provider API key.
+
+1. Activate **AI interpretation** and read the inline privacy statement.
+2. Select the consent checkbox. The provider and API-key controls do not appear before consent.
+3. Select one or more result sources marked **Ready**. A source becomes ready only after that result has loaded or run on the current page. UMAP images are not sent in this version.
+4. Choose **OpenAI** or **DeepSeek** and enter the corresponding provider API key.
+5. Activate **Generate interpretation**. The key field is cleared immediately after submission and must be entered again for another request.
+6. Review the attributed response, linked paper identifiers, and the result-specific evidence sections.
+
+The server constructs the prompt from the selected result snapshots, canonical SAID metadata, available linked-paper abstracts, GEO study summary/design, and a skin single-cell interpretation framework. The prompt is not displayed in the interface. The key is handled transiently for the single provider request and is not placed in application storage or logs. The scientific content sent to the provider and the provider response remain subject to that provider’s API data controls and your account settings; provider charges may apply.
+
+AI interpretation is a synthesis aid, not an additional statistical analysis. Verify every gene, pathway, direction, statistic, and citation against the displayed or downloaded source result. The model may conflate site-derived results with publication findings, overstate inferred communication or regulation, or produce unsupported biological explanations despite the prompt safeguards. Do not use the output for clinical decisions.
 
 ## Search DEGs across datasets
 

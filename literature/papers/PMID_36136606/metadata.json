@@ -25,6 +25,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "We previously reported that Smad anchor for receptor activation (SARA) plays a critical role in maintaining epithelial cell phenotype. Here, we show that SARA suppressed myofibroblast precursor transdifferentiation in a mouse model of scleroderma. Mice overexpressing SARA specifically in PDGFR-β+ pericytes and pan-leukocytes (SARATg) developed significantly less skin fibrosis in response to bleomycin injection compared with wild-type littermates (SARAWT). Single-cell RNA-Seq analysis of skin PDGFR-β+ cells implicated pericyte subsets assuming myofibroblast characteristics under fibrotic stimuli, and SARA overexpression blocked the transition. In addition, a cluster that expresses molecules associated with Th2 cells and macrophage activation was enriched in SARAWT mice, but not in SARATg mice, after bleomycin treatment. Th2-specific Il-31 expression was increased in skin of the bleomycin-treated SARAWT mice and patients with scleroderma (or systemic sclerosis, SSc). Receptor-ligand analyses indicated that lymphocytes mediated pericyte transdifferentiation in SARAWT mice, while with SARA overexpression the myofibroblast activity of pericytes was suppressed. Together, these data suggest a potentially novel crosstalk between myofibroblast precursors and immune cells in the pathogenesis of SSc, in which SARA plays a critical role.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/36136606/",
     "doi": "https://doi.org/10.1172/jci.insight.160977",

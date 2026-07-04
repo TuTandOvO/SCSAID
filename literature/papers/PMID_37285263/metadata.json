@@ -32,6 +32,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Hair loss affects millions of people at some time in their life, and safe and efficient treatments for hair loss are a significant unmet medical need. We report that topical delivery of quercetin (Que) stimulates resting hair follicles to grow with rapid follicular keratinocyte proliferation and replenishes perifollicular microvasculature in mice. We construct dynamic single-cell transcriptome landscape over the course of hair regrowth and find that Que treatment stimulates the differentiation trajectory in the hair follicles and induces an angiogenic signature in dermal endothelial cells by activating HIF-1α in endothelial cells. Skin administration of a HIF-1α agonist partially recapitulates the pro-angiogenesis and hair-growing effects of Que. Together, these findings provide a molecular understanding for the efficacy of Que in hair regrowth, which underscores the translational potential of targeting the hair follicle niche as a strategy for regenerative medicine, and suggest a route of pharmacological intervention that may promote hair regrowth.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37285263/",
     "doi": "https://doi.org/10.1093/procel/pwac062",

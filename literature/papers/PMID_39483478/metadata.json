@@ -23,6 +23,7 @@
     "Journal Article"
   ],
   "language": "eng",
+  "abstract": "It has been demonstrated that CXCL12 inhibits hair growth via CXCR4, and its neutralizing antibody (Ab) increases hair growth in alopecia areata (AA). However, the molecular mechanisms have not been fully elucidated. In the present study, we further prepared humanized CXCL12 Ab for AA treatment and investigated underlying molecular mechanisms using single-cell RNA sequencing. Subcutaneous injection of humanized CXCL12 Ab significantly delayed AA onset in mice, and dorsal skin was analyzed. T cells and dendritic cells/macrophages were increased in the AA model, but decreased after CXCL12 Ab treatment. Pseudobulk RNA sequencing identified 153 differentially expressed genes that were upregulated in AA model and downregulated after Ab treatment. Gene ontology analysis revealed that immune cell chemotaxis and cellular response to type II interferon were upregulated in AA model but downregulated after Ab treatment. We further identified key immune cell-related genes such as Ifng, Cd8a, Ccr5, Ccl4, Ccl5, and Il21r, which were colocalized with Cxcr4 in T cells and regulated by CXCL12 Ab treatment. Notably, CD8+ T cells were significantly increased and activated via Jak/Stat pathway in the AA model but inactivated after CXCL12 Ab treatment. Collectively, these results indicate that humanized CXCL12 Ab is promising for AA treatment via immune modulatory effects.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39483478/",
     "doi": "https://doi.org/10.3389/fimmu.2024.1444777",

@@ -46,6 +46,7 @@
     "Research Support, Non-U.S. Gov't"
   ],
   "language": "eng",
+  "abstract": "Cutaneous T cell lymphoma (CTCL) represents a heterogeneous group of non-Hodgkin lymphoma distinguished by the presence of clonal malignant T cells. The heterogeneity of malignant T cells and the complex tumor microenvironment remain poorly characterized. With single-cell RNA analysis and bulk whole-exome sequencing on 19 skin lesions from 15 CTCL patients, we decipher the intra-tumor and inter-lesion diversity of CTCL patients and propose a multi-step tumor evolution model. We further establish a subtyping scheme based on the molecular features of malignant T cells and their pro-tumorigenic microenvironments: the TCyEM group, demonstrating a cytotoxic effector memory T cell phenotype, shows more M2 macrophages infiltration, while the TCM group, featured by a central memory T cell phenotype and adverse patient outcome, is infiltrated by highly exhausted CD8+ reactive T cells, B cells and Tregs with suppressive activities. Our results establish a solid basis for understanding the nature of CTCL and pave the way for future precision medicine for CTCL patients.",
   "urls": {
     "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35241665/",
     "doi": "https://doi.org/10.1038/s41467-022-28799-3",
