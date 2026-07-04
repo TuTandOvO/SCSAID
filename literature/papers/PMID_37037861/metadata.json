@@ -1,0 +1,58 @@
+{
+  "paper_id": "PMID_37037861",
+  "pmid": "37037861",
+  "pmcid": "PMC10086024",
+  "doi": "10.1038/s41467-023-37798-x",
+  "title": "Tenascin C+ papillary fibroblasts facilitate neuro-immune interaction in a mouse model of psoriasis.",
+  "authors": [
+    "Xiaojie Cai",
+    "Maoying Han",
+    "Fangzhou Lou",
+    "Yang Sun",
+    "Qianqian Yin",
+    "Libo Sun",
+    "Zhikai Wang",
+    "Xiangxiao Li",
+    "Hong Zhou",
+    "Zhenyao Xu",
+    "Hong Wang",
+    "Siyu Deng",
+    "Xichen Zheng",
+    "Taiyu Zhang",
+    "Qun Li",
+    "Bin Zhou",
+    "Honglin Wang"
+  ],
+  "journal": "Nature communications",
+  "journal_abbreviation": "Nat Commun",
+  "publication_date": "2023-Apr-10",
+  "year": "2023",
+  "volume": "14",
+  "issue": "1",
+  "pages": "2004",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37037861/",
+    "doi": "https://doi.org/10.1038/s41467-023-37798-x",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10086024/"
+  },
+  "citation": "Xiaojie Cai, Maoying Han, Fangzhou Lou, Yang Sun, Qianqian Yin, Libo Sun, et al. Tenascin C+ papillary fibroblasts facilitate neuro-immune interaction in a mouse model of psoriasis. Nat Commun. 2023. doi:10.1038/s41467-023-37798-x. PMID:37037861.",
+  "dataset_links": [
+    {
+      "said": "SAID038",
+      "study_accession": "GSE205020",
+      "sample_accession": "GSM6204200",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID039",
+      "study_accession": "GSE205020",
+      "sample_accession": "GSM6204201",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

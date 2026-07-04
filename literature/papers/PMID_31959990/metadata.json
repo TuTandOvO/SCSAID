@@ -1,0 +1,91 @@
+{
+  "paper_id": "PMID_31959990",
+  "pmid": "31959990",
+  "pmcid": "PMC7105105",
+  "doi": "10.1038/s41591-019-0733-7",
+  "title": "Targeted therapy guided by single-cell transcriptomic analysis in drug-induced hypersensitivity syndrome: a case report.",
+  "authors": [
+    "Doyoung Kim",
+    "Tetsuro Kobayashi",
+    "Benjamin Voisin",
+    "Jay-Hyun Jo",
+    "Keiko Sakamoto",
+    "Seon-Pil Jin",
+    "Michael Kelly",
+    "Helena B Pasieka",
+    "Jessica L Naff",
+    "Jon H Meyerle",
+    "Ijeoma D Ikpeama",
+    "Gary A Fahle",
+    "Fred P Davis",
+    "Sergio D Rosenzweig",
+    "Julie C Alejo",
+    "Stefania Pittaluga",
+    "Heidi H Kong",
+    "Alexandra F Freeman",
+    "Keisuke Nagao"
+  ],
+  "journal": "Nature medicine",
+  "journal_abbreviation": "Nat Med",
+  "publication_date": "2020-Feb",
+  "year": "2020",
+  "volume": "26",
+  "issue": "2",
+  "pages": "236-243",
+  "publication_types": [
+    "Case Reports",
+    "Journal Article",
+    "Research Support, N.I.H., Intramural"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/31959990/",
+    "doi": "https://doi.org/10.1038/s41591-019-0733-7",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7105105/"
+  },
+  "citation": "Doyoung Kim, Tetsuro Kobayashi, Benjamin Voisin, Jay-Hyun Jo, Keiko Sakamoto, Seon-Pil Jin, et al. Targeted therapy guided by single-cell transcriptomic analysis in drug-induced hypersensitivity syndrome: a case report. Nat Med. 2020. doi:10.1038/s41591-019-0733-7. PMID:31959990.",
+  "dataset_links": [
+    {
+      "said": "SAID208",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892569",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID209",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892577",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID210",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892578",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID211",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892579",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID212",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892580",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID213",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892581",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID214",
+      "study_accession": "GSE132802",
+      "sample_accession": "GSM3892582",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

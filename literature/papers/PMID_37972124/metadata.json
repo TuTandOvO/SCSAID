@@ -1,0 +1,63 @@
+{
+  "paper_id": "PMID_37972124",
+  "pmid": "37972124",
+  "pmcid": "",
+  "doi": "10.1111/pcmr.13141",
+  "title": "Single-cell profiling of MC1R-inhibited melanocytes.",
+  "authors": [
+    "H Matthew Berns",
+    "Dawn E Watkins-Chow",
+    "Sizhu Lu",
+    "Pakavarin Louphrasitthiphol",
+    "Tongwu Zhang",
+    "Kevin M Brown",
+    "Pedro Moura-Alves",
+    "Colin R Goding",
+    "William J Pavan"
+  ],
+  "journal": "Pigment cell & melanoma research",
+  "journal_abbreviation": "Pigment Cell Melanoma Res",
+  "publication_date": "2024-Mar",
+  "year": "2024",
+  "volume": "37",
+  "issue": "2",
+  "pages": "291-308",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Research Support, N.I.H., Intramural"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37972124/",
+    "doi": "https://doi.org/10.1111/pcmr.13141",
+    "pmc": ""
+  },
+  "citation": "H Matthew Berns, Dawn E Watkins-Chow, Sizhu Lu, Pakavarin Louphrasitthiphol, Tongwu Zhang, Kevin M Brown, et al. Single-cell profiling of MC1R-inhibited melanocytes. Pigment Cell Melanoma Res. 2024. doi:10.1111/pcmr.13141. PMID:37972124.",
+  "dataset_links": [
+    {
+      "said": "SAID086",
+      "study_accession": "GSE236918",
+      "sample_accession": "GSM7585467",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID087",
+      "study_accession": "GSE236918",
+      "sample_accession": "GSM7585468",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID088",
+      "study_accession": "GSE236918",
+      "sample_accession": "GSM7585469",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID089",
+      "study_accession": "GSE236918",
+      "sample_accession": "GSM7585470",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

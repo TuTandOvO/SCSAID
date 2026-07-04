@@ -1,0 +1,50 @@
+{
+  "paper_id": "PMID_39153998",
+  "pmid": "39153998",
+  "pmcid": "PMC11330466",
+  "doi": "10.1038/s41419-024-06994-y",
+  "title": "TLR9 activation in large wound induces tissue repair and hair follicle regeneration via γδT cells.",
+  "authors": [
+    "Xinhui Li",
+    "Tiantian An",
+    "Yang Yang",
+    "Zhaoyu Xu",
+    "Shuaidong Chen",
+    "Zumu Yi",
+    "Chen Deng",
+    "Feng Zhou",
+    "Yi Man",
+    "Chen Hu"
+  ],
+  "journal": "Cell death & disease",
+  "journal_abbreviation": "Cell Death Dis",
+  "publication_date": "2024-Aug-17",
+  "year": "2024",
+  "volume": "15",
+  "issue": "8",
+  "pages": "598",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39153998/",
+    "doi": "https://doi.org/10.1038/s41419-024-06994-y",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11330466/"
+  },
+  "citation": "Xinhui Li, Tiantian An, Yang Yang, Zhaoyu Xu, Shuaidong Chen, Zumu Yi, et al. TLR9 activation in large wound induces tissue repair and hair follicle regeneration via γδT cells. Cell Death Dis. 2024. doi:10.1038/s41419-024-06994-y. PMID:39153998.",
+  "dataset_links": [
+    {
+      "said": "SAID084",
+      "study_accession": "GSE272509",
+      "sample_accession": "GSM8403737",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID085",
+      "study_accession": "GSE272509",
+      "sample_accession": "GSM8403738",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

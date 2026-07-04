@@ -1,0 +1,50 @@
+{
+  "paper_id": "PMID_38127424",
+  "pmid": "38127424",
+  "pmcid": "PMC10735221",
+  "doi": "10.7554/eLife.86269",
+  "title": "Apoptosis recognition receptors regulate skin tissue repair in mice.",
+  "authors": [
+    "Olivia Justynski",
+    "Kate Bridges",
+    "Will Krause",
+    "Maria Fernanda Forni",
+    "Quan M Phan",
+    "Teresa Sandoval-Schaefer",
+    "Kristyn Carter",
+    "Diane E King",
+    "Henry C Hsia",
+    "Michael I Gazes",
+    "Steven D Vyce",
+    "Ryan R Driskell",
+    "Kathryn Miller-Jensen",
+    "Valerie Horsley"
+  ],
+  "journal": "eLife",
+  "journal_abbreviation": "Elife",
+  "publication_date": "2023-Dec-21",
+  "year": "2023",
+  "volume": "12",
+  "issue": "",
+  "pages": "e86269",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Research Support, N.I.H., Extramural"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38127424/",
+    "doi": "https://doi.org/10.7554/eLife.86269",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10735221/"
+  },
+  "citation": "Olivia Justynski, Kate Bridges, Will Krause, Maria Fernanda Forni, Quan M Phan, Teresa Sandoval-Schaefer, et al. Apoptosis recognition receptors regulate skin tissue repair in mice. Elife. 2023. doi:10.7554/eLife.86269. PMID:38127424.",
+  "dataset_links": [
+    {
+      "said": "SAID014",
+      "study_accession": "GSE223660",
+      "sample_accession": "GSM6970228",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

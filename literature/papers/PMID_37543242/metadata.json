@@ -1,0 +1,60 @@
+{
+  "paper_id": "PMID_37543242",
+  "pmid": "37543242",
+  "pmcid": "PMC13032792",
+  "doi": "10.1016/j.jid.2023.07.005",
+  "title": "ΔNp63 Regulates Homeostasis, Stemness, and Suppression of Inflammation in the Adult Epidermis.",
+  "authors": [
+    "Christopher E Eyermann",
+    "Xi Chen",
+    "Ozge S Somuncu",
+    "Jinyu Li",
+    "Alexander N Joukov",
+    "Jiang Chen",
+    "Evguenia M Alexandrova"
+  ],
+  "journal": "The Journal of investigative dermatology",
+  "journal_abbreviation": "J Invest Dermatol",
+  "publication_date": "2024-Jan",
+  "year": "2024",
+  "volume": "144",
+  "issue": "1",
+  "pages": "73-83.e10",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37543242/",
+    "doi": "https://doi.org/10.1016/j.jid.2023.07.005",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13032792/"
+  },
+  "citation": "Christopher E Eyermann, Xi Chen, Ozge S Somuncu, Jinyu Li, Alexander N Joukov, Jiang Chen, et al. ΔNp63 Regulates Homeostasis, Stemness, and Suppression of Inflammation in the Adult Epidermis. J Invest Dermatol. 2024. doi:10.1016/j.jid.2023.07.005. PMID:37543242.",
+  "dataset_links": [
+    {
+      "said": "SAID080",
+      "study_accession": "GSE213528",
+      "sample_accession": "GSM6588784",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID081",
+      "study_accession": "GSE213528",
+      "sample_accession": "GSM6588785",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID082",
+      "study_accession": "GSE213528",
+      "sample_accession": "GSM6588786",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID083",
+      "study_accession": "GSE213528",
+      "sample_accession": "GSM6588787",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

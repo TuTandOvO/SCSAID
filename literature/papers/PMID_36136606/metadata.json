@@ -1,0 +1,60 @@
+{
+  "paper_id": "PMID_36136606",
+  "pmid": "36136606",
+  "pmcid": "PMC9675568",
+  "doi": "10.1172/jci.insight.160977",
+  "title": "SARA suppresses myofibroblast precursor transdifferentiation in fibrogenesis in a mouse model of scleroderma.",
+  "authors": [
+    "Katia Corano Scheri",
+    "Xiaoyan Liang",
+    "Vidhi Dalal",
+    "I Caroline Le Poole",
+    "John Varga",
+    "Tomoko Hayashida"
+  ],
+  "journal": "JCI insight",
+  "journal_abbreviation": "JCI Insight",
+  "publication_date": "2022-Nov-08",
+  "year": "2022",
+  "volume": "7",
+  "issue": "21",
+  "pages": "e160977",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/36136606/",
+    "doi": "https://doi.org/10.1172/jci.insight.160977",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9675568/"
+  },
+  "citation": "Katia Corano Scheri, Xiaoyan Liang, Vidhi Dalal, I Caroline Le Poole, John Varga, Tomoko Hayashida. SARA suppresses myofibroblast precursor transdifferentiation in fibrogenesis in a mouse model of scleroderma. JCI Insight. 2022. doi:10.1172/jci.insight.160977. PMID:36136606.",
+  "dataset_links": [
+    {
+      "said": "SAID015",
+      "study_accession": "GSE211810",
+      "sample_accession": "GSM6502671",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID016",
+      "study_accession": "GSE211810",
+      "sample_accession": "GSM6502672",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID017",
+      "study_accession": "GSE211810",
+      "sample_accession": "GSM6502673",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID018",
+      "study_accession": "GSE211810",
+      "sample_accession": "GSM6502674",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

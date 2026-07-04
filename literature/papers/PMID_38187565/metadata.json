@@ -1,0 +1,59 @@
+{
+  "paper_id": "PMID_38187565",
+  "pmid": "38187565",
+  "pmcid": "PMC10769266",
+  "doi": "10.1101/2023.12.19.571712",
+  "title": "Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing.",
+  "authors": [
+    "Joseph W Palmer",
+    "Nilesh Kumar",
+    "Luye An",
+    "Andrew C White",
+    "M Shahid Mukhtar",
+    "Melissa L Harris"
+  ],
+  "journal": "bioRxiv : the preprint server for biology",
+  "journal_abbreviation": "bioRxiv",
+  "publication_date": "2023-Dec-20",
+  "year": "2023",
+  "volume": "",
+  "issue": "",
+  "pages": "2023.12.19.571712",
+  "publication_types": [
+    "Preprint",
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38187565/",
+    "doi": "https://doi.org/10.1101/2023.12.19.571712",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10769266/"
+  },
+  "citation": "Joseph W Palmer, Nilesh Kumar, Luye An, Andrew C White, M Shahid Mukhtar, Melissa L Harris. Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing. bioRxiv. 2023. doi:10.1101/2023.12.19.571712. PMID:38187565.",
+  "dataset_links": [
+    {
+      "said": "SAID004",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138118",
+      "relation": "preprint"
+    },
+    {
+      "said": "SAID005",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138119",
+      "relation": "preprint"
+    },
+    {
+      "said": "SAID006",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138120",
+      "relation": "preprint"
+    },
+    {
+      "said": "SAID007",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138121",
+      "relation": "preprint"
+    }
+  ]
+}

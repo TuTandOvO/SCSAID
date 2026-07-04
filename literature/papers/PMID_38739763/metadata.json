@@ -1,0 +1,49 @@
+{
+  "paper_id": "PMID_38739763",
+  "pmid": "38739763",
+  "pmcid": "",
+  "doi": "10.1093/bjd/ljae193",
+  "title": "Treating epidermolytic ichthyosis and ichthyosis with confetti with epidermal autografts cultured from revertant skin.",
+  "authors": [
+    "Kana Tanahashi",
+    "Michihiro Kono",
+    "Takenori Yoshikawa",
+    "Yuika Suzuki",
+    "Masukazu Inoie",
+    "Yachiyo Kuwatsuka",
+    "Fumie Kinoshita",
+    "Takuya Takeichi",
+    "Masashi Akiyama"
+  ],
+  "journal": "The British journal of dermatology",
+  "journal_abbreviation": "Br J Dermatol",
+  "publication_date": "2024-Aug-14",
+  "year": "2024",
+  "volume": "191",
+  "issue": "3",
+  "pages": "397-404",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38739763/",
+    "doi": "https://doi.org/10.1093/bjd/ljae193",
+    "pmc": ""
+  },
+  "citation": "Kana Tanahashi, Michihiro Kono, Takenori Yoshikawa, Yuika Suzuki, Masukazu Inoie, Yachiyo Kuwatsuka, et al. Treating epidermolytic ichthyosis and ichthyosis with confetti with epidermal autografts cultured from revertant skin. Br J Dermatol. 2024. doi:10.1093/bjd/ljae193. PMID:38739763.",
+  "dataset_links": [
+    {
+      "said": "SAID168",
+      "study_accession": "GSE245859",
+      "sample_accession": "GSM7849998",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID169",
+      "study_accession": "GSE245859",
+      "sample_accession": "GSM7849999",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

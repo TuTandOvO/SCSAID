@@ -1,0 +1,175 @@
+{
+  "paper_id": "PMID_38815020",
+  "pmid": "38815020",
+  "pmcid": "",
+  "doi": "10.1126/science.adi7453",
+  "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+  "authors": [
+    "Mark A Taylor",
+    "Eve Kandyba",
+    "Kyle Halliwill",
+    "Reyno Delrosario",
+    "Matvei Khoroshkin",
+    "Hani Goodarzi",
+    "David Quigley",
+    "Yun Rose Li",
+    "Di Wu",
+    "Saumya R Bollam",
+    "Olga K Mirzoeva",
+    "Rosemary J Akhurst",
+    "Allan Balmain"
+  ],
+  "journal": "Science (New York, N.Y.)",
+  "journal_abbreviation": "Science",
+  "publication_date": "2024-May-31",
+  "year": "2024",
+  "volume": "384",
+  "issue": "6699",
+  "pages": "eadi7453",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Research Support, N.I.H., Extramural"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38815020/",
+    "doi": "https://doi.org/10.1126/science.adi7453",
+    "pmc": ""
+  },
+  "citation": "Mark A Taylor, Eve Kandyba, Kyle Halliwill, Reyno Delrosario, Matvei Khoroshkin, Hani Goodarzi, et al. Stem-cell states converge in multistage cutaneous squamous cell carcinoma development. Science. 2024. doi:10.1126/science.adi7453. PMID:38815020.",
+  "dataset_links": [
+    {
+      "said": "SAID058",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150922",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID059",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150923",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID060",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150924",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID061",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150925",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID062",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150926",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID063",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150927",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID064",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150928",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID065",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150929",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID066",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150930",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID067",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150931",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID068",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150932",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID069",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150933",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID070",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150934",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID071",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150935",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID072",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150936",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID073",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150937",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID074",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150938",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID075",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150940",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID076",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150941",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID077",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150944",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID078",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150946",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID079",
+      "study_accession": "GSE261766",
+      "sample_accession": "GSM8150947",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "paper_id": "PMID_39483478",
+  "pmid": "39483478",
+  "pmcid": "PMC11524852",
+  "doi": "10.3389/fimmu.2024.1444777",
+  "title": "Humanized CXCL12 antibody delays onset and modulates immune response in alopecia areata mice: insights from single-cell RNA sequencing.",
+  "authors": [
+    "Seungchan An",
+    "Mei Zheng",
+    "In Guk Park",
+    "Sang Gyu Park",
+    "Minsoo Noh",
+    "Jong-Hyuk Sung"
+  ],
+  "journal": "Frontiers in immunology",
+  "journal_abbreviation": "Front Immunol",
+  "publication_date": "2024",
+  "year": "2024",
+  "volume": "15",
+  "issue": "",
+  "pages": "1444777",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39483478/",
+    "doi": "https://doi.org/10.3389/fimmu.2024.1444777",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11524852/"
+  },
+  "citation": "Seungchan An, Mei Zheng, In Guk Park, Sang Gyu Park, Minsoo Noh, Jong-Hyuk Sung. Humanized CXCL12 antibody delays onset and modulates immune response in alopecia areata mice: insights from single-cell RNA sequencing. Front Immunol. 2024. doi:10.3389/fimmu.2024.1444777. PMID:39483478.",
+  "dataset_links": [
+    {
+      "said": "SAID001",
+      "study_accession": "GSE269455",
+      "sample_accession": "GSM8316001",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID002",
+      "study_accession": "GSE269455",
+      "sample_accession": "GSM8316002",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID003",
+      "study_accession": "GSE269455",
+      "sample_accession": "GSM8316003",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

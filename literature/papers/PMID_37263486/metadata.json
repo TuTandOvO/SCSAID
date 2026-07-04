@@ -1,0 +1,126 @@
+{
+  "paper_id": "PMID_37263486",
+  "pmid": "37263486",
+  "pmcid": "",
+  "doi": "10.1016/j.jid.2023.05.011",
+  "title": "Transcriptomic Landscape of Prurigo Nodularis Lesional Skin CD3+ T Cells Using Single-Cell RNA Sequencing.",
+  "authors": [
+    "Andreea Calugareanu",
+    "Florian Specque",
+    "Sarah Demouche",
+    "Chloe Grolleau",
+    "Gabor Dobos",
+    "Marine Merandet",
+    "David Bergerat",
+    "Sandy Peltier",
+    "Marie Jachiet",
+    "Charles Cassius",
+    "Thibault Mahevas",
+    "Anne Saussine",
+    "Alexandre How-Kit",
+    "Rachel Onifarasoaniaina",
+    "Kevin Serror",
+    "Mylène Bohec",
+    "Sylvain Baulande",
+    "Clemence Lepelletier",
+    "Marc Mrad",
+    "Estelle Charvet",
+    "Adèle de Masson",
+    "David Boccara",
+    "Maxime Battistella",
+    "Hélène Le Buanec",
+    "Jean-David Bouaziz"
+  ],
+  "journal": "The Journal of investigative dermatology",
+  "journal_abbreviation": "J Invest Dermatol",
+  "publication_date": "2023-Dec",
+  "year": "2023",
+  "volume": "143",
+  "issue": "12",
+  "pages": "2525-2529.e5",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37263486/",
+    "doi": "https://doi.org/10.1016/j.jid.2023.05.011",
+    "pmc": ""
+  },
+  "citation": "Andreea Calugareanu, Florian Specque, Sarah Demouche, Chloe Grolleau, Gabor Dobos, Marine Merandet, et al. Transcriptomic Landscape of Prurigo Nodularis Lesional Skin CD3+ T Cells Using Single-Cell RNA Sequencing. J Invest Dermatol. 2023. doi:10.1016/j.jid.2023.05.011. PMID:37263486.",
+  "dataset_links": [
+    {
+      "said": "SAID180",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595205",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID181",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595206",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID182",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595208",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID183",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595209",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID184",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595210",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID185",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595211",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID186",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595212",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID187",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595215",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID188",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595217",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID189",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595218",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID190",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595219",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID191",
+      "study_accession": "GSE213849",
+      "sample_accession": "GSM6595220",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

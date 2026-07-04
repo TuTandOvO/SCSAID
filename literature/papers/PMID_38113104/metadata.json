@@ -1,0 +1,136 @@
+{
+  "paper_id": "PMID_38113104",
+  "pmid": "38113104",
+  "pmcid": "PMC10967391",
+  "doi": "10.1172/jci.insight.169870",
+  "title": "Tertiary lymphoid structures sustain cutaneous B cell activity in hidradenitis suppurativa.",
+  "authors": [
+    "Margaret M Lowe",
+    "Jarish N Cohen",
+    "Madison I Moss",
+    "Sean Clancy",
+    "James P Adler",
+    "Ashley E Yates",
+    "Haley B Naik",
+    "Rashi Yadav",
+    "Mariela Pauli",
+    "Ian Taylor",
+    "Austin McKay",
+    "Hobart Harris",
+    "Esther Kim",
+    "Scott L Hansen",
+    "Michael D Rosenblum",
+    "Joshua M Moreau"
+  ],
+  "journal": "JCI insight",
+  "journal_abbreviation": "JCI Insight",
+  "publication_date": "2024-Feb-08",
+  "year": "2024",
+  "volume": "9",
+  "issue": "3",
+  "pages": "e169870",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't",
+    "Research Support, N.I.H., Extramural"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38113104/",
+    "doi": "https://doi.org/10.1172/jci.insight.169870",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10967391/"
+  },
+  "citation": "Margaret M Lowe, Jarish N Cohen, Madison I Moss, Sean Clancy, James P Adler, Ashley E Yates, et al. Tertiary lymphoid structures sustain cutaneous B cell activity in hidradenitis suppurativa. JCI Insight. 2024. doi:10.1172/jci.insight.169870. PMID:38113104.",
+  "dataset_links": [
+    {
+      "said": "SAID141",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951925",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID142",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951926",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID143",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951927",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID144",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951930",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID145",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951931",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID146",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951932",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID147",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951934",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID148",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951935",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID149",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951936",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID150",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951937",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID151",
+      "study_accession": "GSE249622",
+      "sample_accession": "GSM7951938",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID120",
+      "study_accession": "GSE249793",
+      "sample_accession": "GSM7964420",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID121",
+      "study_accession": "GSE249793",
+      "sample_accession": "GSM7964422",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID122",
+      "study_accession": "GSE249793",
+      "sample_accession": "GSM7964423",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID123",
+      "study_accession": "GSE249793",
+      "sample_accession": "GSM7964424",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

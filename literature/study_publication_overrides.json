@@ -1,0 +1,75 @@
+{
+  "GSE261227": [
+    {
+      "pmid": "38613320",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article data-availability statement names GSE261227."
+    },
+    {
+      "pmid": "38187565",
+      "relation": "preprint",
+      "evidence": "Preprint version of PMID 38613320."
+    }
+  ],
+  "GSE230512": [
+    {
+      "pmid": "38393304",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article reports the experiment represented by GSE230512/GSE230513."
+    }
+  ],
+  "GSE261766": [
+    {
+      "pmid": "38815020",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article data-availability statement names GSE261766."
+    }
+  ],
+  "GSE213528": [
+    {
+      "pmid": "37543242",
+      "relation": "primary_dataset_publication",
+      "evidence": "NCBI GEO links GSE213528 to this PubMed record."
+    }
+  ],
+  "GSE237754": [
+    {
+      "pmid": "38242738",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article title and experiment description match GSE237754."
+    }
+  ],
+  "CRA006512": [
+    {
+      "pmid": "37285263",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article data-availability statement names CRA006512."
+    },
+    {
+      "pmid": "40391738",
+      "relation": "correction",
+      "evidence": "Published correction to PMID 37285263."
+    }
+  ],
+  "CRA028265": [
+    {
+      "pmid": "40817122",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article data-availability statement names CRA028265."
+    }
+  ],
+  "CRA028974": [
+    {
+      "pmid": "41329515",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article data-availability statement names CRA028974."
+    }
+  ],
+  "HRA000166": [
+    {
+      "pmid": "35241665",
+      "relation": "primary_dataset_publication",
+      "evidence": "The article data-availability statement names HRA000166."
+    }
+  ]
+}

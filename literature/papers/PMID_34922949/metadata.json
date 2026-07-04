@@ -1,0 +1,41 @@
+{
+  "paper_id": "PMID_34922949",
+  "pmid": "34922949",
+  "pmcid": "PMC9203604",
+  "doi": "10.1016/j.jid.2021.11.032",
+  "title": "Parallel Single-Cell Multiomics Analysis of Neonatal Skin Reveals the Transitional Fibroblast States that Restrict Differentiation into Distinct Fates.",
+  "authors": [
+    "Sean M Thompson",
+    "Quan M Phan",
+    "Sarayut Winuthayanon",
+    "Iwona M Driskell",
+    "Ryan R Driskell"
+  ],
+  "journal": "The Journal of investigative dermatology",
+  "journal_abbreviation": "J Invest Dermatol",
+  "publication_date": "2022-Jul",
+  "year": "2022",
+  "volume": "142",
+  "issue": "7",
+  "pages": "1812-1823.e3",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/34922949/",
+    "doi": "https://doi.org/10.1016/j.jid.2021.11.032",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9203604/"
+  },
+  "citation": "Sean M Thompson, Quan M Phan, Sarayut Winuthayanon, Iwona M Driskell, Ryan R Driskell. Parallel Single-Cell Multiomics Analysis of Neonatal Skin Reveals the Transitional Fibroblast States that Restrict Differentiation into Distinct Fates. J Invest Dermatol. 2022. doi:10.1016/j.jid.2021.11.032. PMID:34922949.",
+  "dataset_links": [
+    {
+      "said": "SAID043",
+      "study_accession": "GSE189210",
+      "sample_accession": "GSM5696148",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

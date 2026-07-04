@@ -1,0 +1,58 @@
+study_accession	paper_id	pmid	doi	relation	evidence	provenance	title_similarity	verified_on	dataset_count
+CRA006512	PMID_37285263	37285263	10.1093/procel/pwac062	primary_dataset_publication	The article data-availability statement names CRA006512.	study_publication_overrides.json		2026-07-04	7
+CRA006512	PMID_40391738	40391738	10.1093/procel/pwaf035	correction	Published correction to PMID 37285263.	study_publication_overrides.json		2026-07-04	7
+CRA028265	PMID_40817122	40817122	10.1038/s41467-025-62874-9	primary_dataset_publication	The article data-availability statement names CRA028265.	study_publication_overrides.json		2026-07-04	2
+CRA028974	PMID_41329515	41329515	10.1172/JCI188827	primary_dataset_publication	The article data-availability statement names CRA028974.	study_publication_overrides.json		2026-07-04	8
+GSE122043	PMID_30595533	30595533	10.1016/j.devcel.2018.11.032	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.437	2026-07-04	2
+GSE130973	PMID_32327715	32327715	10.1038/s42003-020-0922-4	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.897	2026-07-04	4
+GSE132802	PMID_31959990	31959990	10.1038/s41591-019-0733-7	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.490	2026-07-04	7
+GSE146122	PMID_32259486	32259486	10.1016/j.cell.2020.03.015	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.367	2026-07-04	3
+GSE153596	PMID_32990218	32990218	10.7554/eLife.60066	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.333	2026-07-04	6
+GSE155850	PMID_32841223	32841223	10.1172/jci.insight.139932	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.242	2026-07-04	3
+GSE158691	PMID_33737730	33737730	10.1038/s41551-021-00696-y	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.245	2026-07-04	3
+GSE158924	PMID_33317858	33317858	10.1016/j.jaci.2020.10.012	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.948	2026-07-04	6
+GSE165021	PMID_34936223	34936223	10.15252/emmm.202114455	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.351	2026-07-04	6
+GSE165021	PMID_35281792	35281792	10.1002/mco2.120	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.278	2026-07-04	6
+GSE173252	PMID_34274346	34274346	10.1016/j.jid.2021.05.030	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.994	2026-07-04	8
+GSE175990	PMID_34504848	34504848	10.3389/fmed.2021.665873	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.573	2026-07-04	4
+GSE179565	PMID_34380039	34380039	10.1016/j.celrep.2021.109524	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	1.000	2026-07-04	1
+GSE181297	PMID_35123990	35123990	10.1016/j.jid.2022.01.017	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.695	2026-07-04	1
+GSE189210	PMID_34922949	34922949	10.1016/j.jid.2021.11.032	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.983	2026-07-04	1
+GSE193304	PMID_38099574	38099574	10.7554/eLife.85270	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	1.000	2026-07-04	12
+GSE195674	PMID_35464471	35464471	10.3389/fimmu.2022.856363	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.320	2026-07-04	1
+GSE196677	PMID_38429819	38429819	10.1186/s13020-024-00907-z	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.348	2026-07-04	3
+GSE203034	PMID_37727050	37727050	10.1111/exd.14929	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	1.000	2026-07-04	1
+GSE203262	PMID_35653192	35653192	10.1172/jci.insight.154585	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.318	2026-07-04	6
+GSE205020	PMID_37037861	37037861	10.1038/s41467-023-37798-x	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.443	2026-07-04	2
+GSE210224	PMID_38489265	38489265	10.1016/j.celrep.2024.113944	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.400	2026-07-04	12
+GSE211279	PMID_37478901	37478901	10.1016/j.jid.2023.05.029	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.656	2026-07-04	1
+GSE211381	PMID_36994549	36994549	10.15252/embj.2022112196	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.618	2026-07-04	6
+GSE211381	PMID_37699906	37699906	10.1038/s41467-023-40761-5	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.692	2026-07-04	6
+GSE211810	PMID_36136606	36136606	10.1172/jci.insight.160977	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.351	2026-07-04	4
+GSE212447	PMID_37500727	37500727	10.1038/s41588-023-01445-4	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.726	2026-07-04	10
+GSE212447	PMID_40766141	40766141	10.1101/2025.07.25.25332168	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.289	2026-07-04	10
+GSE212673	PMID_37318953	37318953	10.1016/j.celrep.2023.112643	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.936	2026-07-04	3
+GSE213528	PMID_37543242	37543242	10.1016/j.jid.2023.07.005	primary_dataset_publication	NCBI GEO links GSE213528 to this PubMed record.	study_publication_overrides.json		2026-07-04	4
+GSE213849	PMID_37263486	37263486	10.1016/j.jid.2023.05.011	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.550	2026-07-04	12
+GSE223660	PMID_38127424	38127424	10.7554/eLife.86269	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	1.000	2026-07-04	1
+GSE230512	PMID_38393304	38393304	10.1084/jem.20231425	primary_dataset_publication	The article reports the experiment represented by GSE230512/GSE230513.	study_publication_overrides.json		2026-07-04	4
+GSE233137	PMID_39163475	39163475	10.1371/journal.pbio.3002776	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.272	2026-07-04	2
+GSE234269	PMID_39558136	39558136	10.1038/s44319-024-00322-3	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.520	2026-07-04	2
+GSE236918	PMID_37972124	37972124	10.1111/pcmr.13141	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.365	2026-07-04	4
+GSE237754	PMID_38242738	38242738	10.1016/j.jdermsci.2023.12.007	primary_dataset_publication	The article title and experiment description match GSE237754.	study_publication_overrides.json		2026-07-04	2
+GSE242477	PMID_39630887	39630887	10.1126/scitranslmed.adk8832	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	1.000	2026-07-04	5
+GSE242477	PMID_40631515	40631515	10.1080/2162402X.2025.2528110	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.167	2026-07-04	5
+GSE245859	PMID_38739763	38739763	10.1093/bjd/ljae193	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.306	2026-07-04	2
+GSE248121	PMID_39067676	39067676	10.1016/j.clim.2024.110328	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.416	2026-07-04	10
+GSE249622	PMID_38113104	38113104	10.1172/jci.insight.169870	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.310	2026-07-04	11
+GSE249622	PMID_40690378	40690378	10.7554/eLife.105277	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.324	2026-07-04	11
+GSE249793	PMID_38113104	38113104	10.1172/jci.insight.169870	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.295	2026-07-04	4
+GSE249793	PMID_40690378	40690378	10.7554/eLife.105277	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.268	2026-07-04	4
+GSE261227	PMID_38187565	38187565	10.1101/2023.12.19.571712	preprint	Preprint version of PMID 38613320.	study_publication_overrides.json		2026-07-04	4
+GSE261227	PMID_38613320	38613320	10.1111/pcmr.13169	primary_dataset_publication	The article data-availability statement names GSE261227.	study_publication_overrides.json		2026-07-04	4
+GSE261766	PMID_38815020	38815020	10.1126/science.adi7453	primary_dataset_publication	The article data-availability statement names GSE261766.	study_publication_overrides.json		2026-07-04	22
+GSE269455	PMID_39483478	39483478	10.3389/fimmu.2024.1444777	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.818	2026-07-04	3
+GSE269455	PMID_39795953	39795953	10.3390/ijms26010095	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.402	2026-07-04	3
+GSE269455	PMID_40004031	40004031	10.3390/ijms26041565	repository_linked_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	0.430	2026-07-04	3
+GSE272509	PMID_39153998	39153998	10.1038/s41419-024-06994-y	primary_dataset_publication	PubMed identifier recorded in AllData.xlsx	AllData.xlsx	1.000	2026-07-04	2
+HRA000166	PMID_35241665	35241665	10.1038/s41467-022-28799-3	primary_dataset_publication	The article data-availability statement names HRA000166.	study_publication_overrides.json		2026-07-04	14

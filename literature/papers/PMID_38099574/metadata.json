@@ -1,0 +1,118 @@
+{
+  "paper_id": "PMID_38099574",
+  "pmid": "38099574",
+  "pmcid": "PMC10783873",
+  "doi": "10.7554/eLife.85270",
+  "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+  "authors": [
+    "Dan-Dan Zou",
+    "Ya-Zhou Sun",
+    "Xin-Jie Li",
+    "Wen-Juan Wu",
+    "Dan Xu",
+    "Yu-Tong He",
+    "Jue Qi",
+    "Ying Tu",
+    "Yang Tang",
+    "Yun-Hua Tu",
+    "Xiao-Li Wang",
+    "Xing Li",
+    "Feng-Yan Lu",
+    "Ling Huang",
+    "Heng Long",
+    "Li He",
+    "Xin Li"
+  ],
+  "journal": "eLife",
+  "journal_abbreviation": "Elife",
+  "publication_date": "2023-Dec-15",
+  "year": "2023",
+  "volume": "12",
+  "issue": "",
+  "pages": "e85270",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38099574/",
+    "doi": "https://doi.org/10.7554/eLife.85270",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10783873/"
+  },
+  "citation": "Dan-Dan Zou, Ya-Zhou Sun, Xin-Jie Li, Wen-Juan Wu, Dan Xu, Yu-Tong He, et al. Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma. Elife. 2023. doi:10.7554/eLife.85270. PMID:38099574.",
+  "dataset_links": [
+    {
+      "said": "SAID153",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788491",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID154",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788492",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID155",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788493",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID156",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788494",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID157",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788495",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID158",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788496",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID159",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788497",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID160",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788498",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID161",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788499",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID162",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788500",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID163",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788501",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID164",
+      "study_accession": "GSE193304",
+      "sample_accession": "GSM5788503",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

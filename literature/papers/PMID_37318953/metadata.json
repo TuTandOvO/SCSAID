@@ -1,0 +1,55 @@
+{
+  "paper_id": "PMID_37318953",
+  "pmid": "37318953",
+  "pmcid": "",
+  "doi": "10.1016/j.celrep.2023.112643",
+  "title": "Transcriptomic landscape of early hair follicle and epidermal development.",
+  "authors": [
+    "Ana-Marija Sulic",
+    "Rishi Das Roy",
+    "Verdiana Papagno",
+    "Qiang Lan",
+    "Riikka Saikkonen",
+    "Jukka Jernvall",
+    "Irma Thesleff",
+    "Marja L Mikkola"
+  ],
+  "journal": "Cell reports",
+  "journal_abbreviation": "Cell Rep",
+  "publication_date": "2023-Jun-27",
+  "year": "2023",
+  "volume": "42",
+  "issue": "6",
+  "pages": "112643",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37318953/",
+    "doi": "https://doi.org/10.1016/j.celrep.2023.112643",
+    "pmc": ""
+  },
+  "citation": "Ana-Marija Sulic, Rishi Das Roy, Verdiana Papagno, Qiang Lan, Riikka Saikkonen, Jukka Jernvall, et al. Transcriptomic landscape of early hair follicle and epidermal development. Cell Rep. 2023. doi:10.1016/j.celrep.2023.112643. PMID:37318953.",
+  "dataset_links": [
+    {
+      "said": "SAID096",
+      "study_accession": "GSE212673",
+      "sample_accession": "GSM6543169",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID097",
+      "study_accession": "GSE212673",
+      "sample_accession": "GSM6543170",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID098",
+      "study_accession": "GSE212673",
+      "sample_accession": "GSM6543171",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

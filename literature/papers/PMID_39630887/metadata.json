@@ -1,0 +1,77 @@
+{
+  "paper_id": "PMID_39630887",
+  "pmid": "39630887",
+  "pmcid": "",
+  "doi": "10.1126/scitranslmed.adk8832",
+  "title": "Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment.",
+  "authors": [
+    "Tomoyuki Minowa",
+    "Kenji Murata",
+    "Yuka Mizue",
+    "Aiko Murai",
+    "Munehide Nakatsugawa",
+    "Kenta Sasaki",
+    "Serina Tokita",
+    "Terufumi Kubo",
+    "Takayuki Kanaseki",
+    "Tomohide Tsukahara",
+    "Toshiya Handa",
+    "Sayuri Sato",
+    "Kohei Horimoto",
+    "Junji Kato",
+    "Tokimasa Hida",
+    "Yoshihiko Hirohashi",
+    "Hisashi Uhara",
+    "Toshihiko Torigoe"
+  ],
+  "journal": "Science translational medicine",
+  "journal_abbreviation": "Sci Transl Med",
+  "publication_date": "2024-Dec-04",
+  "year": "2024",
+  "volume": "16",
+  "issue": "776",
+  "pages": "eadk8832",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39630887/",
+    "doi": "https://doi.org/10.1126/scitranslmed.adk8832",
+    "pmc": ""
+  },
+  "citation": "Tomoyuki Minowa, Kenji Murata, Yuka Mizue, Aiko Murai, Munehide Nakatsugawa, Kenta Sasaki, et al. Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment. Sci Transl Med. 2024. doi:10.1126/scitranslmed.adk8832. PMID:39630887.",
+  "dataset_links": [
+    {
+      "said": "SAID136",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764406",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID137",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764408",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID138",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764410",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID139",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764411",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID140",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764412",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

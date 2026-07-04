@@ -1,0 +1,73 @@
+{
+  "paper_id": "PMID_32990218",
+  "pmid": "32990218",
+  "pmcid": "PMC7524549",
+  "doi": "10.7554/eLife.60066",
+  "title": "Lef1 expression in fibroblasts maintains developmental potential in adult skin to regenerate wounds.",
+  "authors": [
+    "Quan M Phan",
+    "Gracelyn M Fine",
+    "Lucia Salz",
+    "Gerardo G Herrera",
+    "Ben Wildman",
+    "Iwona M Driskell",
+    "Ryan R Driskell"
+  ],
+  "journal": "eLife",
+  "journal_abbreviation": "Elife",
+  "publication_date": "2020-Sep-29",
+  "year": "2020",
+  "volume": "9",
+  "issue": "",
+  "pages": "e60066",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/32990218/",
+    "doi": "https://doi.org/10.7554/eLife.60066",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7524549/"
+  },
+  "citation": "Quan M Phan, Gracelyn M Fine, Lucia Salz, Gerardo G Herrera, Ben Wildman, Iwona M Driskell, et al. Lef1 expression in fibroblasts maintains developmental potential in adult skin to regenerate wounds. Elife. 2020. doi:10.7554/eLife.60066. PMID:32990218.",
+  "dataset_links": [
+    {
+      "said": "SAID047",
+      "study_accession": "GSE153596",
+      "sample_accession": "GSM4647785",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID048",
+      "study_accession": "GSE153596",
+      "sample_accession": "GSM4647786",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID049",
+      "study_accession": "GSE153596",
+      "sample_accession": "GSM4647787",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID050",
+      "study_accession": "GSE153596",
+      "sample_accession": "GSM4647788",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID051",
+      "study_accession": "GSE153596",
+      "sample_accession": "GSM4647789",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID052",
+      "study_accession": "GSE153596",
+      "sample_accession": "GSM4647790",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

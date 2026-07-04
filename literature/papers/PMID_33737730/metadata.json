@@ -1,0 +1,58 @@
+{
+  "paper_id": "PMID_33737730",
+  "pmid": "33737730",
+  "pmcid": "PMC8387336",
+  "doi": "10.1038/s41551-021-00696-y",
+  "title": "Skeletal muscle regeneration via the chemical induction and expansion of myogenic stem cells in situ or in vitro.",
+  "authors": [
+    "Jun Fang",
+    "Junren Sia",
+    "Jennifer Soto",
+    "Pingping Wang",
+    "LeeAnn K Li",
+    "Yuan-Yu Hsueh",
+    "Raymond Sun",
+    "Kym Francis Faull",
+    "James G Tidball",
+    "Song Li"
+  ],
+  "journal": "Nature biomedical engineering",
+  "journal_abbreviation": "Nat Biomed Eng",
+  "publication_date": "2021-Aug",
+  "year": "2021",
+  "volume": "5",
+  "issue": "8",
+  "pages": "864-879",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/33737730/",
+    "doi": "https://doi.org/10.1038/s41551-021-00696-y",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8387336/"
+  },
+  "citation": "Jun Fang, Junren Sia, Jennifer Soto, Pingping Wang, LeeAnn K Li, Yuan-Yu Hsueh, et al. Skeletal muscle regeneration via the chemical induction and expansion of myogenic stem cells in situ or in vitro. Nat Biomed Eng. 2021. doi:10.1038/s41551-021-00696-y. PMID:33737730.",
+  "dataset_links": [
+    {
+      "said": "SAID044",
+      "study_accession": "GSE158691",
+      "sample_accession": "GSM4805563",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID045",
+      "study_accession": "GSE158691",
+      "sample_accession": "GSM4805560",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID046",
+      "study_accession": "GSE158691",
+      "sample_accession": "GSM4805558",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "paper_id": "PMID_33317858",
+  "pmid": "33317858",
+  "pmcid": "",
+  "doi": "10.1016/j.jaci.2020.10.012",
+  "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+  "authors": [
+    "Alice Wang",
+    "Nur-Taz Rahman",
+    "Meaghan K McGeary",
+    "Michael Murphy",
+    "Austin McHenry",
+    "Danielle Peterson",
+    "Marcus Bosenberg",
+    "Richard A Flavell",
+    "Brett King",
+    "William Damsky"
+  ],
+  "journal": "The Journal of allergy and clinical immunology",
+  "journal_abbreviation": "J Allergy Clin Immunol",
+  "publication_date": "2021-May",
+  "year": "2021",
+  "volume": "147",
+  "issue": "5",
+  "pages": "1795-1809",
+  "publication_types": [
+    "Clinical Trial",
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/33317858/",
+    "doi": "https://doi.org/10.1016/j.jaci.2020.10.012",
+    "pmc": ""
+  },
+  "citation": "Alice Wang, Nur-Taz Rahman, Meaghan K McGeary, Michael Murphy, Austin McHenry, Danielle Peterson, et al. Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib. J Allergy Clin Immunol. 2021. doi:10.1016/j.jaci.2020.10.012. PMID:33317858.",
+  "dataset_links": [
+    {
+      "said": "SAID221",
+      "study_accession": "GSE158924",
+      "sample_accession": "GSM4815800",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID222",
+      "study_accession": "GSE158924",
+      "sample_accession": "GSM4815801",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID223",
+      "study_accession": "GSE158924",
+      "sample_accession": "GSM4815802",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID224",
+      "study_accession": "GSE158924",
+      "sample_accession": "GSM4815803",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID225",
+      "study_accession": "GSE158924",
+      "sample_accession": "GSM4815804",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID226",
+      "study_accession": "GSE158924",
+      "sample_accession": "GSM4815805",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

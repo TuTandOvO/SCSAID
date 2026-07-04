@@ -19,6 +19,8 @@ Thumbs.db
 # 数据文件（不要进 Git）
 *.csv
 *.tsv
+# Bibliographic registry tables are source metadata, not analysis output.
+!literature/*.tsv
 *.h5ad
 
 # Allow cell count stats CSVs (needed for composition charts)

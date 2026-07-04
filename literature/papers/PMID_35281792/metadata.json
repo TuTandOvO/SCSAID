@@ -1,0 +1,72 @@
+{
+  "paper_id": "PMID_35281792",
+  "pmid": "35281792",
+  "pmcid": "PMC8906448",
+  "doi": "10.1002/mco2.120",
+  "title": "Tyrosine phosphatase SHP2 exacerbates psoriasis-like skin inflammation in mice via ERK5-dependent NETosis.",
+  "authors": [
+    "Yan Ding",
+    "Zijun Ouyang",
+    "Chenyang Zhang",
+    "Yuyu Zhu",
+    "Qiang Xu",
+    "Haiyan Sun",
+    "Jiao Qu",
+    "Yang Sun"
+  ],
+  "journal": "MedComm",
+  "journal_abbreviation": "MedComm (2020)",
+  "publication_date": "2022-Mar",
+  "year": "2022",
+  "volume": "3",
+  "issue": "1",
+  "pages": "e120",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35281792/",
+    "doi": "https://doi.org/10.1002/mco2.120",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8906448/"
+  },
+  "citation": "Yan Ding, Zijun Ouyang, Chenyang Zhang, Yuyu Zhu, Qiang Xu, Haiyan Sun, et al. Tyrosine phosphatase SHP2 exacerbates psoriasis-like skin inflammation in mice via ERK5-dependent NETosis. MedComm (2020). 2022. doi:10.1002/mco2.120. PMID:35281792.",
+  "dataset_links": [
+    {
+      "said": "SAID090",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024746",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID091",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024747",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID092",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024748",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID093",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024749",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID094",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024750",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID095",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024751",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "paper_id": "PMID_37285263",
+  "pmid": "37285263",
+  "pmcid": "PMC10246722",
+  "doi": "10.1093/procel/pwac062",
+  "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+  "authors": [
+    "Qian Zhao",
+    "Yandong Zheng",
+    "Dongxin Zhao",
+    "Liyun Zhao",
+    "Lingling Geng",
+    "Shuai Ma",
+    "Yusheng Cai",
+    "Chengyu Liu",
+    "Yupeng Yan",
+    "Juan Carlos Izpisua Belmonte",
+    "Si Wang",
+    "Weiqi Zhang",
+    "Guang-Hui Liu",
+    "Jing Qu"
+  ],
+  "journal": "Protein & cell",
+  "journal_abbreviation": "Protein Cell",
+  "publication_date": "2023-Jun-07",
+  "year": "2023",
+  "volume": "14",
+  "issue": "6",
+  "pages": "398-415",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37285263/",
+    "doi": "https://doi.org/10.1093/procel/pwac062",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10246722/"
+  },
+  "citation": "Qian Zhao, Yandong Zheng, Dongxin Zhao, Liyun Zhao, Lingling Geng, Shuai Ma, et al. Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration. Protein Cell. 2023. doi:10.1093/procel/pwac062. PMID:37285263.",
+  "dataset_links": [
+    {
+      "said": "SAID103",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703634",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID104",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703635",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID105",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703636",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID106",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703637",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID107",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703638",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID108",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703639",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID109",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703640",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

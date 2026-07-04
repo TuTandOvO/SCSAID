@@ -1,0 +1,53 @@
+{
+  "paper_id": "PMID_30595533",
+  "pmid": "30595533",
+  "pmcid": "PMC6361530",
+  "doi": "10.1016/j.devcel.2018.11.032",
+  "title": "Single-Cell Analysis Reveals a Hair Follicle Dermal Niche Molecular Differentiation Trajectory that Begins Prior to Morphogenesis.",
+  "authors": [
+    "Khusali Gupta",
+    "Jonathan Levinsohn",
+    "George Linderman",
+    "Demeng Chen",
+    "Thomas Yang Sun",
+    "Danni Dong",
+    "M Mark Taketo",
+    "Marcus Bosenberg",
+    "Yuval Kluger",
+    "Keith Choate",
+    "Peggy Myung"
+  ],
+  "journal": "Developmental cell",
+  "journal_abbreviation": "Dev Cell",
+  "publication_date": "2019-Jan-07",
+  "year": "2019",
+  "volume": "48",
+  "issue": "1",
+  "pages": "17-31.e6",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/30595533/",
+    "doi": "https://doi.org/10.1016/j.devcel.2018.11.032",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6361530/"
+  },
+  "citation": "Khusali Gupta, Jonathan Levinsohn, George Linderman, Demeng Chen, Thomas Yang Sun, Danni Dong, et al. Single-Cell Analysis Reveals a Hair Follicle Dermal Niche Molecular Differentiation Trajectory that Begins Prior to Morphogenesis. Dev Cell. 2019. doi:10.1016/j.devcel.2018.11.032. PMID:30595533.",
+  "dataset_links": [
+    {
+      "said": "SAID056",
+      "study_accession": "GSE122043",
+      "sample_accession": "GSM3453536",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID057",
+      "study_accession": "GSE122043",
+      "sample_accession": "GSM3453538",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

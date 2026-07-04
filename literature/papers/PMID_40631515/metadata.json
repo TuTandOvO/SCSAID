@@ -1,0 +1,73 @@
+{
+  "paper_id": "PMID_40631515",
+  "pmid": "40631515",
+  "pmcid": "PMC12243901",
+  "doi": "10.1080/2162402X.2025.2528110",
+  "title": "An SNP-dependent cancer-testis antigenic epitope serves as a promising immunotherapeutic target for cancer.",
+  "authors": [
+    "Kenji Murata",
+    "Tomoyuki Minowa",
+    "Tomohide Tsukahara",
+    "Taku Yoshida",
+    "Akiko Minami",
+    "Munehide Nakatsugawa",
+    "Yuka Mizue",
+    "Aiko Murai",
+    "Serina Tokita",
+    "Kenta Sasaki",
+    "Hisashi Uhara",
+    "Terufumi Kubo",
+    "Takayuki Kanaseki",
+    "Toshihiko Torigoe",
+    "Yoshihiko Hirohashi"
+  ],
+  "journal": "Oncoimmunology",
+  "journal_abbreviation": "Oncoimmunology",
+  "publication_date": "2025-Dec",
+  "year": "2025",
+  "volume": "14",
+  "issue": "1",
+  "pages": "2528110",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40631515/",
+    "doi": "https://doi.org/10.1080/2162402X.2025.2528110",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12243901/"
+  },
+  "citation": "Kenji Murata, Tomoyuki Minowa, Tomohide Tsukahara, Taku Yoshida, Akiko Minami, Munehide Nakatsugawa, et al. An SNP-dependent cancer-testis antigenic epitope serves as a promising immunotherapeutic target for cancer. Oncoimmunology. 2025. doi:10.1080/2162402X.2025.2528110. PMID:40631515.",
+  "dataset_links": [
+    {
+      "said": "SAID136",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764406",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID137",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764408",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID138",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764410",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID139",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764411",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID140",
+      "study_accession": "GSE242477",
+      "sample_accession": "GSM7764412",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "paper_id": "PMID_35464471",
+  "pmid": "35464471",
+  "pmcid": "PMC9021607",
+  "doi": "10.3389/fimmu.2022.856363",
+  "title": "Deconvolution of Adult T-Cell Leukemia/Lymphoma With Single-Cell RNA-Seq Using Frozen Archived Skin Tissue Reveals New Subset of Cancer-Associated Fibroblast.",
+  "authors": [
+    "Eun-Hye Joo",
+    "Jai Hee Bae",
+    "Jihye Park",
+    "Yoon Ji Bang",
+    "Joseph Han",
+    "Nicholas Gulati",
+    "Jong-Il Kim",
+    "Chung-Gyu Park",
+    "Woong-Yang Park",
+    "Hyun Je Kim"
+  ],
+  "journal": "Frontiers in immunology",
+  "journal_abbreviation": "Front Immunol",
+  "publication_date": "2022",
+  "year": "2022",
+  "volume": "13",
+  "issue": "",
+  "pages": "856363",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35464471/",
+    "doi": "https://doi.org/10.3389/fimmu.2022.856363",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9021607/"
+  },
+  "citation": "Eun-Hye Joo, Jai Hee Bae, Jihye Park, Yoon Ji Bang, Joseph Han, Nicholas Gulati, et al. Deconvolution of Adult T-Cell Leukemia/Lymphoma With Single-Cell RNA-Seq Using Frozen Archived Skin Tissue Reveals New Subset of Cancer-Associated Fibroblast. Front Immunol. 2022. doi:10.3389/fimmu.2022.856363. PMID:35464471.",
+  "dataset_links": [
+    {
+      "said": "SAID165",
+      "study_accession": "GSE195674",
+      "sample_accession": "GSM5847946",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

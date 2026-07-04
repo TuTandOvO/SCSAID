@@ -1,0 +1,78 @@
+{
+  "paper_id": "PMID_34936223",
+  "pmid": "34936223",
+  "pmcid": "PMC8899919",
+  "doi": "10.15252/emmm.202114455",
+  "title": "Allosteric inhibition of SHP2 uncovers aberrant TLR7 trafficking in aggravating psoriasis.",
+  "authors": [
+    "Yuyu Zhu",
+    "Zhigui Wu",
+    "Wei Yan",
+    "Fenli Shao",
+    "Bowen Ke",
+    "Xian Jiang",
+    "Jian Gao",
+    "Wenjie Guo",
+    "Yuping Lai",
+    "Hongyue Ma",
+    "Dijun Chen",
+    "Qiang Xu",
+    "Yang Sun"
+  ],
+  "journal": "EMBO molecular medicine",
+  "journal_abbreviation": "EMBO Mol Med",
+  "publication_date": "2022-Mar-07",
+  "year": "2022",
+  "volume": "14",
+  "issue": "3",
+  "pages": "e14455",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/34936223/",
+    "doi": "https://doi.org/10.15252/emmm.202114455",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8899919/"
+  },
+  "citation": "Yuyu Zhu, Zhigui Wu, Wei Yan, Fenli Shao, Bowen Ke, Xian Jiang, et al. Allosteric inhibition of SHP2 uncovers aberrant TLR7 trafficking in aggravating psoriasis. EMBO Mol Med. 2022. doi:10.15252/emmm.202114455. PMID:34936223.",
+  "dataset_links": [
+    {
+      "said": "SAID090",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024746",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID091",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024747",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID092",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024748",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID093",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024749",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID094",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024750",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID095",
+      "study_accession": "GSE165021",
+      "sample_accession": "GSM5024751",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

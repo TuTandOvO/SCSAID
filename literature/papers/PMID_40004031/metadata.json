@@ -1,0 +1,53 @@
+{
+  "paper_id": "PMID_40004031",
+  "pmid": "40004031",
+  "pmcid": "PMC11855397",
+  "doi": "10.3390/ijms26041565",
+  "title": "The Involvement of RIPK1 in Alopecia Areata.",
+  "authors": [
+    "Hyunju Kim",
+    "Mei Zheng",
+    "Seungchan An",
+    "In Guk Park",
+    "Leegu Song",
+    "Minsoo Noh",
+    "Jong-Hyuk Sung"
+  ],
+  "journal": "International journal of molecular sciences",
+  "journal_abbreviation": "Int J Mol Sci",
+  "publication_date": "2025-Feb-13",
+  "year": "2025",
+  "volume": "26",
+  "issue": "4",
+  "pages": "1565",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40004031/",
+    "doi": "https://doi.org/10.3390/ijms26041565",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11855397/"
+  },
+  "citation": "Hyunju Kim, Mei Zheng, Seungchan An, In Guk Park, Leegu Song, Minsoo Noh, et al. The Involvement of RIPK1 in Alopecia Areata. Int J Mol Sci. 2025. doi:10.3390/ijms26041565. PMID:40004031.",
+  "dataset_links": [
+    {
+      "said": "SAID001",
+      "study_accession": "GSE269455",
+      "sample_accession": "GSM8316001",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID002",
+      "study_accession": "GSE269455",
+      "sample_accession": "GSM8316002",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID003",
+      "study_accession": "GSE269455",
+      "sample_accession": "GSM8316003",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

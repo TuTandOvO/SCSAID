@@ -1,0 +1,142 @@
+{
+  "paper_id": "PMID_40766141",
+  "pmid": "40766141",
+  "pmcid": "PMC12324615",
+  "doi": "10.1101/2025.07.25.25332168",
+  "title": "The polygenic architecture of hidradenitis suppurativa reveals signaling mechanisms that implicate epithelial remodeling.",
+  "authors": [
+    "Atlas Khan",
+    "Poppy A Gould",
+    "Yiming Luo",
+    "Errol P Prens",
+    "Lee Wheless",
+    "Adriana M Hung",
+    "VA Million Veteran Program",
+    "Theodore G Drivas",
+    "Marylyn D Ritchie",
+    "Amir Hossein Saeidian",
+    "Hákon Hákonarson",
+    "Michael March",
+    "Nick Dand",
+    "Jonathan Barker",
+    "Michael Simpson",
+    "Jake Saklatvala",
+    "Xinyi Du-Harpur",
+    "Shahir Farnood",
+    "Raymond Chung",
+    "Charles J Curtis",
+    "Sang Hyuck Lee",
+    "Brian Kirby",
+    "Maris Teder-Laving",
+    "Külli Kingo",
+    "Estonian Biobank research team",
+    "Laurent F Thomas",
+    "Mari Løset",
+    "Ben Michael Brumpton",
+    "Kristian Hveem",
+    "M Geoffrey Hayes",
+    "John Connolly",
+    "Frank Mentch",
+    "Patrick Sleiman",
+    "Kathleen LaRow Brown",
+    "Nicholas Tatonetti",
+    "Olivia D Perez",
+    "Alice Braun",
+    "Stephan Ripke",
+    "Sadhana Gaddam",
+    "Anthony Oro",
+    "Leah C Redmond",
+    "Claire Higgins",
+    "Meng-Ju Lin",
+    "Ernest S Chiu",
+    "Catherine P Lu",
+    "George Hripcsak",
+    "Chunhua Weng",
+    "Krzysztof Kiryluk",
+    "Lam C Tsoi",
+    "Johann E Gudjonsson",
+    "Kelsey R van Straalen",
+    "Joshua D Milner",
+    "Lynn Petukhova"
+  ],
+  "journal": "medRxiv : the preprint server for health sciences",
+  "journal_abbreviation": "medRxiv",
+  "publication_date": "2025-Jul-28",
+  "year": "2025",
+  "volume": "",
+  "issue": "",
+  "pages": "2025.07.25.25332168",
+  "publication_types": [
+    "Journal Article",
+    "Preprint"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40766141/",
+    "doi": "https://doi.org/10.1101/2025.07.25.25332168",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12324615/"
+  },
+  "citation": "Atlas Khan, Poppy A Gould, Yiming Luo, Errol P Prens, Lee Wheless, Adriana M Hung, et al. The polygenic architecture of hidradenitis suppurativa reveals signaling mechanisms that implicate epithelial remodeling. medRxiv. 2025. doi:10.1101/2025.07.25.25332168. PMID:40766141.",
+  "dataset_links": [
+    {
+      "said": "SAID235",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532919",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID236",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532920",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID237",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532921",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID238",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532922",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID239",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532923",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID240",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532924",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID241",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532925",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID242",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532926",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID243",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532927",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID244",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532928",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

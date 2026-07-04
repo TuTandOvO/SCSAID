@@ -1,0 +1,59 @@
+{
+  "paper_id": "PMID_39558136",
+  "pmid": "39558136",
+  "pmcid": "PMC11724056",
+  "doi": "10.1038/s44319-024-00322-3",
+  "title": "Novel integrated multiomics analysis reveals a key role for integrin beta-like 1 in wound scarring.",
+  "authors": [
+    "Sang-Eun Kim",
+    "Ryota Noda",
+    "Yu-Chen Liu",
+    "Yukari Nakajima",
+    "Shoichiro Kameoka",
+    "Daisuke Motooka",
+    "Seiya Mizuno",
+    "Satoru Takahashi",
+    "Kento Takaya",
+    "Takehiko Murase",
+    "Kazuya Ikematsu",
+    "Katsiaryna Tratsiakova",
+    "Takahiro Motoyama",
+    "Masahiro Nakashima",
+    "Kazuo Kishi",
+    "Paul Martin",
+    "Shigeto Seno",
+    "Daisuke Okuzaki",
+    "Ryoichi Mori"
+  ],
+  "journal": "EMBO reports",
+  "journal_abbreviation": "EMBO Rep",
+  "publication_date": "2025-Jan",
+  "year": "2025",
+  "volume": "26",
+  "issue": "1",
+  "pages": "122-152",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39558136/",
+    "doi": "https://doi.org/10.1038/s44319-024-00322-3",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11724056/"
+  },
+  "citation": "Sang-Eun Kim, Ryota Noda, Yu-Chen Liu, Yukari Nakajima, Shoichiro Kameoka, Daisuke Motooka, et al. Novel integrated multiomics analysis reveals a key role for integrin beta-like 1 in wound scarring. EMBO Rep. 2025. doi:10.1038/s44319-024-00322-3. PMID:39558136.",
+  "dataset_links": [
+    {
+      "said": "SAID008",
+      "study_accession": "GSE234269",
+      "sample_accession": "GSM7461430",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID009",
+      "study_accession": "GSE234269",
+      "sample_accession": "GSM7461431",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "paper_id": "PMID_38613320",
+  "pmid": "38613320",
+  "pmcid": "PMC11178447",
+  "doi": "10.1111/pcmr.13169",
+  "title": "Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing.",
+  "authors": [
+    "Joseph W Palmer",
+    "Nilesh Kumar",
+    "Luye An",
+    "Andrew C White",
+    "M Shahid Mukhtar",
+    "Melissa L Harris"
+  ],
+  "journal": "Pigment cell & melanoma research",
+  "journal_abbreviation": "Pigment Cell Melanoma Res",
+  "publication_date": "2024-Jul",
+  "year": "2024",
+  "volume": "37",
+  "issue": "4",
+  "pages": "480-495",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, U.S. Gov't, Non-P.H.S."
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38613320/",
+    "doi": "https://doi.org/10.1111/pcmr.13169",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11178447/"
+  },
+  "citation": "Joseph W Palmer, Nilesh Kumar, Luye An, Andrew C White, M Shahid Mukhtar, Melissa L Harris. Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing. Pigment Cell Melanoma Res. 2024. doi:10.1111/pcmr.13169. PMID:38613320.",
+  "dataset_links": [
+    {
+      "said": "SAID004",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138118",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID005",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138119",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID006",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138120",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID007",
+      "study_accession": "GSE261227",
+      "sample_accession": "GSM8138121",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

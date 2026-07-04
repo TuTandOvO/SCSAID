@@ -1,0 +1,69 @@
+{
+  "paper_id": "PMID_40391738",
+  "pmid": "40391738",
+  "pmcid": "PMC12578280",
+  "doi": "10.1093/procel/pwaf035",
+  "title": "Correction to: Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+  "authors": [],
+  "journal": "Protein & cell",
+  "journal_abbreviation": "Protein Cell",
+  "publication_date": "2025-Oct-31",
+  "year": "2025",
+  "volume": "16",
+  "issue": "10",
+  "pages": "916",
+  "publication_types": [
+    "Published Erratum"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/40391738/",
+    "doi": "https://doi.org/10.1093/procel/pwaf035",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12578280/"
+  },
+  "citation": "Correction to: Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration. Protein Cell. 2025. doi:10.1093/procel/pwaf035. PMID:40391738.",
+  "dataset_links": [
+    {
+      "said": "SAID103",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703634",
+      "relation": "correction"
+    },
+    {
+      "said": "SAID104",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703635",
+      "relation": "correction"
+    },
+    {
+      "said": "SAID105",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703636",
+      "relation": "correction"
+    },
+    {
+      "said": "SAID106",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703637",
+      "relation": "correction"
+    },
+    {
+      "said": "SAID107",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703638",
+      "relation": "correction"
+    },
+    {
+      "said": "SAID108",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703639",
+      "relation": "correction"
+    },
+    {
+      "said": "SAID109",
+      "study_accession": "CRA006512",
+      "sample_accession": "SAMC703640",
+      "relation": "correction"
+    }
+  ]
+}

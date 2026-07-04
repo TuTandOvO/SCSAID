@@ -1,0 +1,52 @@
+{
+  "paper_id": "PMID_38242738",
+  "pmid": "38242738",
+  "pmcid": "",
+  "doi": "10.1016/j.jdermsci.2023.12.007",
+  "title": "Transcriptome network analysis of inflammation and fibrosis in keloids.",
+  "authors": [
+    "Jiayi Mao",
+    "Lu Chen",
+    "Shutong Qian",
+    "Yuhuan Wang",
+    "Binfan Zhao",
+    "Qiuyu Zhao",
+    "Bolun Lu",
+    "Xiyuan Mao",
+    "Peisong Zhai",
+    "Yuguang Zhang",
+    "Liucheng Zhang",
+    "Xiaoming Sun"
+  ],
+  "journal": "Journal of dermatological science",
+  "journal_abbreviation": "J Dermatol Sci",
+  "publication_date": "2024-Feb",
+  "year": "2024",
+  "volume": "113",
+  "issue": "2",
+  "pages": "62-73",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38242738/",
+    "doi": "https://doi.org/10.1016/j.jdermsci.2023.12.007",
+    "pmc": ""
+  },
+  "citation": "Jiayi Mao, Lu Chen, Shutong Qian, Yuhuan Wang, Binfan Zhao, Qiuyu Zhao, et al. Transcriptome network analysis of inflammation and fibrosis in keloids. J Dermatol Sci. 2024. doi:10.1016/j.jdermsci.2023.12.007. PMID:38242738.",
+  "dataset_links": [
+    {
+      "said": "SAID166",
+      "study_accession": "GSE237754",
+      "sample_accession": "GSM7648532",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID167",
+      "study_accession": "GSE237754",
+      "sample_accession": "GSM7648533",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

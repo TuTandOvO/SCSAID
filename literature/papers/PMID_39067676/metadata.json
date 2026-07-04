@@ -1,0 +1,93 @@
+{
+  "paper_id": "PMID_39067676",
+  "pmid": "39067676",
+  "pmcid": "",
+  "doi": "10.1016/j.clim.2024.110328",
+  "title": "IL-17A/F double producing T cells, unstable Tregs and quiescent TRMs in clinically healed lesions are potential cellular candidates for recurrence of psoriasis.",
+  "authors": [
+    "Lu Peng",
+    "Wenqi Liu",
+    "Yufan Cheng",
+    "Ling Chen",
+    "Zhu Shen"
+  ],
+  "journal": "Clinical immunology (Orlando, Fla.)",
+  "journal_abbreviation": "Clin Immunol",
+  "publication_date": "2024-Sep",
+  "year": "2024",
+  "volume": "266",
+  "issue": "",
+  "pages": "110328",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39067676/",
+    "doi": "https://doi.org/10.1016/j.clim.2024.110328",
+    "pmc": ""
+  },
+  "citation": "Lu Peng, Wenqi Liu, Yufan Cheng, Ling Chen, Zhu Shen. IL-17A/F double producing T cells, unstable Tregs and quiescent TRMs in clinically healed lesions are potential cellular candidates for recurrence of psoriasis. Clin Immunol. 2024. doi:10.1016/j.clim.2024.110328. PMID:39067676.",
+  "dataset_links": [
+    {
+      "said": "SAID170",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906167",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID171",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906168",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID172",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906169",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID173",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906170",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID174",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906171",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID175",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906172",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID176",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906173",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID177",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906174",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID178",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906175",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID179",
+      "study_accession": "GSE248121",
+      "sample_accession": "GSM7906176",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

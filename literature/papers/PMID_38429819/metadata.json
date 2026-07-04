@@ -1,0 +1,56 @@
+{
+  "paper_id": "PMID_38429819",
+  "pmid": "38429819",
+  "pmcid": "PMC10905932",
+  "doi": "10.1186/s13020-024-00907-z",
+  "title": "Traditional Chinese Medicine Shi-Bi-Man ameliorates psoriasis via inhibiting IL-23/Th17 axis and CXCL16-mediated endothelial activation.",
+  "authors": [
+    "Chenyang Zhang",
+    "Xinran Cao",
+    "Lixin Zhao",
+    "Zitong Ni",
+    "Haojie Du",
+    "Jiao Qu",
+    "Jianxia Zhu",
+    "Haiyan Sun",
+    "Yang Sun",
+    "Zijun Ouyang"
+  ],
+  "journal": "Chinese medicine",
+  "journal_abbreviation": "Chin Med",
+  "publication_date": "2024-Mar-01",
+  "year": "2024",
+  "volume": "19",
+  "issue": "1",
+  "pages": "38",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38429819/",
+    "doi": "https://doi.org/10.1186/s13020-024-00907-z",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10905932/"
+  },
+  "citation": "Chenyang Zhang, Xinran Cao, Lixin Zhao, Zitong Ni, Haojie Du, Jiao Qu, et al. Traditional Chinese Medicine Shi-Bi-Man ameliorates psoriasis via inhibiting IL-23/Th17 axis and CXCL16-mediated endothelial activation. Chin Med. 2024. doi:10.1186/s13020-024-00907-z. PMID:38429819.",
+  "dataset_links": [
+    {
+      "said": "SAID040",
+      "study_accession": "GSE196677",
+      "sample_accession": "GSM5898068",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID041",
+      "study_accession": "GSE196677",
+      "sample_accession": "GSM5898069",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID042",
+      "study_accession": "GSE196677",
+      "sample_accession": "GSM5898070",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

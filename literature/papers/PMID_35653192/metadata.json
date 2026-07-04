@@ -1,0 +1,83 @@
+{
+  "paper_id": "PMID_35653192",
+  "pmid": "35653192",
+  "pmcid": "PMC9310536",
+  "doi": "10.1172/jci.insight.154585",
+  "title": "Multimodal analyses of vitiligo skin identify tissue characteristics of stable disease.",
+  "authors": [
+    "Jessica Shiu",
+    "Lihua Zhang",
+    "Griffin Lentsch",
+    "Jessica L Flesher",
+    "Suoqin Jin",
+    "Christopher Polleys",
+    "Seong Jin Jo",
+    "Craig Mizzoni",
+    "Pezhman Mobasher",
+    "Jasmine Kwan",
+    "Francisca Rius-Diaz",
+    "Bruce J Tromberg",
+    "Irene Georgakoudi",
+    "Qing Nie",
+    "Mihaela Balu",
+    "Anand K Ganesan"
+  ],
+  "journal": "JCI insight",
+  "journal_abbreviation": "JCI Insight",
+  "publication_date": "2022-Jul-08",
+  "year": "2022",
+  "volume": "7",
+  "issue": "13",
+  "pages": "e154585",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, U.S. Gov't, Non-P.H.S.",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35653192/",
+    "doi": "https://doi.org/10.1172/jci.insight.154585",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9310536/"
+  },
+  "citation": "Jessica Shiu, Lihua Zhang, Griffin Lentsch, Jessica L Flesher, Suoqin Jin, Christopher Polleys, et al. Multimodal analyses of vitiligo skin identify tissue characteristics of stable disease. JCI Insight. 2022. doi:10.1172/jci.insight.154585. PMID:35653192.",
+  "dataset_links": [
+    {
+      "said": "SAID215",
+      "study_accession": "GSE203262",
+      "sample_accession": "GSM6165459",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID216",
+      "study_accession": "GSE203262",
+      "sample_accession": "GSM6165460",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID217",
+      "study_accession": "GSE203262",
+      "sample_accession": "GSM6165462",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID218",
+      "study_accession": "GSE203262",
+      "sample_accession": "GSM6165463",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID219",
+      "study_accession": "GSE203262",
+      "sample_accession": "GSM6165464",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID220",
+      "study_accession": "GSE203262",
+      "sample_accession": "GSM6165465",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

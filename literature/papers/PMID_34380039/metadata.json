@@ -1,0 +1,45 @@
+{
+  "paper_id": "PMID_34380039",
+  "pmid": "34380039",
+  "pmcid": "",
+  "doi": "10.1016/j.celrep.2021.109524",
+  "title": "Single-cell transcriptome analysis reveals the dynamics of human immune cells during early fetal skin development.",
+  "authors": [
+    "Yingping Xu",
+    "Jun Zhang",
+    "Yongfei Hu",
+    "Xuefei Li",
+    "Lihua Sun",
+    "Yu Peng",
+    "Yuzhe Sun",
+    "Bing Liu",
+    "Zhilei Bian",
+    "Zhili Rong"
+  ],
+  "journal": "Cell reports",
+  "journal_abbreviation": "Cell Rep",
+  "publication_date": "2021-Aug-10",
+  "year": "2021",
+  "volume": "36",
+  "issue": "6",
+  "pages": "109524",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/34380039/",
+    "doi": "https://doi.org/10.1016/j.celrep.2021.109524",
+    "pmc": ""
+  },
+  "citation": "Yingping Xu, Jun Zhang, Yongfei Hu, Xuefei Li, Lihua Sun, Yu Peng, et al. Single-cell transcriptome analysis reveals the dynamics of human immune cells during early fetal skin development. Cell Rep. 2021. doi:10.1016/j.celrep.2021.109524. PMID:34380039.",
+  "dataset_links": [
+    {
+      "said": "SAID131",
+      "study_accession": "GSE179565",
+      "sample_accession": "GSM5420670",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

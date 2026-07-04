@@ -1,0 +1,51 @@
+{
+  "paper_id": "PMID_39163475",
+  "pmid": "39163475",
+  "pmcid": "PMC11364419",
+  "doi": "10.1371/journal.pbio.3002776",
+  "title": "Distinct melanocyte subpopulations defined by stochastic expression of proliferation or maturation programs enable a rapid and sustainable pigmentation response.",
+  "authors": [
+    "Ayush Aggarwal",
+    "Ayesha Nasreen",
+    "Babita Sharma",
+    "Sarthak Sahoo",
+    "Keerthic Aswin",
+    "Mohammed Faruq",
+    "Rajesh Pandey",
+    "Mohit K Jolly",
+    "Abhyudai Singh",
+    "Rajesh S Gokhale",
+    "Vivek T Natarajan"
+  ],
+  "journal": "PLoS biology",
+  "journal_abbreviation": "PLoS Biol",
+  "publication_date": "2024-Aug",
+  "year": "2024",
+  "volume": "22",
+  "issue": "8",
+  "pages": "e3002776",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/39163475/",
+    "doi": "https://doi.org/10.1371/journal.pbio.3002776",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11364419/"
+  },
+  "citation": "Ayush Aggarwal, Ayesha Nasreen, Babita Sharma, Sarthak Sahoo, Keerthic Aswin, Mohammed Faruq, et al. Distinct melanocyte subpopulations defined by stochastic expression of proliferation or maturation programs enable a rapid and sustainable pigmentation response. PLoS Biol. 2024. doi:10.1371/journal.pbio.3002776. PMID:39163475.",
+  "dataset_links": [
+    {
+      "said": "SAID192",
+      "study_accession": "GSE233137",
+      "sample_accession": "GSM7401927",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID193",
+      "study_accession": "GSE233137",
+      "sample_accession": "GSM7401928",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "paper_id": "PMID_37500727",
+  "pmid": "37500727",
+  "pmcid": "PMC11190942",
+  "doi": "10.1038/s41588-023-01445-4",
+  "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+  "authors": [
+    "Benjamin Ober-Reynolds",
+    "Chen Wang",
+    "Justin M Ko",
+    "Eon J Rios",
+    "Sumaira Z Aasi",
+    "Mark M Davis",
+    "Anthony E Oro",
+    "William J Greenleaf"
+  ],
+  "journal": "Nature genetics",
+  "journal_abbreviation": "Nat Genet",
+  "publication_date": "2023-Aug",
+  "year": "2023",
+  "volume": "55",
+  "issue": "8",
+  "pages": "1288-1300",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37500727/",
+    "doi": "https://doi.org/10.1038/s41588-023-01445-4",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11190942/"
+  },
+  "citation": "Benjamin Ober-Reynolds, Chen Wang, Justin M Ko, Eon J Rios, Sumaira Z Aasi, Mark M Davis, et al. Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases. Nat Genet. 2023. doi:10.1038/s41588-023-01445-4. PMID:37500727.",
+  "dataset_links": [
+    {
+      "said": "SAID235",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532919",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID236",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532920",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID237",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532921",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID238",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532922",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID239",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532923",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID240",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532924",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID241",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532925",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID242",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532926",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID243",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532927",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID244",
+      "study_accession": "GSE212447",
+      "sample_accession": "GSM6532928",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

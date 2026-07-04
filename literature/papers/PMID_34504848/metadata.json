@@ -1,0 +1,67 @@
+{
+  "paper_id": "PMID_34504848",
+  "pmid": "34504848",
+  "pmcid": "PMC8421606",
+  "doi": "10.3389/fmed.2021.665873",
+  "title": "Single-Cell RNA Sequencing Reveals Cellular and Transcriptional Changes Associated With M1 Macrophage Polarization in Hidradenitis Suppurativa.",
+  "authors": [
+    "Paula Mariottoni",
+    "Simon W Jiang",
+    "Courtney A Prestwood",
+    "Vaibhav Jain",
+    "Jutamas Suwanpradid",
+    "Melodi Javid Whitley",
+    "Margaret Coates",
+    "David A Brown",
+    "Detlev Erdmann",
+    "David L Corcoran",
+    "Simon G Gregory",
+    "Tarannum Jaleel",
+    "Jennifer Y Zhang",
+    "Tamia A Harris-Tryon",
+    "Amanda S MacLeod"
+  ],
+  "journal": "Frontiers in medicine",
+  "journal_abbreviation": "Front Med (Lausanne)",
+  "publication_date": "2021",
+  "year": "2021",
+  "volume": "8",
+  "issue": "",
+  "pages": "665873",
+  "publication_types": [
+    "Journal Article"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/34504848/",
+    "doi": "https://doi.org/10.3389/fmed.2021.665873",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8421606/"
+  },
+  "citation": "Paula Mariottoni, Simon W Jiang, Courtney A Prestwood, Vaibhav Jain, Jutamas Suwanpradid, Melodi Javid Whitley, et al. Single-Cell RNA Sequencing Reveals Cellular and Transcriptional Changes Associated With M1 Macrophage Polarization in Hidradenitis Suppurativa. Front Med (Lausanne). 2021. doi:10.3389/fmed.2021.665873. PMID:34504848.",
+  "dataset_links": [
+    {
+      "said": "SAID127",
+      "study_accession": "GSE175990",
+      "sample_accession": "GSM5352392",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID128",
+      "study_accession": "GSE175990",
+      "sample_accession": "GSM5352393",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID129",
+      "study_accession": "GSE175990",
+      "sample_accession": "GSM5352394",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID130",
+      "study_accession": "GSE175990",
+      "sample_accession": "GSM5352395",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

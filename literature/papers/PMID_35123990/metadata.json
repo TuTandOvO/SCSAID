@@ -1,0 +1,43 @@
+{
+  "paper_id": "PMID_35123990",
+  "pmid": "35123990",
+  "pmcid": "",
+  "doi": "10.1016/j.jid.2022.01.017",
+  "title": "Integrated Analysis of Single-Cell and Spatial Transcriptomics in Keloids: Highlights on Fibrovascular Interactions in Keloid Pathogenesis.",
+  "authors": [
+    "Joonho Shim",
+    "Se Jin Oh",
+    "Eunhye Yeo",
+    "Ji Hye Park",
+    "Jai Hee Bae",
+    "Seok-Hyung Kim",
+    "Dongyoun Lee",
+    "Jong Hee Lee"
+  ],
+  "journal": "The Journal of investigative dermatology",
+  "journal_abbreviation": "J Invest Dermatol",
+  "publication_date": "2022-Aug",
+  "year": "2022",
+  "volume": "142",
+  "issue": "8",
+  "pages": "2128-2139.e11",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35123990/",
+    "doi": "https://doi.org/10.1016/j.jid.2022.01.017",
+    "pmc": ""
+  },
+  "citation": "Joonho Shim, Se Jin Oh, Eunhye Yeo, Ji Hye Park, Jai Hee Bae, Seok-Hyung Kim, et al. Integrated Analysis of Single-Cell and Spatial Transcriptomics in Keloids: Highlights on Fibrovascular Interactions in Keloid Pathogenesis. J Invest Dermatol. 2022. doi:10.1016/j.jid.2022.01.017. PMID:35123990.",
+  "dataset_links": [
+    {
+      "said": "SAID227",
+      "study_accession": "GSE181297",
+      "sample_accession": "GSM5494438",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

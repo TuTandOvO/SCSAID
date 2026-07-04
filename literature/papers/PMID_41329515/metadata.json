@@ -1,0 +1,90 @@
+{
+  "paper_id": "PMID_41329515",
+  "pmid": "41329515",
+  "pmcid": "PMC12867132",
+  "doi": "10.1172/JCI188827",
+  "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+  "authors": [
+    "Lu Zhang",
+    "Zhichun Tang",
+    "Yi Zhang",
+    "Wenjie Liu",
+    "Haitao Jiang",
+    "Li Yu",
+    "Kexin Lei",
+    "Yubo Ma",
+    "Yang-Xin Fu",
+    "Ruoyu Li",
+    "Wenyan Wang",
+    "Fan Bai",
+    "Xiaowen Wang"
+  ],
+  "journal": "The Journal of clinical investigation",
+  "journal_abbreviation": "J Clin Invest",
+  "publication_date": "2026-Feb-02",
+  "year": "2026",
+  "volume": "136",
+  "issue": "3",
+  "pages": "e188827",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/41329515/",
+    "doi": "https://doi.org/10.1172/JCI188827",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12867132/"
+  },
+  "citation": "Lu Zhang, Zhichun Tang, Yi Zhang, Wenjie Liu, Haitao Jiang, Li Yu, et al. CARD9-dependent macrophage plasticity regulates effective fungal clearance. J Clin Invest. 2026. doi:10.1172/JCI188827. PMID:41329515.",
+  "dataset_links": [
+    {
+      "said": "SAID112",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773650",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID113",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773651",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID114",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773652",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID115",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773653",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID116",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773654",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID117",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773655",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID118",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773656",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID119",
+      "study_accession": "CRA028974",
+      "sample_accession": "SAMC5773657",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

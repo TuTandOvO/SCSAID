@@ -1,0 +1,91 @@
+{
+  "paper_id": "PMID_34274346",
+  "pmid": "34274346",
+  "pmcid": "",
+  "doi": "10.1016/j.jid.2021.05.030",
+  "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+  "authors": [
+    "Ross Dobie",
+    "Chris C West",
+    "Beth E P Henderson",
+    "John R Wilson-Kanamori",
+    "Dyana Markose",
+    "Laura J Kitto",
+    "Jordan R Portman",
+    "Mariana Beltran",
+    "Sadaf Sohrabi",
+    "Ahsan R Akram",
+    "Prakash Ramachandran",
+    "Li Yenn Yong",
+    "Dominique Davidson",
+    "Neil C Henderson"
+  ],
+  "journal": "The Journal of investigative dermatology",
+  "journal_abbreviation": "J Invest Dermatol",
+  "publication_date": "2022-Jan",
+  "year": "2022",
+  "volume": "142",
+  "issue": "1",
+  "pages": "114-123.e8",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/34274346/",
+    "doi": "https://doi.org/10.1016/j.jid.2021.05.030",
+    "pmc": ""
+  },
+  "citation": "Ross Dobie, Chris C West, Beth E P Henderson, John R Wilson-Kanamori, Dyana Markose, Laura J Kitto, et al. Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level. J Invest Dermatol. 2022. doi:10.1016/j.jid.2021.05.030. PMID:34274346.",
+  "dataset_links": [
+    {
+      "said": "SAID245",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264341",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID246",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264342",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID247",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264344",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID248",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264345",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID249",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264346",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID250",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264347",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID251",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264348",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID252",
+      "study_accession": "GSE173252",
+      "sample_accession": "GSM5264349",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

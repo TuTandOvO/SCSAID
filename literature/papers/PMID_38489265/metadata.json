@@ -1,0 +1,119 @@
+{
+  "paper_id": "PMID_38489265",
+  "pmid": "38489265",
+  "pmcid": "PMC11008285",
+  "doi": "10.1016/j.celrep.2024.113944",
+  "title": "Translational genetics identifies a phosphorylation switch in CARD9 required for innate inflammatory responses.",
+  "authors": [
+    "Marta Brandt",
+    "Zhifang Cao",
+    "Chirag Krishna",
+    "Jennifer L Reedy",
+    "Xiebin Gu",
+    "Richard A Dutko",
+    "Blayne A Oliver",
+    "Betsabeh Khoramian Tusi",
+    "Jihye Park",
+    "Lauren Richey",
+    "Åsa Segerstolpe",
+    "Scott Litwiler",
+    "Elizabeth A Creasey",
+    "Kimberly L Carey",
+    "Jatin M Vyas",
+    "Daniel B Graham",
+    "Ramnik J Xavier"
+  ],
+  "journal": "Cell reports",
+  "journal_abbreviation": "Cell Rep",
+  "publication_date": "2024-Mar-26",
+  "year": "2024",
+  "volume": "43",
+  "issue": "3",
+  "pages": "113944",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/38489265/",
+    "doi": "https://doi.org/10.1016/j.celrep.2024.113944",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11008285/"
+  },
+  "citation": "Marta Brandt, Zhifang Cao, Chirag Krishna, Jennifer L Reedy, Xiebin Gu, Richard A Dutko, et al. Translational genetics identifies a phosphorylation switch in CARD9 required for innate inflammatory responses. Cell Rep. 2024. doi:10.1016/j.celrep.2024.113944. PMID:38489265.",
+  "dataset_links": [
+    {
+      "said": "SAID026",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423811",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID027",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423812",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID028",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423813",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID029",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423814",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID030",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423815",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID031",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423816",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID032",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423817",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID033",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423818",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID034",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423819",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID035",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423820",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID036",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423821",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID037",
+      "study_accession": "GSE210224",
+      "sample_accession": "GSM6423822",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "paper_id": "PMID_37699906",
+  "pmid": "37699906",
+  "pmcid": "PMC10497554",
+  "doi": "10.1038/s41467-023-40761-5",
+  "title": "Alk1 acts in non-endothelial VE-cadherin+ perineurial cells to maintain nerve branching during hair homeostasis.",
+  "authors": [
+    "Gopal Chovatiya",
+    "Kefei Nina Li",
+    "Jonathan Li",
+    "Sangeeta Ghuwalewala",
+    "Tudorita Tumbar"
+  ],
+  "journal": "Nature communications",
+  "journal_abbreviation": "Nat Commun",
+  "publication_date": "2023-Sep-12",
+  "year": "2023",
+  "volume": "14",
+  "issue": "1",
+  "pages": "5623",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, N.I.H., Extramural",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/37699906/",
+    "doi": "https://doi.org/10.1038/s41467-023-40761-5",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10497554/"
+  },
+  "citation": "Gopal Chovatiya, Kefei Nina Li, Jonathan Li, Sangeeta Ghuwalewala, Tudorita Tumbar. Alk1 acts in non-endothelial VE-cadherin+ perineurial cells to maintain nerve branching during hair homeostasis. Nat Commun. 2023. doi:10.1038/s41467-023-40761-5. PMID:37699906.",
+  "dataset_links": [
+    {
+      "said": "SAID019",
+      "study_accession": "GSE211381",
+      "sample_accession": "GSM6468127",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID020",
+      "study_accession": "GSE211381",
+      "sample_accession": "GSM6468128",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID021",
+      "study_accession": "GSE211381",
+      "sample_accession": "GSM6468129",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID022",
+      "study_accession": "GSE211381",
+      "sample_accession": "GSM6468130",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID023",
+      "study_accession": "GSE211381",
+      "sample_accession": "GSM6468131",
+      "relation": "repository_linked_publication"
+    },
+    {
+      "said": "SAID024",
+      "study_accession": "GSE211381",
+      "sample_accession": "GSM6468132",
+      "relation": "repository_linked_publication"
+    }
+  ]
+}
