@@ -861,6 +861,50 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.12); }
     margin: 0 !important;
 }
 
+/* --------------------------------------------------------------------------
+   SCORPION "in preparation" rolling band
+   Shown when a dataset's regulatory network is not yet precomputed (a handful
+   of very large datasets). Reuses the site's cream/amber "in-progress" palette
+   (mirrors .progress-box) so it reads as the same status convention, presented
+   as a gently rolling horizontal marquee. Two identical copies + a -50%
+   translate give a seamless loop.
+   -------------------------------------------------------------------------- */
+.scorpion-prep-band {
+    position: relative;
+    overflow: hidden;
+    background: #fdf6e9;
+    color: #7c5a17;
+    border: 1px solid #f0dba4;
+    border-radius: var(--control-radius);
+    padding: 0.7rem 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+.scorpion-prep-band__track {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    will-change: transform;
+    animation: scorpion-prep-scroll 32s linear infinite;
+}
+.scorpion-prep-band__msg {
+    flex-shrink: 0;
+    padding: 0 2.75rem;
+}
+@keyframes scorpion-prep-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+/* Pause on hover so the full message can be read. */
+.scorpion-prep-band:hover .scorpion-prep-band__track { animation-play-state: paused; }
+/* Accessibility: no motion -> a single static, wrapping copy. */
+@media (prefers-reduced-motion: reduce) {
+    .scorpion-prep-band { padding: 0.7rem 1.1rem; }
+    .scorpion-prep-band__track { animation: none; white-space: normal; display: block; }
+    .scorpion-prep-band__msg { padding: 0; }
+    .scorpion-prep-band__msg:nth-child(2) { display: none; }
+}
+
 
 /* --------------------------------------------------------------------------
    K. Filter card grid — consistent for DEG / Compare / Enrichment

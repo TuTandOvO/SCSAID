@@ -429,7 +429,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260703h">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703d">
+    <link rel="stylesheet" href="CSS/details.css?v=20260704a">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
 
@@ -1062,8 +1062,11 @@
                 </div>
                 <div class="panel-body">
                     <div id="scorpion-loading" class="panel-loader" role="status" aria-label="Loading" style="display:none;"></div>
-                    <div id="scorpion-empty" class="progress-box" style="display:none;">
-                        The regulatory network for this dataset is being prepared and is not yet available.
+                    <div id="scorpion-empty" class="scorpion-prep-band" style="display:none;" role="status" aria-label="Regulatory network status">
+                        <div class="scorpion-prep-band__track">
+                            <span class="scorpion-prep-band__msg">The regulatory network for this dataset, as well as the other five datasets, is currently being prepared due to its large size and is not yet available. It will be made available soon.</span>
+                            <span class="scorpion-prep-band__msg" aria-hidden="true">The regulatory network for this dataset, as well as the other five datasets, is currently being prepared due to its large size and is not yet available. It will be made available soon.</span>
+                        </div>
                     </div>
 
                     <div id="scorpionContent" class="section-stack" style="display:none;">
