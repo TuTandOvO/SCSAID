@@ -268,6 +268,7 @@
 .main-nav__dropdown-icon--news { -webkit-mask-image: url('../images/icons/phosphor-fill/sparkle-fill.svg'); mask-image: url('../images/icons/phosphor-fill/sparkle-fill.svg'); }
 .main-nav__dropdown-icon--privacy { -webkit-mask-image: url('../images/icons/phosphor-fill/shield-check-fill.svg'); mask-image: url('../images/icons/phosphor-fill/shield-check-fill.svg'); }
 .main-nav__dropdown-icon--feedback { -webkit-mask-image: url('../images/icons/phosphor-fill/chat-centered-text-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chat-centered-text-fill.svg'); }
+.main-nav__dropdown-icon--newsletter { -webkit-mask-image: url('../images/icons/phosphor-fill/envelope-simple-fill.svg'); mask-image: url('../images/icons/phosphor-fill/envelope-simple-fill.svg'); }
 
 .main-nav__dropdown-link:hover,
 .main-nav__dropdown-link:focus-visible {
@@ -279,6 +280,16 @@
 .main-nav__dropdown-link:focus-visible .main-nav__dropdown-icon,
 .main-nav__dropdown-link--active .main-nav__dropdown-icon {
     color: #337ab7;
+}
+
+/* Button-driven dropdown item (opens a modal instead of navigating) */
+button.main-nav__dropdown-link {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
 }
 
 .main-nav__dropdown-link--active {

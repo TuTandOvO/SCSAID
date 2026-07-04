@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Newsletter / mailing-list signup modal — scSAID design system
+   Buttondown-backed, but fully re-skinned to match the site (Nunito, #337ab7,
+   flat 4px surfaces). Opened from the "About" menu; markup lives in
+   includes/header.jsp so it is available on every page.
+   ========================================================================== */
+
+.nl-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md, 1rem);
+    background: rgba(17, 24, 39, 0.55);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    opacity: 0;
+    animation: nlOverlayIn 0.22s ease forwards;
+}
+
+.nl-modal-overlay[hidden] { display: none; }
+
+@keyframes nlOverlayIn { to { opacity: 1; } }
+
+.nl-modal-overlay.is-closing { animation: nlOverlayOut 0.18s ease forwards; }
+@keyframes nlOverlayOut { to { opacity: 0; } }
+
+/* ---- Dialog surface ---- */
+.nl-modal {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-surface, #ffffff);
+    border: 1px solid var(--border-light, #dddddd);
+    border-radius: var(--radius-xl, 8px);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    transform: translateY(8px) scale(0.98);
+    opacity: 0;
+    animation: nlModalIn 0.24s cubic-bezier(0.34, 1.4, 0.64, 1) 0.04s forwards;
+}
+
+@keyframes nlModalIn {
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.nl-modal-overlay.is-closing .nl-modal { animation: nlModalOut 0.18s ease forwards; }
+@keyframes nlModalOut { to { transform: translateY(6px) scale(0.98); opacity: 0; } }
+
+/* ---- Header ---- */
+.nl-modal__header {
+    padding: var(--space-lg, 1.5rem) var(--space-lg, 1.5rem) var(--space-md, 1rem);
+    text-align: center;
+    border-bottom: 1px solid var(--border-light, #eee);
+    background: linear-gradient(180deg, rgba(51, 122, 183, 0.06), rgba(51, 122, 183, 0));
+}
+
+.nl-modal__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto var(--space-sm, 0.5rem);
+    color: var(--color-primary, #337ab7);
+    background: rgba(51, 122, 183, 0.10);
+    border: 1px solid rgba(51, 122, 183, 0.25);
+    border-radius: var(--radius-full, 9999px);
+}
+
+.nl-modal__icon svg { width: 26px; height: 26px; }
+
+.nl-modal__title {
+    font-family: var(--font-display, 'Nunito', sans-serif);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary, #333);
+    margin: 0;
+    line-height: 1.25;
+}
+
+/* ---- Body ---- */
+.nl-modal__body {
+    padding: var(--space-lg, 1.5rem);
+}
+
+.nl-modal__lead {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--text-secondary, #555);
+    margin: 0 0 var(--space-md, 1rem);
+    text-align: center;
+}
+
+.nl-modal__lead strong { color: var(--text-primary, #333); font-weight: 700; }
+
+.nl-modal__privacy {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-muted, #777);
+    margin: var(--space-md, 1rem) 0 0;
+    text-align: center;
+}
+
+/* ---- Form ---- */
+.nl-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm, 0.5rem);
+}
+
+.nl-form__label {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary, #333);
+}
+
+.nl-form__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.75rem;
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.95rem;
+    color: var(--text-primary, #333);
+    background: #fff;
+    border: 1px solid var(--input-border, #cccccc);
+    border-radius: var(--radius-control, 4px);
+    box-shadow: var(--input-shadow, inset 0 1px 1px rgba(0, 0, 0, 0.075));
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nl-form__input::placeholder { color: #9aa0a6; }
+
+.nl-form__input:focus {
+    outline: none;
+    border-color: var(--focus-border, #66afe9);
+    box-shadow: var(--focus-shadow, inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6));
+}
+
+.nl-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    margin-top: var(--space-md, 1rem);
+    padding: 0.65rem 1rem;
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--color-primary, #337ab7);
+    border: 1px solid var(--btn-primary-border, #2e6da4);
+    border-radius: var(--radius-control, 4px);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.nl-form__submit:hover {
+    background: var(--btn-primary-hover, #286090);
+    border-color: var(--btn-primary-hover-border, #204d74);
+}
+
+.nl-form__submit:active { background: #204d74; }
+
+.nl-form__submit:disabled { opacity: 0.65; cursor: default; }
+
+/* ---- Success state (shown after submit) ---- */
+.nl-modal__success {
+    text-align: center;
+    padding: var(--space-sm, 0.5rem) 0;
+}
+
+.nl-modal__success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto var(--space-md, 1rem);
+    color: #2e7d32;
+    background: rgba(46, 125, 50, 0.10);
+    border: 1px solid rgba(46, 125, 50, 0.25);
+    border-radius: var(--radius-full, 9999px);
+}
+
+.nl-modal__success-icon svg { width: 26px; height: 26px; }
+
+.nl-modal__success-title {
+    font-family: var(--font-display, 'Nunito', sans-serif);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-primary, #333);
+    margin: 0 0 var(--space-sm, 0.5rem);
+}
+
+.nl-modal__success-text {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary, #555);
+    margin: 0;
+}
+
+/* ---- Close (X) ---- */
+.nl-modal__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--text-muted, #777);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md, 4px);
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nl-modal__close:hover {
+    color: var(--color-primary, #337ab7);
+    background: rgba(51, 122, 183, 0.08);
+}
+
+.nl-modal__close svg { width: 18px; height: 18px; }
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+    .nl-modal-overlay { align-items: flex-start; padding: 0.5rem; }
+    .nl-modal { max-width: 100%; }
+    .nl-modal__header { padding: var(--space-md, 1rem) var(--space-md, 1rem) var(--space-sm, 0.5rem); }
+    .nl-modal__body { padding: var(--space-md, 1rem); }
+    .nl-modal__title { font-size: 1.2rem; }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+    .nl-modal-overlay,
+    .nl-modal { animation: none !important; opacity: 1 !important; transform: none !important; }
+}

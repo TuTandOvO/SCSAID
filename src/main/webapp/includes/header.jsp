@@ -72,6 +72,7 @@
                     <a href="whats-new.jsp" class="main-nav__dropdown-link<%= scsaidWhatsNew ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidWhatsNew ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--news" aria-hidden="true"></span><span>What’s New</span></a>
                     <a href="privacy.jsp" class="main-nav__dropdown-link<%= scsaidPrivacy ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPrivacy ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--privacy" aria-hidden="true"></span><span>Privacy</span></a>
                     <a href="feedback" class="main-nav__dropdown-link<%= scsaidFeedback ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--feedback" aria-hidden="true"></span><span>Feedback</span></a>
+                    <button type="button" class="main-nav__dropdown-link" role="menuitem" data-newsletter-open><span class="main-nav__dropdown-icon main-nav__dropdown-icon--newsletter" aria-hidden="true"></span><span>Subscribe to updates</span></button>
                 </div>
             </div>
         </nav>
@@ -113,6 +114,52 @@
     </p>
     <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
 </aside>
+<link rel="stylesheet" href="CSS/newsletter-modal.css?v=20260704a">
+<div class="nl-modal-overlay" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterModalTitle" hidden>
+    <div class="nl-modal" role="document">
+        <button type="button" class="nl-modal__close" data-newsletter-close aria-label="Close subscribe dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+
+        <div data-newsletter-formview>
+            <div class="nl-modal__header">
+                <span class="nl-modal__icon" aria-hidden="true">
+                    <svg viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.53ZM157.29,128,216,74.18V181.82Z"/></svg>
+                </span>
+                <h2 class="nl-modal__title" id="newsletterModalTitle">Subscribe for updates</h2>
+            </div>
+            <div class="nl-modal__body">
+                <p class="nl-modal__lead">Sign up for updates to the <strong>scSAID</strong> platform.</p>
+                <p class="nl-modal__lead" style="margin-bottom:1.25rem;">We'll inform you periodically when a scSAID dataset or exciting new features are added.</p>
+                <form id="newsletterForm" class="nl-form"
+                      action="https://buttondown.com/api/emails/embed-subscribe/ethan-scsaid"
+                      method="post" target="nl-buttondown-sink">
+                    <div class="nl-form__field">
+                        <label class="nl-form__label" for="nl-email">Email address</label>
+                        <input class="nl-form__input" type="email" id="nl-email" name="email"
+                               placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                    <input type="hidden" name="embed" value="1">
+                    <button type="submit" class="nl-form__submit">Subscribe</button>
+                </form>
+                <p class="nl-modal__privacy">Your privacy is important to us, and your email will never be given to a 3rd party.</p>
+            </div>
+        </div>
+
+        <div class="nl-modal__body" data-newsletter-success hidden>
+            <div class="nl-modal__success">
+                <span class="nl-modal__success-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <h2 class="nl-modal__success-title">Almost there!</h2>
+                <p class="nl-modal__success-text">Thanks for subscribing. Please check your inbox for a confirmation email to complete your signup.</p>
+                <button type="button" class="nl-form__submit" style="margin-top:1.25rem;" data-newsletter-close data-newsletter-done>Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe name="nl-buttondown-sink" title="Subscription handler" aria-hidden="true" tabindex="-1" style="position:absolute;width:0;height:0;border:0;left:-9999px;" src="about:blank"></iframe>
 <script src="JS/site-preferences.js?v=20260703d"></script>
 <script src="JS/site-header.js?v=20260702e" defer></script>
+<script src="JS/newsletter-modal.js?v=20260704a" defer></script>
 <script src="JS/analysis-help.js?v=20260702a" defer></script>
