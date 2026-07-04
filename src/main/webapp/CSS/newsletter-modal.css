@@ -101,12 +101,22 @@
 
 .nl-modal__lead strong { color: var(--text-primary, #333); font-weight: 700; }
 
+.nl-modal__confirm-note {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.55;
+    color: #c0392b;
+    margin: var(--space-md, 1rem) 0 0;
+    text-align: center;
+}
+
 .nl-modal__privacy {
     font-family: var(--font-body, 'Nunito', sans-serif);
     font-size: 0.82rem;
     line-height: 1.55;
     color: var(--text-muted, #777);
-    margin: var(--space-md, 1rem) 0 0;
+    margin: var(--space-sm, 0.5rem) 0 0;
     text-align: center;
 }
 

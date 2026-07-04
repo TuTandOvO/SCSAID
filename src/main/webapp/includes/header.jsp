@@ -114,7 +114,7 @@
     </p>
     <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
 </aside>
-<link rel="stylesheet" href="CSS/newsletter-modal.css?v=20260704a">
+<link rel="stylesheet" href="CSS/newsletter-modal.css?v=20260704b">
 <div class="nl-modal-overlay" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterModalTitle" hidden>
     <div class="nl-modal" role="document">
         <button type="button" class="nl-modal__close" data-newsletter-close aria-label="Close subscribe dialog">
@@ -130,7 +130,8 @@
             </div>
             <div class="nl-modal__body">
                 <p class="nl-modal__lead">Sign up for updates to the <strong>scSAID</strong> platform.</p>
-                <p class="nl-modal__lead" style="margin-bottom:1.25rem;">We'll inform you periodically when a scSAID dataset or exciting new features are added.</p>
+                <p class="nl-modal__lead">We'll inform you periodically when a scSAID dataset or exciting new features are added.</p>
+                <p class="nl-modal__lead" style="margin-bottom:1.25rem;">The updates are sent by Ethan Shen in the scSAID team.</p>
                 <form id="newsletterForm" class="nl-form"
                       action="https://buttondown.com/api/emails/embed-subscribe/ethan-scsaid"
                       method="post" target="nl-buttondown-sink">
@@ -142,6 +143,7 @@
                     <input type="hidden" name="embed" value="1">
                     <button type="submit" class="nl-form__submit">Subscribe</button>
                 </form>
+                <p class="nl-modal__confirm-note">Please confirm your subscription from the email we sent, or you won’t receive future notifications.</p>
                 <p class="nl-modal__privacy">Your privacy is important to us, and your email will never be given to a 3rd party.</p>
             </div>
         </div>
