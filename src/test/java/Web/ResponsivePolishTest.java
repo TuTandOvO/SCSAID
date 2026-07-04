@@ -17,7 +17,7 @@ class ResponsivePolishTest {
     void mobileDrawerUsesTheCompactWidthAndStandardButtonShape() throws Exception {
         String css = read("src/main/webapp/CSS/header.css");
 
-        assertTrue(css.contains("width: min(20rem, 82vw)"));
+        assertTrue(css.contains("width: min(18rem, 78vw)"));
         assertTrue(css.contains(".site-header--menu-open .nav-toggle"));
         assertTrue(css.contains(".nav-toggle { width: 40px; height: 40px; }"));
     }
