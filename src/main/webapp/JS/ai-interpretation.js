@@ -109,8 +109,14 @@
     function renderResult(card, result) {
         var panel = card.querySelector("#aiInterpretResult");
         var content = panel.querySelector(".ai-result__content");
+        var providerNames = {
+            openai: "OpenAI",
+            deepseek: "DeepSeek",
+            claude: "Claude",
+            gemini: "Gemini"
+        };
         panel.querySelector(".ai-result__provider").textContent =
-            (result.provider === "openai" ? "OpenAI" : "DeepSeek") + " · " + result.model;
+            (providerNames[result.provider] || result.provider) + " · " + result.model;
         panel.querySelector(".ai-result__time").textContent = new Date(result.generatedAt).toLocaleString();
         renderSafeMarkdown(content, result.interpretation);
 

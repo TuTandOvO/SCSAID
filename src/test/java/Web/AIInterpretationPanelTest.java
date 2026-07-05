@@ -22,6 +22,9 @@ class AIInterpretationPanelTest {
         assertTrue(jsp.contains("type=\"password\" autocomplete=\"new-password\""));
         assertTrue(jsp.contains("data-ai-source=\"cell_communication\""));
         assertTrue(jsp.contains("data-ai-source=\"regulatory_network\""));
+        assertTrue(jsp.contains("LLM Interpretation"));
+        assertTrue(jsp.contains("name=\"aiProvider\" value=\"claude\""));
+        assertTrue(jsp.contains("name=\"aiProvider\" value=\"gemini\""));
         assertTrue(script.contains("X-scSAID-Provider-Key"));
         assertTrue(script.contains("keyInput.value = \"\""));
         assertFalse(script.contains("localStorage"));

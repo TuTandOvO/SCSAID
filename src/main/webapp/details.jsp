@@ -570,7 +570,7 @@
                 <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 3l1.5 4.2L18 9l-4.5 1.8L12 15l-1.5-4.2L6 9l4.5-1.8L12 3z"></path><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"></path>
                 </svg>
-                AI Interpretation
+                LLM Interpretation
             </a>
         </nav>
     </aside>
@@ -1128,13 +1128,13 @@
             <div class="cluster ai-interpretation" id="AIInterpretation"
                  data-said="<%= saidVal %>"
                  data-endpoint="<%= request.getContextPath() %>/ai-interpretation"
-                 data-consent-version="2026-07-04"
+                 data-consent-version="2026-07-05"
                  data-csrf="<%= aiInterpretationCsrf %>">
                 <div class="header">
                     <div class="header-content">
                         <div>
                             <div class="header-title title-with-help">
-                                <span>AI Interpretation</span>
+                                <span>LLM Interpretation</span>
                                 <span class="feature-status" aria-label="Beta feature">Beta</span>
                             </div>
                             <p class="ai-interpretation__lede">Interpret selected scSAID analyses in the context of this dataset and its linked publication.</p>
@@ -1145,15 +1145,15 @@
                     <div class="ai-intro">
                         <div>
                             <span class="ai-kicker">Bring your own API key</span>
-                            <p>The request uses your OpenAI or DeepSeek account. scSAID does not save the key or interpretation.</p>
+                            <p>The request uses your OpenAI, DeepSeek, Claude, or Gemini account. scSAID does not save the key or interpretation.</p>
                         </div>
-                        <button type="button" class="btn-primary" id="aiInterpretActivate">Activate AI interpretation</button>
+                        <button type="button" class="btn-primary" id="aiInterpretActivate">Activate LLM interpretation</button>
                     </div>
 
                     <section class="ai-privacy" id="aiPrivacyGate" hidden aria-labelledby="aiPrivacyTitle">
                         <h3 id="aiPrivacyTitle">Privacy statement</h3>
                         <p>Your API key is sent over HTTPS to the scSAID server, held only for this request, and forwarded to the provider. It is not saved in a database, session, cookie, browser storage, cache, or application log, and the key field is cleared after submission.</p>
-                        <p>The selected analysis results, dataset metadata, linked publication abstract, and GEO study context are sent to the provider. Provider processing and retention follow your provider account and its terms. Charges may apply. AI output can be incorrect and is not medical advice.</p>
+                        <p>The selected analysis results, dataset metadata, linked publication abstract, and GEO study context are sent to the provider. Provider processing and retention follow your provider account and its terms. Charges may apply. LLM output can be incorrect and is not medical advice.</p>
                         <label class="ai-consent">
                             <input type="checkbox" id="aiPrivacyConsent">
                             <span>I understand what will be sent and agree to this one-page-session use.</span>
@@ -1179,6 +1179,8 @@
                             <div class="ai-provider-options">
                                 <label><input type="radio" name="aiProvider" value="openai" checked><span>OpenAI<small>GPT-5 mini</small></span></label>
                                 <label><input type="radio" name="aiProvider" value="deepseek"><span>DeepSeek<small>V4 Flash</small></span></label>
+                                <label><input type="radio" name="aiProvider" value="claude"><span>Claude<small>Sonnet 5</small></span></label>
+                                <label><input type="radio" name="aiProvider" value="gemini"><span>Gemini<small>3.5 Flash</small></span></label>
                             </div>
                         </fieldset>
 
@@ -1191,12 +1193,12 @@
                         </div>
                     </div>
 
-                    <div id="aiInterpretLoading" class="panel-loader ai-interpretation__loader" role="status" aria-label="Generating AI interpretation" hidden></div>
+                    <div id="aiInterpretLoading" class="panel-loader ai-interpretation__loader" role="status" aria-label="Generating LLM interpretation" hidden></div>
                     <div id="aiInterpretError" class="status-error" role="alert" hidden></div>
 
                     <section id="aiInterpretResult" class="ai-result" hidden aria-live="polite">
                         <header class="ai-result__header">
-                            <div><span class="ai-result__eyebrow">AI interpretation</span><strong class="ai-result__provider"></strong></div>
+                            <div><span class="ai-result__eyebrow">LLM interpretation</span><strong class="ai-result__provider"></strong></div>
                             <span class="ai-result__time"></span>
                         </header>
                         <div class="ai-result__content"></div>

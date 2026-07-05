@@ -16,6 +16,8 @@ class AIInterpretationServiceTest {
     private HttpServer server;
     private String baseUrl;
     private final AtomicReference<String> authorization = new AtomicReference<>();
+    private final AtomicReference<String> providerKey = new AtomicReference<>();
+    private final AtomicReference<String> anthropicVersion = new AtomicReference<>();
     private final AtomicReference<String> requestBody = new AtomicReference<>();
 
     @BeforeEach
@@ -34,7 +36,7 @@ class AIInterpretationServiceTest {
     void openAiUsesOneAuthorizationHeaderAndStatelessResponseRequest() throws Exception {
         server.createContext("/openai", exchange -> respond(exchange, 200,
                 "{\"output\":[{\"content\":[{\"type\":\"output_text\",\"text\":\"## Executive interpretation\\nResult\"}]}]}"));
-        AIInterpretationService service = new AIInterpretationService(baseUrl + "/openai", baseUrl + "/deepseek");
+        AIInterpretationService service = service();
         String secret = "sk-test-secret-never-log";
 
         JsonObject result = service.interpret("SAID001", "openai", sourcePayload(), secret);
@@ -54,7 +56,7 @@ class AIInterpretationServiceTest {
     void deepSeekUsesCurrentModelAndNonThinkingSingleTurnRequest() throws Exception {
         server.createContext("/deepseek", exchange -> respond(exchange, 200,
                 "{\"choices\":[{\"message\":{\"content\":\"## Executive interpretation\\nDeepSeek result\"}}]}"));
-        AIInterpretationService service = new AIInterpretationService(baseUrl + "/openai", baseUrl + "/deepseek");
+        AIInterpretationService service = service();
 
         JsonObject result = service.interpret("SAID001", "deepseek", sourcePayload(), "sk-deepseek-test");
 
@@ -66,10 +68,54 @@ class AIInterpretationServiceTest {
     }
 
     @Test
+    void claudeUsesApiKeyHeaderAndMessagesApiShape() throws Exception {
+        server.createContext("/claude", exchange -> respond(exchange, 200,
+                "{\"content\":[{\"type\":\"text\",\"text\":\"## Deep interpretation\\nClaude result\"}]}"));
+        AIInterpretationService service = service();
+        String secret = "sk-ant-test-secret";
+
+        JsonObject result = service.interpret("SAID001", "claude", sourcePayload(), secret);
+
+        assertEquals(secret, providerKey.get());
+        assertEquals("2023-06-01", anthropicVersion.get());
+        assertNull(authorization.get());
+        assertFalse(requestBody.get().contains(secret));
+        JsonObject upstream = JsonParser.parseString(requestBody.get()).getAsJsonObject();
+        assertEquals(AIInterpretationService.CLAUDE_MODEL, upstream.get("model").getAsString());
+        assertTrue(upstream.get("system").getAsString().contains("computational skin biologist"));
+        assertEquals("user", upstream.getAsJsonArray("messages").get(0).getAsJsonObject()
+                .get("role").getAsString());
+        assertEquals("claude", result.get("provider").getAsString());
+        assertTrue(result.get("interpretation").getAsString().contains("Claude result"));
+    }
+
+    @Test
+    void geminiUsesApiKeyHeaderAndGenerateContentShape() throws Exception {
+        server.createContext("/gemini", exchange -> respond(exchange, 200,
+                "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"## Deep interpretation\\nGemini result\"}]}}]}"));
+        AIInterpretationService service = service();
+        String secret = "AIza-test-secret";
+
+        JsonObject result = service.interpret("SAID001", "gemini", sourcePayload(), secret);
+
+        assertEquals(secret, providerKey.get());
+        assertNull(authorization.get());
+        assertFalse(requestBody.get().contains(secret));
+        JsonObject upstream = JsonParser.parseString(requestBody.get()).getAsJsonObject();
+        assertTrue(upstream.getAsJsonObject("system_instruction").getAsJsonArray("parts")
+                .get(0).getAsJsonObject().get("text").getAsString().contains("computational skin biologist"));
+        assertEquals("user", upstream.getAsJsonArray("contents").get(0).getAsJsonObject()
+                .get("role").getAsString());
+        assertEquals(3000, upstream.getAsJsonObject("generationConfig").get("maxOutputTokens").getAsInt());
+        assertEquals(AIInterpretationService.GEMINI_MODEL, result.get("model").getAsString());
+        assertTrue(result.get("interpretation").getAsString().contains("Gemini result"));
+    }
+
+    @Test
     void providerErrorsAreNormalizedWithoutEchoingBodyOrSecret() throws Exception {
         server.createContext("/openai", exchange -> respond(exchange, 401,
                 "{\"error\":\"upstream details must not escape\"}"));
-        AIInterpretationService service = new AIInterpretationService(baseUrl + "/openai", baseUrl + "/deepseek");
+        AIInterpretationService service = service();
         String secret = "sk-private-test-value";
 
         AIInterpretationService.ProviderException error = assertThrows(
@@ -91,8 +137,17 @@ class AIInterpretationServiceTest {
         return sources;
     }
 
+    private AIInterpretationService service() throws IOException {
+        return new AIInterpretationService(baseUrl + "/openai", baseUrl + "/deepseek",
+                baseUrl + "/claude", baseUrl + "/gemini");
+    }
+
     private void respond(HttpExchange exchange, int status, String response) throws IOException {
         authorization.set(exchange.getRequestHeaders().getFirst("Authorization"));
+        providerKey.set(exchange.getRequestHeaders().getFirst("x-api-key") != null
+                ? exchange.getRequestHeaders().getFirst("x-api-key")
+                : exchange.getRequestHeaders().getFirst("x-goog-api-key"));
+        anthropicVersion.set(exchange.getRequestHeaders().getFirst("anthropic-version"));
         requestBody.set(read(exchange.getRequestBody()));
         byte[] bytes = response.getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().set("Content-Type", "application/json");

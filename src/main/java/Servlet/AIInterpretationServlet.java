@@ -12,7 +12,7 @@ import java.util.*;
 
 /** One-shot relay for user-authorized scientific interpretation requests. */
 public class AIInterpretationServlet extends HttpServlet {
-    public static final String CONSENT_VERSION = "2026-07-04";
+    public static final String CONSENT_VERSION = "2026-07-05";
     private static final int MAX_BODY_CHARS = 262_144;
     private static final int MAX_SOURCES = 6;
     private static final int MAX_ROWS = 100;
@@ -30,7 +30,7 @@ public class AIInterpretationServlet extends HttpServlet {
         try {
             service = new AIInterpretationService();
         } catch (IOException ex) {
-            throw new ServletException("AI interpretation resources could not be loaded.", ex);
+            throw new ServletException("LLM interpretation resources could not be loaded.", ex);
         }
     }
 
@@ -60,8 +60,9 @@ public class AIInterpretationServlet extends HttpServlet {
                 return;
             }
             String provider = string(body, "provider").toLowerCase(Locale.ROOT);
-            if (!"openai".equals(provider) && !"deepseek".equals(provider)) {
-                sendError(response, 400, "Choose OpenAI or DeepSeek.");
+            if (!"openai".equals(provider) && !"deepseek".equals(provider)
+                    && !"claude".equals(provider) && !"gemini".equals(provider)) {
+                sendError(response, 400, "Choose OpenAI, DeepSeek, Claude, or Gemini.");
                 return;
             }
 

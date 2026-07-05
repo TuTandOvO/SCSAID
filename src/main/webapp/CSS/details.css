@@ -1547,7 +1547,7 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 
 
 /* --------------------------------------------------------------------------
-   T. AI interpretation — consent-first, editorial scientific reading surface
+   T. LLM interpretation — consent-first, editorial scientific reading surface
    -------------------------------------------------------------------------- */
 .ai-interpretation {
     --ai-ink: var(--text-primary);
@@ -1667,7 +1667,8 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 }
 
 .ai-provider-options label { position: relative; cursor: pointer; }
-.ai-provider-options label + label { border-left: 1px solid var(--border-medium); }
+.ai-provider-options label:nth-child(even) { border-left: 1px solid var(--border-medium); }
+.ai-provider-options label:nth-child(n + 3) { border-top: 1px solid var(--border-medium); }
 .ai-provider-options input { position: absolute; opacity: 0; pointer-events: none; }
 .ai-provider-options span {
     display: grid;

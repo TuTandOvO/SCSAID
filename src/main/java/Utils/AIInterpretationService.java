@@ -13,6 +13,8 @@ import java.util.*;
 public class AIInterpretationService {
     public static final String OPENAI_MODEL = "gpt-5-mini";
     public static final String DEEPSEEK_MODEL = "deepseek-v4-flash";
+    public static final String CLAUDE_MODEL = "claude-sonnet-5";
+    public static final String GEMINI_MODEL = "gemini-3.5-flash";
 
     private static final int CONNECT_TIMEOUT_MS = 15_000;
     // Stay below the common 60-second reverse-proxy default. This makes a slow
@@ -24,18 +26,26 @@ public class AIInterpretationService {
     private final Gson gson = new Gson();
     private final String openAiUrl;
     private final String deepSeekUrl;
+    private final String claudeUrl;
+    private final String geminiUrl;
     private final String systemPrompt;
     private final Map<String, JsonObject> datasets = new HashMap<>();
     private final Map<String, JsonObject> papers = new HashMap<>();
     private final Map<String, List<JsonObject>> linksBySaid = new HashMap<>();
 
     public AIInterpretationService() throws IOException {
-        this("https://api.openai.com/v1/responses", "https://api.deepseek.com/chat/completions");
+        this("https://api.openai.com/v1/responses",
+                "https://api.deepseek.com/chat/completions",
+                "https://api.anthropic.com/v1/messages",
+                "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent");
     }
 
-    AIInterpretationService(String openAiUrl, String deepSeekUrl) throws IOException {
+    AIInterpretationService(String openAiUrl, String deepSeekUrl, String claudeUrl, String geminiUrl)
+            throws IOException {
         this.openAiUrl = openAiUrl;
         this.deepSeekUrl = deepSeekUrl;
+        this.claudeUrl = claudeUrl;
+        this.geminiUrl = geminiUrl;
         this.systemPrompt = readResource("ai/interpretation-system.txt");
         loadRegistry();
     }
@@ -61,6 +71,12 @@ public class AIInterpretationService {
         } else if ("deepseek".equals(provider)) {
             model = DEEPSEEK_MODEL;
             interpretation = callDeepSeek(apiKey, prompt);
+        } else if ("claude".equals(provider)) {
+            model = CLAUDE_MODEL;
+            interpretation = callClaude(apiKey, prompt);
+        } else if ("gemini".equals(provider)) {
+            model = GEMINI_MODEL;
+            interpretation = callGemini(apiKey, prompt);
         } else {
             throw new IllegalArgumentException("Unsupported provider.");
         }
@@ -157,7 +173,8 @@ public class AIInterpretationService {
         body.addProperty("input", prompt);
         body.addProperty("store", false);
         body.addProperty("max_output_tokens", 3000);
-        JsonObject response = postJson(openAiUrl, apiKey, body, "OpenAI");
+        JsonObject response = postJson(openAiUrl, body, "OpenAI",
+                Collections.singletonMap("Authorization", "Bearer " + apiKey));
         StringBuilder output = new StringBuilder();
         JsonArray items = response.has("output") && response.get("output").isJsonArray()
                 ? response.getAsJsonArray("output") : new JsonArray();
@@ -188,7 +205,8 @@ public class AIInterpretationService {
         body.add("thinking", thinking);
         body.addProperty("max_tokens", 3000);
         body.addProperty("stream", false);
-        JsonObject response = postJson(deepSeekUrl, apiKey, body, "DeepSeek");
+        JsonObject response = postJson(deepSeekUrl, body, "DeepSeek",
+                Collections.singletonMap("Authorization", "Bearer " + apiKey));
         try {
             String output = response.getAsJsonArray("choices").get(0).getAsJsonObject()
                     .getAsJsonObject("message").get("content").getAsString();
@@ -199,7 +217,79 @@ public class AIInterpretationService {
         }
     }
 
-    private JsonObject postJson(String endpoint, String apiKey, JsonObject body, String providerName)
+    private String callClaude(String apiKey, String prompt) throws IOException, ProviderException {
+        JsonObject body = new JsonObject();
+        body.addProperty("model", CLAUDE_MODEL);
+        body.addProperty("max_tokens", 3000);
+        body.addProperty("system", systemPrompt);
+        JsonArray messages = new JsonArray();
+        messages.add(message("user", prompt));
+        body.add("messages", messages);
+
+        Map<String, String> headers = new LinkedHashMap<>();
+        headers.put("x-api-key", apiKey);
+        headers.put("anthropic-version", "2023-06-01");
+        JsonObject response = postJson(claudeUrl, body, "Claude", headers);
+        StringBuilder output = new StringBuilder();
+        JsonArray blocks = response.has("content") && response.get("content").isJsonArray()
+                ? response.getAsJsonArray("content") : new JsonArray();
+        for (JsonElement blockElement : blocks) {
+            JsonObject block = blockElement.getAsJsonObject();
+            if ("text".equals(string(block, "type")) && block.has("text")) {
+                if (output.length() > 0) output.append('\n');
+                output.append(block.get("text").getAsString());
+            }
+        }
+        if (output.length() == 0) throw new ProviderException(502, "Claude returned no interpretation.");
+        return output.toString();
+    }
+
+    private String callGemini(String apiKey, String prompt) throws IOException, ProviderException {
+        JsonObject body = new JsonObject();
+        JsonObject systemInstruction = new JsonObject();
+        JsonArray systemParts = new JsonArray();
+        JsonObject systemPart = new JsonObject();
+        systemPart.addProperty("text", systemPrompt);
+        systemParts.add(systemPart);
+        systemInstruction.add("parts", systemParts);
+        body.add("system_instruction", systemInstruction);
+
+        JsonArray contents = new JsonArray();
+        JsonObject userContent = new JsonObject();
+        userContent.addProperty("role", "user");
+        JsonArray userParts = new JsonArray();
+        JsonObject userPart = new JsonObject();
+        userPart.addProperty("text", prompt);
+        userParts.add(userPart);
+        userContent.add("parts", userParts);
+        contents.add(userContent);
+        body.add("contents", contents);
+        JsonObject generationConfig = new JsonObject();
+        generationConfig.addProperty("maxOutputTokens", 3000);
+        body.add("generationConfig", generationConfig);
+
+        JsonObject response = postJson(geminiUrl, body, "Gemini",
+                Collections.singletonMap("x-goog-api-key", apiKey));
+        StringBuilder output = new StringBuilder();
+        try {
+            JsonArray parts = response.getAsJsonArray("candidates").get(0).getAsJsonObject()
+                    .getAsJsonObject("content").getAsJsonArray("parts");
+            for (JsonElement partElement : parts) {
+                JsonObject part = partElement.getAsJsonObject();
+                if (part.has("text")) {
+                    if (output.length() > 0) output.append('\n');
+                    output.append(part.get("text").getAsString());
+                }
+            }
+        } catch (RuntimeException ignored) {
+            // Normalized below so provider payload details are not exposed to the browser.
+        }
+        if (output.length() == 0) throw new ProviderException(502, "Gemini returned no interpretation.");
+        return output.toString();
+    }
+
+    private JsonObject postJson(String endpoint, JsonObject body, String providerName,
+                                Map<String, String> headers)
             throws IOException, ProviderException {
         HttpURLConnection connection = (HttpURLConnection) new URL(endpoint).openConnection();
         connection.setRequestMethod("POST");
@@ -207,7 +297,9 @@ public class AIInterpretationService {
         connection.setConnectTimeout(CONNECT_TIMEOUT_MS);
         connection.setReadTimeout(READ_TIMEOUT_MS);
         connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Authorization", "Bearer " + apiKey);
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            connection.setRequestProperty(header.getKey(), header.getValue());
+        }
         byte[] bytes = gson.toJson(body).getBytes(StandardCharsets.UTF_8);
         try (OutputStream output = connection.getOutputStream()) {
             output.write(bytes);
