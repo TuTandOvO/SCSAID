@@ -1,11 +1,16 @@
 package Servlet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
 import java.util.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.csv.*;
 import Utils.DataPathResolver;
@@ -14,6 +19,7 @@ import Utils.DataPathResolver;
 public class GeneSearchServlet extends HttpServlet {
 
     private static final Map<String, Map<String, String>> mapping;
+    private static volatile Map<String, String> markerReferenceCellTypes;
 
     static {
         try (InputStreamReader reader = new InputStreamReader(
@@ -116,7 +122,10 @@ public class GeneSearchServlet extends HttpServlet {
                             double logfc = Double.parseDouble(rec.get(fcCol));
                             double pval = Double.parseDouble(rec.get(pvalCol));
                             String markerCellType = (cellTypeCol != null) ? rec.get(cellTypeCol) : "";
-                            if (markerCellType == null || markerCellType.trim().isEmpty()) {
+                            if (isGenericCellType(markerCellType)) {
+                                markerCellType = markerReferenceCellTypes(getServletContext()).get(geneName);
+                            }
+                            if (isGenericCellType(markerCellType)) {
                                 markerCellType = "Unannotated";
                             }
 
@@ -168,5 +177,75 @@ public class GeneSearchServlet extends HttpServlet {
             }
         }
         return null;
+    }
+
+    private static boolean isGenericCellType(String value) {
+        if (value == null) return true;
+        String normalized = value.trim();
+        return normalized.isEmpty()
+                || "all".equalsIgnoreCase(normalized)
+                || "unannotated".equalsIgnoreCase(normalized)
+                || "unknown".equalsIgnoreCase(normalized);
+    }
+
+    private static Map<String, String> markerReferenceCellTypes(ServletContext context) {
+        Map<String, String> cached = markerReferenceCellTypes;
+        if (cached != null) return cached;
+
+        synchronized (GeneSearchServlet.class) {
+            if (markerReferenceCellTypes != null) return markerReferenceCellTypes;
+
+            Map<String, List<String>> collected = new LinkedHashMap<String, List<String>>();
+            try (InputStream in = context.getResourceAsStream("/enrichment_resources/gmt/web/marker_genes_fine_map.json")) {
+                if (in != null) {
+                    JsonObject root = JsonParser.parseReader(new InputStreamReader(in, "UTF-8")).getAsJsonObject();
+                    for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
+                        String cellType = entry.getKey();
+                        JsonObject payload = entry.getValue().getAsJsonObject();
+                        if (!payload.has("genes") || !payload.get("genes").isJsonArray()) continue;
+                        JsonArray genes = payload.getAsJsonArray("genes");
+                        for (JsonElement geneElement : genes) {
+                            String gene = geneElement.getAsString();
+                            addMarkerReference(collected, gene, cellType);
+                            addMarkerReference(collected, gene.toUpperCase(Locale.ROOT), cellType);
+                        }
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+
+            Map<String, String> flattened = new HashMap<String, String>();
+            for (Map.Entry<String, List<String>> entry : collected.entrySet()) {
+                flattened.put(entry.getKey(), summarizeCellTypes(entry.getValue()));
+            }
+            markerReferenceCellTypes = flattened;
+            return markerReferenceCellTypes;
+        }
+    }
+
+    private static void addMarkerReference(Map<String, List<String>> collected, String gene, String cellType) {
+        if (gene == null || gene.trim().isEmpty()) return;
+        List<String> list = collected.get(gene);
+        if (list == null) {
+            list = new ArrayList<String>();
+            collected.put(gene, list);
+        }
+        if (!list.contains(cellType)) {
+            list.add(cellType);
+        }
+    }
+
+    private static String summarizeCellTypes(List<String> cellTypes) {
+        if (cellTypes == null || cellTypes.isEmpty()) return "";
+        int shown = Math.min(3, cellTypes.size());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < shown; i++) {
+            if (i > 0) sb.append("; ");
+            sb.append(cellTypes.get(i));
+        }
+        if (cellTypes.size() > shown) {
+            sb.append("; +").append(cellTypes.size() - shown).append(" more");
+        }
+        return sb.toString();
     }
 }
