@@ -135,6 +135,24 @@ body { background-color: var(--bg-body); }
 .search-box__btn:hover:not(:disabled) { background: var(--btn-primary-hover); }
 .search-box__btn:disabled { background: var(--text-muted); cursor: not-allowed; }
 
+.search-hero__hint {
+    max-width: 640px;
+    margin: 0.75rem auto 0;
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+.search-hero__hint code {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    background: var(--bg-muted);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 0.08rem 0.28rem;
+}
+
 
 /* --------------------------------------------------------------------------
    D. Example chip row

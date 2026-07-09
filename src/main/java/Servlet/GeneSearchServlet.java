@@ -39,7 +39,7 @@ public class GeneSearchServlet extends HttpServlet {
             return;
         }
 
-        query = query.trim().toLowerCase();
+        query = query.trim();
         final int maxResults = 500; // Limit results to prevent overwhelming response
 
         List<Map<String, String>> results = new ArrayList<>();
@@ -100,21 +100,27 @@ public class GeneSearchServlet extends HttpServlet {
                     try {
                         String geneName = rec.get(namesCol);
 
-                        // Case-insensitive partial match
-                        if (geneName.toLowerCase().contains(query)) {
+                        // Exact-case partial match. Human symbols are typically uppercase
+                        // (e.g. KRT14), while mouse symbols are typically title case
+                        // (e.g. Krt14), so case-insensitive matching is misleading here.
+                        if (geneName.contains(query)) {
                             double logfc = Double.parseDouble(rec.get(fcCol));
                             double pval = Double.parseDouble(rec.get(pvalCol));
-                            // DEGs_all.csv is dataset-level (no per-cell-type group)
-                            String group = (groupCol != null) ? rec.get(groupCol) : "All";
+                            String markerCellType = (groupCol != null) ? rec.get(groupCol) : "";
+                            if (markerCellType == null || markerCellType.trim().isEmpty()) {
+                                markerCellType = "Unannotated";
+                            }
 
                             Map<String, String> row = new HashMap<>();
                             row.put("gene", geneName);
                             row.put("said", said);
                             row.put("gse", meta.get("GSE"));
                             row.put("gsm", meta.get("GSM"));
+                            row.put("species", species);
                             row.put("logfc", String.format("%.4f", logfc));
                             row.put("pval", String.format("%.2e", pval));
-                            row.put("group", group);
+                            row.put("group", markerCellType);
+                            row.put("cell_type", markerCellType);
                             results.add(row);
                         }
                     } catch (Exception ignore) {

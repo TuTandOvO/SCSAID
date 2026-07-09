@@ -69,7 +69,7 @@
         <h1 class="search-hero__title title-with-help">
             <button type="button" class="analysis-help" aria-label="About cross-dataset marker search" aria-describedby="help-gene-search" aria-expanded="false" data-help-target="help-gene-search">Search markers across all datasets</button>
         </h1>
-        <span id="help-gene-search" class="visually-hidden">Query precomputed marker results across scSAID datasets. These marker rows are not disease-versus-healthy condition DEGs.</span>
+        <span id="help-gene-search" class="visually-hidden">Query precomputed marker results across scSAID datasets. Search is case-sensitive: human symbols are typically uppercase and mouse symbols are typically title case. These marker rows are not disease-versus-healthy condition DEGs.</span>
 
         <div class="search-box-wrap">
         <form class="search-box" role="search" onsubmit="return false;">
@@ -86,6 +86,7 @@
         </form>
         <ul id="gene-suggest" class="search-suggest" role="listbox" hidden></ul>
         </div>
+        <p class="search-hero__hint">Case-sensitive marker search. Use exact species casing, for example <code>KRT14</code> for human and <code>Krt14</code> for mouse.</p>
 
         <div class="search-examples" aria-label="Example genes">
             <span class="search-examples__label">Try</span>
@@ -130,7 +131,7 @@
                         <path d="M9 9l6 6M15 9l-6 6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <h2 class="state-block__title">No results found</h2>
-                    <p class="state-block__text">Try a different gene symbol or check the spelling. Both human (HUGO) and mouse (MGI) symbols are supported.</p>
+                    <p class="state-block__text">Try a different gene symbol or check the spelling and capitalization. Search is case-sensitive: human symbols are usually uppercase, while mouse symbols are often title case.</p>
                 </div>
             </div>
         </article>
@@ -157,7 +158,7 @@
                                     <th>Gene</th>
                                     <th>Dataset</th>
                                     <th>GSE</th>
-                                    <th>Marker group</th>
+                                    <th>Marker cell type</th>
                                     <th>log₂ FC</th>
                                     <th>Adj. p</th>
                                     <th>Action</th>
@@ -256,7 +257,7 @@ $(document).ready(function() {
         }
 
         query = query.trim();
-        currentQuery = query.toLowerCase();
+        currentQuery = query;
 
         // Reset selection
         selectedGenes.clear();
@@ -312,13 +313,16 @@ $(document).ready(function() {
 
             html += '<tr data-gene="' + escapeHtml(row.gene) + '">';
             html += '<td class="cell-checkbox" data-label="Select">' + checkboxHtml + '</td>';
-            html += '<td class="cell-gene" data-label="Gene"><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=human" class="gene-link">' + geneName + '<span class="gene-link-icon">→</span></a></td>';
+            const species = row.species || 'human';
+            const markerCellType = row.cell_type || row.group || 'Unannotated';
+
+            html += '<td class="cell-gene" data-label="Gene"><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=' + encodeURIComponent(species) + '" class="gene-link">' + geneName + '<span class="gene-link-icon">→</span></a></td>';
             html += '<td data-label="Dataset"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '" class="cell-link">' + row.said + '</a></td>';
             html += '<td data-label="GSE">' + escapeHtml(row.gse) + '</td>';
-            html += '<td data-label="Marker group"><span class="group-badge">' + escapeHtml(row.group) + '</span></td>';
+            html += '<td data-label="Marker cell type"><span class="group-badge">' + escapeHtml(markerCellType) + '</span></td>';
             html += '<td data-label="log₂ FC"><span class="expression-badge ' + fcClass + '">' + fcSign + row.logfc + '</span></td>';
             html += '<td class="cell-pval" data-label="Adj. p">' + escapeHtml(row.pval) + '</td>';
-            html += '<td data-label="Action"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '#DEGResults" class="cell-link">Dataset</a><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=human" class="cell-link">Gene Info</a></td>';
+            html += '<td data-label="Action"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '#DEGResults" class="cell-link">Dataset</a><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=' + encodeURIComponent(species) + '" class="cell-link">Gene Info</a></td>';
             html += '</tr>';
         });
 
@@ -400,7 +404,7 @@ $(document).ready(function() {
     }
 
     function highlightMatch(text, query) {
-        const regex = new RegExp('(' + escapeRegex(query) + ')', 'gi');
+        const regex = new RegExp('(' + escapeRegex(query) + ')', 'g');
         return escapeHtml(text).replace(regex, '<mark>$1</mark>');
     }
 
