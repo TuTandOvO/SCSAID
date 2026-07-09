@@ -113,7 +113,7 @@
         <!-- ============================================================
              Step 2 — Results: DEG + GSEA, side by side
              ============================================================ -->
-        <section class="results-grid">
+        <section class="results-grid" id="resultsGrid" hidden>
 
             <!-- DEG panel ---------------------------------------------- -->
             <article class="panel" id="degPanel" aria-labelledby="deg-title">
@@ -127,7 +127,7 @@
                 <div class="panel-body">
 
                     <!-- Empty state (before run) -->
-                    <div id="degEmpty" class="panel-empty">
+                    <div id="degEmpty" class="panel-empty" hidden>
                         <svg class="panel-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M3 3v18h18" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M7 14l3-3 3 3 5-5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -200,7 +200,7 @@
                 <div class="panel-body">
 
                     <!-- Empty state (before DEG completes) -->
-                    <div id="gseaEmpty" class="panel-empty">
+                    <div id="gseaEmpty" class="panel-empty" hidden>
                         <svg class="panel-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/>

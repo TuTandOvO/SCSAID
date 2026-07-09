@@ -142,21 +142,23 @@
 
     // -------- DEG / GSEA panel visibility ------------------------------------
     function showDegResults() {
+        $("#resultsGrid").prop("hidden", false);
         $("#degEmpty").prop("hidden", true);
         $("#degResults").prop("hidden", false);
     }
     function hideDegResults() {
-        $("#degEmpty").prop("hidden", false);
+        $("#degEmpty").prop("hidden", true);
         $("#degResults").prop("hidden", true);
     }
     function unlockGsea() {
+        $("#resultsGrid").prop("hidden", false);
         $("#gseaPanel").attr("data-locked", "false");
         $("#gseaEmpty").prop("hidden", true);
         $("#gseaResults").prop("hidden", false);
     }
     function lockGsea() {
         $("#gseaPanel").attr("data-locked", "true");
-        $("#gseaEmpty").prop("hidden", false);
+        $("#gseaEmpty").prop("hidden", true);
         $("#gseaResults").prop("hidden", true);
     }
 
@@ -275,6 +277,7 @@
         state.gseaJobId = null;
         hideDegResults();
         lockGsea();
+        $("#resultsGrid").prop("hidden", true);
         if (degTable) { degTable.clear().draw(); }
         $("#gseaChart").empty();
         if (gseaTable) { gseaTable.clear().draw(); }

@@ -103,7 +103,7 @@
     <section class="results-section" id="results-section">
 
         <!-- Initial / empty state -->
-        <article id="empty-state" class="panel panel--empty">
+        <article id="empty-state" class="panel panel--empty" hidden>
             <div class="panel-body">
                 <div class="state-block">
                     <svg class="state-block__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -243,8 +243,17 @@ $(document).ready(function() {
         });
     }
 
+    function hideAllResults() {
+        [$emptyState, $loadingState, $noResultsState, $resultsContainer].forEach(function($el) {
+            $el.prop('hidden', true);
+        });
+    }
+
     function performSearch(query) {
-        if (!query || query.trim() === '') return;
+        if (!query || query.trim() === '') {
+            hideAllResults();
+            return;
+        }
 
         query = query.trim();
         currentQuery = query.toLowerCase();
@@ -275,7 +284,7 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 $searchBtn.prop('disabled', false);
                 alert('Search error: ' + error);
-                showOnly($emptyState);
+                hideAllResults();
             }
         });
     }

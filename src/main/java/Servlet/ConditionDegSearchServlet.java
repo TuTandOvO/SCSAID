@@ -49,9 +49,10 @@ public class ConditionDegSearchServlet extends HttpServlet {
     private static final String API_BASE = "http://127.0.0.1:8054";
     private static final int MAX_RESULTS = 500;
     private static final int POLL_INTERVAL_MS = 2000;
-    private static final int MAX_POLLS_PER_CONDITION = 900; // 30 min/contrast ceiling.
+    private static final int MAX_POLLS_PER_CONDITION = 3600; // 2 h/contrast ceiling.
     private static final String HEALTHY = "Healthy";
     private static final String HEADER = "species\tcondition\treference\tcell_type\tgene\tlogFC\tpval\tpval_adj\n";
+    private static final Object BUILD_LOCK = new Object();
 
     private static final Map<String, BuildState> STATES = new ConcurrentHashMap<String, BuildState>();
     private static final Type ROW_LIST_TYPE = new TypeToken<List<Map<String, Object>>>() {}.getType();
@@ -146,6 +147,7 @@ public class ConditionDegSearchServlet extends HttpServlet {
                     JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
                     payload.put("rows", getLong(json, "rows", -1));
                     payload.put("conditions", getLong(json, "conditions", -1));
+                    payload.put("skipped", getLong(json, "skipped", 0));
                 } catch (Exception ignored) {
                 }
             }
@@ -178,6 +180,13 @@ public class ConditionDegSearchServlet extends HttpServlet {
     }
 
     private static void buildCache(String species, ServletContext context, BuildState state) {
+        state.message = "Waiting for the current DEG index build to finish";
+        synchronized (BUILD_LOCK) {
+            buildCacheLocked(species, context, state);
+        }
+    }
+
+    private static void buildCacheLocked(String species, ServletContext context, BuildState state) {
         File dir = cacheDir(context);
         if (!dir.exists() && !dir.mkdirs()) {
             state.error = "Cannot create DEG cache directory: " + dir.getAbsolutePath();
@@ -191,6 +200,7 @@ public class ConditionDegSearchServlet extends HttpServlet {
 
         long rows = 0L;
         int conditionsDone = 0;
+        List<String> skipped = new ArrayList<String>();
 
         try (BufferedWriter writer = Files.newBufferedWriter(tmp.toPath(), StandardCharsets.UTF_8)) {
             writer.write(HEADER);
@@ -208,17 +218,22 @@ public class ConditionDegSearchServlet extends HttpServlet {
                 state.currentCondition = condition;
                 state.message = "Running " + species + ": " + condition + " vs Healthy";
 
-                String jobId = startComparisonJob(species, condition, HEALTHY);
-                JsonObject done = waitForJob(jobId);
-                JsonArray cellTypes = done.has("cellTypes") && done.get("cellTypes").isJsonArray()
-                        ? done.getAsJsonArray("cellTypes") : new JsonArray();
+                try {
+                    String jobId = startComparisonJob(species, condition, HEALTHY);
+                    JsonObject done = waitForJob(jobId);
+                    JsonArray cellTypes = done.has("cellTypes") && done.get("cellTypes").isJsonArray()
+                            ? done.getAsJsonArray("cellTypes") : new JsonArray();
 
-                if (cellTypes.size() == 0) {
-                    rows += writeRowsForJob(writer, species, condition, jobId, "");
-                } else {
-                    for (JsonElement ctElement : cellTypes) {
-                        rows += writeRowsForJob(writer, species, condition, jobId, ctElement.getAsString());
+                    if (cellTypes.size() == 0) {
+                        rows += writeRowsForJob(writer, species, condition, jobId, "");
+                    } else {
+                        for (JsonElement ctElement : cellTypes) {
+                            rows += writeRowsForJob(writer, species, condition, jobId, ctElement.getAsString());
+                        }
                     }
+                } catch (Exception conditionFailed) {
+                    skipped.add(condition + ": " + conditionFailed.getMessage());
+                    state.error = "Skipped " + skipped.size() + " contrast(s); continuing";
                 }
 
                 conditionsDone++;
@@ -253,6 +268,8 @@ public class ConditionDegSearchServlet extends HttpServlet {
         metadata.put("reference", HEALTHY);
         metadata.put("conditions", conditionsDone);
         metadata.put("rows", rows);
+        metadata.put("skipped", skipped.size());
+        metadata.put("skippedDetails", skipped);
         metadata.put("updatedAt", System.currentTimeMillis());
         try (BufferedWriter writer = Files.newBufferedWriter(meta.toPath(), StandardCharsets.UTF_8)) {
             GSON.toJson(metadata, writer);

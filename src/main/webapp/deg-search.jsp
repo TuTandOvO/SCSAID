@@ -94,7 +94,7 @@
     <div class="deg-index-status" id="index-status" hidden></div>
 
     <section class="results-section" id="results-section">
-        <article id="empty-state" class="panel panel--empty">
+        <article id="empty-state" class="panel panel--empty" hidden>
             <div class="panel-body">
                 <div class="state-block">
                     <svg class="state-block__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -195,6 +195,11 @@ $(function() {
             $el.prop('hidden', !$el.is($which));
         });
     }
+    function hideAllResults() {
+        [$emptyState, $loadingState, $noResultsState, $resultsContainer].forEach(function($el) {
+            $el.prop('hidden', true);
+        });
+    }
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text == null ? '' : String(text);
@@ -261,7 +266,11 @@ $(function() {
         };
     }
     function performSearch(query) {
-        if (!query || !query.trim()) return;
+        if (!query || !query.trim()) {
+            hideAllResults();
+            $status.prop('hidden', true).empty();
+            return;
+        }
         state.query = query.trim();
         state.selectedGenes.clear();
         updateSelectionUI();
@@ -375,7 +384,6 @@ $(function() {
     });
     $vizBtn.on('click', visualizeGenes);
 
-    checkIndex();
 });
 </script>
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>
