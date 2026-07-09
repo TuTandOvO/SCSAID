@@ -51,18 +51,23 @@ public class GeneSearchServlet extends HttpServlet {
             String said = entry.getKey();
             Map<String, String> meta = entry.getValue();
 
-            // Resolve the DEG file the same way DEGServlet does. The csv_path in
-            // mapping.csv.json points at a SkinDB_New/... layout that does not exist
-            // on the server, so build the real path instead:
-            //   {dataRoot}/DEG/{species}/{GSE}/{GSM}/DEGs_all.csv
             String csvPath = meta.get("csv_path");
             String species = (csvPath != null && csvPath.contains("/mouse/")) ? "mouse" : "human";
             String gse = meta.get("GSE");
             String gsm = meta.get("GSM");
             if (gse == null || gsm == null) continue;
 
-            String relPath = "DEG/" + species + "/" + gse + "/" + gsm + "/DEGs_all.csv";
-            File csvFile = DataPathResolver.resolveReadableFile(getServletContext(), relPath);
+            File csvFile = null;
+            if (csvPath != null && !csvPath.trim().isEmpty()) {
+                File annotated = DataPathResolver.resolveReadableFile(getServletContext(), csvPath);
+                if (annotated != null && annotated.exists() && annotated.canRead()) {
+                    csvFile = annotated;
+                }
+            }
+            if (csvFile == null) {
+                String relPath = "DEG/" + species + "/" + gse + "/" + gsm + "/DEGs_all.csv";
+                csvFile = DataPathResolver.resolveReadableFile(getServletContext(), relPath);
+            }
             if (csvFile == null || !csvFile.exists()) continue;
 
             try (
