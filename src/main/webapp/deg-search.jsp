@@ -37,34 +37,6 @@
             border-radius: var(--radius-sm); box-shadow: var(--dropdown-shadow);
             max-height: 300px; overflow-y: auto;
         }
-        .deg-search-controls {
-            max-width: 1120px;
-            margin: 0 auto var(--space-xl);
-            padding: 0 var(--space-xl);
-        }
-        .deg-search-controls .filter-grid { align-items: end; }
-        .species-tabs {
-            display: inline-flex;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            box-shadow: var(--input-shadow);
-        }
-        .species-tab {
-            border: 0;
-            background: transparent;
-            padding: 0.65rem 1.1rem;
-            color: var(--text-secondary);
-            font-family: var(--font-body);
-            cursor: pointer;
-            border-right: 1px solid var(--border-light);
-        }
-        .species-tab:last-child { border-right: 0; }
-        .species-tab.is-active {
-            background: var(--bg-muted);
-            color: var(--color-primary);
-        }
         .deg-index-status {
             max-width: 1120px;
             margin: 0 auto var(--space-lg);
@@ -79,12 +51,6 @@
             padding: 0.75rem 1rem;
         }
         .deg-index-status strong { color: var(--text-primary); }
-        @media (max-width: 700px) {
-            .deg-search-controls { padding: 0 var(--space-md); }
-            .deg-search-controls .filter-grid { grid-template-columns: 1fr; }
-            .species-tabs { width: 100%; }
-            .species-tab { flex: 1; }
-        }
     </style>
 </head>
 <body>
@@ -97,7 +63,7 @@
         <h1 class="search-hero__title title-with-help">
             <button type="button" class="analysis-help" aria-label="About condition DEG search" aria-describedby="help-deg-search" aria-expanded="false" data-help-target="help-deg-search">Search disease and perturbation DEGs</button>
         </h1>
-        <span id="help-deg-search" class="visually-hidden">Search pseudobulk DESeq2 results for each non-Healthy condition versus Healthy within one species. Log2 fold change is condition or perturbation relative to Healthy.</span>
+        <span id="help-deg-search" class="visually-hidden">Search cached pseudobulk DESeq2 results for each non-Healthy condition versus Healthy. Log2 fold change is condition or perturbation relative to Healthy.</span>
 
         <div class="search-box-wrap">
             <form class="search-box" role="search" onsubmit="return false;">
@@ -122,49 +88,6 @@
             <button class="search-examples__btn" data-gene="ACTA2">ACTA2</button>
             <button class="search-examples__btn" data-gene="CXCL8">CXCL8</button>
             <button class="search-examples__btn" data-gene="IL1B">IL1B</button>
-        </div>
-    </section>
-
-    <section class="deg-search-controls" aria-label="DEG search controls">
-        <div class="filter-grid">
-            <div class="filter-card">
-                <span class="filter-name">Species</span>
-                <div class="species-tabs" role="tablist" aria-label="Species">
-                    <button type="button" class="species-tab is-active" data-species="human" role="tab" aria-selected="true">Human</button>
-                    <button type="button" class="species-tab" data-species="mouse" role="tab" aria-selected="false">Mouse</button>
-                </div>
-            </div>
-            <div class="filter-card">
-                <label class="filter-name" for="condition-filter">Condition</label>
-                <select id="condition-filter" class="form-select"><option value="">All conditions</option></select>
-            </div>
-            <div class="filter-card">
-                <label class="filter-name" for="celltype-filter">Cell type</label>
-                <select id="celltype-filter" class="form-select"><option value="">All cell types</option></select>
-            </div>
-            <div class="filter-card">
-                <label class="filter-name" for="direction-filter">Direction</label>
-                <select id="direction-filter" class="form-select">
-                    <option value="both">Both</option>
-                    <option value="up">Up in condition</option>
-                    <option value="down">Down in condition</option>
-                </select>
-            </div>
-            <div class="filter-card">
-                <label class="filter-name" for="pval-filter">Adj. p ≤</label>
-                <input type="number" id="pval-filter" class="form-input" min="0" max="1" step="0.001" value="0.05">
-            </div>
-            <div class="filter-card">
-                <label class="filter-name" for="fc-filter">|log₂ FC| ≥</label>
-                <input type="number" id="fc-filter" class="form-input" min="0" step="0.1" value="1.0">
-            </div>
-            <div class="filter-card">
-                <span class="filter-name">Filter</span>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="hide-pseudogenes" data-preference-key="hidePseudogenes" checked>
-                    <span class="checkbox-item__text">Hide pseudogenes</span>
-                </label>
-            </div>
         </div>
     </section>
 
@@ -259,14 +182,13 @@ $(function() {
     const $resultsCount = $('#results-count');
     const $selectAll = $('#select-all');
     const $status = $('#index-status');
-    const $condition = $('#condition-filter');
-    const $cellType = $('#celltype-filter');
     const $selectionBar = $('#selection-bar');
     const $selCount = $('#sel-count');
     const $selectedGenesDisplay = $('#selected-genes-display');
     const $vizBtn = $('#visualize-btn');
 
-    let state = { species: 'human', query: '', selectedGenes: new Set(), lastRows: [], statusTimer: null };
+    const SPECIES = ['human', 'mouse'];
+    let state = { query: '', selectedGenes: new Set(), lastRows: [], statusTimer: null };
 
     function showOnly($which) {
         [$emptyState, $loadingState, $noResultsState, $resultsContainer].forEach(function($el) {
@@ -287,81 +209,55 @@ $(function() {
         if (!Number.isFinite(n)) return '';
         return Math.abs(n) < 0.001 ? n.toExponential(2) : n.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
     }
-    function updateStatus(payload) {
-        if (!payload || payload.state === 'ready') {
-            const rows = payload && payload.rows ? ' · ' + payload.rows + ' cached rows' : '';
-            $status.html('<div class="deg-index-status__card"><strong>' + state.species + ' index ready</strong>' + rows + '</div>').prop('hidden', false);
-            return;
-        }
-        if (payload.state === 'building') {
-            const total = payload.totalConditions || '?';
-            const done = payload.doneConditions || 0;
-            const current = payload.currentCondition ? ' · ' + escapeHtml(payload.currentCondition) : '';
-            $status.html('<div class="deg-index-status__card"><strong>Preparing ' + state.species + ' DEG index</strong> · ' + done + '/' + total + current + '</div>').prop('hidden', false);
+    function isPseudogene(name) {
+        return /^(Gm\d+|.+-ps\d*|.+Rik|.+-PS\d*)$/.test(String(name || ''));
+    }
+    function statusHtml(payloads) {
+        const ready = payloads.filter(function(p) { return p && p.state === 'ready'; });
+        const building = payloads.filter(function(p) { return p && p.state === 'building'; });
+        const missing = payloads.filter(function(p) { return p && p.state === 'missing'; });
+        const errors = payloads.filter(function(p) { return p && p.state === 'error'; });
+
+        if (building.length) {
+            const p = building[0];
+            const total = p.totalConditions || '?';
+            const done = p.doneConditions || 0;
+            const current = p.currentCondition ? ' · ' + escapeHtml(p.currentCondition) : '';
             clearTimeout(state.statusTimer);
-            state.statusTimer = setTimeout(function() { checkIndex(false); }, 5000);
-            return;
+            state.statusTimer = setTimeout(checkIndex, 5000);
+            return '<strong>Preparing ' + escapeHtml(p.species) + ' DEG index</strong> · ' + done + '/' + total + current;
         }
-        if (payload.state === 'missing') {
-            $status.html('<div class="deg-index-status__card"><strong>Preparing ' + state.species + ' DEG index</strong> · starting background build</div>').prop('hidden', false);
-            warmIndex();
-            return;
+        if (ready.length && !missing.length && !errors.length) {
+            return '<strong>DEG indexes ready</strong> · human and mouse caches are available';
         }
-        if (payload.state === 'error') {
-            $status.html('<div class="deg-index-status__card"><strong>DEG index error:</strong> ' + escapeHtml(payload.error || 'unknown') + '</div>').prop('hidden', false);
+        if (ready.length) {
+            return '<strong>Partial DEG index ready</strong> · available: ' + ready.map(function(p) { return p.species; }).join(', ')
+                + (missing.length ? ' · missing: ' + missing.map(function(p) { return p.species; }).join(', ') : '');
         }
+        if (errors.length) {
+            return '<strong>DEG index error:</strong> ' + escapeHtml(errors[0].error || 'unknown');
+        }
+        return '<strong>DEG index not prepared yet.</strong> The all-vs-Healthy cache is a server-side dataset and is not built from the browser.';
     }
-    function checkIndex(thenSearch) {
-        $.getJSON('condition-deg-search/status', { species: state.species })
-            .done(function(payload) {
-                updateStatus(payload);
-                if (payload.state === 'ready' && thenSearch) performSearch(state.query);
-                else if ((payload.state === 'missing' || payload.state === 'building') && thenSearch) {
-                    showOnly($loadingState);
-                    setTimeout(function() { checkIndex(true); }, 4000);
-                }
-            })
-            .fail(function(xhr) {
-                $status.html('<div class="deg-index-status__card"><strong>Could not read DEG index status</strong> (' + xhr.status + ')</div>').prop('hidden', false);
-            });
+    function setStatus(payloads) {
+        $status.html('<div class="deg-index-status__card">' + statusHtml(payloads) + '</div>').prop('hidden', false);
     }
-    function warmIndex() {
-        $.ajax({
-            url: 'condition-deg-search/warm',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ species: state.species })
-        }).done(updateStatus);
-    }
-    function loadConditions() {
-        $.getJSON('conditions', { species: state.species }).done(function(rows) {
-            $condition.html('<option value="">All conditions</option>');
-            (rows || []).forEach(function(row) {
-                if (row.condition && row.condition !== 'Healthy') {
-                    $condition.append('<option value="' + escapeHtml(row.condition) + '">' + escapeHtml(row.condition) + ' (n=' + escapeHtml(row.n_samples) + ')</option>');
-                }
-            });
+    function checkIndex() {
+        $.when.apply($, SPECIES.map(function(species) {
+            return $.getJSON('condition-deg-search/status', { species: species })
+                .then(function(payload) { return payload; }, function(xhr) { return { state: 'error', species: species, error: 'HTTP ' + xhr.status }; });
+        })).done(function() {
+            setStatus(Array.prototype.slice.call(arguments));
         });
     }
-    function refreshCellTypes(rows) {
-        const selected = $cellType.val() || '';
-        const seen = {};
-        (rows || []).forEach(function(row) { if (row.cell_type) seen[row.cell_type] = true; });
-        const names = Object.keys(seen).sort();
-        $cellType.html('<option value="">All cell types</option>');
-        names.forEach(function(name) { $cellType.append('<option value="' + escapeHtml(name) + '">' + escapeHtml(name) + '</option>'); });
-        if (selected && seen[selected]) $cellType.val(selected);
-    }
-    function params() {
+    function params(species) {
         return {
             q: state.query,
-            species: state.species,
-            condition: $condition.val() || '',
-            cellType: $cellType.val() || '',
-            direction: $('#direction-filter').val() || 'both',
-            pval: $('#pval-filter').val() || '0.05',
-            fc: $('#fc-filter').val() || '1.0',
-            hidePseudogenes: $('#hide-pseudogenes').is(':checked')
+            species: species,
+            direction: 'both',
+            pval: '0.05',
+            fc: '1.0',
+            hidePseudogenes: true
         };
     }
     function performSearch(query) {
@@ -371,29 +267,30 @@ $(function() {
         updateSelectionUI();
         showOnly($loadingState);
         $searchBtn.prop('disabled', true);
-        $.getJSON('condition-deg-search', params())
-            .done(function(payload) {
-                $searchBtn.prop('disabled', false);
-                updateStatus(payload);
-                if (payload.state && payload.state !== 'ready') {
-                    setTimeout(function() { checkIndex(true); }, 4000);
-                    return;
+        $.when.apply($, SPECIES.map(function(species) {
+            return $.getJSON('condition-deg-search', params(species))
+                .then(function(payload) { return payload; }, function(xhr) { return { state: 'error', species: species, error: 'HTTP ' + xhr.status, results: [], count: 0 }; });
+        })).done(function() {
+            $searchBtn.prop('disabled', false);
+            const payloads = Array.prototype.slice.call(arguments);
+            const rows = [];
+            let count = 0;
+            payloads.forEach(function(payload) {
+                if (payload.state === 'ready') {
+                    rows.push.apply(rows, payload.results || []);
+                    count += payload.count || (payload.results || []).length;
                 }
-                const rows = payload.results || [];
-                state.lastRows = rows;
-                refreshCellTypes(rows);
-                if (rows.length) {
-                    renderResults(rows, payload.count || rows.length);
-                    showOnly($resultsContainer);
-                } else {
-                    showOnly($noResultsState);
-                }
-            })
-            .fail(function(xhr) {
-                $searchBtn.prop('disabled', false);
-                $status.html('<div class="deg-index-status__card"><strong>Search failed</strong> (' + xhr.status + ')</div>').prop('hidden', false);
-                showOnly($emptyState);
             });
+            rows.sort(function(a, b) { return Number(a.pval_adj || Infinity) - Number(b.pval_adj || Infinity); });
+            state.lastRows = rows.slice(0, 500);
+            setStatus(payloads);
+            if (state.lastRows.length) {
+                renderResults(state.lastRows, count);
+                showOnly($resultsContainer);
+            } else {
+                showOnly($noResultsState);
+            }
+        });
     }
     function renderResults(rows, count) {
         $resultsCount.html('<strong>' + count + '</strong>' + (count === 1 ? ' result' : ' results') + (count >= 500 ? ' · showing top 500' : ''));
@@ -453,25 +350,12 @@ $(function() {
     function visualizeGenes() {
         if (!state.selectedGenes.size) return;
         const genesList = Array.from(state.selectedGenes).join(',');
-        window.location.href = 'featureplot.jsp?species=' + encodeURIComponent(state.species) + '&genes=' + encodeURIComponent(genesList);
+        window.location.href = 'featureplot.jsp?genes=' + encodeURIComponent(genesList);
     }
 
-    $('.species-tab').on('click', function() {
-        state.species = $(this).data('species');
-        $('.species-tab').removeClass('is-active').attr('aria-selected', 'false');
-        $(this).addClass('is-active').attr('aria-selected', 'true');
-        state.selectedGenes.clear();
-        updateSelectionUI();
-        loadConditions();
-        showOnly($emptyState);
-        checkIndex(false);
-    });
     $searchBtn.on('click', function() { performSearch($input.val()); });
     $input.on('keydown', function(e) { if (e.which === 13) { e.preventDefault(); performSearch($input.val()); } });
     $('.search-examples__btn').on('click', function() { $input.val($(this).data('gene')); performSearch($input.val()); });
-    $('#condition-filter, #celltype-filter, #direction-filter, #pval-filter, #fc-filter, #hide-pseudogenes').on('change input', function() {
-        if (state.query) performSearch(state.query);
-    });
     $selectAll.on('change', function() {
         const checked = $(this).prop('checked');
         $('.gene-select').each(function() {
@@ -491,8 +375,7 @@ $(function() {
     });
     $vizBtn.on('click', visualizeGenes);
 
-    loadConditions();
-    checkIndex(false);
+    checkIndex();
 });
 </script>
 <script src="JS/page-loading.js?v=<%= System.currentTimeMillis() %>"></script>

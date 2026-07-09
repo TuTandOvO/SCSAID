@@ -75,7 +75,6 @@ public class ConditionDegSearchServlet extends HttpServlet {
         }
 
         if (!cacheFile(getServletContext(), species).exists()) {
-            startBuild(species, getServletContext());
             writeJson(resp, statusPayload(species, getServletContext()));
             return;
         }

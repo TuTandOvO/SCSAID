@@ -195,14 +195,13 @@ A result means the symbol occurred in an available marker result file; it is not
 
 Open [Search DEG](../deg-search.jsp) to query cached condition/perturbation-versus-Healthy pseudobulk DEG results.
 
-1. Choose **Human** or **Mouse**. The two species are searched separately to avoid mixing HUGO and MGI symbols.
-2. Enter a gene symbol or partial symbol.
-3. Optionally filter by condition, cell type, direction, adjusted p-value, absolute log2 fold change, and pseudogene visibility.
-4. Results are sorted by adjusted p-value and capped at 500 rows.
-5. Interpret log2 fold change as the selected disease, perturbation, or condition relative to **Healthy** within the same species and cell type.
-6. Use **Compare** to open the broader condition comparison page, or **Gene Info** for the gene annotation page.
+1. Enter a gene symbol or partial symbol.
+2. Results are searched across the available human and mouse DEG indexes.
+3. Results are sorted by adjusted p-value and capped at 500 rows.
+4. Interpret log2 fold change as the selected disease, perturbation, or condition relative to **Healthy** within the same species and cell type.
+5. Use **Compare** to open the broader condition comparison page, or **Gene Info** for the gene annotation page.
 
-If the species-level DEG index is not ready, the page starts a background preparation step. The index is built from the existing pseudobulk DESeq2 comparison service by running every non-Healthy condition against Healthy. Biological samples are the replicates. Very small condition sample counts remain underpowered even when a row is statistically reported.
+The DEG index is a server-side cache built from the existing pseudobulk DESeq2 comparison service by running every non-Healthy condition against Healthy. It is not built automatically in a visitor’s browser session. Biological samples are the replicates. Very small condition sample counts remain underpowered even when a row is statistically reported.
 
 ### Gene information page
 
