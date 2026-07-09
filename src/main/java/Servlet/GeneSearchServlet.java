@@ -87,7 +87,11 @@ public class GeneSearchServlet extends HttpServlet {
                         ? lowerToOrig.get("logfoldchange") : lowerToOrig.get("logfoldchanges");
                 String pvalCol = lowerToOrig.containsKey("pval_adj")
                         ? lowerToOrig.get("pval_adj") : lowerToOrig.get("pvals_adj");
-                String groupCol = lowerToOrig.get("group");
+                String cellTypeCol = firstPresent(lowerToOrig,
+                        "cell_type", "cell type", "celltype", "celltypes",
+                        "fine_map", "fine map", "gross_map", "gross map",
+                        "annotation", "cell_annotation", "cell annotation",
+                        "cluster", "clusters", "leiden", "louvain", "group");
 
                 // Skip files missing the columns we need
                 if (namesCol == null || fcCol == null || pvalCol == null) {
@@ -106,7 +110,7 @@ public class GeneSearchServlet extends HttpServlet {
                         if (geneName.contains(query)) {
                             double logfc = Double.parseDouble(rec.get(fcCol));
                             double pval = Double.parseDouble(rec.get(pvalCol));
-                            String markerCellType = (groupCol != null) ? rec.get(groupCol) : "";
+                            String markerCellType = (cellTypeCol != null) ? rec.get(cellTypeCol) : "";
                             if (markerCellType == null || markerCellType.trim().isEmpty()) {
                                 markerCellType = "Unannotated";
                             }
@@ -149,5 +153,15 @@ public class GeneSearchServlet extends HttpServlet {
         responseData.put("count", results.size());
         responseData.put("results", results);
         new Gson().toJson(responseData, response.getWriter());
+    }
+
+    private static String firstPresent(Map<String, String> lowerToOrig, String... keys) {
+        for (String key : keys) {
+            String value = lowerToOrig.get(key);
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
     }
 }
