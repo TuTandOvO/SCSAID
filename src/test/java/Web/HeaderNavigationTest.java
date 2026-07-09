@@ -27,7 +27,7 @@ class HeaderNavigationTest {
     void expressionAndFeedbackLiveInsideTheirRequestedMenus() throws Exception {
         String header = Files.readString(HEADER, StandardCharsets.UTF_8);
 
-        assertTrue(header.contains("boolean scsaidNavigate = scsaidSearch || scsaidCompare || scsaidExpression"));
+        assertTrue(header.contains("boolean scsaidNavigate = scsaidSearch || scsaidDegSearch || scsaidCompare || scsaidExpression"));
         assertTrue(header.contains("boolean scsaidAbout = scsaidCite || scsaidWhatsNew || scsaidPrivacy || scsaidFeedback"));
         assertTrue(header.contains("id=\"navigate-menu\""));
         assertTrue(header.contains("main-nav__dropdown-icon--expression"));
@@ -41,8 +41,8 @@ class HeaderNavigationTest {
     void everyDropdownDestinationHasAnIcon() throws Exception {
         String header = Files.readString(HEADER, StandardCharsets.UTF_8);
 
-        assertEquals(14, occurrences(header, "class=\"main-nav__dropdown-link"));
-        assertEquals(14, occurrences(header, "main-nav__dropdown-icon main-nav__dropdown-icon--"));
+        assertEquals(15, occurrences(header, "class=\"main-nav__dropdown-link"));
+        assertEquals(15, occurrences(header, "main-nav__dropdown-icon main-nav__dropdown-icon--"));
     }
 
     @Test

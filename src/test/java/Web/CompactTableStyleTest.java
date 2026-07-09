@@ -17,11 +17,14 @@ class CompactTableStyleTest {
     @Test
     void sharedTableLayerIsAppliedToAllRequestedSurfaces() throws Exception {
         String geneSearch = read("src/main/webapp/gene-search.jsp");
+        String degSearch = read("src/main/webapp/deg-search.jsp");
         String browse = read("src/main/webapp/browse.jsp");
         String details = read("src/main/webapp/details.jsp");
 
         assertTrue(geneSearch.contains("CSS/humanbase-tables.css"));
         assertTrue(geneSearch.contains("results-table hb-table"));
+        assertTrue(degSearch.contains("CSS/humanbase-tables.css"));
+        assertTrue(degSearch.contains("results-table hb-table"));
         assertFalse(browse.contains("CSS/humanbase-tables.css"));
         assertFalse(browse.contains("browse-table hb-table"));
         assertTrue(browse.contains("<table class=\"browse-table\">"));

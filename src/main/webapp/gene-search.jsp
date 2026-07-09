@@ -15,9 +15,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=20260703a">
     <link rel="manifest" href="/site.webmanifest?v=20260703a">
     <meta name="theme-color" content="#333333">
-    <title>Gene Search - scSAID</title>
-    <meta name="description" content="Search a gene across all differential expression (DEG) results in the scSAID skin atlas. Find in which dataset and cell population your gene of interest is up/down-regulated.">
-    <meta name="keywords" content="gene DEG search, scSAID gene, differential expression skin, scRNA-seq gene search, skin marker gene, keratinocyte DEG">
+    <title>Search Marker - scSAID</title>
+    <meta name="description" content="Search a gene across cell-type marker results in the scSAID skin atlas. Find which dataset or marker group contains your gene of interest.">
+    <meta name="keywords" content="marker search, scSAID gene, cell type marker, scRNA-seq marker gene, skin marker gene, keratinocyte marker">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://skin-scsaid.com/gene-search.jsp">
 
@@ -65,11 +65,11 @@
          Hero — cream, serif, with integrated search box
          ============================================================ -->
     <section class="search-hero">
-        <span class="search-hero__eyebrow">Gene explorer</span>
+        <span class="search-hero__eyebrow">Marker explorer</span>
         <h1 class="search-hero__title title-with-help">
-            <button type="button" class="analysis-help" aria-label="About cross-dataset gene search" aria-describedby="help-gene-search" aria-expanded="false" data-help-target="help-gene-search">Search genes across all datasets</button>
+            <button type="button" class="analysis-help" aria-label="About cross-dataset marker search" aria-describedby="help-gene-search" aria-expanded="false" data-help-target="help-gene-search">Search markers across all datasets</button>
         </h1>
-        <span id="help-gene-search" class="visually-hidden">Query differential-expression results across all scSAID datasets and cell types to locate the populations and effect sizes associated with a gene.</span>
+        <span id="help-gene-search" class="visually-hidden">Query precomputed marker results across scSAID datasets. These marker rows are not disease-versus-healthy condition DEGs.</span>
 
         <div class="search-box-wrap">
         <form class="search-box" role="search" onsubmit="return false;">
@@ -111,7 +111,7 @@
                         <path d="M21 21l-4.35-4.35" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <h2 class="state-block__title">Enter a gene name to search</h2>
-                    <p class="state-block__text">Matching DEG rows across every scSAID dataset and cell type will appear here. Try one of the example genes above to get started.</p>
+                    <p class="state-block__text">Matching marker rows across every scSAID dataset will appear here. Try one of the example genes above to get started.</p>
                 </div>
             </div>
         </article>
@@ -157,7 +157,7 @@
                                     <th>Gene</th>
                                     <th>Dataset</th>
                                     <th>GSE</th>
-                                    <th>Cell type</th>
+                                    <th>Marker group</th>
                                     <th>log₂ FC</th>
                                     <th>Adj. p</th>
                                     <th>Action</th>
@@ -306,10 +306,10 @@ $(document).ready(function() {
             html += '<td class="cell-gene" data-label="Gene"><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=human" class="gene-link">' + geneName + '<span class="gene-link-icon">→</span></a></td>';
             html += '<td data-label="Dataset"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '" class="cell-link">' + row.said + '</a></td>';
             html += '<td data-label="GSE">' + escapeHtml(row.gse) + '</td>';
-            html += '<td data-label="Cell type"><span class="group-badge">' + escapeHtml(row.group) + '</span></td>';
+            html += '<td data-label="Marker group"><span class="group-badge">' + escapeHtml(row.group) + '</span></td>';
             html += '<td data-label="log₂ FC"><span class="expression-badge ' + fcClass + '">' + fcSign + row.logfc + '</span></td>';
             html += '<td class="cell-pval" data-label="Adj. p">' + escapeHtml(row.pval) + '</td>';
-            html += '<td data-label="Action"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '#DEG" class="cell-link">Dataset</a><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=human" class="cell-link">Gene Info</a></td>';
+            html += '<td data-label="Action"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '#DEGResults" class="cell-link">Dataset</a><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=human" class="cell-link">Gene Info</a></td>';
             html += '</tr>';
         });
 

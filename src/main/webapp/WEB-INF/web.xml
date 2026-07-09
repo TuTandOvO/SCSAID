@@ -42,6 +42,9 @@
         <url-pattern>/integrate</url-pattern>
         <url-pattern>/deg</url-pattern>
         <url-pattern>/gene-search</url-pattern>
+        <url-pattern>/condition-deg-search</url-pattern>
+        <url-pattern>/condition-deg-search/status</url-pattern>
+        <url-pattern>/condition-deg-search/warm</url-pattern>
         <url-pattern>/gene-details</url-pattern>
         <url-pattern>/ai-interpretation</url-pattern>
     </filter-mapping>
@@ -316,6 +319,14 @@
     <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-gsea/status</url-pattern></servlet-mapping>
     <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/condition-gsea/result</url-pattern></servlet-mapping>
     <servlet-mapping><servlet-name>ConditionCompareServlet</servlet-name><url-pattern>/gmt-catalog</url-pattern></servlet-mapping>
+
+    <servlet>
+        <servlet-name>ConditionDegSearchServlet</servlet-name>
+        <servlet-class>Servlet.ConditionDegSearchServlet</servlet-class>
+    </servlet>
+    <servlet-mapping><servlet-name>ConditionDegSearchServlet</servlet-name><url-pattern>/condition-deg-search</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionDegSearchServlet</servlet-name><url-pattern>/condition-deg-search/status</url-pattern></servlet-mapping>
+    <servlet-mapping><servlet-name>ConditionDegSearchServlet</servlet-name><url-pattern>/condition-deg-search/warm</url-pattern></servlet-mapping>
 
     <servlet>
         <servlet-name>PsoSpotterServlet</servlet-name>

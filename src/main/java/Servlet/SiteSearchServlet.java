@@ -29,7 +29,8 @@ public class SiteSearchServlet extends HttpServlet {
     static {
         List<FunctionEntry> functions = new ArrayList<>();
         functions.add(new FunctionEntry("Browse datasets", "Explore all scRNA-seq datasets", "browse.jsp", "Browse", "browse dataset studies samples accession gse gsm said"));
-        functions.add(new FunctionEntry("DEG search", "Find differentially expressed genes across datasets", "gene-search.jsp", "Analysis", "deg differential expression marker markers gene search"));
+        functions.add(new FunctionEntry("Search Marker", "Find cell-type marker genes across datasets", "gene-search.jsp", "Analysis", "marker markers cell type cluster gene search"));
+        functions.add(new FunctionEntry("Search DEG", "Find condition or perturbation versus Healthy DEGs", "deg-search.jsp", "Analysis", "deg differential expression disease perturbation condition healthy gene search"));
         functions.add(new FunctionEntry("Gene expression", "Visualize integrated gene expression", "featureplot.jsp", "Analysis", "expression feature plot featureplot umap gene visualization"));
         functions.add(new FunctionEntry("Compare conditions", "Compare cell populations between conditions", "compare.jsp", "Analysis", "compare comparison condition disease healthy"));
         functions.add(new FunctionEntry("psoSpotter", "Run the biomarker panel selection pipeline on uploaded h5ad data", "psospotter.jsp", "Analysis", "psospotter biomarker panel selection uploaded h5ad gene list cross species ortholog"));

@@ -5,7 +5,8 @@ This guide describes the current scSAID interface, the steps required for each w
 The fixed header provides the main routes:
 
 - **Browse** opens the dataset catalogue.
-- **Navigate → Search DEGs** searches differential-expression results across datasets.
+- **Navigate → Search Marker** searches cell-type/sample marker results across datasets.
+- **Navigate → Search DEG** searches condition/perturbation-versus-Healthy pseudobulk DEGs.
 - **Navigate → Compare conditions** runs cross-condition pseudobulk differential expression and pre-ranked GSEA.
 - **Navigate → Expression** overlays a gene on the integrated human or mouse UMAP.
 - **Navigate → psoSpotter** opens the beta real-time biomarker-panel workflow.
@@ -177,18 +178,31 @@ The server constructs the prompt from the selected result snapshots, canonical S
 
 LLM interpretation is a synthesis aid, not an additional statistical analysis. Verify every gene, pathway, direction, statistic, and citation against the displayed or downloaded source result. The model may conflate site-derived results with publication findings, overstate inferred communication or regulation, or produce unsupported biological explanations despite the prompt safeguards. Do not use the output for clinical decisions.
 
-## Search DEGs across datasets
+## Search markers across datasets
 
-Open [Search DEGs](../gene-search.jsp) to query all available differential-expression files.
+Open [Search Marker](../gene-search.jsp) to query all available marker files.
 
 1. Enter a gene symbol or partial symbol. Matching is case-insensitive and based on substring matching.
 2. Choose an autocomplete suggestion or activate **Search**.
 3. Results are sorted by adjusted p-value and capped at 500 rows.
-4. Read the dataset, GSE, cell type/group, log2 fold change, and adjusted p-value for each match.
+4. Read the dataset, GSE, marker group, log2 fold change, and adjusted p-value for each match.
 5. Open **Dataset** to inspect the source analysis or **Gene Info** to open the gene page.
 6. Select one or more unique genes and activate **Visualize on UMAP** to open the integrated expression visualization when available.
 
-A result means the symbol occurred in an available DEG result file; it is not a direct search of raw expression in every cell. Partial searches can match multiple gene families. Verify the exact symbol, species, contrast, effect direction, and adjusted p-value before using a row.
+A result means the symbol occurred in an available marker result file; it is not a disease-versus-Healthy DEG and it is not a direct search of raw expression in every cell. Partial searches can match multiple gene families. Verify the exact symbol, species, marker group, effect direction, and adjusted p-value before using a row.
+
+## Search condition DEGs across datasets
+
+Open [Search DEG](../deg-search.jsp) to query cached condition/perturbation-versus-Healthy pseudobulk DEG results.
+
+1. Choose **Human** or **Mouse**. The two species are searched separately to avoid mixing HUGO and MGI symbols.
+2. Enter a gene symbol or partial symbol.
+3. Optionally filter by condition, cell type, direction, adjusted p-value, absolute log2 fold change, and pseudogene visibility.
+4. Results are sorted by adjusted p-value and capped at 500 rows.
+5. Interpret log2 fold change as the selected disease, perturbation, or condition relative to **Healthy** within the same species and cell type.
+6. Use **Compare** to open the broader condition comparison page, or **Gene Info** for the gene annotation page.
+
+If the species-level DEG index is not ready, the page starts a background preparation step. The index is built from the existing pseudobulk DESeq2 comparison service by running every non-Healthy condition against Healthy. Biological samples are the replicates. Very small condition sample counts remain underpowered even when a row is statistically reported.
 
 ### Gene information page
 

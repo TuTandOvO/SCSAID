@@ -9,10 +9,11 @@
             || scsaidRelativePath.endsWith("/visualization.jsp");
     boolean scsaidSearch = scsaidRelativePath.endsWith("/gene-search.jsp")
             || scsaidRelativePath.startsWith("/gene-details");
+    boolean scsaidDegSearch = scsaidRelativePath.endsWith("/deg-search.jsp");
     boolean scsaidExpression = scsaidRelativePath.endsWith("/featureplot.jsp");
     boolean scsaidCompare = scsaidRelativePath.endsWith("/compare.jsp");
     boolean scsaidPsoSpotter = scsaidRelativePath.endsWith("/psospotter.jsp");
-    boolean scsaidNavigate = scsaidSearch || scsaidCompare || scsaidExpression;
+    boolean scsaidNavigate = scsaidSearch || scsaidDegSearch || scsaidCompare || scsaidExpression;
     scsaidNavigate = scsaidNavigate || scsaidPsoSpotter;
     boolean scsaidDownload = scsaidRelativePath.endsWith("/download.jsp");
     boolean scsaidHelp = scsaidRelativePath.startsWith("/help");
@@ -48,7 +49,8 @@
             <div class="main-nav__item">
                 <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidNavigate ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="navigate-menu"><span class="main-nav__label"><span class="main-nav__icon main-nav__icon--navigate" aria-hidden="true"></span><span>Navigate</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--navigate" id="navigate-menu" role="menu" aria-label="Navigate">
-                    <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--search" aria-hidden="true"></span><span>Search DEGs</span></a>
+                    <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--search" aria-hidden="true"></span><span>Search Marker</span></a>
+                    <a href="deg-search.jsp" class="main-nav__dropdown-link<%= scsaidDegSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidDegSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--compare" aria-hidden="true"></span><span>Search DEG</span></a>
                     <a href="compare.jsp" class="main-nav__dropdown-link<%= scsaidCompare ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCompare ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--compare" aria-hidden="true"></span><span>Compare conditions</span></a>
                     <a href="featureplot.jsp" class="main-nav__dropdown-link<%= scsaidExpression ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--expression" aria-hidden="true"></span><span>Expression</span></a>
                     <a href="psospotter.jsp" class="main-nav__dropdown-link<%= scsaidPsoSpotter ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPsoSpotter ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--psospotter" aria-hidden="true"></span><span>psoSpotter</span><span class="main-nav__badge">beta</span></a>

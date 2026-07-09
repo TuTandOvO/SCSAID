@@ -161,11 +161,11 @@
                             </svg>
                         </div>
                         <div class="error-nav__text">
-                            <span class="error-nav__label">Search</span>
-                            <span class="error-nav__hint">Find specific data</span>
+                            <span class="error-nav__label">Search Marker</span>
+                            <span class="error-nav__hint">Find marker genes</span>
                         </div>
                     </a>
-                    <a href="gene-search.jsp" class="error-nav__link">
+                    <a href="deg-search.jsp" class="error-nav__link">
                         <div class="error-nav__icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
@@ -173,8 +173,8 @@
                             </svg>
                         </div>
                         <div class="error-nav__text">
-                            <span class="error-nav__label">Gene Search</span>
-                            <span class="error-nav__hint">Look up genes</span>
+                            <span class="error-nav__label">Search DEG</span>
+                            <span class="error-nav__hint">Find condition DEGs</span>
                         </div>
                     </a>
                     <a href="download.jsp" class="error-nav__link">

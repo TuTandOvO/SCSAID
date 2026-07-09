@@ -33,4 +33,18 @@ class SiteSearchServletTest {
         assertEquals("Gene expression", results.get(0).title);
         assertEquals("/featureplot.jsp", results.get(0).url);
     }
+
+    @Test
+    void separatesMarkerSearchFromConditionDegSearch() {
+        List<SiteSearchServlet.SearchResult> marker = SiteSearchServlet.search("marker search", "");
+        List<SiteSearchServlet.SearchResult> deg = SiteSearchServlet.search("disease healthy DEG", "");
+
+        assertFalse(marker.isEmpty());
+        assertEquals("Search Marker", marker.get(0).title);
+        assertEquals("/gene-search.jsp", marker.get(0).url);
+
+        assertFalse(deg.isEmpty());
+        assertEquals("Search DEG", deg.get(0).title);
+        assertEquals("/deg-search.jsp", deg.get(0).url);
+    }
 }

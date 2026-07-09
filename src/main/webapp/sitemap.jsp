@@ -34,6 +34,7 @@
         "https://skin-scsaid.com/browse.jsp",
         "https://skin-scsaid.com/featureplot.jsp",
         "https://skin-scsaid.com/gene-search.jsp",
+        "https://skin-scsaid.com/deg-search.jsp",
         "https://skin-scsaid.com/download.jsp",
         "https://skin-scsaid.com/help?topic=faq",
         "https://skin-scsaid.com/help?topic=methods",
