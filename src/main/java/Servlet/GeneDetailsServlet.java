@@ -49,7 +49,8 @@ public class GeneDetailsServlet extends HttpServlet {
             // Generate external links
             Map<String, String> externalLinks = ExternalAPIClient.generateExternalLinks(
                 geneName,
-                geneInfo.getEnsemblId()
+                geneInfo.getEnsemblId(),
+                species
             );
 
             // Set attributes for JSP
@@ -93,7 +94,8 @@ public class GeneDetailsServlet extends HttpServlet {
             GeneInfo geneInfo = ExternalAPIClient.fetchGeneInfo(geneName, species);
             Map<String, String> externalLinks = ExternalAPIClient.generateExternalLinks(
                 geneName,
-                geneInfo != null ? geneInfo.getEnsemblId() : null
+                geneInfo != null ? geneInfo.getEnsemblId() : null,
+                species
             );
 
             // Create response object

@@ -442,10 +442,10 @@ $(document).ready(function() {
             ? UMAPOverlayCore.filterGenes(q, geneUniverse, 8) : [];
         suggestIdx = -1;
         if (!matches.length) { hideSuggest(); return; }
-        var ql = q.trim().toLowerCase(), html = '';
+        var html = '';
         for (var i = 0; i < matches.length; i++) {
             html += '<li class="search-suggest__item" role="option" data-gene="'
-                + escapeHtml(matches[i]) + '">' + highlightMatch(matches[i], ql) + '</li>';
+                + escapeHtml(matches[i]) + '">' + highlightMatch(matches[i], q.trim()) + '</li>';
         }
         $suggest.html(html).prop('hidden', false);
     }
@@ -497,6 +497,13 @@ $(document).ready(function() {
 
     $vizBtn.on('click', visualizeGenes);
     $clearSelectionBtn.on('click', clearSelection);
+
+    const params = new URLSearchParams(window.location.search);
+    const initialGene = params.get('gene') || params.get('q');
+    if (initialGene && initialGene.trim() !== '') {
+        $input.val(initialGene.trim());
+        performSearch(initialGene.trim());
+    }
 });
 </script>
 

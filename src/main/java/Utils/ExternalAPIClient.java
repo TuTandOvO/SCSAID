@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -261,20 +261,35 @@ public class ExternalAPIClient {
      * Generate external database links
      */
     public static Map<String, String> generateExternalLinks(String geneName, String ensemblId) {
-        Map<String, String> links = new HashMap<>();
+        return generateExternalLinks(geneName, ensemblId, "human");
+    }
+
+    public static Map<String, String> generateExternalLinks(String geneName, String ensemblId, String species) {
+        Map<String, String> links = new LinkedHashMap<>();
 
         try {
-            String encodedGene = URLEncoder.encode(geneName, StandardCharsets.UTF_8.toString());
+            String encodedGene = URLEncoder.encode(geneName, StandardCharsets.UTF_8.toString()).replace("+", "%20");
+            String encodedEnsembl = ensemblId != null
+                    ? URLEncoder.encode(ensemblId, StandardCharsets.UTF_8.toString()).replace("+", "%20")
+                    : "";
+            boolean mouse = species != null && species.equalsIgnoreCase("mouse");
+            String ensemblSpecies = mouse ? "Mus_musculus" : "Homo_sapiens";
+            String stringSpecies = mouse ? "10090" : "9606";
 
             links.put("NCBI Gene", "https://www.ncbi.nlm.nih.gov/gene/?term=" + encodedGene);
-            links.put("GeneCards", "https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + encodedGene);
+            if (mouse) {
+                links.put("MGI", "https://www.informatics.jax.org/searchtool/Search.do?query=" + encodedGene);
+            } else {
+                links.put("HGNC", "https://www.genenames.org/tools/search/#!/?query=" + encodedGene);
+                links.put("GeneCards", "https://www.genecards.org/cgi-bin/carddisp.pl?gene=" + encodedGene);
+            }
             links.put("Ensembl", ensemblId != null && !ensemblId.isEmpty() ?
-                     "https://www.ensembl.org/Homo_sapiens/Gene/Summary?g=" + ensemblId :
+                     "https://www.ensembl.org/" + ensemblSpecies + "/Gene/Summary?g=" + encodedEnsembl :
                      "https://www.ensembl.org/Multi/Search/Results?q=" + encodedGene);
             links.put("Protein Atlas", "https://www.proteinatlas.org/search/" + encodedGene);
-            links.put("GTEx Portal", "https://gtexportal.org/home/gene/" + geneName);
+            links.put("GTEx Portal", "https://gtexportal.org/home/gene/" + encodedGene);
             links.put("UniProt", "https://www.uniprot.org/uniprot/?query=" + encodedGene);
-            links.put("STRING", "https://string-db.org/network/" + geneName);
+            links.put("STRING", "https://string-db.org/cgi/network?identifier=" + encodedGene + "&species=" + stringSpecies);
             links.put("KEGG", "https://www.genome.jp/dbget-bin/www_bfind_sub?mode=bfind&max_hit=1000&dbkey=genes&keywords=" + encodedGene);
             links.put("Reactome", "https://reactome.org/content/query?q=" + encodedGene);
             links.put("PubMed", "https://pubmed.ncbi.nlm.nih.gov/?term=" + encodedGene);
