@@ -1248,7 +1248,15 @@
                 // Original DEG Script
                 // =========================================================================
                 console.log("🌟 Original script start");
-                const table = $('#degTable').DataTable({ paging:true, searching:false, info:true });
+                const table = $('#degTable').DataTable({
+                    paging: true,
+                    searching: false,
+                    info: true,
+                    order: [[1, 'desc']],
+                    columnDefs: [
+                        { targets: [1, 2, 3], type: 'num' }
+                    ]
+                });
 
                 const said = '<%= saidParam %>';
                 const gse = '<%= gseVal %>';
