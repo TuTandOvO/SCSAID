@@ -108,7 +108,7 @@
 .main-nav__icon--home { -webkit-mask-image: url('../images/icons/phosphor-fill/house-fill.svg'); mask-image: url('../images/icons/phosphor-fill/house-fill.svg'); }
 .main-nav__icon--browse { -webkit-mask-image: url('../images/icons/phosphor-fill/database-fill.svg'); mask-image: url('../images/icons/phosphor-fill/database-fill.svg'); }
 .main-nav__icon--navigate { -webkit-mask-image: url('../images/icons/phosphor-fill/compass-fill.svg'); mask-image: url('../images/icons/phosphor-fill/compass-fill.svg'); }
-.main-nav__icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
+.main-nav__icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/wave-sine-fill.svg'); mask-image: url('../images/icons/phosphor-fill/wave-sine-fill.svg'); }
 .main-nav__icon--download { -webkit-mask-image: url('../images/icons/phosphor-fill/download-simple-fill.svg'); mask-image: url('../images/icons/phosphor-fill/download-simple-fill.svg'); }
 .main-nav__icon--help { -webkit-mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); }
 .main-nav__icon--about { -webkit-mask-image: url('../images/icons/phosphor-fill/info-fill.svg'); mask-image: url('../images/icons/phosphor-fill/info-fill.svg'); }
@@ -258,7 +258,7 @@
 .main-nav__dropdown-icon--search { -webkit-mask-image: url('../images/icons/phosphor-fill/magnifying-glass-fill.svg'); mask-image: url('../images/icons/phosphor-fill/magnifying-glass-fill.svg'); }
 .main-nav__dropdown-icon--deg { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
 .main-nav__dropdown-icon--compare { -webkit-mask-image: url('../images/icons/phosphor-fill/arrows-left-right-fill.svg'); mask-image: url('../images/icons/phosphor-fill/arrows-left-right-fill.svg'); }
-.main-nav__dropdown-icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
+.main-nav__dropdown-icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/wave-sine-fill.svg'); mask-image: url('../images/icons/phosphor-fill/wave-sine-fill.svg'); }
 .main-nav__dropdown-icon--psospotter { -webkit-mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); }
 .main-nav__dropdown-icon--faq { -webkit-mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); mask-image: url('../images/icons/phosphor-fill/question-fill.svg'); }
 .main-nav__dropdown-icon--methods { -webkit-mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); }

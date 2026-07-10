@@ -24,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260711a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="CSS/search.css?v=20260709a">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
@@ -37,20 +37,6 @@
             border-radius: var(--radius-sm); box-shadow: var(--dropdown-shadow);
             max-height: 300px; overflow-y: auto;
         }
-        .deg-index-status {
-            max-width: 1120px;
-            margin: 0 auto var(--space-lg);
-            padding: 0 var(--space-xl);
-            color: var(--text-secondary);
-            font-size: 0.92rem;
-        }
-        .deg-index-status__card {
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-sm);
-            background: var(--bg-surface);
-            padding: 0.75rem 1rem;
-        }
-        .deg-index-status strong { color: var(--text-primary); }
     </style>
 </head>
 <body>
@@ -90,8 +76,6 @@
             <button class="search-examples__btn" data-gene="IL1B">IL1B</button>
         </div>
     </section>
-
-    <div class="deg-index-status" id="index-status" hidden></div>
 
     <section class="results-section" id="results-section">
         <article id="empty-state" class="panel panel--empty" hidden>
@@ -181,14 +165,13 @@ $(function() {
     const $resultsBody = $('#results-body');
     const $resultsCount = $('#results-count');
     const $selectAll = $('#select-all');
-    const $status = $('#index-status');
     const $selectionBar = $('#selection-bar');
     const $selCount = $('#sel-count');
     const $selectedGenesDisplay = $('#selected-genes-display');
     const $vizBtn = $('#visualize-btn');
 
     const SPECIES = ['human', 'mouse'];
-    let state = { query: '', selectedGenes: new Set(), lastRows: [], statusTimer: null };
+    let state = { query: '', selectedGenes: new Set(), lastRows: [] };
 
     function showOnly($which) {
         [$emptyState, $loadingState, $noResultsState, $resultsContainer].forEach(function($el) {
@@ -217,44 +200,6 @@ $(function() {
     function isPseudogene(name) {
         return /^(Gm\d+|.+-ps\d*|.+Rik|.+-PS\d*)$/.test(String(name || ''));
     }
-    function statusHtml(payloads) {
-        const ready = payloads.filter(function(p) { return p && p.state === 'ready'; });
-        const building = payloads.filter(function(p) { return p && p.state === 'building'; });
-        const missing = payloads.filter(function(p) { return p && p.state === 'missing'; });
-        const errors = payloads.filter(function(p) { return p && p.state === 'error'; });
-
-        if (building.length) {
-            const p = building[0];
-            const total = p.totalConditions || '?';
-            const done = p.doneConditions || 0;
-            const current = p.currentCondition ? ' · ' + escapeHtml(p.currentCondition) : '';
-            clearTimeout(state.statusTimer);
-            state.statusTimer = setTimeout(checkIndex, 5000);
-            return '<strong>Preparing ' + escapeHtml(p.species) + ' DEG index</strong> · ' + done + '/' + total + current;
-        }
-        if (ready.length && !missing.length && !errors.length) {
-            return '<strong>DEG indexes ready</strong> · human and mouse caches are available';
-        }
-        if (ready.length) {
-            return '<strong>Partial DEG index ready</strong> · available: ' + ready.map(function(p) { return p.species; }).join(', ')
-                + (missing.length ? ' · missing: ' + missing.map(function(p) { return p.species; }).join(', ') : '');
-        }
-        if (errors.length) {
-            return '<strong>DEG index error:</strong> ' + escapeHtml(errors[0].error || 'unknown');
-        }
-        return '<strong>DEG index not prepared yet.</strong> The all-vs-Healthy cache is a server-side dataset and is not built from the browser.';
-    }
-    function setStatus(payloads) {
-        $status.html('<div class="deg-index-status__card">' + statusHtml(payloads) + '</div>').prop('hidden', false);
-    }
-    function checkIndex() {
-        $.when.apply($, SPECIES.map(function(species) {
-            return $.getJSON('condition-deg-search/status', { species: species })
-                .then(function(payload) { return payload; }, function(xhr) { return { state: 'error', species: species, error: 'HTTP ' + xhr.status }; });
-        })).done(function() {
-            setStatus(Array.prototype.slice.call(arguments));
-        });
-    }
     function params(species) {
         return {
             q: state.query,
@@ -268,7 +213,6 @@ $(function() {
     function performSearch(query) {
         if (!query || !query.trim()) {
             hideAllResults();
-            $status.prop('hidden', true).empty();
             return;
         }
         state.query = query.trim();
@@ -292,7 +236,6 @@ $(function() {
             });
             rows.sort(function(a, b) { return Number(a.pval_adj || Infinity) - Number(b.pval_adj || Infinity); });
             state.lastRows = rows.slice(0, 500);
-            setStatus(payloads);
             if (state.lastRows.length) {
                 renderResults(state.lastRows, count);
                 showOnly($resultsContainer);

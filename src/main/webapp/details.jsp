@@ -408,7 +408,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260711a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">

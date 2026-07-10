@@ -22,7 +22,7 @@
 
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260703a">
-    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260711a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="CSS/compare.css?v=20260710b">
     <link rel="stylesheet" href="CSS/psospotter.css?v=20260703a">

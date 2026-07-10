@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ContentPagesTest {
@@ -31,6 +32,15 @@ class ContentPagesTest {
     void standalonePrivacyPageWasRemoved() {
         assertTrue(Files.notExists(Path.of("src/main/webapp/privacy.jsp")));
         assertTrue(Files.notExists(Path.of("src/main/webapp/CSS/privacy.css")));
+    }
+
+    @Test
+    void degSearchDoesNotExposeCacheStatusLine() throws Exception {
+        String jsp = read("src/main/webapp/deg-search.jsp");
+        assertFalse(jsp.contains("id=\"index-status\""));
+        assertFalse(jsp.contains("deg-index-status"));
+        assertFalse(jsp.contains("function checkIndex()"));
+        assertFalse(jsp.contains("DEG indexes ready"));
     }
 
     @Test
