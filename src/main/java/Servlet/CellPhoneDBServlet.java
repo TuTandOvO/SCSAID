@@ -29,6 +29,7 @@ public class CellPhoneDBServlet extends HttpServlet {
     private static final String CPDB_HOST = "127.0.0.1";
     private static Process cpdbProcess;
     private static boolean serverStarted = false;
+    private static volatile boolean consolidatedApi = true;
     private static final Object processLock = new Object();
 
     private final Gson gson = new Gson();
@@ -118,16 +119,24 @@ public class CellPhoneDBServlet extends HttpServlet {
     private void handleCellTypes(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String said = request.getParameter("said");
+        String level = request.getParameter("level");
         if (said == null || !said.matches("SAID\\d{3}")) {
             sendError(response, HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
+        if (level == null) level = "";
+        if (!level.isEmpty() && !level.equals("fine") && !level.equals("gross")) {
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid annotation level");
+            return;
+        }
 
-        String apiUrl = String.format("http://%s:%d/api/cell-types?said=%s",
-                CPDB_HOST, CPDB_PORT, URLEncoder.encode(said, "UTF-8"));
+        String apiUrl = consolidatedApi
+                ? String.format("http://%s:%d/api?action=cell-types&said=%s&level=%s",
+                    CPDB_HOST, CPDB_PORT, enc(said), enc(level))
+                : String.format("http://%s:%d/api/cell-types?said=%s&level=%s",
+                    CPDB_HOST, CPDB_PORT, enc(said), enc(level));
 
-        String result = proxyGetRequest(apiUrl);
-        response.getWriter().write(result);
+        writeUpstream(response, proxyGetRequest(apiUrl));
     }
 
     private void handleStatus(HttpServletRequest request, HttpServletResponse response)
@@ -138,11 +147,13 @@ public class CellPhoneDBServlet extends HttpServlet {
             return;
         }
 
-        String apiUrl = String.format("http://%s:%d/api/status?job_id=%s",
-                CPDB_HOST, CPDB_PORT, URLEncoder.encode(jobId, "UTF-8"));
+        String apiUrl = consolidatedApi
+                ? String.format("http://%s:%d/api?action=status&job_id=%s",
+                    CPDB_HOST, CPDB_PORT, enc(jobId))
+                : String.format("http://%s:%d/api/status?job_id=%s",
+                    CPDB_HOST, CPDB_PORT, enc(jobId));
 
-        String result = proxyGetRequest(apiUrl);
-        response.getWriter().write(result);
+        writeUpstream(response, proxyGetRequest(apiUrl));
     }
 
     private void handleResults(HttpServletRequest request, HttpServletResponse response)
@@ -153,11 +164,13 @@ public class CellPhoneDBServlet extends HttpServlet {
             return;
         }
 
-        String apiUrl = String.format("http://%s:%d/api/results?job_id=%s",
-                CPDB_HOST, CPDB_PORT, URLEncoder.encode(jobId, "UTF-8"));
+        String apiUrl = consolidatedApi
+                ? String.format("http://%s:%d/api?action=results&job_id=%s",
+                    CPDB_HOST, CPDB_PORT, enc(jobId))
+                : String.format("http://%s:%d/api/results?job_id=%s",
+                    CPDB_HOST, CPDB_PORT, enc(jobId));
 
-        String result = proxyGetRequest(apiUrl);
-        response.getWriter().write(result);
+        writeUpstream(response, proxyGetRequest(apiUrl));
     }
 
     private void handleHealth(HttpServletResponse response) throws IOException {
@@ -177,6 +190,7 @@ public class CellPhoneDBServlet extends HttpServlet {
         String cellTypes = request.getParameter("cell_types");
         String senders = request.getParameter("senders");
         String receivers = request.getParameter("receivers");
+        String level = request.getParameter("level");
 
         if (said == null || !said.matches("SAID\\d{3}")) {
             sendError(response, HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
@@ -189,13 +203,21 @@ public class CellPhoneDBServlet extends HttpServlet {
             sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid cell-type selection");
             return;
         }
+        if (level == null) level = "";
+        if (!level.isEmpty() && !level.equals("fine") && !level.equals("gross")) {
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid annotation level");
+            return;
+        }
 
-        String apiUrl = String.format("http://%s:%d/api/run-analysis", CPDB_HOST, CPDB_PORT);
+        String apiUrl = consolidatedApi
+                ? String.format("http://%s:%d/api?action=run-analysis", CPDB_HOST, CPDB_PORT)
+                : String.format("http://%s:%d/api/run-analysis", CPDB_HOST, CPDB_PORT);
 
         // Build POST data
         Map<String, String> postData = new HashMap<>();
         postData.put("said", said);
         postData.put("cell_types", cellTypes);
+        postData.put("level", level);
         if (senders != null && !senders.isEmpty()) {
             postData.put("senders", senders);
         }
@@ -203,13 +225,16 @@ public class CellPhoneDBServlet extends HttpServlet {
             postData.put("receivers", receivers);
         }
 
-        String result = proxyPostRequest(apiUrl, postData);
+        UpstreamResponse upstream = proxyPostRequest(apiUrl, postData, consolidatedApi);
+        String result = upstream.body;
         try {
             com.google.gson.JsonObject payload = gson.fromJson(result, com.google.gson.JsonObject.class);
-            if (payload != null && payload.has("job_id")) {
+            if (upstream.isSuccess() && payload != null && payload.has("job_id")
+                    && validJobId(payload.get("job_id").getAsString())) {
                 rememberJob(request, payload.get("job_id").getAsString());
             } else {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setStatus(upstream.isSuccess()
+                        ? HttpServletResponse.SC_BAD_GATEWAY : upstream.status);
             }
         } catch (Exception invalidResponse) {
             throw new IOException("CellPhoneDB returned an invalid job response");
@@ -217,7 +242,7 @@ public class CellPhoneDBServlet extends HttpServlet {
         response.getWriter().write(result);
     }
 
-    private String proxyGetRequest(String urlString) throws IOException {
+    private UpstreamResponse proxyGetRequest(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -233,29 +258,33 @@ public class CellPhoneDBServlet extends HttpServlet {
             inputStream = conn.getErrorStream();
         }
 
-        if (inputStream == null) {
-            return "{\"error\": \"No response from server\"}";
-        }
+        if (inputStream == null) return new UpstreamResponse(responseCode,
+                "{\"error\":\"No response from analysis service\"}");
 
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining("\n"));
+            return new UpstreamResponse(responseCode,
+                    reader.lines().collect(Collectors.joining("\n")));
+        } finally {
+            conn.disconnect();
         }
     }
 
-    private String proxyPostRequest(String urlString, Map<String, String> data) throws IOException {
+    private UpstreamResponse proxyPostRequest(String urlString, Map<String, String> data,
+            boolean formEncoded) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);
         conn.setConnectTimeout(10000);
         conn.setReadTimeout(300000); // 5 minutes for analysis
-        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Content-Type", formEncoded
+                ? "application/x-www-form-urlencoded; charset=UTF-8"
+                : "application/json; charset=UTF-8");
 
-        // Write JSON body
-        String jsonBody = gson.toJson(data);
+        String requestBody = formEncoded ? formEncode(data) : gson.toJson(data);
         try (OutputStream os = conn.getOutputStream()) {
-            os.write(jsonBody.getBytes(StandardCharsets.UTF_8));
+            os.write(requestBody.getBytes(StandardCharsets.UTF_8));
         }
 
         int responseCode = conn.getResponseCode();
@@ -267,13 +296,49 @@ public class CellPhoneDBServlet extends HttpServlet {
             inputStream = conn.getErrorStream();
         }
 
-        if (inputStream == null) {
-            return "{\"error\": \"No response from server\"}";
-        }
+        if (inputStream == null) return new UpstreamResponse(responseCode,
+                "{\"error\":\"No response from analysis service\"}");
 
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining("\n"));
+            return new UpstreamResponse(responseCode,
+                    reader.lines().collect(Collectors.joining("\n")));
+        } finally {
+            conn.disconnect();
+        }
+    }
+
+    private static String formEncode(Map<String, String> data) {
+        return data.entrySet().stream()
+                .map(entry -> enc(entry.getKey()) + "=" + enc(entry.getValue()))
+                .collect(Collectors.joining("&"));
+    }
+
+    private static String enc(String value) {
+        try {
+            return URLEncoder.encode(value == null ? "" : value, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException impossible) {
+            throw new IllegalStateException(impossible);
+        }
+    }
+
+    private static void writeUpstream(HttpServletResponse response, UpstreamResponse upstream)
+            throws IOException {
+        response.setStatus(upstream.status);
+        response.getWriter().write(upstream.body);
+    }
+
+    private static final class UpstreamResponse {
+        final int status;
+        final String body;
+
+        UpstreamResponse(int status, String body) {
+            this.status = status;
+            this.body = body;
+        }
+
+        boolean isSuccess() {
+            return status >= 200 && status < 300;
         }
     }
 
@@ -306,7 +371,8 @@ public class CellPhoneDBServlet extends HttpServlet {
     }
 
     private static boolean validJobId(String jobId) {
-        return jobId != null && jobId.matches("[0-9a-fA-F-]{36}");
+        return jobId != null && (jobId.matches("[0-9a-fA-F]{8}")
+                || jobId.matches("[0-9a-fA-F-]{36}"));
     }
 
     private boolean ensureServerRunning() {
@@ -384,24 +450,32 @@ public class CellPhoneDBServlet extends HttpServlet {
     }
 
     private boolean isServerHealthy() {
+        String consolidatedHealth = String.format(
+                "http://%s:%d/api/conditions?species=human", CPDB_HOST, CPDB_PORT);
+        if (probe(consolidatedHealth)) {
+            consolidatedApi = true;
+            return true;
+        }
+        String restHealth = String.format("http://%s:%d/health", CPDB_HOST, CPDB_PORT);
+        if (probe(restHealth)) {
+            consolidatedApi = false;
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean probe(String apiUrl) {
+        HttpURLConnection conn = null;
         try {
-            // The production analysis service does not expose /health. Use its
-            // lightweight conditions endpoint so an already-running service is
-            // recognised instead of attempting to launch a competing process.
-            String apiUrl = String.format(
-                    "http://%s:%d/api/conditions?species=human", CPDB_HOST, CPDB_PORT);
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) new URL(apiUrl).openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(2000);
             conn.setReadTimeout(2000);
-            try {
-                return conn.getResponseCode() == HttpURLConnection.HTTP_OK;
-            } finally {
-                conn.disconnect();
-            }
+            return conn.getResponseCode() == HttpURLConnection.HTTP_OK;
         } catch (Exception e) {
             return false;
+        } finally {
+            if (conn != null) conn.disconnect();
         }
     }
 

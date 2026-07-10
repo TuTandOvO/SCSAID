@@ -35,10 +35,15 @@ class SecurityHardeningTest {
     @Test
     void cellPhoneDbIsExplicitlyMappedWhenAnnotationScanningIsDisabled() throws Exception {
         String webXml = read("src/main/webapp/WEB-INF/web.xml");
+        String servlet = read("src/main/java/Servlet/CellPhoneDBServlet.java");
         assertTrue(webXml.contains("metadata-complete=\"true\""));
         assertTrue(webXml.contains("<servlet-class>Servlet.CellPhoneDBServlet</servlet-class>"));
         assertTrue(webXml.contains("<servlet-name>CellPhoneDBServlet</servlet-name>"));
         assertTrue(webXml.contains("<url-pattern>/cpdb-api</url-pattern>"));
+        assertTrue(servlet.contains("/api?action=cell-types"));
+        assertTrue(servlet.contains("application/x-www-form-urlencoded"));
+        assertTrue(servlet.contains("jobId.matches(\"[0-9a-fA-F]{8}\")"));
+        assertTrue(servlet.contains("writeUpstream(response"));
     }
 
     @Test
