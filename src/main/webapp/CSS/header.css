@@ -256,6 +256,7 @@
 }
 
 .main-nav__dropdown-icon--search { -webkit-mask-image: url('../images/icons/phosphor-fill/magnifying-glass-fill.svg'); mask-image: url('../images/icons/phosphor-fill/magnifying-glass-fill.svg'); }
+.main-nav__dropdown-icon--deg { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
 .main-nav__dropdown-icon--compare { -webkit-mask-image: url('../images/icons/phosphor-fill/arrows-left-right-fill.svg'); mask-image: url('../images/icons/phosphor-fill/arrows-left-right-fill.svg'); }
 .main-nav__dropdown-icon--expression { -webkit-mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); mask-image: url('../images/icons/phosphor-fill/chart-bar-fill.svg'); }
 .main-nav__dropdown-icon--psospotter { -webkit-mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); mask-image: url('../images/icons/phosphor-fill/flask-fill.svg'); }

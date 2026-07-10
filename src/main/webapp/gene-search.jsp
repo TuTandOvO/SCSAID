@@ -27,10 +27,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/search.css?v=20260710b">
+    <link rel="stylesheet" href="CSS/search.css?v=20260710c">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
@@ -159,8 +159,8 @@
                                     <th>Dataset</th>
                                     <th>GSE</th>
                                     <th>Marker cell type</th>
-                                    <th>log₂ FC</th>
-                                    <th>Adj. p</th>
+                                    <th><button type="button" class="table-sort-btn" data-sort-key="fc">log₂ FC <span class="table-sort-btn__mark" aria-hidden="true"></span></button></th>
+                                    <th><button type="button" class="table-sort-btn" data-sort-key="pval">Adj. p <span class="table-sort-btn__mark" aria-hidden="true"></span></button></th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -233,6 +233,9 @@ $(document).ready(function() {
 
     let currentQuery = '';
     let selectedGenes = new Set();
+    let currentResults = [];
+    let currentResultCount = 0;
+    let sortState = { key: 'fc', direction: 'desc' };
 
     function showOnly($which) {
         [$emptyState, $loadingState, $noResultsState, $resultsContainer].forEach(function($el) {
@@ -276,9 +279,13 @@ $(document).ready(function() {
             success: function(response) {
                 $searchBtn.prop('disabled', false);
                 if (response.results && response.results.length > 0) {
-                    renderResults(response.results, response.count);
+                    currentResults = response.results;
+                    currentResultCount = response.count || response.results.length;
+                    renderResults();
                     showOnly($resultsContainer);
                 } else {
+                    currentResults = [];
+                    currentResultCount = 0;
                     showOnly($noResultsState);
                 }
             },
@@ -290,9 +297,36 @@ $(document).ready(function() {
         });
     }
 
-    function renderResults(results, count) {
+    function numericValue(row, key) {
+        const raw = key === 'pval' ? row.pval : row.logfc;
+        const parsed = parseFloat(String(raw == null ? '' : raw).replace(/[^\deE+\-.]/g, ''));
+        if (Number.isFinite(parsed)) return parsed;
+        return key === 'pval' ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+    }
+
+    function sortedResults() {
+        return currentResults.slice().sort(function(a, b) {
+            const av = numericValue(a, sortState.key);
+            const bv = numericValue(b, sortState.key);
+            if (av === bv) return String(a.gene || '').localeCompare(String(b.gene || ''));
+            return sortState.direction === 'asc' ? av - bv : bv - av;
+        });
+    }
+
+    function updateSortIndicators() {
+        $('.table-sort-btn').removeClass('table-sort-btn--active')
+            .find('.table-sort-btn__mark').text('');
+        const $active = $('.table-sort-btn[data-sort-key="' + sortState.key + '"]');
+        $active.addClass('table-sort-btn--active')
+            .find('.table-sort-btn__mark').text(sortState.direction === 'asc' ? '↑' : '↓');
+    }
+
+    function renderResults() {
+        const results = sortedResults();
+        const count = currentResultCount;
         $resultsCount.html('<strong>' + count + '</strong>' + (count === 1 ? ' result' : ' results')
             + (count >= 500 ? ' · showing top 500' : ''));
+        updateSortIndicators();
 
         let html = '';
         let processedGenes = new Set();
@@ -361,12 +395,12 @@ $(document).ready(function() {
     function renderMarkerCellTypes(row) {
         const types = normalizeCellTypes(row);
         if (!types.length) {
-            return '<span class="group-badge">Unannotated</span>';
+            return '<span class="marker-cell-type-text">Unannotated</span>';
         }
 
         const first = types[0];
         if (types.length === 1) {
-            return '<span class="group-badge">' + escapeHtml(first) + '</span>';
+            return '<span class="marker-cell-type-text">' + escapeHtml(first) + '</span>';
         }
 
         const rest = types.slice(1);
@@ -376,7 +410,7 @@ $(document).ready(function() {
 
         return '<div class="cell-type-menu">'
             + '<button type="button" class="cell-type-menu__trigger" aria-expanded="false">'
-            + '<span class="group-badge">' + escapeHtml(first) + '</span>'
+            + '<span class="marker-cell-type-text">' + escapeHtml(first) + '</span>'
             + '<span class="cell-type-menu__count">+' + rest.length + '</span>'
             + '</button>'
             + '<div class="cell-type-popover" role="list" aria-label="Additional cell types sharing this marker">'
@@ -531,6 +565,18 @@ $(document).ready(function() {
         if (!$(e.target).closest('.cell-type-menu').length) {
             $('.cell-type-menu').removeClass('is-open').find('.cell-type-menu__trigger').attr('aria-expanded', 'false');
         }
+    });
+
+    $(document).on('click', '.table-sort-btn', function() {
+        const key = $(this).data('sort-key');
+        if (!key) return;
+        if (sortState.key === key) {
+            sortState.direction = sortState.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortState.key = key;
+            sortState.direction = key === 'pval' ? 'asc' : 'desc';
+        }
+        renderResults();
     });
 
     // Wire up events

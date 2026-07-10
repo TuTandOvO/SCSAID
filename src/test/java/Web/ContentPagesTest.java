@@ -28,9 +28,9 @@ class ContentPagesTest {
     }
 
     @Test
-    void privacyContentClearsTheFixedHeader() throws Exception {
-        String css = read("src/main/webapp/CSS/privacy.css");
-        assertTrue(css.contains("padding: calc(var(--header-height, 50px) + 2.5rem) 0 4rem;"));
+    void standalonePrivacyPageWasRemoved() {
+        assertTrue(Files.notExists(Path.of("src/main/webapp/privacy.jsp")));
+        assertTrue(Files.notExists(Path.of("src/main/webapp/CSS/privacy.css")));
     }
 
     @Test
@@ -42,8 +42,8 @@ class ContentPagesTest {
         assertTrue(cite.contains("Additional references"));
         assertTrue(cite.contains("[Authors]"));
         assertTrue(news.contains("What’s New in scSAID"));
-        assertTrue(news.contains("[Month Year]"));
-        assertTrue(news.contains("[Data or method version update]"));
+        assertTrue(news.contains("LLM Interpretation panel"));
+        assertTrue(news.contains("Regulon and regulatory-network interpretation"));
     }
 
     @Test
@@ -66,7 +66,7 @@ class ContentPagesTest {
                 "## Compare conditions in real time",
                 "## psoSpotter beta workflow",
                 "## Download Center",
-                "## Help, About, privacy, and feedback"
+                "## Help, About, storage notice, and feedback"
         };
         for (String heading : required) assertTrue(usage.contains(heading), heading);
     }

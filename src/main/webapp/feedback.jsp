@@ -21,8 +21,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
 
     <% if (gateEnabled) { %>
     <!-- Cloudflare Turnstile (gates the feedback form against over-submission) -->
@@ -37,43 +37,6 @@
         .feedback-page {
             min-height: 100vh;
             padding-top: var(--header-height);
-        }
-
-        .page-header {
-            background: var(--color-primary);
-            padding: clamp(3rem, 9vh, 4.5rem) 0;
-            text-align: center;
-        }
-
-        .page-header__content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 clamp(1rem, 4vw, 2rem);
-        }
-
-        .page-header__eyebrow {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .page-header__title {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 300;
-            color: var(--text-inverse);
-            margin: 0 0 1rem;
-        }
-
-        .page-header__description {
-            font-size: 1.15rem;
-            color: rgba(255, 255, 255, 0.75);
-            margin: 0;
-            line-height: 1.7;
         }
 
         .feedback-content {
@@ -136,10 +99,6 @@
         }
 
         @media (max-width: 768px) {
-            .page-header {
-                padding: 3.5rem 0;
-            }
-
             .feedback-content {
                 padding: 2.5rem 1.25rem 3rem;
             }
@@ -166,15 +125,15 @@
 <%@ include file="includes/header.jsp" %>
 
 <main class="feedback-page" id="main-content" tabindex="-1">
-    <div class="page-header">
-        <div class="page-header__content">
-            <span class="page-header__eyebrow">Community</span>
-            <h1 class="page-header__title">Feedback</h1>
-            <p class="page-header__description">
+    <section class="page-hero">
+        <div class="page-hero__inner">
+            <span class="page-hero__eyebrow">Community</span>
+            <h1 class="page-hero__title">Feedback</h1>
+            <p class="page-hero__description">
                 Tell us what you think. Your feedback helps us improve.
             </p>
         </div>
-    </div>
+    </section>
 
     <div class="feedback-content">
         <div class="feedback-card">

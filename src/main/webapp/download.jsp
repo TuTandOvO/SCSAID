@@ -27,9 +27,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
-    <link rel="stylesheet" href="CSS/download.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/download.css?v=20260710c">
 </head>
 <body>
 
@@ -50,11 +50,6 @@
     <!-- Download Section -->
     <section class="download-section">
         <h2 class="section-title">Integrated single-cell atlases</h2>
-        <p class="section-intro">
-            The full integrated atlases as AnnData (<code>.h5ad</code>) objects — UMAP embeddings,
-            cleaned <code>obs</code> metadata, and cell-type annotations — are deposited on Zenodo,
-            one record per species. Open access under CC-BY-4.0.
-        </p>
 
         <div class="download-grid">
             <!-- Human integrated atlas (Zenodo) -->
@@ -318,22 +313,6 @@
         <div class="info-section">
             <h3 class="info-section__title">Usage Guidelines</h3>
             <div class="info-section__content">
-                <div class="info-item">
-                    <div class="info-item__icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                            <polyline points="14,2 14,8 20,8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <polyline points="10,9 9,9 8,9"/>
-                        </svg>
-                    </div>
-                    <div class="info-item__text">
-                        <h4>Data Format</h4>
-                        <p>Metadata is provided as Excel (.xlsx) and CSV, readable in Excel, Google Sheets, and R/Python. The full integrated atlases are AnnData (.h5ad) objects on Zenodo — load with <code>scanpy.read_h5ad</code>.</p>
-                    </div>
-                </div>
-
                 <div class="info-item">
                     <div class="info-item__icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

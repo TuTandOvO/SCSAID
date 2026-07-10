@@ -19,10 +19,9 @@
     boolean scsaidHelp = scsaidRelativePath.startsWith("/help");
     boolean scsaidCite = scsaidRelativePath.endsWith("/cite.jsp");
     boolean scsaidWhatsNew = scsaidRelativePath.endsWith("/whats-new.jsp");
-    boolean scsaidPrivacy = scsaidRelativePath.endsWith("/privacy.jsp");
     boolean scsaidFeedback = scsaidRelativePath.startsWith("/feedback")
             || scsaidRelativePath.startsWith("/contact");
-    boolean scsaidAbout = scsaidCite || scsaidWhatsNew || scsaidPrivacy || scsaidFeedback;
+    boolean scsaidAbout = scsaidCite || scsaidWhatsNew || scsaidFeedback;
     String scsaidHelpTopic = request.getParameter("topic");
     boolean scsaidHelpFaq = scsaidHelp && (scsaidHelpTopic == null || "faq".equals(scsaidHelpTopic));
     boolean scsaidHelpMethods = scsaidHelp && "methods".equals(scsaidHelpTopic);
@@ -50,7 +49,7 @@
                 <button type="button" class="main-nav__link main-nav__menu-toggle<%= scsaidNavigate ? " main-nav__link--active" : "" %>" aria-haspopup="true" aria-expanded="false" aria-controls="navigate-menu"><span class="main-nav__label"><span class="main-nav__icon main-nav__icon--navigate" aria-hidden="true"></span><span>Navigate</span></span></button>
                 <div class="main-nav__dropdown main-nav__dropdown--navigate" id="navigate-menu" role="menu" aria-label="Navigate">
                     <a href="gene-search.jsp" class="main-nav__dropdown-link<%= scsaidSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--search" aria-hidden="true"></span><span>Search Marker</span></a>
-                    <a href="deg-search.jsp" class="main-nav__dropdown-link<%= scsaidDegSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidDegSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--compare" aria-hidden="true"></span><span>Search DEG</span></a>
+                    <a href="deg-search.jsp" class="main-nav__dropdown-link<%= scsaidDegSearch ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidDegSearch ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--deg" aria-hidden="true"></span><span>Search DEG</span></a>
                     <a href="compare.jsp" class="main-nav__dropdown-link<%= scsaidCompare ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCompare ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--compare" aria-hidden="true"></span><span>Compare conditions</span></a>
                     <a href="featureplot.jsp" class="main-nav__dropdown-link<%= scsaidExpression ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidExpression ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--expression" aria-hidden="true"></span><span>Expression</span></a>
                     <a href="psospotter.jsp" class="main-nav__dropdown-link<%= scsaidPsoSpotter ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPsoSpotter ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--psospotter" aria-hidden="true"></span><span>psoSpotter</span><span class="main-nav__badge">beta</span></a>
@@ -72,7 +71,6 @@
                 <div class="main-nav__dropdown main-nav__dropdown--about" id="about-menu" role="menu" aria-label="About">
                     <a href="cite.jsp" class="main-nav__dropdown-link<%= scsaidCite ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidCite ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--cite" aria-hidden="true"></span><span>How to Cite</span></a>
                     <a href="whats-new.jsp" class="main-nav__dropdown-link<%= scsaidWhatsNew ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidWhatsNew ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--news" aria-hidden="true"></span><span>What’s New</span></a>
-                    <a href="privacy.jsp" class="main-nav__dropdown-link<%= scsaidPrivacy ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidPrivacy ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--privacy" aria-hidden="true"></span><span>Privacy</span></a>
                     <a href="feedback" class="main-nav__dropdown-link<%= scsaidFeedback ? " main-nav__dropdown-link--active" : "" %>" role="menuitem"<%= scsaidFeedback ? " aria-current=\"page\"" : "" %>><span class="main-nav__dropdown-icon main-nav__dropdown-icon--feedback" aria-hidden="true"></span><span>Feedback</span></a>
                     <button type="button" class="main-nav__dropdown-link" role="menuitem" data-newsletter-open><span class="main-nav__dropdown-icon main-nav__dropdown-icon--newsletter" aria-hidden="true"></span><span>Subscribe to updates</span></button>
                 </div>
@@ -112,7 +110,6 @@
 <aside class="storage-notice" id="storage-notice" aria-label="Privacy notice" hidden>
     <p class="storage-notice__text">
         scSAID uses first-party cookies for secure sessions and visit counting, and local storage to remember interface preferences. We do not use advertising or third-party tracking cookies.
-        <a href="privacy.jsp">Privacy details</a>
     </p>
     <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
 </aside>
@@ -133,7 +130,6 @@
             <div class="nl-modal__body">
                 <p class="nl-modal__lead">Sign up for updates to the <strong>scSAID</strong> platform.</p>
                 <p class="nl-modal__lead">We'll inform you periodically when a scSAID dataset or exciting new features are added.</p>
-                <p class="nl-modal__lead" style="margin-bottom:1.25rem;">The updates are sent by Ethan Shen in the scSAID team.</p>
                 <form id="newsletterForm" class="nl-form"
                       action="https://buttondown.com/api/emails/embed-subscribe/ethan-scsaid"
                       method="post" target="nl-buttondown-sink">
@@ -146,7 +142,6 @@
                     <button type="submit" class="nl-form__submit">Subscribe</button>
                 </form>
                 <p class="nl-modal__confirm-note">Please confirm your subscription from the email we sent, or you won’t receive future notifications.</p>
-                <p class="nl-modal__privacy">Your privacy is important to us, and your email will never be given to a 3rd party.</p>
             </div>
         </div>
 

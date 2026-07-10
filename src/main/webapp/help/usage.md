@@ -12,7 +12,7 @@ The fixed header provides the main routes:
 - **Navigate → psoSpotter** opens the beta real-time biomarker-panel workflow.
 - **Download** provides integrated atlases and metadata files.
 - **Help** contains FAQ, methods, markers, pipeline, and this usage guide.
-- **About** contains citation, release-note, privacy, and feedback pages.
+- **About** contains citation, release-note, feedback, and subscription links.
 
 ### Search anything
 
@@ -318,7 +318,7 @@ Before publication:
 4. Export the corresponding table when a figure depends on filtered results.
 5. Record analysis parameters in the figure legend or methods.
 
-## Help, About, privacy, and feedback
+## Help, About, storage notice, and feedback
 
 - **FAQ** answers common resource questions.
 - **Methods** summarizes analysis definitions.
@@ -326,7 +326,7 @@ Before publication:
 - **Pipeline** outlines data processing.
 - **How to Cite** provides the scSAID citation and slots for method-specific references.
 - **What’s New** records releases and reproducibility-relevant changes.
-- **Privacy** explains first-party session cookies, visit-count protection, and locally saved interface preferences. It also provides a control to clear saved preferences.
+- The inline storage notice explains first-party session cookies, visit-count protection, and locally saved interface preferences.
 - **Feedback** uses a verification step before revealing the submission form. Use it for corrections, reproducibility problems, missing datasets, broken analyses, or interface issues; include the URL, SAID/accession, inputs, expected behavior, and observed error.
 
 scSAID does not use advertising or third-party tracking cookies. Clearing local preferences resets remembered interface choices but does not alter server-side source data.
@@ -353,5 +353,5 @@ Use scSAID results as evidence within the limits of the underlying study design.
 - **A job fails:** retry once with valid inputs, then report the URL, parameters, file type/size, time, and visible error through Feedback.
 - **A gene is missing:** confirm the official species-specific symbol and whether the gene is present in the relevant processed matrix or DEG file.
 - **A plot is crowded:** use full screen, reduce the number of displayed results, choose a broader annotation, or export PDF.
-- **The interface remembers an unwanted option:** change it directly or clear saved preferences on the Privacy page.
+- **The interface remembers an unwanted option:** change it directly in the relevant widget, or clear site data for scSAID in your browser settings.
 - **A header or control covers content:** reload once to obtain the latest versioned styles; if it persists, report the browser, viewport size, URL, and screenshot.

@@ -108,8 +108,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
 
 
     <!-- Composition Charts -->
@@ -798,11 +798,10 @@
         <div class="site-footer__content">
             <div class="site-footer__logo">scSAID</div>
             <p class="site-footer__text">Single-Cell Skin & Appendages Integrated Database</p>
-            <p class="site-footer__text">Zhejiang University</p>
+            <p class="site-footer__text">Zhejiang University x University of Edinburgh</p>
 
             <div class="site-footer__links">
-                <a href="mailto:info@scsaid.org" class="site-footer__link">Contact</a>
-                <a href="privacy.jsp" class="site-footer__link">Privacy Policy</a>
+                <a href="feedback" class="site-footer__link">Contact</a>
                 <a href="#" class="site-footer__link">Terms of Use</a>
             </div>
 

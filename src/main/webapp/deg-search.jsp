@@ -23,8 +23,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="CSS/search.css?v=20260709a">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">

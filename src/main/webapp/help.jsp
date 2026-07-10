@@ -24,9 +24,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
-    <link rel="stylesheet" href="CSS/help.css?v=20260701h">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/help.css?v=20260710c">
 </head>
 <body>
 <%
@@ -47,15 +47,15 @@
 <%@ include file="includes/header.jsp" %>
 
 <main class="help-page" id="main-content" tabindex="-1">
-    <div class="page-header">
-        <div class="page-header__content">
-            <span class="page-header__eyebrow">Help Center</span>
-            <h1 class="page-header__title"><%= topicTitle %></h1>
-            <p class="page-header__description">
+    <section class="page-hero">
+        <div class="page-hero__inner">
+            <span class="page-hero__eyebrow">Help Center</span>
+            <h1 class="page-hero__title"><%= topicTitle %></h1>
+            <p class="page-hero__description">
                 Find guidance for exploring scSAID datasets, analyses, and exports.
             </p>
         </div>
-    </div>
+    </section>
 
     <section class="help-content-section">
         <div class="help-layout">

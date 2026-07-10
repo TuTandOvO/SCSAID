@@ -166,6 +166,8 @@ div {
     --segmented-pad: 3px;
     --segmented-height: 38px;
     --segmented-max-width: 22rem;
+    --segmented-indicator-scale-x: 0.9;
+    --segmented-indicator-scale-y: 0.72;
 
     position: relative;
     display: grid;
@@ -191,18 +193,18 @@ div {
     left: var(--segmented-pad);
     z-index: 0;
     width: calc((100% - (var(--segmented-pad) * 2)) / 2);
-    background: color-mix(in srgb, var(--color-secondary) 13%, var(--bg-surface));
-    border: 1px solid color-mix(in srgb, var(--color-secondary) 24%, var(--border-light));
+    background: color-mix(in srgb, var(--color-secondary) 12%, var(--bg-surface));
+    border: 0;
     border-radius: calc(var(--radius-sm) - 1px);
-    box-shadow: 0 1px 2px rgba(51, 122, 183, 0.08);
-    transform: translateX(0);
-    transition: transform var(--transition-base), background-color var(--transition-base), border-color var(--transition-base);
+    box-shadow: none;
+    transform: translateX(0) scale(var(--segmented-indicator-scale-x), var(--segmented-indicator-scale-y));
+    transition: transform var(--transition-base), background-color var(--transition-base);
 }
 
 .species-toggle:has(label:nth-of-type(2) input:checked)::before,
 .cpdb-mode-toggle:has(label:nth-of-type(2) input:checked)::before,
 .composition__toggle:has(.composition__toggle-btn:nth-child(2).composition__toggle-btn--active)::before {
-    transform: translateX(100%);
+    transform: translateX(100%) scale(var(--segmented-indicator-scale-x), var(--segmented-indicator-scale-y));
 }
 
 .species-toggle label,

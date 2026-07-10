@@ -32,9 +32,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 
     <!-- Design System -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
     <link rel="stylesheet" href="CSS/animations.css?v=20260701h">
     <link rel="stylesheet" href="CSS/browse.css?v=20260702p">
 

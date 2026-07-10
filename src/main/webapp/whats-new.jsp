@@ -13,8 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/header.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
+    <link rel="stylesheet" href="CSS/header.css?v=20260710c">
     <link rel="stylesheet" href="CSS/about-pages.css?v=20260703a">
 </head>
 <body>
@@ -25,29 +25,20 @@
             <p class="about-page__intro">Release notes for new datasets, analyses, interface improvements, and reproducibility changes.</p>
         </header>
 
-        <div class="template-note">Template: duplicate a dated section for each release and replace the bracketed text.</div>
-
         <section class="release" aria-labelledby="release-latest-title">
-            <h2 class="release__date" id="release-latest-title">[Month Year]</h2>
+            <h2 class="release__date" id="release-latest-title">July 2026</h2>
             <article class="release-entry">
-                <h3>[New analysis or dataset]</h3>
-                <p class="template-placeholder">[Describe what was added, where users can find it, and the scientific question it supports.]</p>
+                <h3>LLM Interpretation panel <span class="main-nav__badge">beta</span></h3>
+                <p>A new LLM Interpretation card is available on dataset detail pages. Users can select scSAID-generated analysis outputs, combine them with dataset metadata and linked publication context, and request an expert-style interpretation from a supported provider using their own API key.</p>
+                <p>The provider key is used only for the submitted request and is not stored in server sessions, cookies, browser storage, database tables, caches, or application logs. The panel currently supports OpenAI, DeepSeek, Claude, and Gemini.</p>
             </article>
             <article class="release-entry">
-                <h3>[Interface or workflow improvement]</h3>
-                <p class="template-placeholder">[Describe the changed workflow and what users should do differently.]</p>
+                <h3>Regulon and regulatory-network interpretation <span class="main-nav__badge">beta</span></h3>
+                <p>The regulatory-network workflow has been expanded around regulon-level interpretation. The detail-page network view now emphasizes compact regulator/target exploration, including top transcription-factor summaries and targetome context for selected datasets.</p>
             </article>
             <article class="release-entry">
-                <h3>[Data or method version update]</h3>
-                <p class="template-placeholder">[Record the affected resource versions, whether results changed, and how to reproduce older results.]</p>
-            </article>
-        </section>
-
-        <section class="release" aria-labelledby="release-previous-title">
-            <h2 class="release__date" id="release-previous-title">[Previous Month Year]</h2>
-            <article class="release-entry">
-                <h3>[Update title]</h3>
-                <p class="template-placeholder">[Concise description of the release, with links to the affected page or documentation where appropriate.]</p>
+                <h3>Navigation and analysis-page polish</h3>
+                <p>Header navigation, shared segmented toggles, marker search, condition DEG search, and result tables were aligned to the same compact scSAID/HumanBase-inspired interface language for clearer cross-page workflows.</p>
             </article>
         </section>
     </main>

@@ -41,16 +41,14 @@ class PreferenceSystemTest {
     }
 
     @Test
-    void publishesAnInformationalNoticeAndPrivacyPage() throws Exception {
+    void publishesAnInformationalStorageNoticeWithoutStandalonePrivacyPage() throws Exception {
         String header = read("includes/header.jsp");
-        String privacy = read("privacy.jsp");
 
         assertTrue(header.contains("id=\"storage-notice\""));
         assertTrue(header.contains("We do not use advertising or third-party tracking cookies."));
-        assertTrue(header.contains("href=\"privacy.jsp\""));
-        assertTrue(privacy.contains("data-reset-preferences"));
-        assertTrue(privacy.contains("count_cookie"));
-        assertTrue(privacy.contains("Gene searches and analysis results are not placed in preference storage."));
+        assertFalse(header.contains("href=\"privacy.jsp\""));
+        assertTrue(Files.notExists(WEBAPP.resolve("privacy.jsp")));
+        assertTrue(Files.notExists(WEBAPP.resolve("CSS/privacy.css")));
     }
 
     @Test
