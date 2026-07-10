@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
     <link rel="stylesheet" href="CSS/header.css?v=20260704b">
     <link rel="stylesheet" href="CSS/details.css?v=20260703d">
-    <link rel="stylesheet" href="CSS/search.css?v=20260702p">
+    <link rel="stylesheet" href="CSS/search.css?v=20260710a">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
@@ -314,12 +314,11 @@ $(document).ready(function() {
             html += '<tr data-gene="' + escapeHtml(row.gene) + '">';
             html += '<td class="cell-checkbox" data-label="Select">' + checkboxHtml + '</td>';
             const species = row.species || 'human';
-            const markerCellType = row.cell_type || row.group || 'Unannotated';
 
             html += '<td class="cell-gene" data-label="Gene"><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=' + encodeURIComponent(species) + '" class="gene-link">' + geneName + '<span class="gene-link-icon">→</span></a></td>';
             html += '<td data-label="Dataset"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '" class="cell-link">' + row.said + '</a></td>';
             html += '<td data-label="GSE">' + escapeHtml(row.gse) + '</td>';
-            html += '<td data-label="Marker cell type"><span class="group-badge">' + escapeHtml(markerCellType) + '</span></td>';
+            html += '<td data-label="Marker cell type">' + renderMarkerCellTypes(row) + '</td>';
             html += '<td data-label="log₂ FC"><span class="expression-badge ' + fcClass + '">' + fcSign + row.logfc + '</span></td>';
             html += '<td class="cell-pval" data-label="Adj. p">' + escapeHtml(row.pval) + '</td>';
             html += '<td data-label="Action"><a href="details.jsp?said=' + encodeURIComponent(row.said) + '#DEGResults" class="cell-link">Dataset</a><a href="gene-details?gene=' + encodeURIComponent(row.gene) + '&species=' + encodeURIComponent(species) + '" class="cell-link">Gene Info</a></td>';
@@ -340,6 +339,51 @@ $(document).ready(function() {
         });
 
         $selectAll.prop('checked', false);
+    }
+
+    function normalizeCellTypes(row) {
+        let types = Array.isArray(row.cell_types) ? row.cell_types.slice() : [];
+        if (!types.length && row.cell_type) types = String(row.cell_type).split(/\s*;\s*|\s*,\s*|\s*\|\s*/);
+        if (!types.length && row.group) types = String(row.group).split(/\s*;\s*|\s*,\s*|\s*\|\s*/);
+
+        const seen = new Set();
+        return types.map(function(type) {
+            return String(type || '').trim();
+        }).filter(function(type) {
+            if (!type || /^\+\d+\s+more$/i.test(type)) return false;
+            const key = type.toLowerCase();
+            if (key === 'all' || seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+    }
+
+    function renderMarkerCellTypes(row) {
+        const types = normalizeCellTypes(row);
+        if (!types.length) {
+            return '<span class="group-badge">Unannotated</span>';
+        }
+
+        const first = types[0];
+        if (types.length === 1) {
+            return '<span class="group-badge">' + escapeHtml(first) + '</span>';
+        }
+
+        const rest = types.slice(1);
+        const list = rest.map(function(type) {
+            return '<li>' + escapeHtml(type) + '</li>';
+        }).join('');
+
+        return '<div class="cell-type-menu">'
+            + '<button type="button" class="cell-type-menu__trigger" aria-expanded="false">'
+            + '<span class="group-badge">' + escapeHtml(first) + '</span>'
+            + '<span class="cell-type-menu__count">+' + rest.length + '</span>'
+            + '</button>'
+            + '<div class="cell-type-popover" role="list" aria-label="Additional cell types sharing this marker">'
+            + '<div class="cell-type-popover__title">Also marker in</div>'
+            + '<ul>' + list + '</ul>'
+            + '</div>'
+            + '</div>';
     }
 
     function updateRowHighlighting() {
@@ -473,6 +517,21 @@ $(document).ready(function() {
     });
     $suggest.on('mousedown', '.search-suggest__item', function (e) { e.preventDefault(); selectSuggest($(this).data('gene')); });
     $(document).on('click', function (e) { if (!$(e.target).closest('.search-box-wrap').length) { hideSuggest(); } });
+
+    $(document).on('click', '.cell-type-menu__trigger', function(e) {
+        e.preventDefault();
+        const $menu = $(this).closest('.cell-type-menu');
+        $('.cell-type-menu').not($menu).removeClass('is-open').find('.cell-type-menu__trigger').attr('aria-expanded', 'false');
+        const open = !$menu.hasClass('is-open');
+        $menu.toggleClass('is-open', open);
+        $(this).attr('aria-expanded', open ? 'true' : 'false');
+    });
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.cell-type-menu').length) {
+            $('.cell-type-menu').removeClass('is-open').find('.cell-type-menu__trigger').attr('aria-expanded', 'false');
+        }
+    });
 
     // Wire up events
     $searchBtn.on('click', function() { performSearch($input.val()); });

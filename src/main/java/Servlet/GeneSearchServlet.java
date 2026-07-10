@@ -19,7 +19,7 @@ import Utils.DataPathResolver;
 public class GeneSearchServlet extends HttpServlet {
 
     private static final Map<String, Map<String, String>> mapping;
-    private static volatile Map<String, String> markerReferenceCellTypes;
+    private static volatile Map<String, List<String>> markerReferenceCellTypes;
 
     static {
         try (InputStreamReader reader = new InputStreamReader(
@@ -48,7 +48,7 @@ public class GeneSearchServlet extends HttpServlet {
         query = query.trim();
         final int maxResults = 500; // Limit results to prevent overwhelming response
 
-        List<Map<String, String>> results = new ArrayList<>();
+        List<Map<String, Object>> results = new ArrayList<>();
 
         // Search across every dataset in the mapping
         for (Map.Entry<String, Map<String, String>> entry : mapping.entrySet()) {
@@ -122,14 +122,16 @@ public class GeneSearchServlet extends HttpServlet {
                             double logfc = Double.parseDouble(rec.get(fcCol));
                             double pval = Double.parseDouble(rec.get(pvalCol));
                             String markerCellType = (cellTypeCol != null) ? rec.get(cellTypeCol) : "";
+                            List<String> markerCellTypes = splitCellTypes(markerCellType);
                             if (isGenericCellType(markerCellType)) {
-                                markerCellType = markerReferenceCellTypes(getServletContext()).get(geneName);
+                                markerCellTypes = markerReferenceCellTypes(getServletContext()).get(geneName);
                             }
-                            if (isGenericCellType(markerCellType)) {
-                                markerCellType = "Unannotated";
+                            if (markerCellTypes == null || markerCellTypes.isEmpty()) {
+                                markerCellTypes = Collections.singletonList("Unannotated");
                             }
+                            markerCellType = markerCellTypes.get(0);
 
-                            Map<String, String> row = new HashMap<>();
+                            Map<String, Object> row = new HashMap<>();
                             row.put("gene", geneName);
                             row.put("said", said);
                             row.put("gse", meta.get("GSE"));
@@ -139,6 +141,7 @@ public class GeneSearchServlet extends HttpServlet {
                             row.put("pval", String.format("%.2e", pval));
                             row.put("group", markerCellType);
                             row.put("cell_type", markerCellType);
+                            row.put("cell_types", markerCellTypes);
                             results.add(row);
                         }
                     } catch (Exception ignore) {
@@ -153,8 +156,8 @@ public class GeneSearchServlet extends HttpServlet {
         // Sort results by adjusted p-value (ascending)
         results.sort((a, b) -> {
             try {
-                double pvalA = Double.parseDouble(a.get("pval"));
-                double pvalB = Double.parseDouble(b.get("pval"));
+                double pvalA = Double.parseDouble(String.valueOf(a.get("pval")));
+                double pvalB = Double.parseDouble(String.valueOf(b.get("pval")));
                 return Double.compare(pvalA, pvalB);
             } catch (Exception e) {
                 return 0;
@@ -188,8 +191,8 @@ public class GeneSearchServlet extends HttpServlet {
                 || "unknown".equalsIgnoreCase(normalized);
     }
 
-    private static Map<String, String> markerReferenceCellTypes(ServletContext context) {
-        Map<String, String> cached = markerReferenceCellTypes;
+    private static Map<String, List<String>> markerReferenceCellTypes(ServletContext context) {
+        Map<String, List<String>> cached = markerReferenceCellTypes;
         if (cached != null) return cached;
 
         synchronized (GeneSearchServlet.class) {
@@ -214,9 +217,9 @@ public class GeneSearchServlet extends HttpServlet {
             } catch (Exception ignored) {
             }
 
-            Map<String, String> flattened = new HashMap<String, String>();
+            Map<String, List<String>> flattened = new HashMap<String, List<String>>();
             for (Map.Entry<String, List<String>> entry : collected.entrySet()) {
-                flattened.put(entry.getKey(), summarizeCellTypes(entry.getValue()));
+                flattened.put(entry.getKey(), Collections.unmodifiableList(new ArrayList<String>(entry.getValue())));
             }
             markerReferenceCellTypes = flattened;
             return markerReferenceCellTypes;
@@ -235,17 +238,20 @@ public class GeneSearchServlet extends HttpServlet {
         }
     }
 
-    private static String summarizeCellTypes(List<String> cellTypes) {
-        if (cellTypes == null || cellTypes.isEmpty()) return "";
-        int shown = Math.min(3, cellTypes.size());
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < shown; i++) {
-            if (i > 0) sb.append("; ");
-            sb.append(cellTypes.get(i));
+    private static List<String> splitCellTypes(String raw) {
+        if (isGenericCellType(raw)) return Collections.emptyList();
+
+        String[] pieces = raw.split("\\s*;\\s*|\\s*,\\s*|\\s*\\|\\s*");
+        List<String> result = new ArrayList<String>();
+        for (String piece : pieces) {
+            String value = piece == null ? "" : piece.trim();
+            if (value.isEmpty()) continue;
+            if (value.matches("^\\+\\d+\\s+more$")) continue;
+            if (isGenericCellType(value)) continue;
+            if (!result.contains(value)) {
+                result.add(value);
+            }
         }
-        if (cellTypes.size() > shown) {
-            sb.append("; +").append(cellTypes.size() - shown).append(" more");
-        }
-        return sb.toString();
+        return result;
     }
 }
