@@ -248,6 +248,18 @@
         <url-pattern>/geo_meta</url-pattern>
     </servlet-mapping>
 
+    <!-- Annotation scanning is disabled by metadata-complete="true", so every
+         production servlet must be declared explicitly. -->
+    <servlet>
+        <servlet-name>CellPhoneDBServlet</servlet-name>
+        <servlet-class>Servlet.CellPhoneDBServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CellPhoneDBServlet</servlet-name>
+        <url-pattern>/cpdb-api</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>DEGCompareServlet</servlet-name>
         <servlet-class>Servlet.DEGCompareServlet</servlet-class>
