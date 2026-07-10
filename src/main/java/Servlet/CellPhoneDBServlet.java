@@ -161,17 +161,13 @@ public class CellPhoneDBServlet extends HttpServlet {
     }
 
     private void handleHealth(HttpServletResponse response) throws IOException {
-        String apiUrl = String.format("http://%s:%d/health", CPDB_HOST, CPDB_PORT);
-
-        try {
-            String result = proxyGetRequest(apiUrl);
-            response.getWriter().write(result);
-        } catch (Exception e) {
-            Map<String, Object> health = new HashMap<>();
-            health.put("status", "unhealthy");
-            health.put("error", e.getMessage());
-            response.getWriter().write(gson.toJson(health));
-        }
+        Map<String, Object> health = new HashMap<>();
+        boolean healthy = isServerHealthy();
+        health.put("status", healthy ? "healthy" : "unhealthy");
+        response.setStatus(healthy
+                ? HttpServletResponse.SC_OK
+                : HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+        response.getWriter().write(gson.toJson(health));
     }
 
     private void handleRunAnalysis(HttpServletRequest request, HttpServletResponse response)
@@ -389,15 +385,21 @@ public class CellPhoneDBServlet extends HttpServlet {
 
     private boolean isServerHealthy() {
         try {
-            String apiUrl = String.format("http://%s:%d/health", CPDB_HOST, CPDB_PORT);
+            // The production analysis service does not expose /health. Use its
+            // lightweight conditions endpoint so an already-running service is
+            // recognised instead of attempting to launch a competing process.
+            String apiUrl = String.format(
+                    "http://%s:%d/api/conditions?species=human", CPDB_HOST, CPDB_PORT);
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(2000);
             conn.setReadTimeout(2000);
-
-            int responseCode = conn.getResponseCode();
-            return responseCode == 200;
+            try {
+                return conn.getResponseCode() == HttpURLConnection.HTTP_OK;
+            } finally {
+                conn.disconnect();
+            }
         } catch (Exception e) {
             return false;
         }
