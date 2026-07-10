@@ -84,43 +84,7 @@ body { background-color: var(--bg-body); }
 }
 
 
-/* --------------------------------------------------------------------------
-   D. Species pill-tab — segmented control; replaces the radio fieldset
-   -------------------------------------------------------------------------- */
-.species-toggle {
-    display: inline-flex;
-    padding: 3px;
-    background: #fff;
-    border: 1px solid var(--input-border);
-    border-radius: var(--radius-sm);
-    gap: 2px;
-}
-
-.species-toggle input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.species-toggle__option {
-    padding: 0.4rem 1.1rem;
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    font-weight: 300;
-    letter-spacing: 0;
-    color: var(--text-secondary);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: color var(--transition-fast), background var(--transition-fast);
-    user-select: none;
-}
-
-.species-toggle__option:hover { color: var(--text-primary); }
-
-.species-toggle input[type="radio"]:checked + .species-toggle__option {
-    background: rgba(51, 122, 183, 0.12);
-    color: #337ab7;
-}
+/* D. Species segmented toggle is shared in design-system.css. */
 
 
 /* --------------------------------------------------------------------------
@@ -356,5 +320,5 @@ body { background-color: var(--bg-body); }
     /* Tighten inner card padding on phones so panels keep proportion. */
     .compare-page { --panel-pad-x: var(--space-lg); --panel-pad-y: var(--space-lg); }
     .filter-grid { grid-template-columns: 1fr; }
-    .species-toggle__option { padding: 0.4rem 0.85rem; }
+    .species-toggle { --segmented-height: 36px; }
 }

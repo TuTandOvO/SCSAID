@@ -433,9 +433,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
     <link rel="stylesheet" href="CSS/header.css?v=20260704b">
-    <link rel="stylesheet" href="CSS/details.css?v=20260704b">
+    <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="lib/css/jquery.dataTables.min.css?v=20260416">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
 

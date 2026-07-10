@@ -16,7 +16,7 @@
     <link rel="manifest" href="/site.webmanifest?v=20260703a">
     <meta name="theme-color" content="#333333">
     <title>Gene: <%= request.getAttribute("geneName") %> - scSAID</title>
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
     <link rel="stylesheet" href="CSS/header.css?v=20260704b">
     <link rel="stylesheet" href="CSS/gene-details.css?v=20260701h">
     <link rel="preconnect" href="https://fonts.googleapis.com">

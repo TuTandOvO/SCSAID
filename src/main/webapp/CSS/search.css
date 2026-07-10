@@ -243,6 +243,16 @@ body { background-color: var(--bg-body); }
 
 .panel-body--flush { padding: 0 !important; }
 
+#results-container .panel-body--flush {
+    padding: 0.75rem !important;
+}
+
+#results-container .hb-table-shell {
+    border: 1px solid var(--compact-table-rule, var(--border-light));
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+}
+
 
 /* --------------------------------------------------------------------------
    G. Results table — custom HTML (not DataTables). Styled to match

@@ -1307,38 +1307,17 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .cpdb-toggle-row .cpdb-section-title { margin-right: var(--space-sm); }
 
 .cpdb-mode-toggle {
-    display: inline-flex;
-    gap: 0;
-    background: #fff;
-    border: 1px solid var(--input-border);
-    border-radius: var(--radius-sm);
-    padding: 3px;
+    --segmented-height: 34px;
+    --segmented-max-width: 30rem;
+    flex: 1 1 16rem;
 }
 
 .cpdb-radio {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.3rem 0.85rem;
+    padding: 0;
+}
+
+.cpdb-radio span {
     font-size: 0.82rem;
-    color: var(--text-secondary);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    min-height: 28px;
-    transition: color var(--transition-fast), background-color var(--transition-fast);
-    font-weight: 300;
-}
-.cpdb-radio input { position: absolute; opacity: 0; pointer-events: none; }
-.cpdb-radio:has(input:checked) {
-    background: rgba(51, 122, 183, 0.12);
-    color: #337ab7;
-    font-weight: 300;
-}
-/* Fallback (no :has) via JS toggle class if needed */
-.cpdb-radio.is-checked {
-    background: rgba(51, 122, 183, 0.12);
-    color: #337ab7;
-    font-weight: 300;
 }
 
 .arrow-separator {

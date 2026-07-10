@@ -14,7 +14,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
     <title>Something went wrong - scSAID</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
     <style>
         body { background:#ffffff; font-family:'Nunito', sans-serif; color:#333333;
                display:flex; min-height:100vh; min-height:100dvh; align-items:center; justify-content:center; margin:0; padding:1rem; }

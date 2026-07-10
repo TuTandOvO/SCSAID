@@ -156,6 +156,131 @@ div {
 }
 
 /* --------------------------------------------------------------------------
+   Shared two-option segmented toggles
+   Used by species selectors, CellPhoneDB mode/annotation selectors, and
+   two-option home composition switches. Every option is an exact 50% half.
+   -------------------------------------------------------------------------- */
+.species-toggle,
+.cpdb-mode-toggle,
+.composition__toggle {
+    --segmented-pad: 3px;
+    --segmented-height: 38px;
+    --segmented-max-width: 22rem;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, var(--segmented-max-width));
+    min-width: 0;
+    padding: var(--segmented-pad);
+    gap: 0;
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--input-shadow);
+}
+
+.species-toggle::before,
+.cpdb-mode-toggle::before,
+.composition__toggle::before {
+    content: "";
+    position: absolute;
+    top: var(--segmented-pad);
+    bottom: var(--segmented-pad);
+    left: var(--segmented-pad);
+    z-index: 0;
+    width: calc((100% - (var(--segmented-pad) * 2)) / 2);
+    background: color-mix(in srgb, var(--color-secondary) 13%, var(--bg-surface));
+    border: 1px solid color-mix(in srgb, var(--color-secondary) 24%, var(--border-light));
+    border-radius: calc(var(--radius-sm) - 1px);
+    box-shadow: 0 1px 2px rgba(51, 122, 183, 0.08);
+    transform: translateX(0);
+    transition: transform var(--transition-base), background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.species-toggle:has(label:nth-of-type(2) input:checked)::before,
+.cpdb-mode-toggle:has(label:nth-of-type(2) input:checked)::before,
+.composition__toggle:has(.composition__toggle-btn:nth-child(2).composition__toggle-btn--active)::before {
+    transform: translateX(100%);
+}
+
+.species-toggle label,
+.cpdb-mode-toggle .cpdb-radio {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-width: 0;
+    width: 100%;
+}
+
+.species-toggle input[type="radio"],
+.cpdb-mode-toggle input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.species-toggle__option,
+.cpdb-radio span,
+.composition__toggle-btn {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: calc(var(--segmented-height) - (var(--segmented-pad) * 2));
+    padding: 0.35rem 0.65rem;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 0;
+    border-radius: calc(var(--radius-sm) - 1px);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: normal;
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--transition-base);
+}
+
+.species-toggle__option:hover,
+.cpdb-radio:hover span,
+.composition__toggle-btn:hover {
+    color: var(--text-primary);
+}
+
+.species-toggle input[type="radio"]:focus-visible + .species-toggle__option,
+.cpdb-radio input[type="radio"]:focus-visible + span,
+.composition__toggle-btn:focus-visible {
+    outline: 2px solid var(--focus-border);
+    outline-offset: -2px;
+}
+
+.species-toggle input[type="radio"]:checked + .species-toggle__option,
+.cpdb-radio:has(input:checked) span,
+.cpdb-radio.is-checked span,
+.composition__toggle-btn--active {
+    color: var(--color-secondary-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .species-toggle::before,
+    .cpdb-mode-toggle::before,
+    .composition__toggle::before,
+    .species-toggle__option,
+    .cpdb-radio span,
+    .composition__toggle-btn {
+        transition: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
    Context help
    Expert-facing analysis pages expose method notes through a quiet, keyboard-
    accessible title link. The popover is portalled to <body> by

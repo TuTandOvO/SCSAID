@@ -55,6 +55,7 @@ body { background-color: var(--bg-body); }
     text-transform: uppercase;
     color: var(--text-muted);
 }
+.umap-control .species-toggle { --segmented-max-width: 14rem; }
 
 /* --------------------------------------------------------------------------
    B. Gene search + autocomplete

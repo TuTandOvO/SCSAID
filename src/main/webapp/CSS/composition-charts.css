@@ -38,34 +38,14 @@
     margin: 0 auto var(--space-xl);
 }
 
-/* Species Toggle */
+/* Species toggle — shared segmented-control behavior lives in design-system.css. */
 .composition__toggle {
-    display: inline-flex;
-    background: #fff;
-    border: 1px solid var(--input-border);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-    gap: 2px;
+    --segmented-max-width: 14rem;
+    margin: 0 auto;
 }
 
 .composition__toggle-btn {
-    min-height: 34px;
-    padding: var(--space-sm) var(--space-lg);
-    font-family: var(--font-body);
     font-size: 0.9rem;
-    font-weight: 300;
-    letter-spacing: 0;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: color var(--transition-base), background-color var(--transition-base);
-    background: transparent;
-    color: var(--text-secondary);
-}
-
-.composition__toggle-btn--active {
-    background: rgba(51, 122, 183, 0.12);
-    color: #337ab7;
 }
 
 /* Chart Grid */

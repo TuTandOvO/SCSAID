@@ -27,10 +27,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
-    <link rel="stylesheet" href="CSS/design-system.css?v=20260703q">
+    <link rel="stylesheet" href="CSS/design-system.css?v=20260710b">
     <link rel="stylesheet" href="CSS/header.css?v=20260704b">
-    <link rel="stylesheet" href="CSS/details.css?v=20260703d">
-    <link rel="stylesheet" href="CSS/search.css?v=20260710a">
+    <link rel="stylesheet" href="CSS/details.css?v=20260710b">
+    <link rel="stylesheet" href="CSS/search.css?v=20260710b">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
     <style>
         /* Gene-name autocomplete dropdown (inline so edge-caching never staleness it) */
