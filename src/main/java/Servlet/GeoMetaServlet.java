@@ -53,8 +53,8 @@ public class GeoMetaServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String said = request.getParameter("said");
-        if (said == null || said.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter: said");
+        if (said == null || !said.matches("SAID\\d{3}")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
 

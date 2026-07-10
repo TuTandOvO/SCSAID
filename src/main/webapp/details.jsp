@@ -4,8 +4,10 @@
 <%@ page import="
     java.io.*,
     java.util.*,
+    java.util.concurrent.TimeUnit,
     java.nio.file.Paths,
-    Utils.DataPathResolver" %>
+    Utils.DataPathResolver,
+    Utils.RateLimitFilter" %>
 <%!
     private static final String DOWNLOAD_DATA_RELATIVE_PATH = "download_data";
     private static final String HUMAN_CSV_RELATIVE_PATH = "human/human_obs_by_batch.csv";
@@ -43,6 +45,18 @@
         }
         return out.toString();
     }
+
+    protected static String htmlEscape(String s) {
+        if (s == null) return "";
+        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                .replace("\"", "&quot;").replace("'", "&#39;");
+    }
+
+    protected static String jsEscape(String s) {
+        if (s == null) return "";
+        return s.replace("\\", "\\\\").replace("'", "\\'").replace("\"", "\\\"")
+                .replace("\r", "\\r").replace("\n", "\\n").replace("</", "<\\/");
+    }
 %>
 <%
     // =========================================================================
@@ -59,142 +73,93 @@
     if (action != null) {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        response.setHeader("Cache-Control", "no-store");
         PrintWriter jsonOut = response.getWriter();
         String saidParamForAction = request.getParameter("said");
         String gseForAction = request.getParameter("gse");
         String gsmForAction = request.getParameter("gsm");
 
-        // Handle cell proportion action (does not need cpdbPath)
-        if ("cell_proportion".equals(action)) {
-            String mapType = request.getParameter("map_type");
-            String speciesForProp = request.getParameter("species");
-            if (mapType == null) mapType = "Gross_Map";
-            if (speciesForProp == null) speciesForProp = "human";
-            String h5adDir = speciesForProp.equalsIgnoreCase("mouse") ? "mouse" : "human";
-            String h5adFile = Paths.get(dataRoot, DOWNLOAD_DATA_RELATIVE_PATH, h5adDir, gseForAction, gsmForAction, gseForAction + "_" + gsmForAction + ".h5ad").toString();
-            String propScript = Paths.get(dataRoot, "services", "cell_proportion.py").toString();
-            try {
-                ProcessBuilder pb = new ProcessBuilder(pythonCommand, propScript, h5adFile, mapType);
-                pb.redirectErrorStream(true);
-                Process p = pb.start();
-                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"));
-                StringBuilder sb = new StringBuilder();
-                String ln;
-                while ((ln = br.readLine()) != null) sb.append(ln);
-                br.close();
-                p.waitFor();
-                jsonOut.print(sb.toString());
-            } catch (Exception e) {
-                jsonOut.print("{\"error\": \"" + e.getMessage().replace("\"", "'") + "\"}");
-            }
+        if (!"cell_proportion".equals(action)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            jsonOut.print("{\"error\":\"Unsupported action.\"}");
             jsonOut.flush();
             return;
         }
 
-        String cpdbPath = getCpdbPath(dataRoot, gseForAction, gsmForAction);
-
-        if (cpdbPath == null || !new File(cpdbPath).exists()) {
-            jsonOut.print("{\"error\": \"CPDB data path not found for the given sample. Path was: " + (cpdbPath == null ? "null" : cpdbPath.replace("\\", "\\\\")) + "\"}");
+        String mapType = request.getParameter("map_type");
+        String speciesForProp = request.getParameter("species");
+        boolean validIds = saidParamForAction != null && saidParamForAction.matches("SAID\\d{3}")
+                && gseForAction != null && gseForAction.matches("GSE\\d+")
+                && gsmForAction != null && gsmForAction.matches("GSM\\d+");
+        boolean validMap = "Gross_Map".equals(mapType) || "Fine_Map".equals(mapType);
+        boolean validSpecies = "human".equalsIgnoreCase(speciesForProp)
+                || "mouse".equalsIgnoreCase(speciesForProp);
+        if (!validIds || !validMap || !validSpecies) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            jsonOut.print("{\"error\":\"Invalid cell-proportion request.\"}");
             jsonOut.flush();
             return;
         }
 
+        if (!RateLimitFilter.allow(RateLimitFilter.clientIp(request), "details-cell-proportion", 5)) {
+            response.setStatus(429);
+            response.setHeader("Retry-After", "60");
+            jsonOut.print("{\"error\":\"Too many analysis requests. Please try again shortly.\"}");
+            jsonOut.flush();
+            return;
+        }
+
+        String h5adDir = speciesForProp.equalsIgnoreCase("mouse") ? "mouse" : "human";
+        File h5adFile = Paths.get(dataRoot, DOWNLOAD_DATA_RELATIVE_PATH, h5adDir,
+                gseForAction, gsmForAction, gseForAction + "_" + gsmForAction + ".h5ad").toFile();
+        File propScript = Paths.get(dataRoot, "services", "cell_proportion.py").toFile();
+        if (!h5adFile.isFile() || !propScript.isFile()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            jsonOut.print("{\"error\":\"Cell-proportion data is unavailable for this dataset.\"}");
+            jsonOut.flush();
+            return;
+        }
+
+        Process p = null;
         try {
-            if ("get_cell_types".equals(action)) {
-                // 调用 Python 脚本 --list 模式
-                String pythonScriptPath = Paths.get(cpdbPath, "plot_cpdb_receiver_top15.py").toString();
-                ProcessBuilder pb = new ProcessBuilder(pythonCommand, pythonScriptPath, "--list");
-                pb.directory(new File(cpdbPath));
-                pb.redirectErrorStream(true);
-                try {
-                    Process p = pb.start();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line);
-                    }
-                    br.close();
-                    int exitCode = p.waitFor();
-                    if (exitCode == 0) {
-                        jsonOut.print(sb.toString());
-                        // 直接输出 Python 的 JSON
-                    } else {
-                        jsonOut.print("{\"error\": \"Python script exited with code " + exitCode + ". Output: " + sb.toString().replace("\"", "'") + "\"}");
-                    }
-                } catch (Exception e) {
-                    jsonOut.print("{\"error\": \"Exception: " + e.getMessage().replace("\"", "'") + "\"}");
+            ProcessBuilder pb = new ProcessBuilder(pythonCommand, propScript.getAbsolutePath(),
+                    h5adFile.getAbsolutePath(), mapType);
+            pb.redirectErrorStream(true);
+            p = pb.start();
+            final Process processForReader = p;
+            final StringBuilder output = new StringBuilder();
+            Thread reader = new Thread(new Runnable() {
+                public void run() {
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                            processForReader.getInputStream(), "UTF-8"))) {
+                        String line;
+                        while ((line = br.readLine()) != null && output.length() < 1_000_000) output.append(line);
+                    } catch (IOException ignored) { }
                 }
-                return;
-            }
-            else if ("generate_plot".equals(action)) {
-                String plotType = request.getParameter("plot_type");
-                String scriptName = "";
-                List<String> command = new ArrayList<String>();
-                command.add(pythonCommand);
-                String outputFileName = "";
-                // 定义输出文件名变量
-
-                if ("summary".equals(plotType)) {
-                    scriptName = "plot_cpdb_sum_sig.py";
-                    outputFileName = "sum_sig_heatmap.png"; // 使用您本地运行的硬编码文件名
-                } else if ("receiver".equals(plotType)) {
-                    scriptName = "plot_cpdb_receiver_top15.py";
-                    String cellType = request.getParameter("cell_type");
-                    if (cellType == null || cellType.isEmpty()) {
-                        jsonOut.print("{\"error\": \"Cell type is required for this plot.\"}");
-                        return;
-                    }
-                    command.add(new File(cpdbPath, scriptName).getAbsolutePath());
-                    command.add(cellType);
-                    outputFileName = "top15_receiver_" + cellType.replace(" ", "_").replace("/", "_") + ".png";
+            }, "cell-proportion-output");
+            reader.setDaemon(true);
+            reader.start();
+            if (!p.waitFor(2, TimeUnit.MINUTES)) {
+                p.destroyForcibly();
+                response.setStatus(HttpServletResponse.SC_GATEWAY_TIMEOUT);
+                jsonOut.print("{\"error\":\"Cell-proportion analysis timed out.\"}");
+            } else {
+                reader.join(2000);
+                if (p.exitValue() == 0 && output.length() > 0) {
+                    jsonOut.print(output.toString());
                 } else {
-                    jsonOut.print("{\"error\": \"Invalid plot type specified.\"}");
-                    return;
-                }
-
-                if (command.size() == 1) { // For scripts that need no extra args, like summary plot
-                    command.add(new File(cpdbPath, scriptName).getAbsolutePath());
-                }
-
-                // Execute the script
-                ProcessBuilder pb = new ProcessBuilder(command);
-                pb.directory(new File(cpdbPath)); // Execute script in its directory
-                // 修改：不捕获脚本输出，只等待进程结束，以防止JSON响应被污染
-                Process process = pb.start();
-                InputStream is = null, es = null;
-                try {
-                    is = process.getInputStream();
-                    es = process.getErrorStream();
-                    while (is.read() != -1) ;
-                    while (es.read() != -1) ;
-                } finally {
-                    if (is != null) try { is.close(); } catch (IOException ignore) {}
-                    if (es != null) try { es.close(); } catch (IOException ignore) {}
-                }
-
-                int exitCode = process.waitFor();
-                if (exitCode == 0) {
-                    // Check if the output file was generated
-                    File outputFile = new File(cpdbPath, outputFileName);
-                    if (outputFile.exists()) {
-                        String imageUrl = request.getContextPath() + "/SkinDB_New/10X/human/" + gseForAction + "/" + gsmForAction + "/cpdb_out/" + outputFileName;
-                        jsonOut.print("{\"imageUrl\": \"" + imageUrl + "\"}");
-                    } else {
-                        // 修改: 移除 scriptOutput 变量，因为我们已不再捕获它
-                        jsonOut.print("{\"error\": \"Plot generated successfully but output file not found: " + outputFileName + ".\"}");
-                    }
-                } else {
-                    // 修改: 移除 scriptOutput 变量，因为我们已不再捕获它
-                    jsonOut.print("{\"error\": \"Failed to generate plot. Exit code: " + exitCode + ".\"}");
+                    response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+                    jsonOut.print("{\"error\":\"Cell-proportion analysis failed.\"}");
                 }
             }
         } catch (Exception e) {
-            jsonOut.print("{\"error\": \"An exception occurred: " + e.getMessage().replace("\"", "'") + "\"}");
-        } finally {
-            jsonOut.flush();
+            if (p != null && p.isAlive()) p.destroyForcibly();
+            application.log("Cell-proportion analysis failed for " + saidParamForAction, e);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            jsonOut.print("{\"error\":\"Cell-proportion analysis failed.\"}");
         }
-        return; // End execution here, do not render the HTML page
+        jsonOut.flush();
+        return;
     }
 
     // =========================================================================
@@ -202,8 +167,9 @@
     // =========================================================================
     // 1) 获取 URL 中的 said 参数
     String saidParam = request.getParameter("said");
-    if (saidParam == null || saidParam.trim().isEmpty()) {
-        out.println("<h2 style='color:red;'>Error: no SAID specified.</h2>");
+    if (saidParam == null || !saidParam.matches("SAID\\d{3}")) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        out.println("<h2 style='color:red;'>A valid dataset accession is required.</h2>");
         return;
     }
 
@@ -224,8 +190,9 @@
 
     // Check if CSV files exist
     if (!humanCsvFile.exists() || !mouseCsvFile.exists()) {
-        csvError = "CSV data files not found. Human path: " + humanCsvPath + ", Mouse path: " + mouseCsvPath;
-        out.println("<h2 style='color:red;'>Error loading CSV: " + csvError + "</h2>");
+        csvError = "CSV data files not found.";
+        application.log("Dataset metadata files are missing: " + humanCsvPath + ", " + mouseCsvPath);
+        out.println("<h2 style='color:red;'>Dataset metadata is temporarily unavailable.</h2>");
         return;
     } else {
         try {
@@ -276,13 +243,20 @@
             }
             csvReader.close();
         }
+        if (!gseVal.matches("GSE\\d+") || !gsmVal.matches("GSM\\d+")) {
+            application.log("Invalid study/sample accession in dataset metadata for " + saidParam);
+            out.println("<h2 style='color:red;'>Dataset metadata is invalid.</h2>");
+            return;
+        }
 
         if (!found) {
-            out.println("<h2 style='color:red;'>Error: SAID '" + saidParam + "' not found in database.</h2>");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            out.println("<h2 style='color:red;'>Dataset not found.</h2>");
             return;
         }
     } catch (Exception e) {
-        out.println("<h2 style='color:red;'>Error loading CSV: " + e.getMessage() + "</h2>");
+        application.log("Unable to load dataset metadata", e);
+        out.println("<h2 style='color:red;'>Dataset metadata is temporarily unavailable.</h2>");
         return;
     } finally {
         if (csvReader != null) try { csvReader.close(); } catch (Exception ignore) {}
@@ -310,7 +284,7 @@
                 if (g.has("overall_design") && !g.get("overall_design").isJsonNull()) geoDesign = g.get("overall_design").getAsString();
                 if (g.has("pubmed_ids") && g.get("pubmed_ids").isJsonArray()) {
                     for (com.google.gson.JsonElement e : g.getAsJsonArray("pubmed_ids")) {
-                        if (!e.isJsonNull()) geoPubmedIds.add(e.getAsString());
+                        if (!e.isJsonNull() && e.getAsString().matches("\\d{1,16}")) geoPubmedIds.add(e.getAsString());
                     }
                 }
             }
@@ -411,17 +385,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=20260703a">
     <link rel="manifest" href="/site.webmanifest?v=20260703a">
     <meta name="theme-color" content="#333333">
-    <title><%= pageTitle.replace("<","&lt;").replace(">","&gt;") %></title>
+    <title><%= htmlEscape(pageTitle) %></title>
 
     <!-- SEO: per-SAID meta tags + JSON-LD Dataset schema -->
     <meta name="description" content="<%= metaDescHtml %>">
-    <meta name="keywords" content="scSAID, <%= saidVal %>, <%= gseVal %>, <%= gsmVal %>, <%= speciesVal %> scRNA-seq, <%= conditionVal %>, <%= tissueVal %>, skin atlas, single-cell">
+    <meta name="keywords" content="scSAID, <%= htmlEscape(saidVal) %>, <%= htmlEscape(gseVal) %>, <%= htmlEscape(gsmVal) %>, <%= htmlEscape(speciesVal) %> scRNA-seq, <%= htmlEscape(conditionVal) %>, <%= htmlEscape(tissueVal) %>, skin atlas, single-cell">
     <meta name="robots" content="index,follow,max-image-preview:large">
     <link rel="canonical" href="<%= canonUrl %>">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="scSAID">
-    <meta property="og:title" content="<%= (saidVal + " — " + speciesVal + " " + conditionVal + " (" + tissueVal + ")").replace("\"","&quot;") %>">
+    <meta property="og:title" content="<%= htmlEscape(saidVal + " — " + speciesVal + " " + conditionVal + " (" + tissueVal + ")") %>">
     <meta property="og:description" content="<%= metaDescHtml %>">
     <meta property="og:url" content="<%= canonUrl %>">
 
@@ -461,53 +435,53 @@
         <div class="dataset-hero__inner">
             <div class="dataset-hero__eyebrow">
                 <span>Dataset</span>
-                <code><%= saidVal %></code>
+                <code><%= htmlEscape(saidVal) %></code>
             </div>
             <h1 class="dataset-hero__title"><%
                     StringBuilder heroTitle = new StringBuilder();
                     heroTitle.append(speciesVal);
                     if (conditionVal != null && !conditionVal.isEmpty()) heroTitle.append(" · ").append(conditionVal);
                     if (tissueVal   != null && !tissueVal.isEmpty()  && !"NA".equalsIgnoreCase(tissueVal)) heroTitle.append(" — ").append(tissueVal);
-                %><%= heroTitle.toString().replace("<","&lt;").replace(">","&gt;") %></h1>
+                %><%= htmlEscape(heroTitle.toString()) %></h1>
             <p class="dataset-hero__subtitle">
                 <% if (!geoTitle.isEmpty()) { %>
-                    <%= geoTitle.replace("<","&lt;").replace(">","&gt;") %>
+                    <%= htmlEscape(geoTitle) %>
                 <% } else { %>
-                    Single-cell RNA-seq dataset catalogued in scSAID under accession <%= gseVal %> / <%= gsmVal %>.
+                    Single-cell RNA-seq dataset catalogued in scSAID under accession <%= htmlEscape(gseVal) %> / <%= htmlEscape(gsmVal) %>.
                 <% } %>
             </p>
             <div class="dataset-hero__meta">
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">Cells</span>
-                    <span class="dataset-hero__meta-value dataset-hero__meta-value--large"><%= (n_cellsVal == null || n_cellsVal.isEmpty()) ? "—" : n_cellsVal %></span>
+                    <span class="dataset-hero__meta-value dataset-hero__meta-value--large"><%= (n_cellsVal == null || n_cellsVal.isEmpty()) ? "—" : htmlEscape(n_cellsVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">GSE</span>
-                    <span class="dataset-hero__meta-value"><%= gseVal %></span>
+                    <span class="dataset-hero__meta-value"><%= htmlEscape(gseVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">GSM</span>
-                    <span class="dataset-hero__meta-value"><%= gsmVal %></span>
+                    <span class="dataset-hero__meta-value"><%= htmlEscape(gsmVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">Species</span>
-                    <span class="dataset-hero__meta-value"><%= speciesVal %></span>
+                    <span class="dataset-hero__meta-value"><%= htmlEscape(speciesVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">Tissue</span>
-                    <span class="dataset-hero__meta-value"><%= (tissueVal == null || tissueVal.isEmpty()) ? "—" : tissueVal %></span>
+                    <span class="dataset-hero__meta-value"><%= (tissueVal == null || tissueVal.isEmpty()) ? "—" : htmlEscape(tissueVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">Condition</span>
-                    <span class="dataset-hero__meta-value"><%= (conditionVal == null || conditionVal.isEmpty()) ? "—" : conditionVal %></span>
+                    <span class="dataset-hero__meta-value"><%= (conditionVal == null || conditionVal.isEmpty()) ? "—" : htmlEscape(conditionVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">Age</span>
-                    <span class="dataset-hero__meta-value"><%= (ageVal == null || ageVal.isEmpty()) ? "—" : ageVal %></span>
+                    <span class="dataset-hero__meta-value"><%= (ageVal == null || ageVal.isEmpty()) ? "—" : htmlEscape(ageVal) %></span>
                 </div>
                 <div class="dataset-hero__meta-item">
                     <span class="dataset-hero__meta-label">Sex</span>
-                    <span class="dataset-hero__meta-value"><%= (sexVal == null || sexVal.isEmpty()) ? "—" : sexVal %></span>
+                    <span class="dataset-hero__meta-value"><%= (sexVal == null || sexVal.isEmpty()) ? "—" : htmlEscape(sexVal) %></span>
                 </div>
             </div>
         </div>
@@ -582,19 +556,19 @@
             <% if (!geoTitle.isEmpty()) { %>
             <div class="study-brief__item">
                 <span class="study-brief__label">Study</span>
-                <div class="study-brief__value study-brief__value--title"><%= geoTitle.replace("<","&lt;").replace(">","&gt;") %></div>
+                <div class="study-brief__value study-brief__value--title"><%= htmlEscape(geoTitle) %></div>
             </div>
             <% } %>
             <% if (!geoSummary.isEmpty()) { %>
             <div class="study-brief__item">
                 <span class="study-brief__label">Summary</span>
-                <div class="study-brief__value"><%= geoSummary.replace("<","&lt;").replace(">","&gt;") %></div>
+                <div class="study-brief__value"><%= htmlEscape(geoSummary) %></div>
             </div>
             <% } %>
             <% if (!geoDesign.isEmpty()) { %>
             <div class="study-brief__item">
                 <span class="study-brief__label">Overall Design</span>
-                <div class="study-brief__value"><%= geoDesign.replace("<","&lt;").replace(">","&gt;") %></div>
+                <div class="study-brief__value"><%= htmlEscape(geoDesign) %></div>
             </div>
             <% } %>
             <% if (!geoPubmedIds.isEmpty()) { %>
@@ -1258,16 +1232,16 @@
                     ]
                 });
 
-                const said = '<%= saidParam %>';
-                const gse = '<%= gseVal %>';
-                const gsm = '<%= gsmVal %>';
+                const said = '<%= jsEscape(saidParam) %>';
+                const gse = '<%= jsEscape(gseVal) %>';
+                const gsm = '<%= jsEscape(gsmVal) %>';
 
                 // Module-scope state for cross-dataset comparison
                 var currentComparisonJobId = null;
                 var comparisonCellTypes = [];
                 var comparisonSaidB = null;
                 var comparisonLabelB = null;
-                var species = '<%= speciesVal == null ? "" : speciesVal.toLowerCase() %>';
+                var species = '<%= jsEscape(speciesVal == null ? "" : speciesVal.toLowerCase()) %>';
                 var legacyJobId = null;
                 var legacyCellTypes = [];
                 var legacyReady = false;
@@ -2464,7 +2438,7 @@
                 var gssUploadedSets = {};       // {name: [genes]}
                 var gssSelectedUploadName = '';
                 var gssSelectedUploadGenes = null;
-                var datasetSpecies = '<%= speciesVal %>'.toLowerCase();
+                var datasetSpecies = '<%= jsEscape(speciesVal) %>'.toLowerCase();
 
                 // Input mode tab switching
                 $('.gss-input-tab').click(function() {
@@ -2835,7 +2809,7 @@
 
                 function loadCellProportion() {
                     var mapType = $('#proportionMapType').val();
-                    var species = '<%= speciesVal %>';
+                    var species = '<%= jsEscape(speciesVal) %>';
                     $('#proportion-loading').show();
                     $('#proportion-charts').hide();
                     $('#proportion-error').hide();

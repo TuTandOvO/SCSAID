@@ -19,21 +19,16 @@ import java.util.Map;
  */
 @WebServlet("/gene-details")
 public class GeneDetailsServlet extends HttpServlet {
+    private static final Gson GSON = new Gson();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String geneName = request.getParameter("gene");
-        String species = request.getParameter("species");
-
-        // Default to human if not specified
-        if (species == null || species.isEmpty()) {
-            species = "human";
-        }
-
-        if (geneName == null || geneName.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Gene name is required");
+        String geneName = normalizeGene(request.getParameter("gene"));
+        String species = normalizeSpecies(request.getParameter("species"));
+        if (geneName == null || species == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "A valid gene and species are required");
             return;
         }
 
@@ -63,9 +58,8 @@ public class GeneDetailsServlet extends HttpServlet {
             request.getRequestDispatcher("gene-details.jsp").forward(request, response);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                             "Error fetching gene information: " + e.getMessage());
+            getServletContext().log("Gene information lookup failed", e);
+            response.sendError(HttpServletResponse.SC_BAD_GATEWAY, "Gene information is temporarily unavailable");
         }
     }
 
@@ -76,16 +70,10 @@ public class GeneDetailsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String geneName = request.getParameter("gene");
-        String species = request.getParameter("species");
-
-        if (species == null || species.isEmpty()) {
-            species = "human";
-        }
-
-        if (geneName == null || geneName.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"error\": \"Gene name is required\"}");
+        String geneName = normalizeGene(request.getParameter("gene"));
+        String species = normalizeSpecies(request.getParameter("species"));
+        if (geneName == null || species == null) {
+            sendJsonError(response, HttpServletResponse.SC_BAD_REQUEST, "A valid gene and species are required");
             return;
         }
 
@@ -104,17 +92,38 @@ public class GeneDetailsServlet extends HttpServlet {
             responseData.put("externalLinks", externalLinks);
 
             // Convert to JSON
-            Gson gson = new Gson();
-            String json = gson.toJson(responseData);
+            String json = GSON.toJson(responseData);
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
+            getServletContext().log("Gene information API lookup failed", e);
+            sendJsonError(response, HttpServletResponse.SC_BAD_GATEWAY,
+                    "Gene information is temporarily unavailable");
         }
+    }
+
+    private static String normalizeGene(String value) {
+        if (value == null) return null;
+        String gene = value.trim();
+        return gene.matches("[A-Za-z0-9._-]{1,64}") ? gene : null;
+    }
+
+    private static String normalizeSpecies(String value) {
+        if (value == null || value.trim().isEmpty()) return "human";
+        String species = value.trim().toLowerCase();
+        return "human".equals(species) || "mouse".equals(species) ? species : null;
+    }
+
+    private static void sendJsonError(HttpServletResponse response, int status, String message) throws IOException {
+        response.setStatus(status);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader("Cache-Control", "no-store");
+        Map<String, String> error = new HashMap<>();
+        error.put("error", message);
+        response.getWriter().write(GSON.toJson(error));
     }
 }

@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,8 +27,10 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -47,9 +46,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class PsoSpotterServlet extends HttpServlet {
     private static final Gson GSON = new GsonBuilder().serializeNulls().create();
-    private static final String JOB_COOKIE_PREFIX = "psospotter.";
     private static final int MAX_QUEUED_JOBS = 5; // 1 running + 4 queued
     private static final int RESULT_TTL_MINUTES = 30;
+    private static final int MAX_GENES = 5_000;
+    private static final int MAX_GENE_LENGTH = 64;
+    private static final int MAX_GENE_TEXT_LENGTH = 100_000;
+    private static final byte[] HDF5_MAGIC = new byte[]{(byte) 0x89, 'H', 'D', 'F', '\r', '\n', 0x1a, '\n'};
     private static final Semaphore SLOTS = new Semaphore(MAX_QUEUED_JOBS, true);
     private static final ScheduledExecutorService CLEANER = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread t = new Thread(r, "psospotter-cleaner");
@@ -153,9 +155,9 @@ public class PsoSpotterServlet extends HttpServlet {
     private Map<String, Object> buildRequestSpec(HttpServletRequest request, JobRecord job, Path jobDir) throws Exception {
         Map<String, Object> spec = new LinkedHashMap<>();
         spec.put("mode", job.mode);
-        spec.put("species", trim(request.getParameter("species")));
-        spec.put("panel_k", parseInt(request.getParameter("panelK"), 20));
-        spec.put("target_total", parseInt(request.getParameter("targetTotal"), 20000));
+        spec.put("panel_k", parseBoundedInt(request.getParameter("panelK"), 20, 1, 500, "panelK"));
+        spec.put("target_total", parseBoundedInt(request.getParameter("targetTotal"), 20000,
+                1_000, 5_000_000, "targetTotal"));
         spec.put("genes", splitGenes(trim(request.getParameter("genes"))));
         spec.put("submittedAt", Instant.now().toString());
 
@@ -164,7 +166,8 @@ public class PsoSpotterServlet extends HttpServlet {
             if (part == null || part.getSize() <= 0) {
                 throw new IllegalArgumentException("Single-species mode needs one .h5ad upload.");
             }
-            String species = normalizeSpecies(request.getParameter("species"), "human");
+            String species = normalizeSpecies(request.getParameter("species"));
+            spec.put("species", species);
             Path file = jobDir.resolve("input.h5ad");
             savePart(part, file);
             spec.put("single", mapOf(
@@ -173,8 +176,11 @@ public class PsoSpotterServlet extends HttpServlet {
                     "genes", spec.get("genes")
             ));
         } else {
-            String trainSpecies = normalizeSpecies(request.getParameter("trainSpecies"), "human");
-            String testSpecies = normalizeSpecies(request.getParameter("testSpecies"), "mouse");
+            String trainSpecies = normalizeSpecies(request.getParameter("trainSpecies"));
+            String testSpecies = normalizeSpecies(request.getParameter("testSpecies"));
+            if (trainSpecies.equals(testSpecies)) {
+                throw new IllegalArgumentException("Cross-species mode requires two different species.");
+            }
             Part trainPart = request.getPart("trainH5ad");
             Part testPart = request.getPart("testH5ad");
             if (trainPart == null || trainPart.getSize() <= 0 || testPart == null || testPart.getSize() <= 0) {
@@ -333,7 +339,7 @@ public class PsoSpotterServlet extends HttpServlet {
     }
 
     private void handleStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JobRecord job = JOBS.get(trim(request.getParameter("jobId")));
+        JobRecord job = ownedJob(request, trim(request.getParameter("jobId")));
         if (job == null) {
             sendJson(response, HttpServletResponse.SC_NOT_FOUND, errorMap("Unknown job."));
             return;
@@ -348,7 +354,7 @@ public class PsoSpotterServlet extends HttpServlet {
     }
 
     private void handleResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JobRecord job = JOBS.get(trim(request.getParameter("jobId")));
+        JobRecord job = ownedJob(request, trim(request.getParameter("jobId")));
         if (job == null) {
             sendJson(response, HttpServletResponse.SC_NOT_FOUND, errorMap("Unknown job."));
             return;
@@ -433,11 +439,20 @@ public class PsoSpotterServlet extends HttpServlet {
         return ortholog;
     }
 
-    private String normalizeSpecies(String value, String fallback) {
+    private JobRecord ownedJob(HttpServletRequest request, String jobId) {
+        if (jobId == null || request.getSession(false) == null) return null;
+        JobRecord job = JOBS.get(jobId);
+        return job != null && job.sessionId.equals(request.getSession(false).getId()) ? job : null;
+    }
+
+    private String normalizeSpecies(String value) {
         String s = trim(value);
-        if (s == null) return fallback;
+        if (s == null) throw new IllegalArgumentException("Species is required.");
         s = s.toLowerCase();
-        return "mouse".equals(s) ? "mouse" : "human";
+        if (!"human".equals(s) && !"mouse".equals(s)) {
+            throw new IllegalArgumentException("Species must be human or mouse.");
+        }
+        return s;
     }
 
     private void savePart(Part part, Path file) throws IOException {
@@ -447,6 +462,22 @@ public class PsoSpotterServlet extends HttpServlet {
             int n;
             while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
         }
+        if (!hasHdf5Signature(file)) {
+            Files.deleteIfExists(file);
+            throw new IllegalArgumentException("The upload is not a valid HDF5/h5ad file.");
+        }
+    }
+
+    private static boolean hasHdf5Signature(Path file) throws IOException {
+        if (Files.size(file) < HDF5_MAGIC.length) return false;
+        byte[] header = new byte[HDF5_MAGIC.length];
+        try (InputStream in = Files.newInputStream(file)) {
+            if (in.read(header) != header.length) return false;
+        }
+        for (int i = 0; i < HDF5_MAGIC.length; i++) {
+            if (header[i] != HDF5_MAGIC[i]) return false;
+        }
+        return true;
     }
 
     private static Map<String, Object> errorMap(String message) {
@@ -477,23 +508,51 @@ public class PsoSpotterServlet extends HttpServlet {
         return trimmed.isEmpty() ? null : trimmed;
     }
 
-    private static int parseInt(String value, int fallback) {
+    private static int parseBoundedInt(String value, int fallback, int min, int max, String field) {
         try {
-            return value == null ? fallback : Integer.parseInt(value.trim());
+            int parsed = value == null ? fallback : Integer.parseInt(value.trim());
+            if (parsed < min || parsed > max) throw new NumberFormatException();
+            return parsed;
         } catch (Exception error) {
-            return fallback;
+            throw new IllegalArgumentException(field + " must be between " + min + " and " + max + ".");
         }
     }
 
     private static List<String> splitGenes(String raw) {
-        List<String> genes = new ArrayList<>();
-        if (raw == null) return genes;
+        if (raw == null) return new ArrayList<>();
+        if (raw.length() > MAX_GENE_TEXT_LENGTH) {
+            throw new IllegalArgumentException("The gene list is too large.");
+        }
+        Set<String> unique = new LinkedHashSet<>();
         String[] tokens = raw.replace('\r', '\n').split("[\\n,;\\t ]+");
         for (String token : tokens) {
             String gene = token.trim();
-            if (!gene.isEmpty()) genes.add(gene);
+            if (gene.isEmpty()) continue;
+            if (gene.length() > MAX_GENE_LENGTH || !gene.matches("[A-Za-z0-9._-]+")) {
+                throw new IllegalArgumentException("Invalid gene symbol: " + gene.substring(0, Math.min(gene.length(), MAX_GENE_LENGTH)));
+            }
+            unique.add(gene);
+            if (unique.size() > MAX_GENES) {
+                throw new IllegalArgumentException("A maximum of " + MAX_GENES + " candidate genes is allowed.");
+            }
         }
-        return genes;
+        return new ArrayList<>(unique);
+    }
+
+    @Override
+    public void destroy() {
+        WORKER.shutdownNow();
+        CLEANER.shutdownNow();
+        synchronized (QUEUE_LOCK) {
+            QUEUE.clear();
+            workerScheduled = false;
+        }
+        for (JobRecord job : new ArrayList<>(JOBS.values())) {
+            deleteRecursively(job.jobDir);
+        }
+        JOBS.clear();
+        SESSION_JOB.clear();
+        super.destroy();
     }
 
     private static void deleteRecursively(Path path) {

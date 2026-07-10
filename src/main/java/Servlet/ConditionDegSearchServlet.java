@@ -92,29 +92,11 @@ public class ConditionDegSearchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("application/json");
-        resp.setHeader("Cache-Control", "no-store");
-
-        String species = normalizeSpecies(req.getParameter("species"));
-        if (species == null) {
-            String body = readBody(req);
-            if (!body.isEmpty()) {
-                try {
-                    JsonObject json = JsonParser.parseString(body).getAsJsonObject();
-                    species = normalizeSpecies(getString(json, "species"));
-                } catch (Exception ignored) {
-                    species = null;
-                }
-            }
-        }
-        if (species == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "species must be human or mouse");
-            return;
-        }
-
-        startBuild(species, getServletContext());
-        writeJson(resp, statusPayload(species, getServletContext()));
+        // Cache construction is an administrative deployment task. Keeping it
+        // off the public request path prevents an anonymous visitor from
+        // launching hours of server-side comparisons.
+        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+                "The DEG index is built by the server administrator.");
     }
 
     private static void writeStatus(String species, ServletContext context, HttpServletResponse resp) throws IOException {

@@ -60,6 +60,10 @@ public class SiteSearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("q");
+        if (query != null && query.length() > 256) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Search query is too long");
+            return;
+        }
         String contextPath = request.getContextPath();
         List<SearchResult> results = search(query == null ? "" : query, contextPath == null ? "" : contextPath);
 

@@ -30,6 +30,17 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>SecurityHeadersFilter</filter-name>
+        <filter-class>Utils.SecurityHeadersFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityHeadersFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
     <!-- Per-client-IP rate limiting for abuse-prone / compute-heavy endpoints -->
     <filter>
         <filter-name>RateLimitFilter</filter-name>
@@ -44,9 +55,26 @@
         <url-pattern>/gene-search</url-pattern>
         <url-pattern>/condition-deg-search</url-pattern>
         <url-pattern>/condition-deg-search/status</url-pattern>
-        <url-pattern>/condition-deg-search/warm</url-pattern>
         <url-pattern>/gene-details</url-pattern>
         <url-pattern>/ai-interpretation</url-pattern>
+        <url-pattern>/cpdb-api</url-pattern>
+        <url-pattern>/condition-compare</url-pattern>
+        <url-pattern>/condition-compare/status</url-pattern>
+        <url-pattern>/condition-compare/result</url-pattern>
+        <url-pattern>/condition-gsea</url-pattern>
+        <url-pattern>/condition-gsea/status</url-pattern>
+        <url-pattern>/condition-gsea/result</url-pattern>
+        <url-pattern>/deg-compare</url-pattern>
+        <url-pattern>/deg-compare/status</url-pattern>
+        <url-pattern>/deg-compare/result</url-pattern>
+        <url-pattern>/deg-per-celltype</url-pattern>
+        <url-pattern>/deg-per-celltype/status</url-pattern>
+        <url-pattern>/deg-per-celltype/result</url-pattern>
+        <url-pattern>/scorpion</url-pattern>
+        <url-pattern>/psospotter</url-pattern>
+        <url-pattern>/psospotter/status</url-pattern>
+        <url-pattern>/psospotter/result</url-pattern>
+        <url-pattern>/details.jsp</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -74,33 +102,6 @@
     <servlet-mapping>
         <servlet-name>details</servlet-name>
         <url-pattern>/details</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>details_init</servlet-name>
-        <servlet-class>Servlet.details_init</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>details_init</servlet-name>
-        <url-pattern>/details_init</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>query_init</servlet-name>
-        <servlet-class>Servlet.query_init</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>query_init</servlet-name>
-        <url-pattern>/query_init</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>deg_cell_type_change</servlet-name>
-        <servlet-class>Servlet.deg_cell_type_change</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>deg_cell_type_change</servlet-name>
-        <url-pattern>/deg_cell_type_change</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -140,15 +141,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>IntegrateServlet</servlet-name>
-        <servlet-class>Servlet.IntegrateServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>IntegrateServlet</servlet-name>
-        <url-pattern>/integrate</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>VisualizationServlet</servlet-name>
         <servlet-class>Servlet.VisualizationServlet</servlet-class>
     </servlet>
@@ -173,24 +165,6 @@
     <servlet-mapping>
         <servlet-name>DownloadServlet</servlet-name>
         <url-pattern>/download-file</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>GeoIPServlet</servlet-name>
-        <servlet-class>Servlet.GeoIPServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GeoIPServlet</servlet-name>
-        <url-pattern>/track</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>GeoDataAPI</servlet-name>
-        <servlet-class>web.GeoDataAPI</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GeoDataAPI</servlet-name>
-        <url-pattern>/api/geo</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -326,7 +300,6 @@
     </servlet>
     <servlet-mapping><servlet-name>ConditionDegSearchServlet</servlet-name><url-pattern>/condition-deg-search</url-pattern></servlet-mapping>
     <servlet-mapping><servlet-name>ConditionDegSearchServlet</servlet-name><url-pattern>/condition-deg-search/status</url-pattern></servlet-mapping>
-    <servlet-mapping><servlet-name>ConditionDegSearchServlet</servlet-name><url-pattern>/condition-deg-search/warm</url-pattern></servlet-mapping>
 
     <servlet>
         <servlet-name>PsoSpotterServlet</servlet-name>

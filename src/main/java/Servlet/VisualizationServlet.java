@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import Utils.DataPathResolver;
 
 /**
  * Servlet for managing the Interactive Visualization Suite
@@ -37,14 +38,18 @@ public class VisualizationServlet extends HttpServlet {
         String vizType = request.getParameter("type"); // Added to distinguish between integrated and individual
         String direct = request.getParameter("direct"); // Parameter to indicate direct visualization access
 
-        if (datasetId == null || datasetId.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Dataset ID is required");
+        if (datasetId == null || !datasetId.matches("SAID\\d{3}")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "A valid dataset ID is required");
             return;
         }
 
         // Default to individual visualization if not specified
         if (vizType == null || vizType.isEmpty()) {
             vizType = "individual";
+        }
+        if (!"individual".equals(vizType) && !"integrated".equals(vizType)) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid visualization type");
+            return;
         }
 
         try {
@@ -59,7 +64,7 @@ public class VisualizationServlet extends HttpServlet {
             }
 
             if (datasetPath == null || !Files.exists(Paths.get(datasetPath))) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Dataset file not found: " + datasetPath);
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Dataset file not found");
                 return;
             }
 
@@ -67,6 +72,8 @@ public class VisualizationServlet extends HttpServlet {
             String processKey = vizType + "_" + datasetId;
 
             // Check if visualization server is already running for this dataset
+            Process existing = runningProcesses.get(processKey);
+            if (existing != null && !existing.isAlive()) runningProcesses.remove(processKey, existing);
             if (!runningProcesses.containsKey(processKey)) {
                 startVisualizationServer(processKey, datasetPath, vizType, datasetId);
             }
@@ -75,9 +82,7 @@ public class VisualizationServlet extends HttpServlet {
             request.setAttribute("datasetId", datasetId);
             request.setAttribute("vizType", vizType);
             request.setAttribute("vizPort", VIZ_PORT_BASE);
-            String scheme = request.getScheme();
-            String host = request.getServerName();
-            String vizUrl = scheme + "://" + host + ":" + VIZ_PORT_BASE + "/viz/?dataset=" + datasetId + "&type=" + vizType;
+            String vizUrl = "/viz/?dataset=" + datasetId + "&type=" + vizType;
 
             request.setAttribute("vizUrl", vizUrl);
 
@@ -90,9 +95,9 @@ public class VisualizationServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            getServletContext().log("Visualization startup failed for " + datasetId, e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                             "Error starting visualization: " + e.getMessage());
+                             "The visualization could not be started");
         }
     }
 
@@ -112,8 +117,15 @@ public class VisualizationServlet extends HttpServlet {
                 vizType = "individual";
             }
 
+            if (datasetId == null || !datasetId.matches("SAID\\d{3}")
+                    || (!"individual".equals(vizType) && !"integrated".equals(vizType))) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid visualization request");
+                return;
+            }
             String processKey = vizType + "_" + datasetId;
-            boolean isRunning = runningProcesses.containsKey(processKey);
+            Process process = runningProcesses.get(processKey);
+            boolean isRunning = process != null && process.isAlive();
+            if (process != null && !isRunning) runningProcesses.remove(processKey, process);
 
             Map<String, Object> result = new HashMap<>();
             result.put("running", isRunning);
@@ -123,22 +135,8 @@ public class VisualizationServlet extends HttpServlet {
             response.setContentType("application/json");
             response.getWriter().write(gson.toJson(result));
 
-        } else if ("stop".equals(action)) {
-            String datasetId = request.getParameter("dataset");
-            String vizType = request.getParameter("type");
-            if (vizType == null || vizType.isEmpty()) {
-                vizType = "individual";
-            }
-
-            String processKey = vizType + "_" + datasetId;
-            stopVisualizationServer(processKey);
-
-            Map<String, Object> result = new HashMap<>();
-            result.put("stopped", true);
-
-            Gson gson = new Gson();
-            response.setContentType("application/json");
-            response.getWriter().write(gson.toJson(result));
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action");
         }
     }
 
@@ -161,7 +159,7 @@ public class VisualizationServlet extends HttpServlet {
 
         // Build command - specify type as individual to ensure UMAP computation if needed
         ProcessBuilder pb = new ProcessBuilder(
-            "python3",
+            DataPathResolver.resolvePythonCommand(getServletContext()),
             pythonScript,
             "--dataset", datasetPath,
             "--dataset-id", datasetId,
@@ -178,7 +176,7 @@ public class VisualizationServlet extends HttpServlet {
         runningProcesses.put(processKey, process);
 
         // Monitor output in separate thread
-        new Thread(() -> {
+        Thread monitor = new Thread(() -> {
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()))) {
                 String line;
@@ -188,7 +186,9 @@ public class VisualizationServlet extends HttpServlet {
             } catch (IOException e) {
                 System.err.println("Error reading visualization output: " + e.getMessage());
             }
-        }).start();
+        }, "visualization-log-" + processKey);
+        monitor.setDaemon(true);
+        monitor.start();
 
         System.out.println("Started visualization server for dataset: " + processKey + " (type: " + vizType + ")");
 

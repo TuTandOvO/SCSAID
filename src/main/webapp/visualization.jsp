@@ -27,6 +27,7 @@
     <main class="visualization-container" id="main-content" tabindex="-1">
         <%
             String datasetId = (String) request.getAttribute("datasetId");
+            String vizType = (String) request.getAttribute("vizType");
             String vizUrl = (String) request.getAttribute("vizUrl");
             Integer vizPort = (Integer) request.getAttribute("vizPort");
         %>
@@ -196,6 +197,7 @@
     <script>
         $(document).ready(function() {
             const datasetId = '<%= datasetId %>';
+            const vizType = '<%= vizType %>';
             const vizUrl = '<%= vizUrl %>';
             let checkInterval;
             let checkAttempts = 0;
@@ -206,7 +208,7 @@
                 $.ajax({
                     url: 'visualization',
                     type: 'POST',
-                    data: { action: 'status', dataset: datasetId },
+                    data: { action: 'status', dataset: datasetId, type: vizType },
                     success: function(response) {
                         if (response.running) {
                             setTimeout(function() {

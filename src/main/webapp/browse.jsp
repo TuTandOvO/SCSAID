@@ -2,6 +2,13 @@
          contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ page import="java.io.BufferedReader, java.io.File, java.io.FileReader, java.util.ArrayList, java.util.List, java.util.Map, java.util.HashMap, java.util.Set, java.util.TreeSet, Utils.DataPathResolver" %>
+<%!
+    private static String h(String value) {
+        if (value == null) return "";
+        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                .replace("\"", "&quot;").replace("'", "&#39;");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,12 +79,18 @@
             if (filterSpecies == null) filterSpecies = "";
             if (filterCondition == null) filterCondition = "";
             if (filterTissue == null) filterTissue = "";
+            if (!filterSpecies.isEmpty() && !"Human".equalsIgnoreCase(filterSpecies)
+                    && !"Mouse".equalsIgnoreCase(filterSpecies)) filterSpecies = "";
+            if (filterCondition.length() > 128) filterCondition = "";
+            if (filterTissue.length() > 128) filterTissue = "";
 
             // Sort parameters
             String sortCol = request.getParameter("sort");
             String sortOrder = request.getParameter("order");
             if (sortCol == null || sortCol.isEmpty()) sortCol = "said";
             if (sortOrder == null || sortOrder.isEmpty()) sortOrder = "asc";
+            if (!java.util.Arrays.asList("said", "gse", "gsm", "species", "n_cells", "condition", "tissue").contains(sortCol)) sortCol = "said";
+            if (!"asc".equals(sortOrder) && !"desc".equals(sortOrder)) sortOrder = "asc";
             final String finalSortCol = sortCol;
             final String finalSortOrder = sortOrder;
 
@@ -89,11 +102,11 @@
             String dataLoadError = null;
 
             if (!humanFile.exists() || !humanFile.canRead()) {
-                dataLoadError = "Human dataset file not accessible: " + humanCsvPath
-                        + " (tried: " + String.join(", ", DataPathResolver.getCandidateFilePaths(application, "human/human_obs_by_batch.csv")) + ")";
+                application.log("Human dataset file is not readable: " + humanCsvPath);
+                dataLoadError = "Human dataset metadata is temporarily unavailable.";
             } else if (!mouseFile.exists() || !mouseFile.canRead()) {
-                dataLoadError = "Mouse dataset file not accessible: " + mouseCsvPath
-                        + " (tried: " + String.join(", ", DataPathResolver.getCandidateFilePaths(application, "mouse/mouse_obs_by_batch.csv")) + ")";
+                application.log("Mouse dataset file is not readable: " + mouseCsvPath);
+                dataLoadError = "Mouse dataset metadata is temporarily unavailable.";
             } else {
                 try {
                 // Load human data
@@ -263,7 +276,7 @@
                         <select name="condition" id="filter-condition" class="filter-group__select" onchange="this.form.submit()">
                             <option value="">All Conditions</option>
                             <% for (String cond : allConditions) { %>
-                            <option value="<%= cond %>" <%= cond.equalsIgnoreCase(filterCondition) ? "selected" : "" %>><%= cond %></option>
+                            <option value="<%= h(cond) %>" <%= cond.equalsIgnoreCase(filterCondition) ? "selected" : "" %>><%= h(cond) %></option>
                             <% } %>
                         </select>
                     </div>
@@ -273,7 +286,7 @@
                         <select name="tissue" id="filter-tissue" class="filter-group__select" onchange="this.form.submit()">
                             <option value="">All Tissues</option>
                             <% for (String tis : allTissues) { %>
-                            <option value="<%= tis %>" <%= tis.equalsIgnoreCase(filterTissue) ? "selected" : "" %>><%= tis %></option>
+                            <option value="<%= h(tis) %>" <%= tis.equalsIgnoreCase(filterTissue) ? "selected" : "" %>><%= h(tis) %></option>
                             <% } %>
                         </select>
                     </div>
@@ -334,19 +347,19 @@
                             String conditionLower = condition.toLowerCase();
                             String tissueLower = tissue.toLowerCase().trim();
                     %>
-                    <tr data-species="<%= speciesLower %>" data-disease="<%= conditionLower %>" data-tissue="<%= tissueLower %>" data-stagger-item>
-                        <td data-label="Select"><input type="checkbox" name="dataset_checkbox" value="<%= said_display %>" aria-label="Select dataset <%= said_display %>"></td>
-                        <td class="cell-id" data-label="SAID"><%= said_display %></td>
-                        <td data-label="GSE"><%= gse %></td>
-                        <td data-label="GSM"><%= gsm_value %></td>
+                    <tr data-species="<%= h(speciesLower) %>" data-disease="<%= h(conditionLower) %>" data-tissue="<%= h(tissueLower) %>" data-stagger-item>
+                        <td data-label="Select"><input type="checkbox" name="dataset_checkbox" value="<%= h(said_display) %>" aria-label="Select dataset <%= h(said_display) %>"></td>
+                        <td class="cell-id" data-label="SAID"><%= h(said_display) %></td>
+                        <td data-label="GSE"><%= h(gse) %></td>
+                        <td data-label="GSM"><%= h(gsm_value) %></td>
                         <td data-label="Species">
                             <span class="species-badge <%= speciesLower.contains("human") ? "species-badge--human" : "species-badge--mouse" %>">
-                                <%= species %>
+                                <%= h(species) %>
                             </span>
                         </td>
-                        <td data-label="Cells"><%= n_cells %></td>
-                        <td data-label="Condition"><%= condition %></td>
-                        <td data-label="Tissue"><%= tissue %></td>
+                        <td data-label="Cells"><%= h(n_cells) %></td>
+                        <td data-label="Condition"><%= h(condition) %></td>
+                        <td data-label="Tissue"><%= h(tissue) %></td>
                         <td data-label="Details">
                             <a href="details.jsp?said=<%= java.net.URLEncoder.encode(said_display, "UTF-8") %>" class="cell-link">
                                 View
@@ -382,9 +395,9 @@
                     <div class="pagination__input-group">
                         <span class="pagination__label">Page</span>
                         <form method="get" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                            <input type="hidden" name="species" value="<%= filterSpecies %>">
-                            <input type="hidden" name="condition" value="<%= filterCondition %>">
-                            <input type="hidden" name="tissue" value="<%= filterTissue %>">
+                            <input type="hidden" name="species" value="<%= h(filterSpecies) %>">
+                            <input type="hidden" name="condition" value="<%= h(filterCondition) %>">
+                            <input type="hidden" name="tissue" value="<%= h(filterTissue) %>">
                             <input type="number" name="page" min="1" max="<%= totalPages %>" value="<%= pageNum %>" class="pagination__input">
                             <span class="pagination__label">of <%= totalPages %></span>
                             <button type="submit" class="pagination__btn">Go</button>
@@ -418,7 +431,8 @@
 
         <%
             } catch (Exception e) {
-                dataLoadError = "Error loading data: " + e.getMessage();
+                application.log("Unable to load browse metadata", e);
+                dataLoadError = "Dataset metadata is temporarily unavailable.";
             } finally {
                 if (reader != null) try { reader.close(); } catch(Exception ignore){}
             }
@@ -428,7 +442,7 @@
             if (dataLoadError != null) {
         %>
         <div class="error-message" style="background: var(--color-warning-bg); border: 1px solid var(--color-warning-border); color: var(--color-warning-text); padding: 20px; border-radius: var(--radius-md); margin: 20px 0;">
-            <strong>Data Loading Notice:</strong> <%= dataLoadError %>
+            <strong>Data Loading Notice:</strong> <%= h(dataLoadError) %>
             <br><br>
             <em>The data files may not be available on this deployment. This feature requires the CSV data files to be present on the server.</em>
         </div>

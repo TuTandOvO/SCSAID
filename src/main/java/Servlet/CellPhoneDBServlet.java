@@ -13,7 +13,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -48,13 +50,13 @@ public class CellPhoneDBServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
-            sendError(response, "Missing action parameter");
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing action parameter");
             return;
         }
 
         // Ensure server is running
         if (!ensureServerRunning()) {
-            sendError(response, "CellPhoneDB server is not available");
+            sendError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE, "CellPhoneDB server is not available");
             return;
         }
 
@@ -73,11 +75,11 @@ public class CellPhoneDBServlet extends HttpServlet {
                     handleHealth(response);
                     break;
                 default:
-                    sendError(response, "Unknown action: " + action);
+                    sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Unknown action");
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            sendError(response, "Server error: " + e.getMessage());
+            getServletContext().log("CellPhoneDB request failed", e);
+            sendError(response, HttpServletResponse.SC_BAD_GATEWAY, "CellPhoneDB request failed");
         }
     }
 
@@ -91,13 +93,13 @@ public class CellPhoneDBServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
-            sendError(response, "Missing action parameter");
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing action parameter");
             return;
         }
 
         // Ensure server is running
         if (!ensureServerRunning()) {
-            sendError(response, "CellPhoneDB server is not available");
+            sendError(response, HttpServletResponse.SC_SERVICE_UNAVAILABLE, "CellPhoneDB server is not available");
             return;
         }
 
@@ -105,19 +107,19 @@ public class CellPhoneDBServlet extends HttpServlet {
             if ("run-analysis".equals(action)) {
                 handleRunAnalysis(request, response);
             } else {
-                sendError(response, "Unknown action: " + action);
+                sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Unknown action");
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            sendError(response, "Server error: " + e.getMessage());
+            getServletContext().log("CellPhoneDB analysis request failed", e);
+            sendError(response, HttpServletResponse.SC_BAD_GATEWAY, "CellPhoneDB analysis request failed");
         }
     }
 
     private void handleCellTypes(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String said = request.getParameter("said");
-        if (said == null || said.isEmpty()) {
-            sendError(response, "Missing said parameter");
+        if (said == null || !said.matches("SAID\\d{3}")) {
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
 
@@ -131,8 +133,8 @@ public class CellPhoneDBServlet extends HttpServlet {
     private void handleStatus(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String jobId = request.getParameter("job_id");
-        if (jobId == null || jobId.isEmpty()) {
-            sendError(response, "Missing job_id parameter");
+        if (!validJobId(jobId) || !ownsJob(request, jobId)) {
+            sendError(response, HttpServletResponse.SC_NOT_FOUND, "Unknown job");
             return;
         }
 
@@ -146,8 +148,8 @@ public class CellPhoneDBServlet extends HttpServlet {
     private void handleResults(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String jobId = request.getParameter("job_id");
-        if (jobId == null || jobId.isEmpty()) {
-            sendError(response, "Missing job_id parameter");
+        if (!validJobId(jobId) || !ownsJob(request, jobId)) {
+            sendError(response, HttpServletResponse.SC_NOT_FOUND, "Unknown job");
             return;
         }
 
@@ -180,13 +182,15 @@ public class CellPhoneDBServlet extends HttpServlet {
         String senders = request.getParameter("senders");
         String receivers = request.getParameter("receivers");
 
-        if (said == null || said.isEmpty()) {
-            sendError(response, "Missing said parameter");
+        if (said == null || !said.matches("SAID\\d{3}")) {
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
 
-        if (cellTypes == null || cellTypes.isEmpty()) {
-            sendError(response, "Missing cell_types parameter");
+        if (cellTypes == null || cellTypes.isEmpty() || cellTypes.length() > 20_000
+                || (senders != null && senders.length() > 20_000)
+                || (receivers != null && receivers.length() > 20_000)) {
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Invalid cell-type selection");
             return;
         }
 
@@ -204,6 +208,16 @@ public class CellPhoneDBServlet extends HttpServlet {
         }
 
         String result = proxyPostRequest(apiUrl, postData);
+        try {
+            com.google.gson.JsonObject payload = gson.fromJson(result, com.google.gson.JsonObject.class);
+            if (payload != null && payload.has("job_id")) {
+                rememberJob(request, payload.get("job_id").getAsString());
+            } else {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (Exception invalidResponse) {
+            throw new IOException("CellPhoneDB returned an invalid job response");
+        }
         response.getWriter().write(result);
     }
 
@@ -267,10 +281,36 @@ public class CellPhoneDBServlet extends HttpServlet {
         }
     }
 
-    private void sendError(HttpServletResponse response, String message) throws IOException {
+    private void sendError(HttpServletResponse response, int status, String message) throws IOException {
+        response.setStatus(status);
+        response.setHeader("Cache-Control", "no-store");
         Map<String, String> error = new HashMap<>();
         error.put("error", message);
         response.getWriter().write(gson.toJson(error));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void rememberJob(HttpServletRequest request, String jobId) {
+        if (!validJobId(jobId)) return;
+        synchronized (request.getSession(true)) {
+            Set<String> jobs = (Set<String>) request.getSession().getAttribute("cpdbJobIds");
+            if (jobs == null) {
+                jobs = new HashSet<>();
+                request.getSession().setAttribute("cpdbJobIds", jobs);
+            }
+            jobs.add(jobId);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static boolean ownsJob(HttpServletRequest request, String jobId) {
+        if (request.getSession(false) == null) return false;
+        Object jobs = request.getSession(false).getAttribute("cpdbJobIds");
+        return jobs instanceof Set && ((Set<String>) jobs).contains(jobId);
+    }
+
+    private static boolean validJobId(String jobId) {
+        return jobId != null && jobId.matches("[0-9a-fA-F-]{36}");
     }
 
     private boolean ensureServerRunning() {

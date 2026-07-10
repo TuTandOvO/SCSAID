@@ -35,19 +35,24 @@ public class DEGServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String said = request.getParameter("said");
-        if (said == null || said.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter: said");
+        if (said == null || !said.matches("SAID\\d{3}")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
 
         Map<String, String> meta = mapping.get(said);
         if (meta == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "SAID not found in mapping: " + said);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Dataset not found");
             return;
         }
 
         double pvalThreshold = parseDouble(request.getParameter("pval"), 0.05);
         double fcThreshold   = parseDouble(request.getParameter("fc"), 1.0);
+        if (!Double.isFinite(pvalThreshold) || pvalThreshold < 0 || pvalThreshold > 1
+                || !Double.isFinite(fcThreshold) || fcThreshold < 0 || fcThreshold > 100) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid DEG thresholds");
+            return;
+        }
 
         // Determine species from the csv_path in mapping
         String csvPath = meta.get("csv_path");
@@ -104,6 +109,10 @@ public class DEGServlet extends HttpServlet {
             // Optional group column
             String groupCol = lowerToOrig.get("group");
             String filterGroup = request.getParameter("group");
+            if (filterGroup != null && filterGroup.length() > 128) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid group filter");
+                return;
+            }
 
             for (CSVRecord rec : parser) {
                 try {
@@ -122,6 +131,7 @@ public class DEGServlet extends HttpServlet {
                             row.put("scores",         score);
                             row.put("group",          group);
                             outList.add(row);
+                            if (outList.size() >= 50_000) break;
                         }
                     }
                 } catch (NumberFormatException ignore) {
@@ -129,7 +139,8 @@ public class DEGServlet extends HttpServlet {
             }
 
         } catch (IOException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading CSV: " + e.getMessage());
+            getServletContext().log("Unable to read DEG results for " + said, e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "DEG data is temporarily unavailable");
             return;
         }
 

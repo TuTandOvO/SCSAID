@@ -289,4 +289,4 @@ def update_umap_individual(search):
         return px.scatter(title="Error: Failed to process data. Please try again."), "Processing error"
 
 if __name__ == "__main__":
-    server.run(debug=True, host="0.0.0.0", port=8051)
+    server.run(debug=False, host="127.0.0.1", port=8051)

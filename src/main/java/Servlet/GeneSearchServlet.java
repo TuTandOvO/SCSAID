@@ -46,6 +46,10 @@ public class GeneSearchServlet extends HttpServlet {
         }
 
         query = query.trim();
+        if (query.length() > 64 || !query.matches("[A-Za-z0-9._-]+")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid gene query");
+            return;
+        }
         final int maxResults = 500; // Limit results to prevent overwhelming response
 
         List<Map<String, Object>> results = new ArrayList<>();

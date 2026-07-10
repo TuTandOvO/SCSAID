@@ -119,7 +119,7 @@
 
                         <div class="filter-card filter-card--wide" id="singleUploadCard">
                             <label class="filter-name" for="singleH5ad">Upload h5ad</label>
-                            <input id="singleH5ad" class="psospotter-file" type="file" accept=".h5ad,.h5ad.gz">
+                            <input id="singleH5ad" class="psospotter-file" type="file" accept=".h5ad,application/x-hdf5">
                             <div class="psospotter-helpline">Raw counts must be in layers[&quot;counts&quot;].</div>
                         </div>
 
@@ -128,11 +128,11 @@
                             <div class="psospotter-upload-grid">
                                 <label class="psospotter-upload">
                                     <span class="psospotter-upload__label">Train h5ad</span>
-                                    <input id="trainH5ad" class="psospotter-file" type="file" accept=".h5ad,.h5ad.gz">
+                                    <input id="trainH5ad" class="psospotter-file" type="file" accept=".h5ad,application/x-hdf5">
                                 </label>
                                 <label class="psospotter-upload">
                                     <span class="psospotter-upload__label">Test h5ad</span>
-                                    <input id="testH5ad" class="psospotter-file" type="file" accept=".h5ad,.h5ad.gz">
+                                    <input id="testH5ad" class="psospotter-file" type="file" accept=".h5ad,application/x-hdf5">
                                 </label>
                             </div>
                             <div class="psospotter-helpline">Cross-species mode uses the bundled Ensembl 116 ortholog table.</div>

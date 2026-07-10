@@ -57,8 +57,8 @@ public class ScorpionServlet extends HttpServlet {
 
         String said = request.getParameter("said");
         String action = request.getParameter("action");
-        if (said == null || said.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter: said");
+        if (said == null || !said.matches("SAID\\d{3}")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
         Map<String, String> meta = mapping.get(said);
@@ -78,24 +78,25 @@ public class ScorpionServlet extends HttpServlet {
             switch (action) {
                 case "activity":
                     handleActivity(out, activityFile, metaFile,
-                            parseIntOr(request.getParameter("top"), 25));
+                            boundedInt(request.getParameter("top"), 25, 1, 100));
                     break;
                 case "targets":
                     handleTargets(out, targetsFile,
-                            request.getParameter("tf"),
-                            parseIntOr(request.getParameter("top"), 20));
+                            validGene(request.getParameter("tf")),
+                            boundedInt(request.getParameter("top"), 20, 1, 100));
                     break;
                 case "network":
                     handleNetwork(out, activityFile, targetsFile,
-                            parseIntOr(request.getParameter("topTf"), 10),
-                            parseIntOr(request.getParameter("topTarget"), 8));
+                            boundedInt(request.getParameter("topTf"), 10, 1, 50),
+                            boundedInt(request.getParameter("topTarget"), 8, 1, 50));
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action: " + action);
             }
         } catch (Exception e) {
+            getServletContext().log("Unable to read SCORPION data for " + said, e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    "Error reading SCORPION data: " + e.getMessage());
+                    "Regulatory-network data is temporarily unavailable");
         }
     }
 
@@ -231,6 +232,15 @@ public class ScorpionServlet extends HttpServlet {
     private static int parseIntOr(String s, int def) {
         try { return s == null ? def : (int) Math.round(Double.parseDouble(s.trim())); }
         catch (Exception e) { return def; }
+    }
+    private static int boundedInt(String s, int def, int min, int max) {
+        int value = parseIntOr(s, def);
+        return Math.max(min, Math.min(max, value));
+    }
+    private static String validGene(String value) {
+        if (value == null) return null;
+        String gene = value.trim();
+        return gene.matches("[A-Za-z0-9._-]{1,64}") ? gene : null;
     }
     private static double parseDoubleOr(String s, double def) {
         try { return s == null ? def : Double.parseDouble(s.trim()); } catch (Exception e) { return def; }

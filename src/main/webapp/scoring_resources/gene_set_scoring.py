@@ -570,4 +570,4 @@ if __name__ == "__main__":
     print(f"URL: http://0.0.0.0:8052/gene-scoring/")
     print("=" * 60)
 
-    server.run(debug=False, host="0.0.0.0", port=8052)
+    server.run(debug=False, host="127.0.0.1", port=8052)

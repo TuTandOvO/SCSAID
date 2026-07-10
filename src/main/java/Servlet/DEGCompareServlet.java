@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 public class DEGCompareServlet extends HttpServlet {
 
     private static final String API_BASE = "http://127.0.0.1:8054";
+    private static final int MAX_JSON_BODY = 65_536;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -64,7 +65,13 @@ public class DEGCompareServlet extends HttpServlet {
         StringBuilder body = new StringBuilder();
         try (BufferedReader r = req.getReader()) {
             String line;
-            while ((line = r.readLine()) != null) body.append(line);
+            while ((line = r.readLine()) != null) {
+                if (body.length() + line.length() > MAX_JSON_BODY) {
+                    resp.sendError(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE, "Request body is too large");
+                    return;
+                }
+                body.append(line);
+            }
         }
         String path = req.getServletPath();
         String upstream = "/deg-per-celltype".equals(path)
@@ -81,6 +88,7 @@ public class DEGCompareServlet extends HttpServlet {
         for (String k : keys) {
             String v = req.getParameter(k);
             if (v == null) continue;
+            if (v.length() > 256) continue;
             if (!first) sb.append("&");
             first = false;
             sb.append(URLEncoder.encode(k, StandardCharsets.UTF_8))

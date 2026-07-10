@@ -10,6 +10,9 @@ import hashlib
 import threading
 import uuid
 import time
+import gc
+import re
+from collections import OrderedDict
 from datetime import datetime, timedelta
 from functools import lru_cache
 
@@ -49,9 +52,15 @@ app = Flask(__name__)
 # Job storage (in-memory for simplicity)
 JOBS = {}
 JOBS_LOCK = threading.Lock()
+JOB_RESULT_TTL = timedelta(minutes=30)
+MAX_ACTIVE_JOBS = 4
+ANALYSIS_SLOTS = threading.BoundedSemaphore(2)
 
-# Dataset cache
-DATASETS = {}
+# AnnData objects can be several GB. Keep only the most recently used dataset
+# instead of retaining every dataset for the lifetime of the service.
+DATASETS = OrderedDict()
+DATASETS_LOCK = threading.Lock()
+MAX_CACHED_DATASETS = 1
 
 
 def get_mapping_path():
@@ -92,20 +101,46 @@ def get_dataset_path(said):
 
 def load_dataset(said):
     """Load h5ad file for a dataset, with caching"""
-    if said in DATASETS:
-        return DATASETS[said]
+    with DATASETS_LOCK:
+        if said in DATASETS:
+            DATASETS.move_to_end(said)
+            return DATASETS[said]
 
-    file_path = get_dataset_path(said)
-    if not file_path or not os.path.exists(file_path):
-        return None
+        file_path = get_dataset_path(said)
+        if not file_path or not os.path.exists(file_path):
+            return None
 
-    try:
-        adata = sc.read_h5ad(file_path)
-        DATASETS[said] = adata
-        return adata
-    except Exception as e:
-        print(f"Error loading dataset {said}: {e}")
-        return None
+        try:
+            adata = sc.read_h5ad(file_path)
+            DATASETS[said] = adata
+            while len(DATASETS) > MAX_CACHED_DATASETS:
+                _, evicted = DATASETS.popitem(last=False)
+                del evicted
+            gc.collect()
+            return adata
+        except Exception as e:
+            print(f"Error loading dataset {said}: {e}")
+            return None
+
+
+def purge_expired_jobs():
+    """Discard completed job payloads after 30 minutes."""
+    cutoff = datetime.now() - JOB_RESULT_TTL
+    with JOBS_LOCK:
+        expired = []
+        for job_id, job in JOBS.items():
+            if job.get('status') not in ('completed', 'failed'):
+                continue
+            try:
+                created = datetime.fromisoformat(job.get('created_at', ''))
+            except (TypeError, ValueError):
+                created = cutoff - timedelta(seconds=1)
+            if created < cutoff:
+                expired.append(job_id)
+        for job_id in expired:
+            JOBS.pop(job_id, None)
+    if expired:
+        gc.collect()
 
 
 def get_cache_key(said, cell_types):
@@ -301,6 +336,12 @@ def run_cpdb_analysis_simple(adata, selected_cell_types, senders=None, receivers
 
 def run_analysis_thread(job_id, said, cell_types, senders, receivers):
     """Background thread for running analysis"""
+    acquired = ANALYSIS_SLOTS.acquire(timeout=600)
+    if not acquired:
+        with JOBS_LOCK:
+            JOBS[job_id]['status'] = 'failed'
+            JOBS[job_id]['error'] = 'The analysis queue timed out'
+        return
     try:
         with JOBS_LOCK:
             JOBS[job_id]['status'] = 'running'
@@ -352,6 +393,9 @@ def run_analysis_thread(job_id, said, cell_types, senders, receivers):
         with JOBS_LOCK:
             JOBS[job_id]['status'] = 'failed'
             JOBS[job_id]['error'] = str(e)
+    finally:
+        ANALYSIS_SLOTS.release()
+        purge_expired_jobs()
 
 
 # ============ API Endpoints ============
@@ -361,8 +405,8 @@ def get_cell_types():
     """Get available cell types for a dataset"""
     said = request.args.get('said')
 
-    if not said:
-        return jsonify({'error': 'Missing said parameter'}), 400
+    if not said or not re.fullmatch(r'SAID\d{3}', said):
+        return jsonify({'error': 'A valid dataset accession is required'}), 400
 
     adata = load_dataset(said)
     if adata is None:
@@ -403,8 +447,8 @@ def run_analysis():
     senders_raw = data.get('senders')
     receivers_raw = data.get('receivers')
 
-    if not said:
-        return jsonify({'error': 'Missing said parameter'}), 400
+    if not said or not re.fullmatch(r'SAID\d{3}', str(said)):
+        return jsonify({'error': 'A valid dataset accession is required'}), 400
 
     # Parse cell types
     if isinstance(cell_types_raw, str):
@@ -415,8 +459,16 @@ def run_analysis():
     else:
         cell_types = cell_types_raw or []
 
-    if len(cell_types) < 2:
+    if not isinstance(cell_types, list) or len(cell_types) < 2 or len(cell_types) > 100 \
+            or any(not isinstance(value, str) or len(value) > 200 for value in cell_types):
         return jsonify({'error': 'Please select at least 2 cell types'}), 400
+
+    purge_expired_jobs()
+    with JOBS_LOCK:
+        active_jobs = sum(1 for job in JOBS.values()
+                          if job.get('status') in ('pending', 'running'))
+    if active_jobs >= MAX_ACTIVE_JOBS:
+        return jsonify({'error': 'The analysis queue is full'}), 429
 
     # Parse senders/receivers (optional)
     senders = None
@@ -468,6 +520,7 @@ def run_analysis():
 @app.route('/api/status', methods=['GET'])
 def get_status():
     """Check job status"""
+    purge_expired_jobs()
     job_id = request.args.get('job_id')
 
     if not job_id:
@@ -490,6 +543,7 @@ def get_status():
 @app.route('/api/results', methods=['GET'])
 def get_results():
     """Get analysis results"""
+    purge_expired_jobs()
     job_id = request.args.get('job_id')
 
     if not job_id:
@@ -526,7 +580,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='CellPhoneDB Analysis API')
     parser.add_argument('--port', type=int, default=8054, help='Port to run on')
-    parser.add_argument('--host', type=str, default='0.0.0.0', help='Host to bind to')
+    parser.add_argument('--host', type=str, default='127.0.0.1', help='Host to bind to')
     parser.add_argument('--test', action='store_true', help='Run tests')
     args = parser.parse_args()
 

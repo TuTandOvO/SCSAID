@@ -64,8 +64,8 @@ public class EnrichmentServlet extends HttpServlet {
         String action = request.getParameter("action");
         String method = request.getParameter("method");
 
-        if (said == null || said.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameter: said");
+        if (said == null || !said.matches("SAID\\d{3}")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "A valid dataset accession is required");
             return;
         }
 
@@ -195,7 +195,8 @@ public class EnrichmentServlet extends HttpServlet {
                 results.add(row);
             }
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading CSV: " + e.getMessage());
+            getServletContext().log("Unable to read GSEA results for " + said, e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Enrichment data is temporarily unavailable");
             return;
         }
 
@@ -217,7 +218,7 @@ public class EnrichmentServlet extends HttpServlet {
         Map<String, String> libs = "mouse".equals(species) ? MOUSE_ORA_LIBS : HUMAN_ORA_LIBS;
         if (!libs.containsKey(library)) { out.print("[]"); return; }
 
-        int topN = parseIntOr(request.getParameter("top"), 10);
+        int topN = Math.max(1, Math.min(100, parseIntOr(request.getParameter("top"), 10)));
         boolean sigOnly = "significant".equals(request.getParameter("filter"));
 
         File degFile = new File(dataRoot, "DEG" + File.separator + species
@@ -249,7 +250,8 @@ public class EnrichmentServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error reading DEGs: " + e.getMessage());
+            getServletContext().log("Unable to read DEG input for enrichment", e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Enrichment input is temporarily unavailable");
             return;
         }
 

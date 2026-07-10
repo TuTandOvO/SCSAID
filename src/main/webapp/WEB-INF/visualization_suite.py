@@ -983,10 +983,10 @@ if __name__ == '__main__':
         dataset_type = args.type  # Use the provided type
         if load_dataset(args.dataset, dataset_type=dataset_type):
             print(f"Starting visualization server on port {args.port}...")
-            app.run_server(debug=args.debug, host='0.0.0.0', port=args.port)
+            app.run_server(debug=args.debug, host='127.0.0.1', port=args.port)
         else:
             print("Failed to load dataset. Exiting.")
             sys.exit(1)
     else:
         print("No dataset specified. Starting server without data...")
-        app.run_server(debug=args.debug, host='0.0.0.0', port=args.port)
+        app.run_server(debug=args.debug, host='127.0.0.1', port=args.port)

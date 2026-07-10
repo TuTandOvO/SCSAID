@@ -2,8 +2,8 @@
 <%
     // Redirect to details page since this functionality is now accessed from there
     String saidParam = request.getParameter("said");
-    if(saidParam != null && !saidParam.isEmpty()) {
-        response.sendRedirect("details?said=" + saidParam + "#GeneSetScoring");
+    if(saidParam != null && saidParam.matches("SAID\\d{3}")) {
+        response.sendRedirect("details?said=" + java.net.URLEncoder.encode(saidParam, "UTF-8") + "#GeneSetScoring");
     } else {
         response.sendRedirect("details.jsp");
     }

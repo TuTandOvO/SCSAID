@@ -449,4 +449,4 @@ if __name__ == "__main__":
     print("Access at: http://localhost:8053/gene-viz/")
     print("=" * 60)
     print()
-    server.run(debug=False, host="0.0.0.0", port=8053)
+    server.run(debug=False, host="127.0.0.1", port=8053)

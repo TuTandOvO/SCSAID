@@ -405,4 +405,4 @@ if __name__ == "__main__":
     print(f"URL: http://0.0.0.0:8051/enrichment/")
     print("=" * 50)
     
-    server.run(debug=False, host="0.0.0.0", port=8051)
+    server.run(debug=False, host="127.0.0.1", port=8051)

@@ -13,8 +13,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * Lightweight per-client-IP rate limiter for abuse-prone endpoints
  * (process spawners and search). Sliding fixed-window counters kept in memory.
  *
- * <p>The real client IP is resolved from the Cloudflare/sslh/nginx chain:
- * {@code CF-Connecting-IP} -> first hop of {@code X-Forwarded-For} -> remote addr.
+ * <p>The real client IP is read only from nginx's sanitized {@code X-Real-IP}
+ * header. Client-supplied Cloudflare/X-Forwarded-For values are deliberately
+ * ignored so a direct request cannot choose its own rate-limit identity.
  *
  * <p>The static {@link #allow(String, String, int)} method is reused by
  * {@code Servlet.feedback} so the Turnstile verify endpoint shares the same logic.
@@ -25,9 +26,10 @@ public class RateLimitFilter implements Filter {
     private static final long WINDOW_MS = 60_000L;
 
     // per-bucket request budget within one window
-    private static final int LIMIT_PROCESS = 15;   // spawn Python / heavy compute
+    private static final int LIMIT_PROCESS = 10;   // spawn Python / heavy compute
     private static final int LIMIT_SEARCH  = 60;    // CSV scans / lookups
     private static final int LIMIT_AI = 5;          // user-funded external LLM calls
+    private static final int LIMIT_STATUS = 180;    // bounded job polling
     private static final int LIMIT_DEFAULT = 90;
 
     // ip|bucket -> window state
@@ -51,7 +53,7 @@ public class RateLimitFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String bucket = bucketFor(req.getRequestURI(), req.getContextPath());
+        String bucket = bucketFor(req);
         int limit = limitFor(bucket);
 
         if (!allow(clientIp(req), bucket, limit)) {
@@ -84,27 +86,29 @@ public class RateLimitFilter implements Filter {
         }
     }
 
-    /** Resolve the originating client IP behind Cloudflare -> sslh -> nginx. */
+    /** Resolve the originating client IP from nginx's overwritten proxy header. */
     public static String clientIp(HttpServletRequest req) {
-        String cf = req.getHeader("CF-Connecting-IP");
-        if (cf != null && !cf.trim().isEmpty()) {
-            return cf.trim();
-        }
-        String xff = req.getHeader("X-Forwarded-For");
-        if (xff != null && !xff.trim().isEmpty()) {
-            int comma = xff.indexOf(',');
-            return (comma > 0 ? xff.substring(0, comma) : xff).trim();
+        String real = req.getHeader("X-Real-IP");
+        if (real != null) {
+            real = real.trim();
+            if (real.length() <= 64 && real.matches("[0-9A-Fa-f:.]+")) return real;
         }
         return req.getRemoteAddr();
     }
 
-    private static String bucketFor(String uri, String ctx) {
-        String path = uri;
+    private static String bucketFor(HttpServletRequest req) {
+        String path = req.getRequestURI();
+        String ctx = req.getContextPath();
         if (ctx != null && !ctx.isEmpty() && path.startsWith(ctx)) {
             path = path.substring(ctx.length());
         }
+        if (path.endsWith("/status") || path.endsWith("/result")) return "status";
         if (path.startsWith("/visualization") || path.startsWith("/enrichment")
-                || path.startsWith("/integrate")) {
+                || path.startsWith("/integrate") || path.startsWith("/cpdb-api")
+                || path.startsWith("/condition-compare") || path.startsWith("/condition-gsea")
+                || path.startsWith("/deg-compare") || path.startsWith("/deg-per-celltype")
+                || path.startsWith("/scorpion") || path.startsWith("/psospotter")
+                || path.equals("/details.jsp")) {
             return "process";
         }
         if (path.startsWith("/gene-search") || path.startsWith("/gene-details")
@@ -122,6 +126,7 @@ public class RateLimitFilter implements Filter {
             case "process": return LIMIT_PROCESS;
             case "search":  return LIMIT_SEARCH;
             case "ai":      return LIMIT_AI;
+            case "status":  return LIMIT_STATUS;
             default:        return LIMIT_DEFAULT;
         }
     }

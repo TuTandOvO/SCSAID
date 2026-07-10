@@ -128,6 +128,24 @@
 
     marked.use({ renderer });
 
+    const sanitizeHelpHtml = (html) => {
+        const template = document.createElement("template");
+        template.innerHTML = String(html || "");
+        template.content.querySelectorAll("script, iframe, object, embed, form, style, link, meta").forEach((node) => node.remove());
+        template.content.querySelectorAll("*").forEach((node) => {
+            Array.from(node.attributes).forEach((attribute) => {
+                const name = attribute.name.toLowerCase();
+                const value = attribute.value.trim();
+                if (name.startsWith("on") || name === "srcdoc") node.removeAttribute(attribute.name);
+                if ((name === "href" || name === "src")
+                        && !/^(?:https?:|mailto:|\/|#|\.\.?\/)/i.test(value)) {
+                    node.removeAttribute(attribute.name);
+                }
+            });
+        });
+        return template.innerHTML;
+    };
+
     const buildSubTOC = () => {
         if (!tocEl) {
             return;
@@ -202,7 +220,7 @@
             contentEl.classList.remove("panel-loader");
             contentEl.removeAttribute("role");
             contentEl.removeAttribute("aria-label");
-            contentEl.innerHTML = marked.parse(markdown);
+            contentEl.innerHTML = sanitizeHelpHtml(marked.parse(markdown));
             buildSubTOC();
             setupScrollHighlighting();
         })
