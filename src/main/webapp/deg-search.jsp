@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
     <link rel="stylesheet" href="CSS/header.css?v=20260711a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/search.css?v=20260711a">
+    <link rel="stylesheet" href="CSS/search.css?v=20260711b">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
     <style>
         .search-box-wrap { position: relative; max-width: 640px; margin: 0 auto; }
