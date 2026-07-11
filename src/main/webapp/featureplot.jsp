@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="CSS/header.css?v=20260711a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="CSS/compare.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260710b">
+    <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260711a">
 
     <!-- Third-party libs -->
     <script src="lib/jquery-3.7.1.min.js?v=20260420"></script>
@@ -72,7 +72,7 @@
             <h1 class="page-hero__title title-with-help">
                 <button type="button" class="analysis-help" aria-label="About integrated expression" aria-describedby="help-expression" aria-expanded="false" data-help-target="help-expression">Expression</button>
             </h1>
-            <span id="help-expression" class="visually-hidden">Overlay a gene's expression intensity on the integrated human or mouse skin UMAP. Gene-symbol matching is case-insensitive.</span>
+            <span id="help-expression" class="visually-hidden">Overlay a gene's expression intensity on the integrated human or mouse skin UMAP, then focus the view by dataset and experimental condition. The full atlas remains visible in the background for spatial context.</span>
         </div>
     </section>
 
@@ -97,6 +97,20 @@
                     </div>
 
                     <div class="umap-control umap-control--search">
+                        <label class="filter-name" for="conditionSelect">Condition</label>
+                        <select id="conditionSelect" class="umap-select">
+                            <option value="">All conditions</option>
+                        </select>
+                    </div>
+
+                    <div class="umap-control umap-control--dataset">
+                        <label class="filter-name" for="datasetSelect">Dataset</label>
+                        <select id="datasetSelect" class="umap-select">
+                            <option value="">All datasets</option>
+                        </select>
+                    </div>
+
+                    <div class="umap-control umap-control--search">
                         <label class="filter-name" for="geneInput">Gene</label>
                         <div class="gene-search">
                             <input type="text" id="geneInput" class="gene-search__input"
@@ -109,7 +123,10 @@
 
                     <div class="umap-control umap-control--action">
                         <span class="filter-name">&nbsp;</span>
-                        <button id="clearGeneBtn" class="btn-secondary" disabled>Clear gene</button>
+                        <div class="umap-actions">
+                            <button id="clearContextBtn" class="btn-secondary" disabled>Reset focus</button>
+                            <button id="clearGeneBtn" class="btn-secondary" disabled>Clear gene</button>
+                        </div>
                     </div>
                 </div>
 
@@ -120,6 +137,24 @@
         <!-- Plot -->
         <section class="panel" aria-label="UMAP feature plot">
             <div class="panel-body umap-plot-body">
+                <div id="umapContext" class="umap-context" aria-live="polite">
+                    <div class="umap-context__item">
+                        <span class="umap-context__label">Dataset</span>
+                        <strong id="contextDataset" class="umap-context__value">All datasets</strong>
+                    </div>
+                    <div class="umap-context__item">
+                        <span class="umap-context__label">Condition</span>
+                        <strong id="contextCondition" class="umap-context__value">All conditions</strong>
+                    </div>
+                    <div class="umap-context__item">
+                        <span class="umap-context__label">Gene</span>
+                        <strong id="contextGene" class="umap-context__value">Cell-type overview</strong>
+                    </div>
+                    <div class="umap-context__item umap-context__item--count">
+                        <span class="umap-context__label">Cells in view</span>
+                        <strong id="contextCells" class="umap-context__value">—</strong>
+                    </div>
+                </div>
                 <div class="umap-stage">
                     <div id="umapPlot" class="umap-plot"></div>
                     <div id="umapLegend" class="umap-legend"></div>

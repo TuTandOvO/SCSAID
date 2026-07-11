@@ -7,10 +7,12 @@
      /integrated_umap/api/genes?species=     -> autocomplete gene list
      /integrated_umap/api/umap-base?species= -> coords + cell IDs + metadata (once/species)
      /integrated_umap/api/expression?...&gene -> per-gene expression vector (cached)
+     /atlas-context?species=                  -> GSM / SAID / condition metadata
 
-   Default coloring is categorical (cell type). Selecting a gene recolors the
-   single Plotly scattergl trace via restyle (no full re-render); clearing
-   restores the categorical coloring. Depends on JS/umap-overlay-core.js.
+   Default coloring is categorical (cell type). Selecting a gene uses the
+   continuous expression scale. Dataset and condition filters keep the full
+   atlas faintly visible while focusing the matching cells. Depends on
+   JS/umap-overlay-core.js.
    ========================================================================== */
 (function () {
     "use strict";
@@ -24,13 +26,16 @@
         base: { human: null, mouse: null },      // {x,y,cellIds,index(Map),customdata,legend,categories}
         genes: { human: null, mouse: null },     // gene-symbol arrays
         exprCache: {},                            // "species|GENE" -> {gene,values,min,max,stats}
+        filters: { dataset: "", condition: "" },
         currentGene: null,
         pendingGene: null,
         suggestIdx: -1,
         plotInited: false
     };
 
-    var $input, $suggest, $clearBtn, $geneStatus, $legend, $loading, $error;
+    var $input, $suggest, $clearBtn, $clearContextBtn, $dataset, $condition;
+    var $geneStatus, $legend, $loading, $error;
+    var $contextDataset, $contextCondition, $contextGene, $contextCells;
 
     /* ---- tiny DOM helpers -------------------------------------------------- */
     function el(id) { return document.getElementById(id); }
@@ -55,10 +60,13 @@
     /* ====================================================================== */
     function loadSpecies(sp) {
         state.species = sp;
+        state.filters.dataset = "";
+        state.filters.condition = "";
         clearGene(true);
         hideSuggest();
         if (state.base[sp]) {
-            renderCategorical(state.base[sp]);
+            populateContextControls(state.base[sp]);
+            renderView();
             maybeSelectPending();
             return;
         }
@@ -66,13 +74,15 @@
         hide($error);
         $.when(
             $.getJSON(API + "/genes?species=" + sp),
-            $.getJSON(API + "/umap-base?species=" + sp)
-        ).done(function (genesRes, baseRes) {
+            $.getJSON(API + "/umap-base?species=" + sp),
+            $.getJSON("/atlas-context?species=" + sp)
+        ).done(function (genesRes, baseRes, contextRes) {
             state.genes[sp] = genesRes[0].genes || [];
             var raw = baseRes[0];
-            state.base[sp] = buildBase(raw);
+            state.base[sp] = buildBase(raw, contextRes[0].datasets || []);
             hide($loading);
-            renderCategorical(state.base[sp]);
+            populateContextControls(state.base[sp]);
+            renderView();
             maybeSelectPending();
         }).fail(function () {
             hide($loading);
@@ -116,16 +126,27 @@
     }
 
     /* Pre-decode categorical codes into per-point label strings + customdata. */
-    function buildBase(raw) {
+    function buildBase(raw, contextRows) {
         var n = raw.n;
         var ct = raw.meta.cell_type, cl = raw.meta.cluster, sm = raw.meta.sample;
+        var byGsm = {};
+        contextRows.forEach(function (row) { byGsm[row.gsm] = row; });
         var customdata = new Array(n);
+        var datasets = new Array(n);
+        var conditions = new Array(n);
         for (var i = 0; i < n; i++) {
+            var gsm = labelOf(sm, i);
+            var context = byGsm[gsm] || {};
+            datasets[i] = context.said || "";
+            conditions[i] = context.condition || "Unspecified";
             customdata[i] = [
                 raw.cell_ids[i],
                 labelOf(ct, i),
                 labelOf(cl, i),
-                labelOf(sm, i)
+                gsm,
+                context.said || "Unmapped dataset",
+                context.gse || "—",
+                context.condition || "Unspecified"
             ];
         }
         return {
@@ -134,6 +155,9 @@
             cellIds: raw.cell_ids,
             index: Core.buildCellIndex(raw.cell_ids),
             customdata: customdata,
+            datasets: datasets,
+            conditions: conditions,
+            contextRows: contextRows,
             categories: ct.categories,
             catColors: Core.categoricalColors(ct.codes),
             legend: Core.categoricalLegend(ct.categories)
@@ -167,10 +191,12 @@
         modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d"]
     };
     // High-res PNG / vector PDF download buttons (figure-export.js), with a
-    // filename that reflects the current species + gene at click time.
+    // filename that reflects the current species, gene, and focused dataset.
     function plotConfig() {
         var name = function () {
-            return "featureplot_" + state.species + (state.currentGene ? "_" + state.currentGene : "");
+            return "featureplot_" + state.species +
+                (state.currentGene ? "_" + state.currentGene : "") +
+                (state.filters.dataset ? "_" + state.filters.dataset : "");
         };
         return window.FigureExport ? window.FigureExport.config(name, PLOT_CONFIG_BASE)
                                    : PLOT_CONFIG_BASE;
@@ -181,60 +207,116 @@
         "UMAP: (%{x:.2f}, %{y:.2f})<br>" +
         "Cell type: %{customdata[1]}<br>" +
         "Cluster: %{customdata[2]}<br>" +
-        "Sample: %{customdata[3]}<extra></extra>";
+        "Sample: %{customdata[3]}<br>" +
+        "Dataset: %{customdata[4]} · %{customdata[5]}<br>" +
+        "Condition: %{customdata[6]}<extra></extra>";
 
     function geneHover(gene) {
         return "Cell ID: %{customdata[0]}<br>" +
             "UMAP: (%{x:.2f}, %{y:.2f})<br>" +
-            "<b>" + esc(gene) + ": %{marker.color:.3f}</b><br>" +
+            "<b>" + esc(gene) + ": %{text:.3f}</b><br>" +
             "Cell type: %{customdata[1]}<br>" +
             "Cluster: %{customdata[2]}<br>" +
-            "Sample: %{customdata[3]}<extra></extra>";
+            "Sample: %{customdata[3]}<br>" +
+            "Dataset: %{customdata[4]} · %{customdata[5]}<br>" +
+            "Condition: %{customdata[6]}<extra></extra>";
     }
 
-    function renderCategorical(base) {
-        var trace = {
+    function matchingIndices(base) {
+        var out = [];
+        for (var i = 0; i < base.x.length; i++) {
+            if (state.filters.dataset && base.datasets[i] !== state.filters.dataset) { continue; }
+            if (state.filters.condition && base.conditions[i] !== state.filters.condition) { continue; }
+            out.push(i);
+        }
+        return out;
+    }
+
+    function pick(values, indices) {
+        var out = new Array(indices.length);
+        for (var i = 0; i < indices.length; i++) { out[i] = values[indices[i]]; }
+        return out;
+    }
+
+    function backgroundTrace(base) {
+        return {
             type: "scattergl",
             mode: "markers",
             x: base.x,
             y: base.y,
-            customdata: base.customdata,
-            hovertemplate: CAT_HOVER,
-            marker: { size: 3.5, opacity: 0.7, color: base.catColors, line: { width: 0 } }
+            hoverinfo: "skip",
+            marker: { size: 3.2, opacity: 0.13, color: "#bfc3c7", line: { width: 0 } }
         };
-        Plotly.react(PLOT_ID, [trace], BASE_LAYOUT, plotConfig());
-        state.plotInited = true;
-        renderLegendCategorical(base.legend);
     }
 
-    function recolorByGene(gene, values, stats) {
-        var base = state.base[state.species];
-        var update;
-        if (Core.hasMissing(values)) {
-            // Slow path: some cells lack a value -> explicit per-point colors (grey for missing)
-            update = { "marker.color": [Core.expressionColors(values, stats.min, stats.max)],
-                       "hovertemplate": [CAT_HOVER] };
+    function foregroundTrace(base, indices, entry) {
+        var all = indices == null;
+        var x = all ? base.x : pick(base.x, indices);
+        var y = all ? base.y : pick(base.y, indices);
+        var customdata = all ? base.customdata : pick(base.customdata, indices);
+        var marker = { size: 3.8, opacity: 0.78, line: { width: 0 } };
+        var hovertemplate = CAT_HOVER;
+        var text = null;
+
+        if (entry) {
+            var values = all ? entry.values : pick(entry.values, indices);
+            text = values;
+            marker.color = Core.hasMissing(values)
+                ? Core.expressionColors(values, entry.stats.min, entry.stats.max)
+                : values;
+            if (!Core.hasMissing(values)) {
+                marker.colorscale = Core.plotlyColorscale();
+                marker.cmin = entry.stats.min;
+                marker.cmax = entry.stats.max;
+                marker.showscale = false;
+            }
+            hovertemplate = geneHover(entry.gene);
         } else {
-            update = {
-                "marker.color": [values],
-                "marker.colorscale": [Core.plotlyColorscale()],
-                "marker.cmin": [stats.min],
-                "marker.cmax": [stats.max],
-                "marker.showscale": [false],
-                "hovertemplate": [geneHover(gene)]
-            };
+            marker.color = all ? base.catColors : pick(base.catColors, indices);
         }
-        Plotly.restyle(PLOT_ID, update, [0]);
-        renderLegendGene(gene, stats);
+
+        return {
+            type: "scattergl",
+            mode: "markers",
+            x: x,
+            y: y,
+            customdata: customdata,
+            text: text,
+            hovertemplate: hovertemplate,
+            marker: marker
+        };
     }
 
-    function restoreCategorical() {
+    function currentExpression() {
+        if (!state.currentGene) { return null; }
+        return state.exprCache[state.species + "|" + state.currentGene] || null;
+    }
+
+    function renderView() {
         var base = state.base[state.species];
-        Plotly.restyle(PLOT_ID, {
-            "marker.color": [base.catColors],
-            "hovertemplate": [CAT_HOVER]
-        }, [0]);
-        renderLegendCategorical(base.legend);
+        if (!base) { return; }
+        var active = !!(state.filters.dataset || state.filters.condition);
+        var indices = active ? matchingIndices(base) : null;
+        var visibleCount = active ? indices.length : base.x.length;
+        var entry = currentExpression();
+        var traces = [];
+        if (active) { traces.push(backgroundTrace(base)); }
+        if (!active || indices.length) { traces.push(foregroundTrace(base, indices, entry)); }
+
+        Plotly.react(PLOT_ID, traces, BASE_LAYOUT, plotConfig());
+        state.plotInited = true;
+        if (entry) {
+            var viewValues = active ? pick(entry.values, indices) : entry.values;
+            renderLegendGene(entry.gene, entry.stats, Core.computeColorStats(viewValues));
+        } else {
+            renderLegendCategorical(base.legend);
+        }
+        renderContext(base, visibleCount);
+        if (active && !visibleCount) {
+            showGeneStatus("No sampled cells match this dataset and condition combination.", "warn");
+        } else {
+            hideGeneStatus();
+        }
     }
 
     /* ====================================================================== */
@@ -257,18 +339,129 @@
         }).join(",") + ")";
     }
 
-    function renderLegendGene(gene, stats) {
+    function renderLegendGene(gene, stats, viewStats) {
+        viewStats = viewStats || stats;
         var note = "";
-        if (stats.allZero) { note = '<div class="umap-legend__note">No expression detected in view</div>'; }
-        else if (stats.constant) { note = '<div class="umap-legend__note">Uniform expression</div>'; }
+        if (viewStats.allZero) { note = '<div class="umap-legend__note">No expression detected in view</div>'; }
+        else if (viewStats.constant) { note = '<div class="umap-legend__note">Uniform expression in view</div>'; }
         var html =
             '<div class="umap-legend__title">' + esc(gene) + '</div>' +
-            '<div class="umap-legend__sub">Expression</div>' +
+            '<div class="umap-legend__sub">Expression · atlas-wide scale</div>' +
             '<div class="umap-legend__bar" style="background:' + gradientCss() + '"></div>' +
             '<div class="umap-legend__scale">' +
             '<span>' + stats.min.toFixed(2) + '</span>' +
             '<span>' + stats.max.toFixed(2) + '</span></div>' + note;
         $legend.innerHTML = html;
+    }
+
+    /* ====================================================================== */
+    /*  Dataset × condition coordination                                      */
+    /* ====================================================================== */
+    function addOption(select, value, label) {
+        var option = document.createElement("option");
+        option.value = value;
+        option.textContent = label;
+        select.appendChild(option);
+    }
+
+    function saidNumber(value) {
+        var match = String(value || "").match(/\d+/);
+        return match ? parseInt(match[0], 10) : Number.MAX_SAFE_INTEGER;
+    }
+
+    function populateContextControls(base) {
+        var conditions = [];
+        var seen = {};
+        base.contextRows.forEach(function (row) {
+            if (!seen[row.condition]) {
+                seen[row.condition] = true;
+                conditions.push(row.condition);
+            }
+        });
+        conditions.sort(function (a, b) {
+            if (a === "Healthy") { return -1; }
+            if (b === "Healthy") { return 1; }
+            return a.localeCompare(b);
+        });
+
+        $condition.innerHTML = "";
+        addOption($condition, "", "All conditions");
+        conditions.forEach(function (condition) { addOption($condition, condition, condition); });
+        $condition.value = "";
+        fillDatasetOptions(base);
+        updateContextButton();
+    }
+
+    function fillDatasetOptions(base) {
+        var selected = state.filters.dataset;
+        var rows = base.contextRows.filter(function (row) {
+            return !state.filters.condition || row.condition === state.filters.condition;
+        }).slice().sort(function (a, b) {
+            return saidNumber(a.said) - saidNumber(b.said);
+        });
+
+        $dataset.innerHTML = "";
+        addOption($dataset, "", state.filters.condition ? "All matching datasets" : "All datasets");
+        rows.forEach(function (row) {
+            addOption($dataset, row.said,
+                row.said + " · " + row.gsm + " · " + row.condition);
+        });
+        var stillAvailable = rows.some(function (row) { return row.said === selected; });
+        if (!stillAvailable) { state.filters.dataset = ""; }
+        $dataset.value = state.filters.dataset;
+    }
+
+    function selectedDatasetRow(base) {
+        for (var i = 0; i < base.contextRows.length; i++) {
+            if (base.contextRows[i].said === state.filters.dataset) {
+                return base.contextRows[i];
+            }
+        }
+        return null;
+    }
+
+    function renderContext(base, visibleCount) {
+        var row = selectedDatasetRow(base);
+        $contextDataset.textContent = row
+            ? row.said + " · " + row.gsm
+            : "All " + base.contextRows.length + " datasets";
+        $contextCondition.textContent = state.filters.condition || "All conditions";
+        $contextGene.textContent = state.currentGene || "Cell-type overview";
+        $contextCells.textContent = visibleCount.toLocaleString() + " / " +
+            base.x.length.toLocaleString();
+        updateContextButton();
+    }
+
+    function updateContextButton() {
+        $clearContextBtn.disabled = !(state.filters.dataset || state.filters.condition);
+    }
+
+    function onConditionChange() {
+        state.filters.condition = $condition.value;
+        fillDatasetOptions(state.base[state.species]);
+        renderView();
+    }
+
+    function onDatasetChange() {
+        state.filters.dataset = $dataset.value;
+        var base = state.base[state.species];
+        var row = selectedDatasetRow(base);
+        if (row && state.filters.condition !== row.condition) {
+            state.filters.condition = row.condition;
+            $condition.value = row.condition;
+            fillDatasetOptions(base);
+            $dataset.value = row.said;
+            state.filters.dataset = row.said;
+        }
+        renderView();
+    }
+
+    function clearContext() {
+        state.filters.dataset = "";
+        state.filters.condition = "";
+        $condition.value = "";
+        fillDatasetOptions(state.base[state.species]);
+        renderView();
     }
 
     /* ====================================================================== */
@@ -321,7 +514,7 @@
 
     function applyExpression(entry) {
         state.currentGene = entry.gene;
-        recolorByGene(entry.gene, entry.values, entry.stats);
+        renderView();
         $clearBtn.disabled = false;
     }
 
@@ -330,7 +523,7 @@
         $clearBtn.disabled = true;
         hideGeneStatus();
         if (!silent) { $input.value = ""; }
-        if (state.plotInited && state.base[state.species]) { restoreCategorical(); }
+        if (state.plotInited && state.base[state.species]) { renderView(); }
     }
 
     /* ====================================================================== */
@@ -407,10 +600,17 @@
         $input = el("geneInput");
         $suggest = el("geneSuggest");
         $clearBtn = el("clearGeneBtn");
+        $clearContextBtn = el("clearContextBtn");
+        $dataset = el("datasetSelect");
+        $condition = el("conditionSelect");
         $geneStatus = el("geneStatus");
         $legend = el("umapLegend");
         $loading = el("umapLoading");
         $error = el("umapError");
+        $contextDataset = el("contextDataset");
+        $contextCondition = el("contextCondition");
+        $contextGene = el("contextGene");
+        $contextCells = el("contextCells");
 
         // Species toggle
         var radios = document.querySelectorAll('input[name="umap-species"]');
@@ -433,6 +633,9 @@
         });
 
         $clearBtn.addEventListener("click", function () { clearGene(false); });
+        $clearContextBtn.addEventListener("click", clearContext);
+        $condition.addEventListener("change", onConditionChange);
+        $dataset.addEventListener("change", onDatasetChange);
 
         document.addEventListener("click", function (e) {
             if (!e.target.closest(".gene-search")) { hideSuggest(); }

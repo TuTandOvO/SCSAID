@@ -123,6 +123,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AtlasContextServlet</servlet-name>
+        <servlet-class>Servlet.AtlasContextServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AtlasContextServlet</servlet-name>
+        <url-pattern>/atlas-context</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>SiteSearchServlet</servlet-name>
         <servlet-class>Servlet.SiteSearchServlet</servlet-class>
     </servlet>

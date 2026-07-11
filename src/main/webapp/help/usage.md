@@ -214,14 +214,18 @@ External annotations are retrieved from external services and may be unavailable
 Open [Expression](../featureplot.jsp) to overlay one gene on the integrated human or mouse skin atlas.
 
 1. Choose **Human** or **Mouse**. The species preference is retained locally.
-2. Enter a gene symbol and select an autocomplete result. Matching is case-insensitive.
-3. The default view colors cells categorically by cell type. After gene selection, cells are recolored by expression and the legend reports the observed range.
-4. Hover points to inspect UMAP coordinates, cell identity, and expression value.
-5. Use **Clear gene** to restore cell-type coloring.
-6. Use Plotly controls to zoom, pan, reset, export, or view full screen.
-7. A `featureplot.jsp?gene=SYMBOL` link attempts to detect the species containing the gene and loads it directly.
+2. Optionally select a **Condition**. The dataset list is narrowed to datasets carrying that annotation.
+3. Optionally select a **Dataset**. Each option identifies the scSAID accession, sample accession, and condition. Selecting a dataset also selects its condition so the active biological context remains explicit.
+4. Enter a gene symbol and select an autocomplete result. Matching is case-insensitive.
+5. The default view colors cells categorically by cell type. After gene selection, cells are recolored by expression. The expression legend uses one atlas-wide scale for the selected gene so dataset and condition views remain visually comparable.
+6. When a dataset or condition is focused, matching cells remain colored while the complete integrated atlas is retained as a faint spatial reference.
+7. Read the context strip above the UMAP to confirm the active dataset, condition, gene, and number of sampled cells in view.
+8. Hover points to inspect the cell ID, UMAP coordinates, expression value, cell type, cluster, GSM sample, scSAID/GSE dataset, and condition together.
+9. Use **Reset focus** to restore all datasets and conditions. Use **Clear gene** to restore cell-type coloring without changing the dataset/condition focus.
+10. Use Plotly controls to zoom, pan, reset, export, or view full screen. Export filenames include the species, selected gene, and focused dataset when present.
+11. A `featureplot.jsp?gene=SYMBOL` link attempts to detect the species containing the gene and loads it directly.
 
-The gene catalogue is restricted to genes available in the integrated visualization data. Grey or missing points indicate unavailable signal; zero or low values can reflect biological absence or technical dropout. Color scales describe the current gene and should not be compared visually between genes without checking their numeric ranges.
+The gene catalogue is restricted to genes available in the integrated visualization data. Grey points outside a focus are contextual cells, whereas grey or missing points inside the focus indicate unavailable signal. Zero or low values can reflect biological absence or technical dropout. The scale is stable across dataset/condition subsets for one gene, but scales for different genes should not be compared without checking their numeric ranges. Dataset and condition labels come from scSAID sample metadata; filtering does not perform a statistical comparison.
 
 ## Compare conditions in real time
 

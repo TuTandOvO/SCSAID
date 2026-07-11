@@ -1,0 +1,1766 @@
+[
+  {
+    "said": "SAID120",
+    "gse": "GSE249793",
+    "gsm": "GSM7964420",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID121",
+    "gse": "GSE249793",
+    "gsm": "GSM7964422",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID122",
+    "gse": "GSE249793",
+    "gsm": "GSM7964423",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID123",
+    "gse": "GSE249793",
+    "gsm": "GSM7964424",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID124",
+    "gse": "GSE155850",
+    "gsm": "GSM7754887",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID125",
+    "gse": "GSE155850",
+    "gsm": "GSM7754889",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID126",
+    "gse": "GSE155850",
+    "gsm": "GSM7754890",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID127",
+    "gse": "GSE175990",
+    "gsm": "GSM5352392",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID128",
+    "gse": "GSE175990",
+    "gsm": "GSM5352393",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID129",
+    "gse": "GSE175990",
+    "gsm": "GSM5352394",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID130",
+    "gse": "GSE175990",
+    "gsm": "GSM5352395",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID131",
+    "gse": "GSE179565",
+    "gsm": "GSM5420670",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID132",
+    "gse": "GSE130973",
+    "gsm": "GSM3758115",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID133",
+    "gse": "GSE130973",
+    "gsm": "GSM3758116",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID134",
+    "gse": "GSE130973",
+    "gsm": "GSM3758117",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID135",
+    "gse": "GSE130973",
+    "gsm": "GSM3758119",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID136",
+    "gse": "GSE242477",
+    "gsm": "GSM7764406",
+    "species": "human",
+    "condition": "Acral Melanoma"
+  },
+  {
+    "said": "SAID137",
+    "gse": "GSE242477",
+    "gsm": "GSM7764408",
+    "species": "human",
+    "condition": "Acral Melanoma"
+  },
+  {
+    "said": "SAID138",
+    "gse": "GSE242477",
+    "gsm": "GSM7764410",
+    "species": "human",
+    "condition": "Acral Melanoma"
+  },
+  {
+    "said": "SAID139",
+    "gse": "GSE242477",
+    "gsm": "GSM7764411",
+    "species": "human",
+    "condition": "Acral Melanoma"
+  },
+  {
+    "said": "SAID140",
+    "gse": "GSE242477",
+    "gsm": "GSM7764412",
+    "species": "human",
+    "condition": "Acral Melanoma"
+  },
+  {
+    "said": "SAID141",
+    "gse": "GSE249622",
+    "gsm": "GSM7951925",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID142",
+    "gse": "GSE249622",
+    "gsm": "GSM7951926",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID143",
+    "gse": "GSE249622",
+    "gsm": "GSM7951927",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID144",
+    "gse": "GSE249622",
+    "gsm": "GSM7951930",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID145",
+    "gse": "GSE249622",
+    "gsm": "GSM7951931",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID146",
+    "gse": "GSE249622",
+    "gsm": "GSM7951932",
+    "species": "human",
+    "condition": "HS lesion"
+  },
+  {
+    "said": "SAID147",
+    "gse": "GSE249622",
+    "gsm": "GSM7951934",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID148",
+    "gse": "GSE249622",
+    "gsm": "GSM7951935",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID149",
+    "gse": "GSE249622",
+    "gsm": "GSM7951936",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID150",
+    "gse": "GSE249622",
+    "gsm": "GSM7951937",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID151",
+    "gse": "GSE249622",
+    "gsm": "GSM7951938",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID152",
+    "gse": "GSE203034",
+    "gsm": "GSM6152838",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID153",
+    "gse": "GSE193304",
+    "gsm": "GSM5788491",
+    "species": "human",
+    "condition": "Actinic Keratosis"
+  },
+  {
+    "said": "SAID154",
+    "gse": "GSE193304",
+    "gsm": "GSM5788492",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID155",
+    "gse": "GSE193304",
+    "gsm": "GSM5788493",
+    "species": "human",
+    "condition": "Actinic Keratosis"
+  },
+  {
+    "said": "SAID156",
+    "gse": "GSE193304",
+    "gsm": "GSM5788494",
+    "species": "human",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID157",
+    "gse": "GSE193304",
+    "gsm": "GSM5788495",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID158",
+    "gse": "GSE193304",
+    "gsm": "GSM5788496",
+    "species": "human",
+    "condition": "Actinic Keratosis"
+  },
+  {
+    "said": "SAID159",
+    "gse": "GSE193304",
+    "gsm": "GSM5788497",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID160",
+    "gse": "GSE193304",
+    "gsm": "GSM5788498",
+    "species": "human",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID161",
+    "gse": "GSE193304",
+    "gsm": "GSM5788499",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID162",
+    "gse": "GSE193304",
+    "gsm": "GSM5788500",
+    "species": "human",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID163",
+    "gse": "GSE193304",
+    "gsm": "GSM5788501",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID164",
+    "gse": "GSE193304",
+    "gsm": "GSM5788503",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID165",
+    "gse": "GSE195674",
+    "gsm": "GSM5847946",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID166",
+    "gse": "GSE237754",
+    "gsm": "GSM7648532",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID167",
+    "gse": "GSE237754",
+    "gsm": "GSM7648533",
+    "species": "human",
+    "condition": "Keloid"
+  },
+  {
+    "said": "SAID168",
+    "gse": "GSE245859",
+    "gsm": "GSM7849998",
+    "species": "human",
+    "condition": "Epidermolytic Ichthyosis"
+  },
+  {
+    "said": "SAID169",
+    "gse": "GSE245859",
+    "gsm": "GSM7849999",
+    "species": "human",
+    "condition": "Epidermolytic Ichthyosis"
+  },
+  {
+    "said": "SAID170",
+    "gse": "GSE248121",
+    "gsm": "GSM7906167",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID171",
+    "gse": "GSE248121",
+    "gsm": "GSM7906168",
+    "species": "human",
+    "condition": "Psoriasis"
+  },
+  {
+    "said": "SAID172",
+    "gse": "GSE248121",
+    "gsm": "GSM7906169",
+    "species": "human",
+    "condition": "Resolved Psoriatic Lesion"
+  },
+  {
+    "said": "SAID173",
+    "gse": "GSE248121",
+    "gsm": "GSM7906170",
+    "species": "human",
+    "condition": "Psoriasis"
+  },
+  {
+    "said": "SAID174",
+    "gse": "GSE248121",
+    "gsm": "GSM7906171",
+    "species": "human",
+    "condition": "Resolved Psoriatic Lesion"
+  },
+  {
+    "said": "SAID175",
+    "gse": "GSE248121",
+    "gsm": "GSM7906172",
+    "species": "human",
+    "condition": "Psoriasis"
+  },
+  {
+    "said": "SAID176",
+    "gse": "GSE248121",
+    "gsm": "GSM7906173",
+    "species": "human",
+    "condition": "Psoriasis"
+  },
+  {
+    "said": "SAID177",
+    "gse": "GSE248121",
+    "gsm": "GSM7906174",
+    "species": "human",
+    "condition": "Resolved Psoriatic Lesion"
+  },
+  {
+    "said": "SAID178",
+    "gse": "GSE248121",
+    "gsm": "GSM7906175",
+    "species": "human",
+    "condition": "Psoriasis"
+  },
+  {
+    "said": "SAID179",
+    "gse": "GSE248121",
+    "gsm": "GSM7906176",
+    "species": "human",
+    "condition": "Psoriasis"
+  },
+  {
+    "said": "SAID180",
+    "gse": "GSE213849",
+    "gsm": "GSM6595205",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID181",
+    "gse": "GSE213849",
+    "gsm": "GSM6595206",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID182",
+    "gse": "GSE213849",
+    "gsm": "GSM6595208",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID183",
+    "gse": "GSE213849",
+    "gsm": "GSM6595209",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID184",
+    "gse": "GSE213849",
+    "gsm": "GSM6595210",
+    "species": "human",
+    "condition": "Atopic dermatitis"
+  },
+  {
+    "said": "SAID185",
+    "gse": "GSE213849",
+    "gsm": "GSM6595211",
+    "species": "human",
+    "condition": "Atopic dermatitis"
+  },
+  {
+    "said": "SAID186",
+    "gse": "GSE213849",
+    "gsm": "GSM6595212",
+    "species": "human",
+    "condition": "Atopic dermatitis"
+  },
+  {
+    "said": "SAID187",
+    "gse": "GSE213849",
+    "gsm": "GSM6595215",
+    "species": "human",
+    "condition": "Prurigo nodularis"
+  },
+  {
+    "said": "SAID188",
+    "gse": "GSE213849",
+    "gsm": "GSM6595217",
+    "species": "human",
+    "condition": "Prurigo nodularis"
+  },
+  {
+    "said": "SAID189",
+    "gse": "GSE213849",
+    "gsm": "GSM6595218",
+    "species": "human",
+    "condition": "Prurigo nodularis"
+  },
+  {
+    "said": "SAID190",
+    "gse": "GSE213849",
+    "gsm": "GSM6595219",
+    "species": "human",
+    "condition": "Prurigo nodularis"
+  },
+  {
+    "said": "SAID191",
+    "gse": "GSE213849",
+    "gsm": "GSM6595220",
+    "species": "human",
+    "condition": "Prurigo nodularis"
+  },
+  {
+    "said": "SAID192",
+    "gse": "GSE233137",
+    "gsm": "GSM7401927",
+    "species": "human",
+    "condition": "Forskolin Treatment"
+  },
+  {
+    "said": "SAID193",
+    "gse": "GSE233137",
+    "gsm": "GSM7401928",
+    "species": "human",
+    "condition": "Forskolin Treatment"
+  },
+  {
+    "said": "SAID194",
+    "gse": "HRA000166",
+    "gsm": "HRR060114",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID195",
+    "gse": "HRA000166",
+    "gsm": "HRR060115",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID196",
+    "gse": "HRA000166",
+    "gsm": "HRR060116",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID197",
+    "gse": "HRA000166",
+    "gsm": "HRR060118",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID198",
+    "gse": "HRA000166",
+    "gsm": "HRR060122",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID199",
+    "gse": "HRA000166",
+    "gsm": "HRR060124",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID200",
+    "gse": "HRA000166",
+    "gsm": "HRR060128",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID201",
+    "gse": "HRA000166",
+    "gsm": "HRR060130",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID202",
+    "gse": "HRA000166",
+    "gsm": "HRR060132",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID203",
+    "gse": "HRA000166",
+    "gsm": "HRR060134",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID204",
+    "gse": "HRA000166",
+    "gsm": "HRR060136",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID205",
+    "gse": "HRA000166",
+    "gsm": "HRR060138",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID206",
+    "gse": "HRA000166",
+    "gsm": "HRR060140",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID207",
+    "gse": "HRA000166",
+    "gsm": "HRR060142",
+    "species": "human",
+    "condition": "Lymphoma"
+  },
+  {
+    "said": "SAID208",
+    "gse": "GSE132802",
+    "gsm": "GSM3892569",
+    "species": "human",
+    "condition": "DRESS"
+  },
+  {
+    "said": "SAID209",
+    "gse": "GSE132802",
+    "gsm": "GSM3892577",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID210",
+    "gse": "GSE132802",
+    "gsm": "GSM3892578",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID211",
+    "gse": "GSE132802",
+    "gsm": "GSM3892579",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID212",
+    "gse": "GSE132802",
+    "gsm": "GSM3892580",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID213",
+    "gse": "GSE132802",
+    "gsm": "GSM3892581",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID214",
+    "gse": "GSE132802",
+    "gsm": "GSM3892582",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID215",
+    "gse": "GSE203262",
+    "gsm": "GSM6165459",
+    "species": "human",
+    "condition": "Vitiligo Lesion"
+  },
+  {
+    "said": "SAID216",
+    "gse": "GSE203262",
+    "gsm": "GSM6165460",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID217",
+    "gse": "GSE203262",
+    "gsm": "GSM6165462",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID218",
+    "gse": "GSE203262",
+    "gsm": "GSM6165463",
+    "species": "human",
+    "condition": "Vitiligo Lesion"
+  },
+  {
+    "said": "SAID219",
+    "gse": "GSE203262",
+    "gsm": "GSM6165464",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID220",
+    "gse": "GSE203262",
+    "gsm": "GSM6165465",
+    "species": "human",
+    "condition": "Vitiligo Lesion"
+  },
+  {
+    "said": "SAID221",
+    "gse": "GSE158924",
+    "gsm": "GSM4815800",
+    "species": "human",
+    "condition": "Granuloma Annulare"
+  },
+  {
+    "said": "SAID222",
+    "gse": "GSE158924",
+    "gsm": "GSM4815801",
+    "species": "human",
+    "condition": "Granuloma Annulare"
+  },
+  {
+    "said": "SAID223",
+    "gse": "GSE158924",
+    "gsm": "GSM4815802",
+    "species": "human",
+    "condition": "Granuloma Annulare"
+  },
+  {
+    "said": "SAID224",
+    "gse": "GSE158924",
+    "gsm": "GSM4815803",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID225",
+    "gse": "GSE158924",
+    "gsm": "GSM4815804",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID226",
+    "gse": "GSE158924",
+    "gsm": "GSM4815805",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID227",
+    "gse": "GSE181297",
+    "gsm": "GSM5494438",
+    "species": "human",
+    "condition": "Keloid"
+  },
+  {
+    "said": "SAID228",
+    "gse": "GSE275846",
+    "gsm": "GSM8486557",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID229",
+    "gse": "GSE275846",
+    "gsm": "GSM8486558",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID230",
+    "gse": "GSE275846",
+    "gsm": "GSM8486559",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID231",
+    "gse": "GSE275846",
+    "gsm": "GSM8486560",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID232",
+    "gse": "GSE275846",
+    "gsm": "GSM8486561",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID233",
+    "gse": "GSE275846",
+    "gsm": "GSM8486562",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID234",
+    "gse": "GSE275846",
+    "gsm": "GSM8486564",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID235",
+    "gse": "GSE212447",
+    "gsm": "GSM6532919",
+    "species": "human",
+    "condition": "Alopecia Areata"
+  },
+  {
+    "said": "SAID236",
+    "gse": "GSE212447",
+    "gsm": "GSM6532920",
+    "species": "human",
+    "condition": "Alopecia Areata"
+  },
+  {
+    "said": "SAID237",
+    "gse": "GSE212447",
+    "gsm": "GSM6532921",
+    "species": "human",
+    "condition": "Alopecia Areata"
+  },
+  {
+    "said": "SAID238",
+    "gse": "GSE212447",
+    "gsm": "GSM6532922",
+    "species": "human",
+    "condition": "Alopecia Areata"
+  },
+  {
+    "said": "SAID239",
+    "gse": "GSE212447",
+    "gsm": "GSM6532923",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID240",
+    "gse": "GSE212447",
+    "gsm": "GSM6532924",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID241",
+    "gse": "GSE212447",
+    "gsm": "GSM6532925",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID242",
+    "gse": "GSE212447",
+    "gsm": "GSM6532926",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID243",
+    "gse": "GSE212447",
+    "gsm": "GSM6532927",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID244",
+    "gse": "GSE212447",
+    "gsm": "GSM6532928",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID245",
+    "gse": "GSE173252",
+    "gsm": "GSM5264341",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID246",
+    "gse": "GSE173252",
+    "gsm": "GSM5264342",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID247",
+    "gse": "GSE173252",
+    "gsm": "GSM5264344",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID248",
+    "gse": "GSE173252",
+    "gsm": "GSM5264345",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID249",
+    "gse": "GSE173252",
+    "gsm": "GSM5264346",
+    "species": "human",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID250",
+    "gse": "GSE173252",
+    "gsm": "GSM5264347",
+    "species": "human",
+    "condition": "Dupuytren’s Disease"
+  },
+  {
+    "said": "SAID251",
+    "gse": "GSE173252",
+    "gsm": "GSM5264348",
+    "species": "human",
+    "condition": "Dupuytren’s Disease"
+  },
+  {
+    "said": "SAID252",
+    "gse": "GSE173252",
+    "gsm": "GSM5264349",
+    "species": "human",
+    "condition": "Dupuytren’s Disease"
+  },
+  {
+    "said": "SAID001",
+    "gse": "GSE269455",
+    "gsm": "GSM8316001",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID002",
+    "gse": "GSE269455",
+    "gsm": "GSM8316002",
+    "species": "mouse",
+    "condition": "Alopecia Areata"
+  },
+  {
+    "said": "SAID003",
+    "gse": "GSE269455",
+    "gsm": "GSM8316003",
+    "species": "mouse",
+    "condition": "Alopecia Areata with Antibody"
+  },
+  {
+    "said": "SAID004",
+    "gse": "GSE261227",
+    "gsm": "GSM8138118",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID005",
+    "gse": "GSE261227",
+    "gsm": "GSM8138119",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID006",
+    "gse": "GSE261227",
+    "gsm": "GSM8138120",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID007",
+    "gse": "GSE261227",
+    "gsm": "GSM8138121",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID008",
+    "gse": "GSE234269",
+    "gsm": "GSM7461430",
+    "species": "mouse",
+    "condition": "Wounded"
+  },
+  {
+    "said": "SAID009",
+    "gse": "GSE234269",
+    "gsm": "GSM7461431",
+    "species": "mouse",
+    "condition": "Wounded"
+  },
+  {
+    "said": "SAID010",
+    "gse": "GSE230512",
+    "gsm": "GSM7225686",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID011",
+    "gse": "GSE230512",
+    "gsm": "GSM7225687",
+    "species": "mouse",
+    "condition": "Intradermal S. aureus infection"
+  },
+  {
+    "said": "SAID012",
+    "gse": "GSE230512",
+    "gsm": "GSM7225688",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID013",
+    "gse": "GSE230512",
+    "gsm": "GSM7225689",
+    "species": "mouse",
+    "condition": "Topical imiquimod"
+  },
+  {
+    "said": "SAID014",
+    "gse": "GSE223660",
+    "gsm": "GSM6970228",
+    "species": "mouse",
+    "condition": "Wounded"
+  },
+  {
+    "said": "SAID015",
+    "gse": "GSE211810",
+    "gsm": "GSM6502671",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID016",
+    "gse": "GSE211810",
+    "gsm": "GSM6502672",
+    "species": "mouse",
+    "condition": "Bleomycin Treatment"
+  },
+  {
+    "said": "SAID017",
+    "gse": "GSE211810",
+    "gsm": "GSM6502673",
+    "species": "mouse",
+    "condition": "Bleomycin Treatment"
+  },
+  {
+    "said": "SAID018",
+    "gse": "GSE211810",
+    "gsm": "GSM6502674",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID019",
+    "gse": "GSE211381",
+    "gsm": "GSM6468127",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID020",
+    "gse": "GSE211381",
+    "gsm": "GSM6468128",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID021",
+    "gse": "GSE211381",
+    "gsm": "GSM6468129",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID022",
+    "gse": "GSE211381",
+    "gsm": "GSM6468130",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID023",
+    "gse": "GSE211381",
+    "gsm": "GSM6468131",
+    "species": "mouse",
+    "condition": "Alk1 Knockout"
+  },
+  {
+    "said": "SAID024",
+    "gse": "GSE211381",
+    "gsm": "GSM6468132",
+    "species": "mouse",
+    "condition": "Alk1 Knockout"
+  },
+  {
+    "said": "SAID025",
+    "gse": "GSE211279",
+    "gsm": "GSM6460378",
+    "species": "mouse",
+    "condition": "C. acnes infected"
+  },
+  {
+    "said": "SAID026",
+    "gse": "GSE210224",
+    "gsm": "GSM6423811",
+    "species": "mouse",
+    "condition": "Trichophyton rubrum infection"
+  },
+  {
+    "said": "SAID027",
+    "gse": "GSE210224",
+    "gsm": "GSM6423812",
+    "species": "mouse",
+    "condition": "Trichophyton rubrum infection"
+  },
+  {
+    "said": "SAID028",
+    "gse": "GSE210224",
+    "gsm": "GSM6423813",
+    "species": "mouse",
+    "condition": "Trichophyton rubrum infection"
+  },
+  {
+    "said": "SAID029",
+    "gse": "GSE210224",
+    "gsm": "GSM6423814",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID030",
+    "gse": "GSE210224",
+    "gsm": "GSM6423815",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID031",
+    "gse": "GSE210224",
+    "gsm": "GSM6423816",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID032",
+    "gse": "GSE210224",
+    "gsm": "GSM6423817",
+    "species": "mouse",
+    "condition": "Trichophyton rubrum infection"
+  },
+  {
+    "said": "SAID033",
+    "gse": "GSE210224",
+    "gsm": "GSM6423818",
+    "species": "mouse",
+    "condition": "Trichophyton rubrum infection"
+  },
+  {
+    "said": "SAID034",
+    "gse": "GSE210224",
+    "gsm": "GSM6423819",
+    "species": "mouse",
+    "condition": "Trichophyton rubrum infection"
+  },
+  {
+    "said": "SAID035",
+    "gse": "GSE210224",
+    "gsm": "GSM6423820",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID036",
+    "gse": "GSE210224",
+    "gsm": "GSM6423821",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID037",
+    "gse": "GSE210224",
+    "gsm": "GSM6423822",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID038",
+    "gse": "GSE205020",
+    "gsm": "GSM6204200",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID039",
+    "gse": "GSE205020",
+    "gsm": "GSM6204201",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis"
+  },
+  {
+    "said": "SAID040",
+    "gse": "GSE196677",
+    "gsm": "GSM5898068",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID041",
+    "gse": "GSE196677",
+    "gsm": "GSM5898069",
+    "species": "mouse",
+    "condition": "Shi-Bi-Man Treatment (Smear)"
+  },
+  {
+    "said": "SAID042",
+    "gse": "GSE196677",
+    "gsm": "GSM5898070",
+    "species": "mouse",
+    "condition": "Shi-Bi-Man Treatment (Oral)"
+  },
+  {
+    "said": "SAID043",
+    "gse": "GSE189210",
+    "gsm": "GSM5696148",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID044",
+    "gse": "GSE158691",
+    "gsm": "GSM4805563",
+    "species": "mouse",
+    "condition": "FR Treatment"
+  },
+  {
+    "said": "SAID045",
+    "gse": "GSE158691",
+    "gsm": "GSM4805560",
+    "species": "mouse",
+    "condition": "FR Treatment"
+  },
+  {
+    "said": "SAID046",
+    "gse": "GSE158691",
+    "gsm": "GSM4805558",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID047",
+    "gse": "GSE153596",
+    "gsm": "GSM4647785",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID048",
+    "gse": "GSE153596",
+    "gsm": "GSM4647786",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID049",
+    "gse": "GSE153596",
+    "gsm": "GSM4647787",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID050",
+    "gse": "GSE153596",
+    "gsm": "GSM4647788",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID051",
+    "gse": "GSE153596",
+    "gsm": "GSM4647789",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID052",
+    "gse": "GSE153596",
+    "gsm": "GSM4647790",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID053",
+    "gse": "GSE146122",
+    "gsm": "GSM4378540",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID054",
+    "gse": "GSE146122",
+    "gsm": "GSM4378541",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID055",
+    "gse": "GSE146122",
+    "gsm": "GSM4378542",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID056",
+    "gse": "GSE122043",
+    "gsm": "GSM3453536",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID057",
+    "gse": "GSE122043",
+    "gsm": "GSM3453538",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID058",
+    "gse": "GSE261766",
+    "gsm": "GSM8150922",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID059",
+    "gse": "GSE261766",
+    "gsm": "GSM8150923",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID060",
+    "gse": "GSE261766",
+    "gsm": "GSM8150924",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID061",
+    "gse": "GSE261766",
+    "gsm": "GSM8150925",
+    "species": "mouse",
+    "condition": "Papilloma"
+  },
+  {
+    "said": "SAID062",
+    "gse": "GSE261766",
+    "gsm": "GSM8150926",
+    "species": "mouse",
+    "condition": "Papilloma"
+  },
+  {
+    "said": "SAID063",
+    "gse": "GSE261766",
+    "gsm": "GSM8150927",
+    "species": "mouse",
+    "condition": "Papilloma"
+  },
+  {
+    "said": "SAID064",
+    "gse": "GSE261766",
+    "gsm": "GSM8150928",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID065",
+    "gse": "GSE261766",
+    "gsm": "GSM8150929",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID066",
+    "gse": "GSE261766",
+    "gsm": "GSM8150930",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID067",
+    "gse": "GSE261766",
+    "gsm": "GSM8150931",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID068",
+    "gse": "GSE261766",
+    "gsm": "GSM8150932",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID069",
+    "gse": "GSE261766",
+    "gsm": "GSM8150933",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID070",
+    "gse": "GSE261766",
+    "gsm": "GSM8150934",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID071",
+    "gse": "GSE261766",
+    "gsm": "GSM8150935",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID072",
+    "gse": "GSE261766",
+    "gsm": "GSM8150936",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID073",
+    "gse": "GSE261766",
+    "gsm": "GSM8150937",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID074",
+    "gse": "GSE261766",
+    "gsm": "GSM8150938",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID075",
+    "gse": "GSE261766",
+    "gsm": "GSM8150940",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID076",
+    "gse": "GSE261766",
+    "gsm": "GSM8150941",
+    "species": "mouse",
+    "condition": "Squamous cell carcinoma"
+  },
+  {
+    "said": "SAID077",
+    "gse": "GSE261766",
+    "gsm": "GSM8150944",
+    "species": "mouse",
+    "condition": "Papilloma"
+  },
+  {
+    "said": "SAID078",
+    "gse": "GSE261766",
+    "gsm": "GSM8150946",
+    "species": "mouse",
+    "condition": "Progressing papilloma"
+  },
+  {
+    "said": "SAID079",
+    "gse": "GSE261766",
+    "gsm": "GSM8150947",
+    "species": "mouse",
+    "condition": "Progressing papilloma"
+  },
+  {
+    "said": "SAID080",
+    "gse": "GSE213528",
+    "gsm": "GSM6588784",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID081",
+    "gse": "GSE213528",
+    "gsm": "GSM6588785",
+    "species": "mouse",
+    "condition": "Np63 Knockout"
+  },
+  {
+    "said": "SAID082",
+    "gse": "GSE213528",
+    "gsm": "GSM6588786",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID083",
+    "gse": "GSE213528",
+    "gsm": "GSM6588787",
+    "species": "mouse",
+    "condition": "Np63 Knockout"
+  },
+  {
+    "said": "SAID084",
+    "gse": "GSE272509",
+    "gsm": "GSM8403737",
+    "species": "mouse",
+    "condition": "Lethal Yellow"
+  },
+  {
+    "said": "SAID085",
+    "gse": "GSE272509",
+    "gsm": "GSM8403738",
+    "species": "mouse",
+    "condition": "Wounded"
+  },
+  {
+    "said": "SAID086",
+    "gse": "GSE236918",
+    "gsm": "GSM7585467",
+    "species": "mouse",
+    "condition": "Lethal Yellow"
+  },
+  {
+    "said": "SAID087",
+    "gse": "GSE236918",
+    "gsm": "GSM7585468",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID088",
+    "gse": "GSE236918",
+    "gsm": "GSM7585469",
+    "species": "mouse",
+    "condition": "Recessive Yellow"
+  },
+  {
+    "said": "SAID089",
+    "gse": "GSE236918",
+    "gsm": "GSM7585470",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID090",
+    "gse": "GSE165021",
+    "gsm": "GSM5024746",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID091",
+    "gse": "GSE165021",
+    "gsm": "GSM5024747",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID092",
+    "gse": "GSE165021",
+    "gsm": "GSM5024748",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis"
+  },
+  {
+    "said": "SAID093",
+    "gse": "GSE165021",
+    "gsm": "GSM5024749",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis"
+  },
+  {
+    "said": "SAID094",
+    "gse": "GSE165021",
+    "gsm": "GSM5024750",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis + SHP099 Treatment"
+  },
+  {
+    "said": "SAID095",
+    "gse": "GSE165021",
+    "gsm": "GSM5024751",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis + SHP099 Treatment"
+  },
+  {
+    "said": "SAID096",
+    "gse": "GSE212673",
+    "gsm": "GSM6543169",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID097",
+    "gse": "GSE212673",
+    "gsm": "GSM6543170",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID098",
+    "gse": "GSE212673",
+    "gsm": "GSM6543171",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID099",
+    "gse": "CRA004660",
+    "gsm": "SAMC438600",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID100",
+    "gse": "CRA004660",
+    "gsm": "SAMC438601",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID101",
+    "gse": "CRA004660",
+    "gsm": "SAMC438602",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID102",
+    "gse": "CRA004660",
+    "gsm": "SAMC438603",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID103",
+    "gse": "CRA006512",
+    "gsm": "SAMC703634",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID104",
+    "gse": "CRA006512",
+    "gsm": "SAMC703635",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID105",
+    "gse": "CRA006512",
+    "gsm": "SAMC703636",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID106",
+    "gse": "CRA006512",
+    "gsm": "SAMC703637",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID107",
+    "gse": "CRA006512",
+    "gsm": "SAMC703638",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID108",
+    "gse": "CRA006512",
+    "gsm": "SAMC703639",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID109",
+    "gse": "CRA006512",
+    "gsm": "SAMC703640",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID110",
+    "gse": "CRA028265",
+    "gsm": "SAMC5706929",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis"
+  },
+  {
+    "said": "SAID111",
+    "gse": "CRA028265",
+    "gsm": "SAMC5706930",
+    "species": "mouse",
+    "condition": "IMQ-induced psoriasis"
+  },
+  {
+    "said": "SAID112",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773650",
+    "species": "mouse",
+    "condition": "Card9 Knockout"
+  },
+  {
+    "said": "SAID113",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773651",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID114",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773652",
+    "species": "mouse",
+    "condition": "Card9 Knockout"
+  },
+  {
+    "said": "SAID115",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773653",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID116",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773654",
+    "species": "mouse",
+    "condition": "Card9 Knockout"
+  },
+  {
+    "said": "SAID117",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773655",
+    "species": "mouse",
+    "condition": "Healthy"
+  },
+  {
+    "said": "SAID118",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773656",
+    "species": "mouse",
+    "condition": "Card9 Knockout"
+  },
+  {
+    "said": "SAID119",
+    "gse": "CRA028974",
+    "gsm": "SAMC5773657",
+    "species": "mouse",
+    "condition": "Healthy"
+  }
+]
