@@ -104,7 +104,12 @@ body { background-color: var(--bg-body); }
    and stack above the plot card. */
 .umap-controls,
 .umap-controls .panel-body { overflow: visible; }
-.umap-controls { position: relative; z-index: 20; }
+.umap-controls {
+    position: relative;
+    z-index: 20;
+    border: 0;
+    box-shadow: none;
+}
 
 .gene-search { position: relative; }
 
