@@ -35,6 +35,7 @@ class FeaturePlotContextTest {
         assertTrue(js.contains("function backgroundTrace(base)"));
         assertTrue(js.contains("Condition: %{customdata[6]}"));
         assertTrue(css.contains(".umap-context"));
+        assertTrue(css.contains("justify-content: center;\n    gap: var(--space-lg);\n    width: min(100%, 70rem);\n    margin-inline: auto;"));
         assertTrue(css.contains(".umap-controls {\n    position: relative;\n    z-index: 20;\n    border: 0;\n    box-shadow: none;"));
         assertTrue(css.contains("@media (max-width: 420px)"));
         assertTrue(webXml.contains("<url-pattern>/atlas-context</url-pattern>"));
