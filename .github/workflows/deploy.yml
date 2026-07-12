@@ -44,6 +44,38 @@ jobs:
             set -e
             DEPLOY_DIR=/tmp/scsaid-${{ github.sha }}
             WAR=$(ls "$DEPLOY_DIR"/target/*.war | head -n1)
+            # Private country dashboard credentials are generated only on the
+            # server. They are never committed, printed by CI, or returned by
+            # the site. The root-only copy is the recovery path for the site
+            # owner if browser credentials are lost.
+            ANALYTICS_DIR=/etc/scsaid
+            ANALYTICS_ENV="$ANALYTICS_DIR/private-analytics.env"
+            ANALYTICS_DROPIN=/etc/systemd/system/tomcat.service.d/70-private-analytics.conf
+            install -d -m 0750 "$ANALYTICS_DIR" /etc/systemd/system/tomcat.service.d
+            if [ ! -f "$ANALYTICS_ENV" ]; then
+              ANALYTICS_PASSWORD=$(openssl rand -hex 32)
+              printf 'SCSAID_ANALYTICS_USER=scsaid-developer\nSCSAID_ANALYTICS_PASSWORD=%s\n' "$ANALYTICS_PASSWORD" > "$ANALYTICS_ENV"
+              cp "$ANALYTICS_ENV" /root/scsaid-private-analytics-credentials.txt
+              chmod 0600 /root/scsaid-private-analytics-credentials.txt
+            fi
+            chown root:tomcat "$ANALYTICS_ENV"
+            chmod 0640 "$ANALYTICS_ENV"
+            printf '[Service]\nEnvironmentFile=%s\n' "$ANALYTICS_ENV" > "$ANALYTICS_DROPIN"
+            chmod 0644 "$ANALYTICS_DROPIN"
+            systemctl daemon-reload
+            # Nginx logs operational fields for this site but omits client IP
+            # addresses and user-agent strings. Existing historical logs are
+            # deliberately not altered by a deployment.
+            NGINX_LOG_FORMAT=/etc/nginx/conf.d/scsaid-privacy-log.conf
+            if [ ! -f "$NGINX_LOG_FORMAT" ]; then
+              printf '%s\n' "log_format scsaid_privacy '\$time_iso8601 \$server_name \"\$request\" \$status \$body_bytes_sent \$request_time';" > "$NGINX_LOG_FORMAT"
+            fi
+            if ! grep -qF 'access_log /var/log/nginx/scsaid-access.log scsaid_privacy;' /etc/nginx/sites-available/skin-scsaid; then
+              cp -p /etc/nginx/sites-available/skin-scsaid /etc/nginx/sites-available/skin-scsaid.before-private-analytics
+              sed -i '/server_name skin-scsaid.com www.skin-scsaid.com;/a\    access_log /var/log/nginx/scsaid-access.log scsaid_privacy;' /etc/nginx/sites-available/skin-scsaid
+            fi
+            nginx -t
+            systemctl reload nginx
             # Stop via systemd so the next start runs as the 'tomcat' user —
             # keeps webapps/work/temp owned by tomcat and avoids root-owned files
             # that break later restarts.
