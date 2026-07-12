@@ -329,7 +329,7 @@ Before publication:
 - **Pipeline** outlines data processing.
 - **How to Cite** provides the scSAID citation and slots for method-specific references.
 - **What’s New** records releases and reproducibility-relevant changes.
-- The inline storage notice explains first-party session cookies, visit-count protection, locally saved interface preferences, and the MapMyVisitors visitor-map integration. The MapMyVisitors script is loaded in the page body and reports visits to its owner dashboard; consult MapMyVisitors for its visitor-data processing and retention terms.
+- The inline storage notice explains first-party session cookies, visit-count protection, locally saved interface preferences, and private country-level visitor aggregates. Country is resolved locally from an on-server GeoLite database only when a countable page view is recorded; the application retains country/day totals rather than an IP address, visitor profile, browsing history, or third-party analytics record.
 - The homepage footer reports approximate unique-browser visits using a UTC day boundary. Double-click **Today** for the rolling 24-hour hourly profile, or double-click **Total Visits** for the average hourly profile across all UTC days recorded since hourly collection began. Both views refresh every 15 seconds; historical hourly values from before collection began cannot be reconstructed.
 - **Feedback** uses a verification step before revealing the submission form. Use it for corrections, reproducibility problems, missing datasets, broken analyses, or interface issues; include the URL, SAID/accession, inputs, expected behavior, and observed error.
 

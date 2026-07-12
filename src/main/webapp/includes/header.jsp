@@ -109,7 +109,7 @@
 <button class="nav-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
 <aside class="storage-notice" id="storage-notice" aria-label="Privacy notice" hidden>
     <p class="storage-notice__text">
-        scSAID uses first-party cookies for secure sessions and visit counting, and local storage to remember interface preferences. MapMyVisitors visitor analytics is enabled and receives a visit request to provide the public visitor map and its owner dashboard. We do not use advertising or third-party tracking cookies.
+        scSAID uses first-party cookies for secure sessions and visit counting, and local storage to remember interface preferences. Private visitor analytics retain country-level aggregates only; no individual IP address is retained by the application. We do not use advertising or third-party tracking cookies.
     </p>
     <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
 </aside>
@@ -162,4 +162,3 @@
 <script src="JS/site-header.js?v=20260702e" defer></script>
 <script src="JS/newsletter-modal.js?v=20260704a" defer></script>
 <script src="JS/analysis-help.js?v=20260702a" defer></script>
-<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=FceBPIpTNKr7fyBoiQjL-qoD1MRcySwmXIUGnxPMY2c&cl=ffffff&w=a"></script>

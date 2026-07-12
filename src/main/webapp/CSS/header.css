@@ -739,7 +739,7 @@ button.main-nav__dropdown-link {
     .site-search__status.is-loading::after { animation: none; }
 }
 
-/* Storage and visitor-map disclosure. */
+/* First-party storage disclosure. */
 .storage-notice {
     position: fixed;
     right: 1rem;
