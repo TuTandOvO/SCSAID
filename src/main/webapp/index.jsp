@@ -549,6 +549,129 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        .site-footer__counter-stat {
+            user-select: none;
+            cursor: default;
+        }
+
+        /* Traffic statistics dialog — intentionally activated by dblclick only. */
+        .traffic-modal[hidden] { display: none; }
+        .traffic-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2200;
+            display: grid;
+            place-items: center;
+            padding: clamp(1rem, 4vw, 3rem);
+        }
+        .traffic-modal__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(19, 24, 31, 0.62);
+            backdrop-filter: blur(3px);
+        }
+        .traffic-modal__dialog {
+            position: relative;
+            width: min(100%, 58rem);
+            max-height: min(90dvh, 46rem);
+            overflow-y: auto;
+            padding: clamp(1.25rem, 3vw, 2rem);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+            color: var(--text-primary);
+        }
+        .traffic-modal__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        .traffic-modal__eyebrow {
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--color-secondary);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .traffic-modal__title {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: clamp(1.65rem, 4vw, 2.4rem);
+            font-weight: 300;
+            line-height: 1.15;
+        }
+        .traffic-modal__subtitle {
+            max-width: 44rem;
+            margin: var(--space-sm) 0 0;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+        .traffic-modal__close {
+            flex: none;
+            width: 2.5rem;
+            height: 2.5rem;
+            padding: 0;
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .traffic-modal__summary {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-sm);
+            padding: 0 0 var(--space-md);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .traffic-modal__metric {
+            color: var(--color-secondary-dark);
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 300;
+        }
+        .traffic-modal__metric-label {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .traffic-modal__chart-wrap {
+            position: relative;
+            min-height: clamp(18rem, 48vh, 25rem);
+        }
+        .traffic-modal__chart { position: absolute; inset: 0; }
+        .traffic-modal__loading { position: absolute; inset: 0; z-index: 2; }
+        .traffic-modal__loading[hidden] { display: none; }
+        .traffic-modal__status {
+            min-height: 1.4rem;
+            margin: var(--space-sm) 0 0;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.45;
+        }
+        .traffic-modal__status--error { color: var(--color-danger-dark, #b91c1c); }
+        body.traffic-modal-open { overflow: hidden; }
+
+        @media (max-width: 560px) {
+            .traffic-modal { padding: var(--space-sm); }
+            .traffic-modal__dialog { max-height: 94dvh; }
+            .traffic-modal__chart-wrap { min-height: 17rem; }
+        }
+
+        @media (max-height: 560px) {
+            .traffic-modal { align-items: start; }
+            .traffic-modal__dialog { max-height: calc(100dvh - 1rem); }
+            .traffic-modal__chart-wrap { min-height: 15rem; }
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .overview__grid {
@@ -816,18 +939,43 @@
                             ? ((java.util.concurrent.atomic.AtomicLong) dailyObj).get()
                             : 0;
                 %>
-                <span>Total Visits: <%= totalCountValue %></span>
+                <span id="totalVisitsTrigger" class="site-footer__counter-stat" title="Double-click for average hourly traffic">Total Visits: <strong id="totalVisitsValue"><%= totalCountValue %></strong></span>
                 <span class="site-footer__counter-divider"></span>
-                <span>Today: <%= dailyCountValue %></span>
+                <span id="todayVisitsTrigger" class="site-footer__counter-stat" title="UTC day · double-click for the rolling 24-hour chart">Today: <strong id="todayVisitsValue"><%= dailyCountValue %></strong></span>
             </div>
         </div>
     </div>
 </footer>
 
+<div id="trafficModal" class="traffic-modal" role="dialog" aria-modal="true"
+     aria-labelledby="trafficModalTitle" aria-describedby="trafficModalSubtitle" hidden>
+    <div class="traffic-modal__backdrop" data-traffic-close></div>
+    <section class="traffic-modal__dialog" tabindex="-1">
+        <header class="traffic-modal__header">
+            <div>
+                <span class="traffic-modal__eyebrow">Live site traffic</span>
+                <h2 id="trafficModalTitle" class="traffic-modal__title">Traffic in the last 24 hours</h2>
+                <p id="trafficModalSubtitle" class="traffic-modal__subtitle"></p>
+            </div>
+            <button id="trafficModalClose" class="traffic-modal__close" type="button" aria-label="Close traffic statistics">×</button>
+        </header>
+        <div class="traffic-modal__summary">
+            <strong id="trafficMetric" class="traffic-modal__metric">—</strong>
+            <span id="trafficMetricLabel" class="traffic-modal__metric-label">visits</span>
+        </div>
+        <div class="traffic-modal__chart-wrap">
+            <div id="trafficChart" class="traffic-modal__chart" role="img" aria-label="Hourly website traffic"></div>
+            <div id="trafficLoading" class="traffic-modal__loading panel-loader" role="status" aria-label="Loading traffic statistics"></div>
+        </div>
+        <p id="trafficStatus" class="traffic-modal__status" aria-live="polite"></p>
+    </section>
+</div>
+
 
 <!-- Composition Charts -->
 <script src="JS/cell-count-data.js"></script>
 <script src="JS/composition-charts.js?v=20260701"></script>
+<script src="JS/traffic-stats.js?v=20260712a"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         if (typeof CompositionCharts !== 'undefined') {

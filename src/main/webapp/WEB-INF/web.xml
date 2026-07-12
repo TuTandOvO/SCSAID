@@ -24,6 +24,10 @@
             <param-name>counterFile</param-name>
             <param-value>/opt/SkinDB/runtime/access-counter.properties</param-value>
         </init-param>
+        <init-param>
+            <param-name>trafficHistoryFile</param-name>
+            <param-value>/opt/SkinDB/runtime/traffic-history.properties</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>AccessCounterFilter</filter-name>
@@ -76,6 +80,15 @@
         <url-pattern>/psospotter/result</url-pattern>
         <url-pattern>/details.jsp</url-pattern>
     </filter-mapping>
+
+    <servlet>
+        <servlet-name>TrafficStatsServlet</servlet-name>
+        <servlet-class>AccessCounter.TrafficStatsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TrafficStatsServlet</servlet-name>
+        <url-pattern>/traffic-stats</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>home</servlet-name>

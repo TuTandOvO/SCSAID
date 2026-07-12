@@ -214,18 +214,17 @@ External annotations are retrieved from external services and may be unavailable
 Open [Expression](../featureplot.jsp) to overlay one gene on the integrated human or mouse skin atlas.
 
 1. Choose **Human** or **Mouse**. The species preference is retained locally.
-2. Optionally select a **Condition**. The dataset list is narrowed to datasets carrying that annotation.
-3. Optionally select a **Dataset**. Each option identifies the scSAID accession, sample accession, and condition. Selecting a dataset also selects its condition so the active biological context remains explicit.
-4. Enter a gene symbol and select an autocomplete result. Matching is case-insensitive.
-5. The default view colors cells categorically by cell type. After gene selection, cells are recolored by expression. The expression legend uses one atlas-wide scale for the selected gene so dataset and condition views remain visually comparable.
-6. When a dataset or condition is focused, matching cells remain colored while the complete integrated atlas is retained as a faint spatial reference.
-7. Read the context strip above the UMAP to confirm the active dataset, condition, gene, and number of sampled cells in view.
-8. Hover points to inspect the cell ID, UMAP coordinates, expression value, cell type, cluster, GSM sample, scSAID/GSE dataset, and condition together.
-9. Use **Reset focus** to restore all datasets and conditions. Use **Clear gene** to restore cell-type coloring without changing the dataset/condition focus.
-10. Use Plotly controls to zoom, pan, reset, export, or view full screen. Export filenames include the species, selected gene, and focused dataset when present.
-11. A `featureplot.jsp?gene=SYMBOL` link attempts to detect the species containing the gene and loads it directly.
+2. Optionally select a **Condition** to focus the integrated atlas on matching samples.
+3. Enter a gene symbol and select an autocomplete result. Matching is case-insensitive.
+4. The default view colors cells categorically by cell type. After gene selection, cells are recolored by expression. The expression legend uses one atlas-wide scale for the selected gene so condition views remain visually comparable.
+5. When a condition is focused, matching cells remain colored while the complete integrated atlas is retained as a faint spatial reference.
+6. Read the context strip above the UMAP to confirm the included dataset count, active condition, gene, and number of sampled cells in view.
+7. Hover points to inspect the cell ID, UMAP coordinates, expression value, cell type, cluster, GSM sample, scSAID/GSE dataset, and condition together.
+8. Use **Reset focus** to restore all conditions. Use **Clear gene** to restore cell-type coloring without changing the condition focus.
+9. Use Plotly controls to zoom, pan, reset, export, or view full screen. Export filenames include the species and selected gene.
+10. A `featureplot.jsp?gene=SYMBOL` link attempts to detect the species containing the gene and loads it directly.
 
-The gene catalogue is restricted to genes available in the integrated visualization data. Grey points outside a focus are contextual cells, whereas grey or missing points inside the focus indicate unavailable signal. Zero or low values can reflect biological absence or technical dropout. The scale is stable across dataset/condition subsets for one gene, but scales for different genes should not be compared without checking their numeric ranges. Dataset and condition labels come from scSAID sample metadata; filtering does not perform a statistical comparison.
+The gene catalogue is restricted to genes available in the integrated visualization data. Grey points outside a focus are contextual cells, whereas grey or missing points inside the focus indicate unavailable signal. Zero or low values can reflect biological absence or technical dropout. The scale is stable across condition subsets for one gene, but scales for different genes should not be compared without checking their numeric ranges. Dataset and condition labels shown on hover come from scSAID sample metadata; filtering does not perform a statistical comparison.
 
 ## Compare conditions in real time
 
@@ -331,6 +330,7 @@ Before publication:
 - **How to Cite** provides the scSAID citation and slots for method-specific references.
 - **What’s New** records releases and reproducibility-relevant changes.
 - The inline storage notice explains first-party session cookies, visit-count protection, and locally saved interface preferences.
+- The homepage footer reports approximate unique-browser visits using a UTC day boundary. Double-click **Today** for the rolling 24-hour hourly profile, or double-click **Total Visits** for the average hourly profile across all UTC days recorded since hourly collection began. Both views refresh every 15 seconds; historical hourly values from before collection began cannot be reconstructed.
 - **Feedback** uses a verification step before revealing the submission form. Use it for corrections, reproducibility problems, missing datasets, broken analyses, or interface issues; include the URL, SAID/accession, inputs, expected behavior, and observed error.
 
 scSAID does not use advertising or third-party tracking cookies. Clearing local preferences resets remembered interface choices but does not alter server-side source data.

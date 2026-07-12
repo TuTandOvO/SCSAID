@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -25,6 +27,7 @@ public class AccessCounterFilter implements Filter {
     private final Object counterLock = new Object();
     private FilterConfig filterConfig;
     private CounterStore counterStore;
+    private TrafficHistoryStore trafficHistoryStore;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -32,8 +35,10 @@ public class AccessCounterFilter implements Filter {
         ServletContext context = filterConfig.getServletContext();
         Path counterPath = resolveCounterPath(filterConfig, context);
         counterStore = new CounterStore(counterPath);
+        Path historyPath = resolveHistoryPath(filterConfig, counterPath);
+        trafficHistoryStore = new TrafficHistoryStore(historyPath);
 
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneOffset.UTC);
         CounterStore.Snapshot snapshot;
         try {
             snapshot = counterStore.load(today);
@@ -43,11 +48,18 @@ public class AccessCounterFilter implements Filter {
         }
 
         context.setAttribute("counterFile", counterPath.toString());
+        context.setAttribute("trafficHistoryFile", historyPath.toString());
+        context.setAttribute("trafficHistoryStore", trafficHistoryStore);
         context.setAttribute(TOTAL_ATTRIBUTE, new AtomicLong(snapshot.total));
         context.setAttribute(DAILY_ATTRIBUTE, new AtomicLong(snapshot.daily));
         context.setAttribute(DATE_ATTRIBUTE, snapshot.date);
         context.log("Access counter loaded from " + counterPath
                 + ": total=" + snapshot.total + ", daily=" + snapshot.daily);
+        try {
+            trafficHistoryStore.load();
+        } catch (IOException error) {
+            context.log("Unable to load traffic history from " + historyPath, error);
+        }
     }
 
     private Path resolveCounterPath(FilterConfig config, ServletContext context) {
@@ -63,6 +75,14 @@ public class AccessCounterFilter implements Filter {
 
         return Path.of(System.getProperty("java.io.tmpdir") + File.separator
                 + "scsaid" + File.separator + "access-counter.properties");
+    }
+
+    private Path resolveHistoryPath(FilterConfig config, Path counterPath) {
+        String configured = config.getInitParameter("trafficHistoryFile");
+        if (configured != null && !configured.trim().isEmpty()) {
+            return Path.of(configured.trim());
+        }
+        return counterPath.resolveSibling("traffic-history.properties");
     }
 
     private boolean isStaticAsset(String uri) {
@@ -95,31 +115,43 @@ public class AccessCounterFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         ServletContext context = filterConfig.getServletContext();
+        AtomicLong total = (AtomicLong) context.getAttribute(TOTAL_ATTRIBUTE);
+        AtomicLong daily = (AtomicLong) context.getAttribute(DAILY_ATTRIBUTE);
+        Instant now = Instant.now();
+        LocalDate today = now.atZone(ZoneOffset.UTC).toLocalDate();
+
+        // Apply the UTC boundary even when the request is the live JSON poll,
+        // so an already-open homepage resets "Today" at midnight without
+        // waiting for another HTML navigation.
+        synchronized (counterLock) {
+            LocalDate storedDate = (LocalDate) context.getAttribute(DATE_ATTRIBUTE);
+            if (!today.equals(storedDate)) {
+                daily.set(0);
+                context.setAttribute(DATE_ATTRIBUTE, today);
+                persistCounts(context, total, daily, today);
+            }
+        }
 
         if (isStaticAsset(httpRequest.getRequestURI()) || !isCountablePageView(httpRequest)) {
             chain.doFilter(request, response);
             return;
         }
 
-        AtomicLong total = (AtomicLong) context.getAttribute(TOTAL_ATTRIBUTE);
-        AtomicLong daily = (AtomicLong) context.getAttribute(DAILY_ATTRIBUTE);
-        LocalDate today = LocalDate.now();
         Cookie counterCookie = findCounterCookie(httpRequest.getCookies());
         String todayValue = today.toString();
         boolean countVisit = counterCookie == null || !todayValue.equals(counterCookie.getValue());
 
         synchronized (counterLock) {
-            LocalDate storedDate = (LocalDate) context.getAttribute(DATE_ATTRIBUTE);
             boolean changed = false;
-            if (!today.equals(storedDate)) {
-                daily.set(0);
-                context.setAttribute(DATE_ATTRIBUTE, today);
-                changed = true;
-            }
-
             if (countVisit) {
                 total.incrementAndGet();
                 daily.incrementAndGet();
+                try {
+                    trafficHistoryStore.record(now);
+                } catch (IOException error) {
+                    context.log("Unable to persist hourly traffic history to "
+                            + trafficHistoryStore.getPath(), error);
+                }
                 changed = true;
             }
 
