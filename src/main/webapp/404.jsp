@@ -22,7 +22,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260711a">
+    <link rel="stylesheet" href="CSS/header.css?v=20260712a">
     <link rel="stylesheet" href="CSS/404.css?v=20260701h">
 </head>
 <body>

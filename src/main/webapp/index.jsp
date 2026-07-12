@@ -109,7 +109,7 @@
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
-    <link rel="stylesheet" href="CSS/header.css?v=20260711a">
+    <link rel="stylesheet" href="CSS/header.css?v=20260712a">
 
 
     <!-- Composition Charts -->
@@ -213,7 +213,7 @@
         .hero__acronym-letter {
             font-weight: inherit;
             text-decoration-line: underline;
-            text-decoration-color: var(--color-accent);
+            text-decoration-color: currentColor;
             text-decoration-thickness: 0.08em;
             text-underline-offset: 0.18em;
         }

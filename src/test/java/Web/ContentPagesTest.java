@@ -86,7 +86,7 @@ class ContentPagesTest {
         String home = read("src/main/webapp/index.jsp");
         assertEquals(6, home.split("class=\\\"hero__acronym-letter\\\"", -1).length - 1);
         assertTrue(home.contains("text-decoration-line: underline"));
-        assertTrue(home.contains("text-decoration-color: var(--color-accent)"));
+        assertTrue(home.contains("text-decoration-color: currentColor"));
     }
 
     @Test

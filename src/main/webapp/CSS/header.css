@@ -675,7 +675,7 @@ button.main-nav__dropdown-link {
     .main-nav__dropdown {
         position: static;
         display: none;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
         gap: 0.15rem;
         min-width: 0;
         margin: 0.1rem 0 0.5rem;

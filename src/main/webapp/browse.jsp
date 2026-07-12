@@ -41,7 +41,7 @@
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
     <link rel="stylesheet" href="CSS/buttons.css?v=20260702p">
-    <link rel="stylesheet" href="CSS/header.css?v=20260711a">
+    <link rel="stylesheet" href="CSS/header.css?v=20260712a">
     <link rel="stylesheet" href="CSS/animations.css?v=20260701h">
     <link rel="stylesheet" href="CSS/browse.css?v=20260702p">
 
