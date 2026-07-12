@@ -21,6 +21,8 @@ class SecurityHardeningTest {
         assertFalse(webXml.contains("/track"));
         assertFalse(webXml.contains("/api/geo"));
         assertFalse(webXml.contains("/condition-deg-search/warm"));
+        assertTrue(webXml.contains("DeveloperAnalyticsFilter"));
+        assertTrue(webXml.contains("/country-traffic-stats"));
     }
 
     @Test
@@ -71,7 +73,8 @@ class SecurityHardeningTest {
         String pom = read("pom.xml");
         assertFalse(pom.contains("<version>5.2.3</version>"));
         assertFalse(pom.contains("<version>20210307</version>"));
-        assertFalse(pom.contains("<artifactId>geoip2</artifactId>"));
+        assertTrue(pom.contains("<artifactId>geoip2</artifactId>"));
+        assertTrue(pom.contains("<version>4.0.0</version>"));
         assertFalse(pom.contains("<artifactId>jsch</artifactId>"));
         assertFalse(pom.contains("<artifactId>poi-ooxml</artifactId>"));
         assertFalse(pom.contains("<artifactId>opencsv</artifactId>"));

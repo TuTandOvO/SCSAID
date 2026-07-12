@@ -109,7 +109,7 @@
 <button class="nav-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1"></button>
 <aside class="storage-notice" id="storage-notice" aria-label="Privacy notice" hidden>
     <p class="storage-notice__text">
-        scSAID uses first-party cookies for secure sessions and visit counting, and local storage to remember interface preferences. We do not use advertising or third-party tracking cookies.
+        scSAID uses first-party cookies for secure sessions and visit counting, and local storage to remember interface preferences. Private visitor analytics retain country-level aggregates only; no individual IP address is retained by the application. We do not use advertising or third-party tracking cookies.
     </p>
     <button class="storage-notice__dismiss" id="storage-notice-dismiss" type="button">Close</button>
 </aside>

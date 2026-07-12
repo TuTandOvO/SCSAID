@@ -42,6 +42,12 @@
             <artifactId>gson</artifactId>
             <version>2.10</version>
         </dependency>
+        <!-- Local MaxMind reader only: no remote geolocation API is used. -->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>4.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
@@ -85,6 +91,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+                <configuration>
+                    <packagingExcludes>**/__pycache__/**,**/*.pyc,reference-map.jsp,CSS/reference-map.css,JS/reference-map.js,images/icons/phosphor-fill/map-trifold-fill.svg,WEB-INF/reference-mapping/**,WEB-INF/classes/Servlet/ReferenceMappingServlet*.class</packagingExcludes>
+                </configuration>
             </plugin>
 
             <plugin>

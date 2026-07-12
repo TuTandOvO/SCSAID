@@ -65,6 +65,9 @@ jobs:
             COUNTER_DIR=/opt/SkinDB/runtime
             COUNTER_FILE="$COUNTER_DIR/access-counter.properties"
             TRAFFIC_FILE="$COUNTER_DIR/traffic-history.properties"
+            COUNTRY_TRAFFIC_FILE="$COUNTER_DIR/country-traffic.properties"
+            GEOIP_DATABASE="$COUNTER_DIR/GeoLite2-City.mmdb"
+            OLD_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT/WEB-INF/GeoLite2-City.mmdb
             OLD_COUNTER=/opt/tomcat/webapps/ROOT/WEB-INF/counter.properties
             install -d -o tomcat -g tomcat "$COUNTER_DIR"
             if [ ! -f "$COUNTER_FILE" ] && [ -f "$OLD_COUNTER" ]; then
@@ -76,8 +79,23 @@ jobs:
             if [ ! -f "$TRAFFIC_FILE" ]; then
               touch "$TRAFFIC_FILE"
             fi
-            chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE"
-            chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE"
+            if [ ! -f "$COUNTRY_TRAFFIC_FILE" ]; then
+              touch "$COUNTRY_TRAFFIC_FILE"
+            fi
+            # Keep the local GeoLite database outside the replaced WAR. It is
+            # used only transiently to aggregate country counts; raw IPs are
+            # never saved in the application analytics store.
+            if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$OLD_GEOIP_DATABASE" ]; then
+              cp "$OLD_GEOIP_DATABASE" "$GEOIP_DATABASE"
+            fi
+            chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE"
+            chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE"
+            if [ -f "$GEOIP_DATABASE" ]; then
+              chown tomcat:tomcat "$GEOIP_DATABASE"
+              chmod 640 "$GEOIP_DATABASE"
+            else
+              echo "Local GeoLite database missing; country analytics will report Unknown until it is restored."
+            fi
             # Clear old app, compiled-JSP cache and stale PID before swapping in.
             rm -rf /opt/tomcat/webapps/ROOT \
                    /opt/tomcat/webapps/ROOT.war \

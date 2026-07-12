@@ -28,6 +28,8 @@ public class AccessCounterFilter implements Filter {
     private FilterConfig filterConfig;
     private CounterStore counterStore;
     private TrafficHistoryStore trafficHistoryStore;
+    private CountryTrafficStore countryTrafficStore;
+    private CountryResolver countryResolver;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,6 +39,10 @@ public class AccessCounterFilter implements Filter {
         counterStore = new CounterStore(counterPath);
         Path historyPath = resolveHistoryPath(filterConfig, counterPath);
         trafficHistoryStore = new TrafficHistoryStore(historyPath);
+        Path countryHistoryPath = resolveCountryHistoryPath(filterConfig, counterPath);
+        countryTrafficStore = new CountryTrafficStore(countryHistoryPath,
+                resolveCountryRetentionDays(filterConfig));
+        Path geoIpDatabase = resolveGeoIpDatabasePath(filterConfig, context);
 
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
         CounterStore.Snapshot snapshot;
@@ -50,6 +56,8 @@ public class AccessCounterFilter implements Filter {
         context.setAttribute("counterFile", counterPath.toString());
         context.setAttribute("trafficHistoryFile", historyPath.toString());
         context.setAttribute("trafficHistoryStore", trafficHistoryStore);
+        context.setAttribute("countryTrafficFile", countryHistoryPath.toString());
+        context.setAttribute("countryTrafficStore", countryTrafficStore);
         context.setAttribute(TOTAL_ATTRIBUTE, new AtomicLong(snapshot.total));
         context.setAttribute(DAILY_ATTRIBUTE, new AtomicLong(snapshot.daily));
         context.setAttribute(DATE_ATTRIBUTE, snapshot.date);
@@ -59,6 +67,19 @@ public class AccessCounterFilter implements Filter {
             trafficHistoryStore.load();
         } catch (IOException error) {
             context.log("Unable to load traffic history from " + historyPath, error);
+        }
+        try {
+            countryTrafficStore.load();
+        } catch (IOException error) {
+            context.log("Unable to load country-level traffic aggregates from " + countryHistoryPath, error);
+        }
+        try {
+            countryResolver = CountryResolver.open(geoIpDatabase);
+            if (countryResolver == null) {
+                context.log("Country-level traffic analytics is running without a local GeoLite database.");
+            }
+        } catch (IOException error) {
+            context.log("Unable to open local GeoLite database for country-level traffic analytics", error);
         }
     }
 
@@ -85,6 +106,32 @@ public class AccessCounterFilter implements Filter {
         return counterPath.resolveSibling("traffic-history.properties");
     }
 
+    private Path resolveCountryHistoryPath(FilterConfig config, Path counterPath) {
+        String configured = config.getInitParameter("countryTrafficFile");
+        if (configured != null && !configured.trim().isEmpty()) {
+            return Path.of(configured.trim());
+        }
+        return counterPath.resolveSibling("country-traffic.properties");
+    }
+
+    private int resolveCountryRetentionDays(FilterConfig config) {
+        String configured = config.getInitParameter("countryTrafficRetentionDays");
+        try {
+            return configured == null ? 365 : Integer.parseInt(configured.trim());
+        } catch (NumberFormatException ignored) {
+            return 365;
+        }
+    }
+
+    private Path resolveGeoIpDatabasePath(FilterConfig config, ServletContext context) {
+        String configured = config.getInitParameter("geoIpDatabase");
+        if (configured != null && !configured.trim().isEmpty()) {
+            return Path.of(configured.trim());
+        }
+        String deployed = context.getRealPath("/WEB-INF/GeoLite2-City.mmdb");
+        return deployed == null ? null : Path.of(deployed);
+    }
+
     private boolean isStaticAsset(String uri) {
         if (uri == null) return false;
         String lower = uri.toLowerCase();
@@ -105,6 +152,9 @@ public class AccessCounterFilter implements Filter {
 
     private boolean isCountablePageView(HttpServletRequest request) {
         if (!"GET".equalsIgnoreCase(request.getMethod())) return false;
+        String uri = request.getRequestURI();
+        if (uri != null && (uri.endsWith("/developer-traffic.jsp")
+                || uri.endsWith("/country-traffic-stats"))) return false;
         String accept = request.getHeader("Accept");
         return accept != null && accept.toLowerCase(Locale.ROOT).contains("text/html");
     }
@@ -151,6 +201,13 @@ public class AccessCounterFilter implements Filter {
                 } catch (IOException error) {
                     context.log("Unable to persist hourly traffic history to "
                             + trafficHistoryStore.getPath(), error);
+                }
+                try {
+                    String country = countryResolver == null ? "ZZ" : countryResolver.resolve(httpRequest);
+                    countryTrafficStore.record(today, country);
+                } catch (IOException error) {
+                    context.log("Unable to persist country-level traffic aggregate to "
+                            + countryTrafficStore.getPath(), error);
                 }
                 changed = true;
             }
@@ -200,6 +257,13 @@ public class AccessCounterFilter implements Filter {
 
         synchronized (counterLock) {
             persistCounts(context, total, daily, date);
+        }
+        if (countryResolver != null) {
+            try {
+                countryResolver.close();
+            } catch (IOException error) {
+                context.log("Unable to close local GeoLite database", error);
+            }
         }
     }
 }

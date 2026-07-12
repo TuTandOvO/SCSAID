@@ -28,10 +28,36 @@
             <param-name>trafficHistoryFile</param-name>
             <param-value>/opt/SkinDB/runtime/traffic-history.properties</param-value>
         </init-param>
+        <!-- Country-only aggregates. The GeoLite database is deployed outside
+             the WAR so an IP address is resolved locally and never exported. -->
+        <init-param>
+            <param-name>countryTrafficFile</param-name>
+            <param-value>/opt/SkinDB/runtime/country-traffic.properties</param-value>
+        </init-param>
+        <init-param>
+            <param-name>countryTrafficRetentionDays</param-name>
+            <param-value>365</param-value>
+        </init-param>
+        <init-param>
+            <param-name>geoIpDatabase</param-name>
+            <param-value>/opt/SkinDB/runtime/GeoLite2-City.mmdb</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>AccessCounterFilter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- The dashboard and its JSON endpoint remain invisible unless the
+         deployment supplies both SCSAID_ANALYTICS_USER and _PASSWORD. -->
+    <filter>
+        <filter-name>DeveloperAnalyticsFilter</filter-name>
+        <filter-class>AccessCounter.DeveloperAnalyticsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DeveloperAnalyticsFilter</filter-name>
+        <url-pattern>/developer-traffic.jsp</url-pattern>
+        <url-pattern>/country-traffic-stats</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -88,6 +114,15 @@
     <servlet-mapping>
         <servlet-name>TrafficStatsServlet</servlet-name>
         <url-pattern>/traffic-stats</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CountryTrafficStatsServlet</servlet-name>
+        <servlet-class>AccessCounter.CountryTrafficStatsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CountryTrafficStatsServlet</servlet-name>
+        <url-pattern>/country-traffic-stats</url-pattern>
     </servlet-mapping>
 
     <servlet>
