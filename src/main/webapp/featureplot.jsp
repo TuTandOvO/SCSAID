@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="CSS/header.css?v=20260711a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="CSS/compare.css?v=20260710b">
-    <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260711c">
+    <link rel="stylesheet" href="CSS/umap-explorer.css?v=20260711d">
 
     <!-- Third-party libs -->
     <script src="lib/jquery-3.7.1.min.js?v=20260420"></script>
@@ -100,13 +100,6 @@
                         <label class="filter-name" for="conditionSelect">Condition</label>
                         <select id="conditionSelect" class="umap-select">
                             <option value="">All conditions</option>
-                        </select>
-                    </div>
-
-                    <div class="umap-control umap-control--dataset">
-                        <label class="filter-name" for="datasetSelect">Dataset</label>
-                        <select id="datasetSelect" class="umap-select">
-                            <option value="">All datasets</option>
                         </select>
                     </div>
 

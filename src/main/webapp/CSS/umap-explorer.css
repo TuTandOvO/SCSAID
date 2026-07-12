@@ -35,12 +35,12 @@ body { background-color: var(--bg-body); }
 }
 
 /* --------------------------------------------------------------------------
-   A. Control row — Species · Condition · Dataset · Gene · Actions
+   A. Control row — Species · Condition · Gene · Actions
    -------------------------------------------------------------------------- */
 .umap-control-row {
     display: grid;
-    grid-template-columns: minmax(9rem, 10.5rem) minmax(10rem, 11.5rem)
-        minmax(14rem, 15.5rem) minmax(13rem, 14.5rem) auto;
+    grid-template-columns: minmax(9rem, 10.5rem) minmax(11rem, 13rem)
+        minmax(15rem, 17rem) auto;
     align-items: end;
     justify-content: center;
     gap: var(--space-lg);
@@ -49,12 +49,10 @@ body { background-color: var(--bg-body); }
 }
 @media (max-width: 1080px) {
     .umap-control-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .umap-control--dataset { grid-column: span 2; }
     .umap-control--action { grid-column: span 2; }
 }
 @media (max-width: 620px) {
     .umap-control-row { grid-template-columns: 1fr; align-items: stretch; }
-    .umap-control--dataset,
     .umap-control--action { grid-column: auto; }
 }
 

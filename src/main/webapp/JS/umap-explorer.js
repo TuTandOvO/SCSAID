@@ -10,7 +10,7 @@
      /atlas-context?species=                  -> GSM / SAID / condition metadata
 
    Default coloring is categorical (cell type). Selecting a gene uses the
-   continuous expression scale. Dataset and condition filters keep the full
+   continuous expression scale. Condition filters keep the full
    atlas faintly visible while focusing the matching cells. Depends on
    JS/umap-overlay-core.js.
    ========================================================================== */
@@ -26,14 +26,14 @@
         base: { human: null, mouse: null },      // {x,y,cellIds,index(Map),customdata,legend,categories}
         genes: { human: null, mouse: null },     // gene-symbol arrays
         exprCache: {},                            // "species|GENE" -> {gene,values,min,max,stats}
-        filters: { dataset: "", condition: "" },
+        filters: { condition: "" },
         currentGene: null,
         pendingGene: null,
         suggestIdx: -1,
         plotInited: false
     };
 
-    var $input, $suggest, $clearBtn, $clearContextBtn, $dataset, $condition;
+    var $input, $suggest, $clearBtn, $clearContextBtn, $condition;
     var $geneStatus, $legend, $loading, $error;
     var $contextDataset, $contextCondition, $contextGene, $contextCells;
 
@@ -60,7 +60,6 @@
     /* ====================================================================== */
     function loadSpecies(sp) {
         state.species = sp;
-        state.filters.dataset = "";
         state.filters.condition = "";
         clearGene(true);
         hideSuggest();
@@ -132,12 +131,10 @@
         var byGsm = {};
         contextRows.forEach(function (row) { byGsm[row.gsm] = row; });
         var customdata = new Array(n);
-        var datasets = new Array(n);
         var conditions = new Array(n);
         for (var i = 0; i < n; i++) {
             var gsm = labelOf(sm, i);
             var context = byGsm[gsm] || {};
-            datasets[i] = context.said || "";
             conditions[i] = context.condition || "Unspecified";
             customdata[i] = [
                 raw.cell_ids[i],
@@ -155,7 +152,6 @@
             cellIds: raw.cell_ids,
             index: Core.buildCellIndex(raw.cell_ids),
             customdata: customdata,
-            datasets: datasets,
             conditions: conditions,
             contextRows: contextRows,
             categories: ct.categories,
@@ -191,12 +187,11 @@
         modeBarButtonsToRemove: ["lasso2d", "select2d", "autoScale2d"]
     };
     // High-res PNG / vector PDF download buttons (figure-export.js), with a
-    // filename that reflects the current species, gene, and focused dataset.
+    // filename that reflects the current species and gene.
     function plotConfig() {
         var name = function () {
             return "featureplot_" + state.species +
-                (state.currentGene ? "_" + state.currentGene : "") +
-                (state.filters.dataset ? "_" + state.filters.dataset : "");
+                (state.currentGene ? "_" + state.currentGene : "");
         };
         return window.FigureExport ? window.FigureExport.config(name, PLOT_CONFIG_BASE)
                                    : PLOT_CONFIG_BASE;
@@ -225,7 +220,6 @@
     function matchingIndices(base) {
         var out = [];
         for (var i = 0; i < base.x.length; i++) {
-            if (state.filters.dataset && base.datasets[i] !== state.filters.dataset) { continue; }
             if (state.filters.condition && base.conditions[i] !== state.filters.condition) { continue; }
             out.push(i);
         }
@@ -295,7 +289,7 @@
     function renderView() {
         var base = state.base[state.species];
         if (!base) { return; }
-        var active = !!(state.filters.dataset || state.filters.condition);
+        var active = !!state.filters.condition;
         var indices = active ? matchingIndices(base) : null;
         var visibleCount = active ? indices.length : base.x.length;
         var entry = currentExpression();
@@ -355,18 +349,13 @@
     }
 
     /* ====================================================================== */
-    /*  Dataset × condition coordination                                      */
+    /*  Condition coordination                                                 */
     /* ====================================================================== */
     function addOption(select, value, label) {
         var option = document.createElement("option");
         option.value = value;
         option.textContent = label;
         select.appendChild(option);
-    }
-
-    function saidNumber(value) {
-        var match = String(value || "").match(/\d+/);
-        return match ? parseInt(match[0], 10) : Number.MAX_SAFE_INTEGER;
     }
 
     function populateContextControls(base) {
@@ -388,43 +377,11 @@
         addOption($condition, "", "All conditions");
         conditions.forEach(function (condition) { addOption($condition, condition, condition); });
         $condition.value = "";
-        fillDatasetOptions(base);
         updateContextButton();
     }
 
-    function fillDatasetOptions(base) {
-        var selected = state.filters.dataset;
-        var rows = base.contextRows.filter(function (row) {
-            return !state.filters.condition || row.condition === state.filters.condition;
-        }).slice().sort(function (a, b) {
-            return saidNumber(a.said) - saidNumber(b.said);
-        });
-
-        $dataset.innerHTML = "";
-        addOption($dataset, "", state.filters.condition ? "All matching datasets" : "All datasets");
-        rows.forEach(function (row) {
-            addOption($dataset, row.said,
-                row.said + " · " + row.gsm + " · " + row.condition);
-        });
-        var stillAvailable = rows.some(function (row) { return row.said === selected; });
-        if (!stillAvailable) { state.filters.dataset = ""; }
-        $dataset.value = state.filters.dataset;
-    }
-
-    function selectedDatasetRow(base) {
-        for (var i = 0; i < base.contextRows.length; i++) {
-            if (base.contextRows[i].said === state.filters.dataset) {
-                return base.contextRows[i];
-            }
-        }
-        return null;
-    }
-
     function renderContext(base, visibleCount) {
-        var row = selectedDatasetRow(base);
-        $contextDataset.textContent = row
-            ? row.said + " · " + row.gsm
-            : "All " + base.contextRows.length + " datasets";
+        $contextDataset.textContent = "All " + base.contextRows.length + " datasets";
         $contextCondition.textContent = state.filters.condition || "All conditions";
         $contextGene.textContent = state.currentGene || "Cell-type overview";
         $contextCells.textContent = visibleCount.toLocaleString() + " / " +
@@ -433,34 +390,17 @@
     }
 
     function updateContextButton() {
-        $clearContextBtn.disabled = !(state.filters.dataset || state.filters.condition);
+        $clearContextBtn.disabled = !state.filters.condition;
     }
 
     function onConditionChange() {
         state.filters.condition = $condition.value;
-        fillDatasetOptions(state.base[state.species]);
-        renderView();
-    }
-
-    function onDatasetChange() {
-        state.filters.dataset = $dataset.value;
-        var base = state.base[state.species];
-        var row = selectedDatasetRow(base);
-        if (row && state.filters.condition !== row.condition) {
-            state.filters.condition = row.condition;
-            $condition.value = row.condition;
-            fillDatasetOptions(base);
-            $dataset.value = row.said;
-            state.filters.dataset = row.said;
-        }
         renderView();
     }
 
     function clearContext() {
-        state.filters.dataset = "";
         state.filters.condition = "";
         $condition.value = "";
-        fillDatasetOptions(state.base[state.species]);
         renderView();
     }
 
@@ -601,7 +541,6 @@
         $suggest = el("geneSuggest");
         $clearBtn = el("clearGeneBtn");
         $clearContextBtn = el("clearContextBtn");
-        $dataset = el("datasetSelect");
         $condition = el("conditionSelect");
         $geneStatus = el("geneStatus");
         $legend = el("umapLegend");
@@ -635,7 +574,6 @@
         $clearBtn.addEventListener("click", function () { clearGene(false); });
         $clearContextBtn.addEventListener("click", clearContext);
         $condition.addEventListener("change", onConditionChange);
-        $dataset.addEventListener("change", onDatasetChange);
 
         document.addEventListener("click", function (e) {
             if (!e.target.closest(".gene-search")) { hideSuggest(); }

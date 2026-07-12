@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FeaturePlotContextTest {
@@ -26,7 +27,7 @@ class FeaturePlotContextTest {
         String webXml = Files.readString(ROOT.resolve("webapp/WEB-INF/web.xml"), StandardCharsets.UTF_8);
 
         assertTrue(jsp.contains("id=\"conditionSelect\""));
-        assertTrue(jsp.contains("id=\"datasetSelect\""));
+        assertFalse(jsp.contains("id=\"datasetSelect\""));
         assertTrue(jsp.contains("id=\"contextDataset\""));
         assertTrue(jsp.contains("id=\"contextCondition\""));
         assertTrue(jsp.contains("id=\"contextGene\""));
