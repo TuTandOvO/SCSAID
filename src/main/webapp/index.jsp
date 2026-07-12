@@ -210,6 +210,14 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
+        .hero__acronym-letter {
+            font-weight: inherit;
+            text-decoration-line: underline;
+            text-decoration-color: var(--color-accent);
+            text-decoration-thickness: 0.08em;
+            text-underline-offset: 0.18em;
+        }
+
         .hero__description {
             font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.7);
@@ -739,7 +747,7 @@
         <span class="hero__eyebrow">Skin Single-Cell Transcriptomic Super Atlas</span>
         <h1 class="hero__title">
             <img src="images/scsaid-logo-white.svg" alt="scSAID" class="hero__logo" width="250" height="250">
-            <span>Single-Cell <strong>S</strong>kin & <strong>A</strong>ppendages <strong>I</strong>ntegrated <strong>D</strong>atabase</span>
+            <span><strong class="hero__acronym-letter">S</strong>ingle-<strong class="hero__acronym-letter">C</strong>ell <strong class="hero__acronym-letter">S</strong>kin & <strong class="hero__acronym-letter">A</strong>ppendages <strong class="hero__acronym-letter">I</strong>ntegrated <strong class="hero__acronym-letter">D</strong>atabase</span>
         </h1>
         <p class="hero__description">
             Explore the comprehensive cellular map of human and mouse skin through our curated single-cell transcriptomics repository.
