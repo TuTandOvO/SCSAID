@@ -100,6 +100,7 @@ jobs:
             COUNTRY_TRAFFIC_FILE="$COUNTER_DIR/country-traffic.properties"
             GEOIP_DATABASE="$COUNTER_DIR/GeoLite2-City.mmdb"
             OLD_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT/WEB-INF/GeoLite2-City.mmdb
+            LEGACY_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT.colleague_0619_exploded/WEB-INF/GeoLite2-City.mmdb
             OLD_COUNTER=/opt/tomcat/webapps/ROOT/WEB-INF/counter.properties
             install -d -o tomcat -g tomcat "$COUNTER_DIR"
             if [ ! -f "$COUNTER_FILE" ] && [ -f "$OLD_COUNTER" ]; then
@@ -119,6 +120,9 @@ jobs:
             # never saved in the application analytics store.
             if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$OLD_GEOIP_DATABASE" ]; then
               cp "$OLD_GEOIP_DATABASE" "$GEOIP_DATABASE"
+            fi
+            if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$LEGACY_GEOIP_DATABASE" ]; then
+              cp "$LEGACY_GEOIP_DATABASE" "$GEOIP_DATABASE"
             fi
             chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE"
             chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE"
