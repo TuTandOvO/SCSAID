@@ -739,8 +739,7 @@ button.main-nav__dropdown-link {
     .site-search__status.is-loading::after { animation: none; }
 }
 
-/* First-party storage disclosure. This is informational rather than a consent
-   prompt because scSAID does not load optional advertising or tracking tools. */
+/* Storage and visitor-map disclosure. */
 .storage-notice {
     position: fixed;
     right: 1rem;
