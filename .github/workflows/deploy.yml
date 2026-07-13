@@ -115,6 +115,7 @@ jobs:
             TRAFFIC_FILE="$COUNTER_DIR/traffic-history.properties"
             COUNTRY_TRAFFIC_FILE="$COUNTER_DIR/country-traffic.properties"
             DEVELOPER_VISITOR_FILE="$COUNTER_DIR/developer-visitor-addresses.properties"
+            DEVELOPER_VISIT_EVENTS_FILE="$COUNTER_DIR/developer-visit-events.tsv"
             GEOIP_DATABASE="$COUNTER_DIR/GeoLite2-City.mmdb"
             OLD_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT/WEB-INF/GeoLite2-City.mmdb
             LEGACY_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT.colleague_0619_exploded/WEB-INF/GeoLite2-City.mmdb
@@ -135,6 +136,9 @@ jobs:
             if [ ! -f "$DEVELOPER_VISITOR_FILE" ]; then
               touch "$DEVELOPER_VISITOR_FILE"
             fi
+            if [ ! -f "$DEVELOPER_VISIT_EVENTS_FILE" ]; then
+              touch "$DEVELOPER_VISIT_EVENTS_FILE"
+            fi
             # Keep the local GeoLite database outside the replaced WAR. It is
             # used only for country resolution. The separate address history is
             # restricted to the authenticated developer analytics endpoint.
@@ -144,8 +148,8 @@ jobs:
             if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$LEGACY_GEOIP_DATABASE" ]; then
               cp "$LEGACY_GEOIP_DATABASE" "$GEOIP_DATABASE"
             fi
-            chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE"
-            chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE"
+            chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"
+            chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"
             if [ -f "$GEOIP_DATABASE" ]; then
               chown tomcat:tomcat "$GEOIP_DATABASE"
               chmod 640 "$GEOIP_DATABASE"

@@ -29,6 +29,7 @@ class TrafficStatsPanelTest {
         assertFalse(js.contains("totalTrigger.addEventListener(\"click\""));
         assertFalse(js.contains("todayTrigger.addEventListener(\"click\""));
         assertTrue(js.contains("var POLL_MS = 15000"));
+        assertTrue(js.contains("function renderFallbackChart"));
         assertTrue(js.contains("fetch(\"/traffic-stats?_=\""));
         assertTrue(filter.contains("LocalDate.now(ZoneOffset.UTC)"));
         assertTrue(filter.contains("now.atZone(ZoneOffset.UTC).toLocalDate()"));

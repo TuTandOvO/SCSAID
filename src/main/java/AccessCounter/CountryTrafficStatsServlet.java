@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Authenticated JSON view of country aggregates; never returns IP-level data. */
+/** Authenticated JSON view of the developer-only visit ledger and aggregates. */
 public final class CountryTrafficStatsServlet extends HttpServlet {
     private static final Gson GSON = new Gson();
 
@@ -27,6 +27,7 @@ public final class CountryTrafficStatsServlet extends HttpServlet {
         CountryTrafficStore.Snapshot snapshot =
                 ((CountryTrafficStore) value).snapshot(LocalDate.now());
         Object developerValue = getServletContext().getAttribute("developerVisitorStore");
+        Object eventValue = getServletContext().getAttribute("developerVisitEventStore");
         Map<String, Object> payload = new LinkedHashMap<>();
         payload.put("allTimeTotal", snapshot.allTimeTotal);
         payload.put("allTime", snapshot.allTime);
@@ -37,7 +38,12 @@ public final class CountryTrafficStatsServlet extends HttpServlet {
         if (developerValue instanceof DeveloperVisitorStore) {
             payload.put("recentVisitors", ((DeveloperVisitorStore) developerValue).recent(200));
         }
-        payload.put("privacy", "Developer-only view. Exact visitor addresses are retained for 90 days.");
+        if (eventValue instanceof DeveloperVisitEventStore) {
+            DeveloperVisitEventStore.Snapshot eventSnapshot =
+                    ((DeveloperVisitEventStore) eventValue).snapshot(java.time.Instant.now(), 5000);
+            payload.put("visitAnalytics", eventSnapshot);
+        }
+        payload.put("privacy", "Developer-only view. Counted visit events and address aggregates are retained indefinitely.");
 
         response.setContentType("application/json;charset=UTF-8");
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");

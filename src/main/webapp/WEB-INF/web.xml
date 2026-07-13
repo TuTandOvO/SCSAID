@@ -43,6 +43,10 @@
             <param-value>/opt/SkinDB/runtime/developer-visitor-addresses.properties</param-value>
         </init-param>
         <init-param>
+            <param-name>developerVisitEventsFile</param-name>
+            <param-value>/opt/SkinDB/runtime/developer-visit-events.tsv</param-value>
+        </init-param>
+        <init-param>
             <param-name>geoIpDatabase</param-name>
             <param-value>/opt/SkinDB/runtime/GeoLite2-City.mmdb</param-value>
         </init-param>

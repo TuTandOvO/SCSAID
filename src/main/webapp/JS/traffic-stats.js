@@ -78,13 +78,44 @@
         };
     }
 
+    /* Keep the footer traffic panel functional when a CDN-hosted chart library
+       is unavailable. The fallback is deliberately dependency-free SVG. */
+    function renderFallbackChart(labels, values, mode) {
+        var width = 620, height = 250, left = 40, top = 22, right = 18, bottom = 40;
+        var innerWidth = width - left - right, innerHeight = height - top - bottom;
+        var maximum = Math.max.apply(null, values.concat([1]));
+        var points = values.map(function (value, index) {
+            return {
+                x: left + (values.length < 2 ? innerWidth / 2 : index * innerWidth / (values.length - 1)),
+                y: top + innerHeight - (Number(value || 0) / maximum * innerHeight)
+            };
+        });
+        var line = points.map(function (point, index) {
+            return (index ? "L" : "M") + point.x.toFixed(1) + " " + point.y.toFixed(1);
+        }).join(" ");
+        var area = "M" + points[0].x.toFixed(1) + " " + (top + innerHeight) + " L" + line.substring(1) +
+            " L" + points[points.length - 1].x.toFixed(1) + " " + (top + innerHeight) + " Z";
+        var grid = [0, .5, 1].map(function (ratio) {
+            var y = top + innerHeight * (1 - ratio);
+            return '<line x1="' + left + '" x2="' + (width - right) + '" y1="' + y + '" y2="' + y +
+                '" stroke="#ececef"/><text x="' + (left - 8) + '" y="' + (y + 4) + '" text-anchor="end">' +
+                formatNumber(maximum * ratio, mode === "average" ? 2 : 0) + '</text>';
+        }).join("");
+        var labelsSvg = points.map(function (point, index) {
+            if (index % Math.max(1, Math.ceil(points.length / 7)) !== 0 && index !== points.length - 1) return "";
+            var label = mode === "average" ? labels[index] + " UTC" : new Intl.DateTimeFormat(undefined, { hour:"2-digit" }).format(new Date(labels[index]));
+            return '<text x="' + point.x + '" y="' + (height - 12) + '" text-anchor="middle">' + label + '</text>';
+        }).join("");
+        chartNode.innerHTML = '<svg viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="Traffic chart" ' +
+            'style="width:100%;height:100%;font:11px sans-serif;fill:#777"><g>' + grid + '</g><path d="' + area +
+            '" fill="rgba(61,134,198,.13)"/><path d="' + line + '" fill="none" stroke="#3d86c6" stroke-width="2.5"/>' +
+            points.map(function (point) { return '<circle cx="' + point.x + '" cy="' + point.y + '" r="3" fill="#3d86c6" stroke="#fff"/>'; }).join("") +
+            '<g>' + labelsSvg + '</g></svg>';
+    }
+
     function render() {
         if (!latest || !currentMode || modal.hidden) return;
         if (!chart && window.echarts) chart = window.echarts.init(chartNode, null, { renderer: "svg" });
-        if (!chart) {
-            showError("The traffic chart could not be initialized.");
-            return;
-        }
 
         var historySince = latest.historySince || "today";
         if (currentMode === "last24") {
@@ -92,7 +123,8 @@
             subtitleNode.textContent = "Hourly unique-browser visits on a rolling 24-hour window. Times are shown in " + localZone() + ".";
             metricNode.textContent = formatNumber(latest.last24.total);
             metricLabelNode.textContent = "visits in this window";
-            chart.setOption(chartOption(latest.last24.labels, latest.last24.values, currentMode), true);
+            if (chart) chart.setOption(chartOption(latest.last24.labels, latest.last24.values, currentMode), true);
+            else renderFallbackChart(latest.last24.labels, latest.last24.values, currentMode);
         } else {
             titleNode.textContent = "Average traffic by hour";
             subtitleNode.textContent = "Mean unique-browser visits per UTC hour across " +
@@ -100,13 +132,14 @@
                 (latest.average.daysIncluded === 1 ? "" : "s") + ".";
             metricNode.textContent = formatNumber(latest.average.averageDaily, 2);
             metricLabelNode.textContent = "average visits per day";
-            chart.setOption(chartOption(latest.average.labels, latest.average.values, currentMode), true);
+            if (chart) chart.setOption(chartOption(latest.average.labels, latest.average.values, currentMode), true);
+            else renderFallbackChart(latest.average.labels, latest.average.values, currentMode);
         }
         loading.hidden = true;
         statusNode.className = "traffic-modal__status";
         statusNode.textContent = "Hourly history is available from " + historySince +
             ". Earlier aggregate visits cannot be reconstructed by hour. Updated every 15 seconds.";
-        requestAnimationFrame(function () { chart.resize(); });
+        if (chart) requestAnimationFrame(function () { chart.resize(); });
     }
 
     function showError(message) {

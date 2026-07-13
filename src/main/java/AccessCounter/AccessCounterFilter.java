@@ -30,6 +30,7 @@ public class AccessCounterFilter implements Filter {
     private TrafficHistoryStore trafficHistoryStore;
     private CountryTrafficStore countryTrafficStore;
     private DeveloperVisitorStore developerVisitorStore;
+    private DeveloperVisitEventStore developerVisitEventStore;
     private CountryResolver countryResolver;
 
     @Override
@@ -43,7 +44,8 @@ public class AccessCounterFilter implements Filter {
         Path countryHistoryPath = resolveCountryHistoryPath(filterConfig, counterPath);
         countryTrafficStore = new CountryTrafficStore(countryHistoryPath,
                 resolveCountryRetentionDays(filterConfig));
-        developerVisitorStore = new DeveloperVisitorStore(resolveDeveloperVisitorPath(filterConfig, counterPath), 90);
+        developerVisitorStore = new DeveloperVisitorStore(resolveDeveloperVisitorPath(filterConfig, counterPath), 0);
+        developerVisitEventStore = new DeveloperVisitEventStore(resolveDeveloperVisitEventPath(filterConfig, counterPath));
         Path geoIpDatabase = resolveGeoIpDatabasePath(filterConfig, context);
 
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
@@ -61,6 +63,7 @@ public class AccessCounterFilter implements Filter {
         context.setAttribute("countryTrafficFile", countryHistoryPath.toString());
         context.setAttribute("countryTrafficStore", countryTrafficStore);
         context.setAttribute("developerVisitorStore", developerVisitorStore);
+        context.setAttribute("developerVisitEventStore", developerVisitEventStore);
         context.setAttribute(TOTAL_ATTRIBUTE, new AtomicLong(snapshot.total));
         context.setAttribute(DAILY_ATTRIBUTE, new AtomicLong(snapshot.daily));
         context.setAttribute(DATE_ATTRIBUTE, snapshot.date);
@@ -135,6 +138,12 @@ public class AccessCounterFilter implements Filter {
         String configured = config.getInitParameter("developerVisitorFile");
         if (configured != null && !configured.trim().isEmpty()) return Path.of(configured.trim());
         return counterPath.resolveSibling("developer-visitor-addresses.properties");
+    }
+
+    private Path resolveDeveloperVisitEventPath(FilterConfig config, Path counterPath) {
+        String configured = config.getInitParameter("developerVisitEventsFile");
+        if (configured != null && !configured.trim().isEmpty()) return Path.of(configured.trim());
+        return counterPath.resolveSibling("developer-visit-events.tsv");
     }
 
     private Path resolveGeoIpDatabasePath(FilterConfig config, ServletContext context) {
@@ -222,6 +231,7 @@ public class AccessCounterFilter implements Filter {
                             : countryResolver.resolve(httpRequest);
                     countryTrafficStore.record(today, location.getCountry());
                     developerVisitorStore.record(location, now);
+                    developerVisitEventStore.record(location, now, pagePath(httpRequest));
                 } catch (IOException error) {
                     context.log("Unable to persist country-level traffic aggregate to "
                             + countryTrafficStore.getPath(), error);
@@ -253,6 +263,16 @@ public class AccessCounterFilter implements Filter {
             if ("count_cookie".equals(cookie.getName())) return cookie;
         }
         return null;
+    }
+
+    /** The protected analytics ledger stores only the path, never query values. */
+    private String pagePath(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        if (contextPath != null && !contextPath.isEmpty() && path != null && path.startsWith(contextPath)) {
+            path = path.substring(contextPath.length());
+        }
+        return path == null || path.isBlank() ? "/" : path;
     }
 
     private void persistCounts(ServletContext context, AtomicLong total, AtomicLong daily, LocalDate date) {

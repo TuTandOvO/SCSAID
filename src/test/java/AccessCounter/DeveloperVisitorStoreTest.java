@@ -45,4 +45,13 @@ class DeveloperVisitorStoreTest {
         store.record(CountryResolver.VisitorLocation.unavailable(), Instant.now());
         assertTrue(store.recent(10).isEmpty());
     }
+
+    @Test
+    void nonPositiveRetentionKeepsProtectedAddressAggregatesIndefinitely() throws Exception {
+        DeveloperVisitorStore store = new DeveloperVisitorStore(
+                temporaryDirectory.resolve("all-time.properties"), 0);
+        store.record(new CountryResolver.VisitorLocation("8.8.8.8", "US"),
+                Instant.parse("2020-01-01T00:00:00Z"));
+        assertEquals(1, store.recent(10).size());
+    }
 }

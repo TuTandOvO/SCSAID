@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Comparator;
@@ -29,12 +28,13 @@ final class DeveloperVisitorStore {
     private static final String COUNTRY = "country.";
 
     private final Path path;
+    /** A non-positive value retains the protected address aggregate indefinitely. */
     private final int retentionDays;
     private final Map<String, Visitor> visitors = new LinkedHashMap<>();
 
     DeveloperVisitorStore(Path path, int retentionDays) {
         this.path = path;
-        this.retentionDays = Math.max(1, retentionDays);
+        this.retentionDays = retentionDays;
     }
 
     synchronized void load() throws IOException {
@@ -80,7 +80,8 @@ final class DeveloperVisitorStore {
     }
 
     private void prune(Instant now) {
-        Instant cutoff = now.minus(retentionDays, ChronoUnit.DAYS);
+        if (retentionDays <= 0) return;
+        Instant cutoff = now.minus(retentionDays, java.time.temporal.ChronoUnit.DAYS);
         visitors.entrySet().removeIf(entry -> entry.getValue().lastSeen.isBefore(cutoff));
     }
 
