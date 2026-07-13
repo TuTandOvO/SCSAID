@@ -22,5 +22,6 @@
 .developer-analytics tbody tr:nth-child(even) { background: #fafafa; }
 .developer-analytics tbody tr:last-child td { border-bottom: 0; }
 .developer-analytics code { color: #337ab7; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.developer-analytics #visitorRows td:nth-child(3), .developer-analytics #visitorRows th:nth-child(3) { text-align: right; }
 .developer-analytics__status { min-height: 1.4rem; margin: 1rem 0 0; color: #777; font-size: .8rem; }
 @media (max-width: 560px) { .developer-analytics__metrics { grid-template-columns: 1fr; } .developer-analytics__panel-head { align-items: start; flex-direction: column; } .developer-analytics th, .developer-analytics td { padding: .72rem .9rem; } }

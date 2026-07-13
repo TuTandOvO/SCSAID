@@ -82,6 +82,14 @@ jobs:
               cp -p /etc/nginx/sites-available/skin-scsaid /etc/nginx/sites-available/skin-scsaid.before-private-analytics
               sed -i '/server_name skin-scsaid.com www.skin-scsaid.com;/a\    access_log /var/log/nginx/scsaid-access.log scsaid_privacy;' /etc/nginx/sites-available/skin-scsaid
             fi
+            # The public TLS endpoint is reached through a trusted local proxy.
+            # Restore the public address from that proxy's X-Forwarded-For chain
+            # before passing it to Tomcat as X-Real-IP. This is safe because
+            # nginx itself only accepts this upstream path on loopback.
+            if ! grep -qF 'real_ip_header X-Forwarded-For;' /etc/nginx/sites-available/skin-scsaid; then
+              cp -p /etc/nginx/sites-available/skin-scsaid /etc/nginx/sites-available/skin-scsaid.before-real-ip
+              sed -i '/server_name skin-scsaid.com www.skin-scsaid.com;/a\    set_real_ip_from 127.0.0.1;\n    real_ip_header X-Forwarded-For;\n    real_ip_recursive on;' /etc/nginx/sites-available/skin-scsaid
+            fi
             nginx -t
             systemctl reload nginx
             # Stop via systemd so the next start runs as the 'tomcat' user —
@@ -106,6 +114,7 @@ jobs:
             COUNTER_FILE="$COUNTER_DIR/access-counter.properties"
             TRAFFIC_FILE="$COUNTER_DIR/traffic-history.properties"
             COUNTRY_TRAFFIC_FILE="$COUNTER_DIR/country-traffic.properties"
+            DEVELOPER_VISITOR_FILE="$COUNTER_DIR/developer-visitor-addresses.properties"
             GEOIP_DATABASE="$COUNTER_DIR/GeoLite2-City.mmdb"
             OLD_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT/WEB-INF/GeoLite2-City.mmdb
             LEGACY_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT.colleague_0619_exploded/WEB-INF/GeoLite2-City.mmdb
@@ -123,17 +132,20 @@ jobs:
             if [ ! -f "$COUNTRY_TRAFFIC_FILE" ]; then
               touch "$COUNTRY_TRAFFIC_FILE"
             fi
+            if [ ! -f "$DEVELOPER_VISITOR_FILE" ]; then
+              touch "$DEVELOPER_VISITOR_FILE"
+            fi
             # Keep the local GeoLite database outside the replaced WAR. It is
-            # used only transiently to aggregate country counts; raw IPs are
-            # never saved in the application analytics store.
+            # used only for country resolution. The separate address history is
+            # restricted to the authenticated developer analytics endpoint.
             if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$OLD_GEOIP_DATABASE" ]; then
               cp "$OLD_GEOIP_DATABASE" "$GEOIP_DATABASE"
             fi
             if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$LEGACY_GEOIP_DATABASE" ]; then
               cp "$LEGACY_GEOIP_DATABASE" "$GEOIP_DATABASE"
             fi
-            chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE"
-            chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE"
+            chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE"
+            chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE"
             if [ -f "$GEOIP_DATABASE" ]; then
               chown tomcat:tomcat "$GEOIP_DATABASE"
               chmod 640 "$GEOIP_DATABASE"

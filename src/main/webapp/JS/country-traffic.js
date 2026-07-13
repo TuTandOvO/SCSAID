@@ -19,12 +19,30 @@
                 escapeHtml(row.country) + "</code></td><td>" + number(row.visits) + "</td></tr>";
         }).join("");
     }
+    function formatTime(value) {
+        if (!value) return "—";
+        var date = new Date(value);
+        return isNaN(date.getTime()) ? "—" : date.toISOString().replace("T", " ").replace(".000Z", "Z");
+    }
+    function renderVisitorRows(rows) {
+        var target = document.getElementById("visitorRows");
+        if (!rows || !rows.length) {
+            target.innerHTML = '<tr><td colspan="5">No public visitor addresses have been recorded yet.</td></tr>';
+            return;
+        }
+        target.innerHTML = rows.map(function (row) {
+            return "<tr><td><code>" + escapeHtml(row.address) + "</code></td><td>" +
+                escapeHtml(row.country || "ZZ") + "</td><td>" + number(row.visits) + "</td><td>" +
+                escapeHtml(formatTime(row.firstSeen)) + "</td><td>" + escapeHtml(formatTime(row.lastSeen)) + "</td></tr>";
+        }).join("");
+    }
     function render(payload) {
         document.getElementById("allTimeTotal").textContent = number(payload.allTimeTotal);
         document.getElementById("recentTotal").textContent = number(payload.recent30DaysTotal);
         document.getElementById("recentRange").textContent = payload.recentStart + " to " + payload.recentEnd;
         renderRows("recentRows", payload.recent30Days);
         renderRows("allTimeRows", payload.allTime);
+        renderVisitorRows(payload.recentVisitors);
         document.getElementById("analyticsStatus").textContent = payload.privacy + " Updated " +
             new Date().toLocaleTimeString() + ".";
     }

@@ -14,7 +14,7 @@ class SecurityHardeningTest {
     }
 
     @Test
-    void publicMappingsExcludeLegacyLaunchersAndVisitorIpExports() throws Exception {
+    void publicMappingsExcludeLegacyLaunchersAndProtectVisitorAddressData() throws Exception {
         String webXml = read("src/main/webapp/WEB-INF/web.xml");
         assertFalse(webXml.contains("/details_init"));
         assertFalse(webXml.contains("/deg_cell_type_change"));
@@ -22,7 +22,11 @@ class SecurityHardeningTest {
         assertFalse(webXml.contains("/api/geo"));
         assertFalse(webXml.contains("/condition-deg-search/warm"));
         assertTrue(webXml.contains("DeveloperAnalyticsFilter"));
+        assertTrue(webXml.contains("<url-pattern>/developer-traffic.jsp</url-pattern>"));
         assertTrue(webXml.contains("/country-traffic-stats"));
+        String filter = read("src/main/java/AccessCounter/DeveloperAnalyticsFilter.java");
+        assertTrue(filter.contains("SC_UNAUTHORIZED"));
+        assertTrue(filter.contains("MessageDigest.isEqual"));
     }
 
     @Test

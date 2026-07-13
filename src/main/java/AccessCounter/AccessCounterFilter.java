@@ -29,6 +29,7 @@ public class AccessCounterFilter implements Filter {
     private CounterStore counterStore;
     private TrafficHistoryStore trafficHistoryStore;
     private CountryTrafficStore countryTrafficStore;
+    private DeveloperVisitorStore developerVisitorStore;
     private CountryResolver countryResolver;
 
     @Override
@@ -42,6 +43,7 @@ public class AccessCounterFilter implements Filter {
         Path countryHistoryPath = resolveCountryHistoryPath(filterConfig, counterPath);
         countryTrafficStore = new CountryTrafficStore(countryHistoryPath,
                 resolveCountryRetentionDays(filterConfig));
+        developerVisitorStore = new DeveloperVisitorStore(resolveDeveloperVisitorPath(filterConfig, counterPath), 90);
         Path geoIpDatabase = resolveGeoIpDatabasePath(filterConfig, context);
 
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
@@ -58,6 +60,7 @@ public class AccessCounterFilter implements Filter {
         context.setAttribute("trafficHistoryStore", trafficHistoryStore);
         context.setAttribute("countryTrafficFile", countryHistoryPath.toString());
         context.setAttribute("countryTrafficStore", countryTrafficStore);
+        context.setAttribute("developerVisitorStore", developerVisitorStore);
         context.setAttribute(TOTAL_ATTRIBUTE, new AtomicLong(snapshot.total));
         context.setAttribute(DAILY_ATTRIBUTE, new AtomicLong(snapshot.daily));
         context.setAttribute(DATE_ATTRIBUTE, snapshot.date);
@@ -72,6 +75,11 @@ public class AccessCounterFilter implements Filter {
             countryTrafficStore.load();
         } catch (IOException error) {
             context.log("Unable to load country-level traffic aggregates from " + countryHistoryPath, error);
+        }
+        try {
+            developerVisitorStore.load();
+        } catch (IOException error) {
+            context.log("Unable to load developer-only visitor address history", error);
         }
         try {
             countryResolver = CountryResolver.open(geoIpDatabase);
@@ -121,6 +129,12 @@ public class AccessCounterFilter implements Filter {
         } catch (NumberFormatException ignored) {
             return 365;
         }
+    }
+
+    private Path resolveDeveloperVisitorPath(FilterConfig config, Path counterPath) {
+        String configured = config.getInitParameter("developerVisitorFile");
+        if (configured != null && !configured.trim().isEmpty()) return Path.of(configured.trim());
+        return counterPath.resolveSibling("developer-visitor-addresses.properties");
     }
 
     private Path resolveGeoIpDatabasePath(FilterConfig config, ServletContext context) {
@@ -203,8 +217,11 @@ public class AccessCounterFilter implements Filter {
                             + trafficHistoryStore.getPath(), error);
                 }
                 try {
-                    String country = countryResolver == null ? "ZZ" : countryResolver.resolve(httpRequest);
-                    countryTrafficStore.record(today, country);
+                    CountryResolver.VisitorLocation location = countryResolver == null
+                            ? CountryResolver.locate(httpRequest)
+                            : countryResolver.resolve(httpRequest);
+                    countryTrafficStore.record(today, location.getCountry());
+                    developerVisitorStore.record(location, now);
                 } catch (IOException error) {
                     context.log("Unable to persist country-level traffic aggregate to "
                             + countryTrafficStore.getPath(), error);

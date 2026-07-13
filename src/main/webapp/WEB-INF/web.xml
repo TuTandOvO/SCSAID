@@ -39,6 +39,10 @@
             <param-value>365</param-value>
         </init-param>
         <init-param>
+            <param-name>developerVisitorFile</param-name>
+            <param-value>/opt/SkinDB/runtime/developer-visitor-addresses.properties</param-value>
+        </init-param>
+        <init-param>
             <param-name>geoIpDatabase</param-name>
             <param-value>/opt/SkinDB/runtime/GeoLite2-City.mmdb</param-value>
         </init-param>
