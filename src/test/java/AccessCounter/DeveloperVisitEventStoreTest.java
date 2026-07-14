@@ -19,9 +19,13 @@ class DeveloperVisitEventStoreTest {
                 temporaryDirectory.resolve("developer-visit-events.tsv"));
         CountryResolver.VisitorLocation uk = new CountryResolver.VisitorLocation("8.8.8.8", "GB");
         CountryResolver.VisitorLocation us = new CountryResolver.VisitorLocation("1.1.1.1", "US");
-        store.record(uk, Instant.parse("2026-06-01T09:10:00Z"), "/browse.jsp");
-        store.record(uk, Instant.parse("2026-07-12T12:10:00Z"), "/details.jsp");
-        store.record(us, Instant.parse("2026-07-13T12:45:00Z"), "/browse.jsp");
+        DeveloperVisitEventStore.UserContext returning = new DeveloperVisitEventStore.UserContext(
+                "visitor-alpha", "agent-a", "Chrome", "macOS", "en-GB");
+        DeveloperVisitEventStore.UserContext another = new DeveloperVisitEventStore.UserContext(
+                "visitor-beta", "agent-b", "Safari", "iOS", "en-US");
+        store.record(uk, returning, Instant.parse("2026-06-01T09:10:00Z"), "/browse.jsp");
+        store.record(uk, returning, Instant.parse("2026-07-12T12:10:00Z"), "/details.jsp");
+        store.record(us, another, Instant.parse("2026-07-13T12:45:00Z"), "/browse.jsp");
 
         DeveloperVisitEventStore.Snapshot snapshot = store.snapshot(
                 Instant.parse("2026-07-13T13:00:00Z"), 100);
@@ -38,7 +42,9 @@ class DeveloperVisitEventStoreTest {
         assertEquals(24, snapshot.hourly24.size());
         assertEquals(3, snapshot.mapEvents.size());
         assertEquals(2, snapshot.returningVisitorRows.get(0).getVisits());
-        assertEquals(2, snapshot.mapEvents.stream().filter(event -> event.getAddress().equals("8.8.8.8"))
+        assertEquals("visitor-alpha", snapshot.returningVisitorRows.get(0).getVisitorId());
+        assertEquals("Chrome", snapshot.returningVisitorRows.get(0).getBrowser());
+        assertEquals(2, snapshot.mapEvents.stream().filter(event -> event.getVisitorId().equals("visitor-alpha"))
                 .mapToLong(DeveloperVisitEventStore.Event::getVisitNumber).max().orElse(0));
     }
 
@@ -46,10 +52,13 @@ class DeveloperVisitEventStoreTest {
     void ignoresUnavailableAddressesAndCapsOnlyTheDisplayedMapEvents() throws Exception {
         DeveloperVisitEventStore store = new DeveloperVisitEventStore(
                 temporaryDirectory.resolve("events.tsv"));
-        store.record(CountryResolver.VisitorLocation.unavailable(), Instant.now(), "/");
-        store.record(new CountryResolver.VisitorLocation("9.9.9.9", "US"),
+        store.record(CountryResolver.VisitorLocation.unavailable(), DeveloperVisitEventStore.UserContext.legacy(),
+                Instant.now(), "/");
+        store.record(new CountryResolver.VisitorLocation("9.9.9.9", "US"), new DeveloperVisitEventStore.UserContext(
+                        "visitor-a", "agent-a", "Chrome", "Linux", "en"),
                 Instant.parse("2026-07-13T12:00:00Z"), "/");
-        store.record(new CountryResolver.VisitorLocation("8.8.4.4", "GB"),
+        store.record(new CountryResolver.VisitorLocation("8.8.4.4", "GB"), new DeveloperVisitEventStore.UserContext(
+                        "visitor-b", "agent-b", "Firefox", "Windows", "en"),
                 Instant.parse("2026-07-13T12:01:00Z"), "/");
 
         DeveloperVisitEventStore.Snapshot snapshot = store.snapshot(
@@ -58,5 +67,30 @@ class DeveloperVisitEventStoreTest {
         assertEquals(1, snapshot.mapEvents.size());
         assertFalse(snapshot.mapEvents.isEmpty());
         assertEquals(true, snapshot.mapEventsTruncated);
+    }
+
+    @Test
+    void filtersProbePathsAndUnknownCountriesFromDashboardAggregates() throws Exception {
+        DeveloperVisitEventStore store = new DeveloperVisitEventStore(
+                temporaryDirectory.resolve("filtered.tsv"));
+        DeveloperVisitEventStore.UserContext context = new DeveloperVisitEventStore.UserContext(
+                "visitor-filter", "agent", "Chrome", "macOS", "en");
+        store.record(new CountryResolver.VisitorLocation("9.9.9.9", "US"), context,
+                Instant.parse("2026-07-13T12:00:00Z"), "/browse.jsp");
+        store.record(new CountryResolver.VisitorLocation("9.9.9.9", "US"), context,
+                Instant.parse("2026-07-13T12:01:00Z"), "/wp-admin/install.php");
+        store.record(new CountryResolver.VisitorLocation("8.8.8.8", "ZZ"),
+                new DeveloperVisitEventStore.UserContext("visitor-unknown", "agent", "Chrome", "macOS", "en"),
+                Instant.parse("2026-07-13T12:02:00Z"), "/details.jsp");
+
+        DeveloperVisitEventStore.Snapshot snapshot = store.snapshot(
+                Instant.parse("2026-07-13T12:05:00Z"), 100);
+
+        assertEquals(2, snapshot.topPages.size());
+        assertEquals("/browse.jsp", snapshot.topPages.get(0).getPath());
+        assertEquals(0, snapshot.topPages.stream()
+                .filter(row -> row.getPath().contains("wp-admin")).count());
+        assertEquals(2, snapshot.mapEvents.size());
+        assertEquals(0, snapshot.mapEvents.stream().filter(event -> "ZZ".equals(event.getCountry())).count());
     }
 }

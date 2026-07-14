@@ -85,8 +85,10 @@ final class CountryTrafficStore {
                 recent.put(country, recent.getOrDefault(country, 0L) + entry.getValue());
             }
         }
-        return new Snapshot(sortedRows(allTime), sortedRows(recent),
-                sum(allTime), sum(recent), cutoff, today);
+        List<CountryRow> allTimeRows = sortedRows(allTime);
+        List<CountryRow> recentRows = sortedRows(recent);
+        return new Snapshot(allTimeRows, recentRows,
+                sumRows(allTimeRows), sumRows(recentRows), cutoff, today);
     }
 
     Path getPath() {
@@ -133,6 +135,7 @@ final class CountryTrafficStore {
     private static List<CountryRow> sortedRows(Map<String, Long> values) {
         List<CountryRow> rows = new ArrayList<>();
         for (Map.Entry<String, Long> entry : values.entrySet()) {
+            if ("ZZ".equals(entry.getKey())) continue;
             rows.add(new CountryRow(entry.getKey(), displayName(entry.getKey()), entry.getValue()));
         }
         rows.sort(Comparator.comparingLong(CountryRow::getVisits).reversed()
@@ -140,9 +143,9 @@ final class CountryTrafficStore {
         return Collections.unmodifiableList(rows);
     }
 
-    private static long sum(Map<String, Long> values) {
+    private static long sumRows(List<CountryRow> rows) {
         long total = 0;
-        for (long value : values.values()) total += value;
+        for (CountryRow row : rows) total += row.visits;
         return total;
     }
 

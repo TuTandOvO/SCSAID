@@ -28,8 +28,8 @@ class CountryTrafficStoreTest {
         reloaded.load();
         CountryTrafficStore.Snapshot snapshot = reloaded.snapshot(LocalDate.of(2026, 7, 11));
 
-        assertEquals(4, snapshot.allTimeTotal);
-        assertEquals(4, snapshot.recent30DaysTotal);
+        assertEquals(3, snapshot.allTimeTotal);
+        assertEquals(3, snapshot.recent30DaysTotal);
         assertEquals("US", snapshot.allTime.get(0).getCountry());
         assertEquals(2, snapshot.allTime.get(0).getVisits());
         String stored = Files.readString(file);

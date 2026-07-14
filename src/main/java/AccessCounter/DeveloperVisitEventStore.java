@@ -35,13 +35,22 @@ final class DeveloperVisitEventStore {
         this.path = path;
     }
 
-    synchronized void record(CountryResolver.VisitorLocation location, Instant timestamp, String requestPath)
+    synchronized void record(CountryResolver.VisitorLocation location, UserContext userContext,
+                             Instant timestamp, String requestPath)
             throws IOException {
         if (location == null || !location.hasPublicAddress()) return;
+        UserContext normalizedContext = userContext == null ? UserContext.legacy() : userContext;
         Path parent = path.toAbsolutePath().getParent();
         if (parent != null) Files.createDirectories(parent);
-        String line = timestamp.toString() + "\t" + encode(location.getAddress()) + "\t"
-                + CountryTrafficStore.normalizeCountry(location.getCountry()) + "\t"
+        String line = timestamp.toString()
+                + "\t" + encode(location.getAddress())
+                + "\t" + CountryTrafficStore.normalizeCountry(location.getCountry())
+                + "\t" + encode(normalizedContext.visitorId)
+                + "\t" + encode(normalizedContext.userAgentHash)
+                + "\t" + encode(normalizedContext.browser)
+                + "\t" + encode(normalizedContext.operatingSystem)
+                + "\t" + encode(normalizedContext.language)
+                + "\t"
                 + encode(normalizePath(requestPath)) + "\n";
         Files.writeString(path, line, StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
@@ -55,25 +64,32 @@ final class DeveloperVisitEventStore {
         Instant last24Cutoff = now.minusSeconds(24 * 60 * 60L);
 
         Map<String, Long> perAddress = new LinkedHashMap<>();
+        Map<String, Long> perVisitor = new LinkedHashMap<>();
         Map<String, Long> allPages = new LinkedHashMap<>();
         Map<String, Long> recentPages = new LinkedHashMap<>();
         Map<LocalDate, Long> daily = new TreeMap<>();
         Map<String, Long> hourly = new TreeMap<>();
-        Set<String> recentAddresses = new LinkedHashSet<>();
+        Set<String> recentVisitors = new LinkedHashSet<>();
         List<Event> numbered = new ArrayList<>(events.size());
         long recentVisits = 0;
 
         for (Event event : events) {
             long visitNumber = perAddress.getOrDefault(event.address, 0L) + 1L;
             perAddress.put(event.address, visitNumber);
-            numbered.add(event.withVisitNumber(visitNumber));
-            allPages.put(event.path, allPages.getOrDefault(event.path, 0L) + 1L);
+            long visitorVisitNumber = perVisitor.getOrDefault(event.visitorKey, 0L) + 1L;
+            perVisitor.put(event.visitorKey, visitorVisitNumber);
+            numbered.add(event.withVisitNumber(visitorVisitNumber));
+            if (AccessCounterFilter.isAnalyticsContentPath(event.path)) {
+                allPages.put(event.path, allPages.getOrDefault(event.path, 0L) + 1L);
+            }
             LocalDate day = event.timestamp.atZone(ZoneOffset.UTC).toLocalDate();
             daily.put(day, daily.getOrDefault(day, 0L) + 1L);
             if (!day.isBefore(cutoff) && !day.isAfter(today)) {
                 recentVisits++;
-                recentAddresses.add(event.address);
-                recentPages.put(event.path, recentPages.getOrDefault(event.path, 0L) + 1L);
+                recentVisitors.add(event.visitorKey);
+                if (AccessCounterFilter.isAnalyticsContentPath(event.path)) {
+                    recentPages.put(event.path, recentPages.getOrDefault(event.path, 0L) + 1L);
+                }
             }
             if (!event.timestamp.isBefore(last24Cutoff) && !event.timestamp.isAfter(now)) {
                 String hour = event.timestamp.atZone(ZoneOffset.UTC)
@@ -82,19 +98,20 @@ final class DeveloperVisitEventStore {
             }
         }
 
-        long returningVisitors = perAddress.values().stream().filter(count -> count > 1).count();
-        long returnVisits = perAddress.values().stream().mapToLong(count -> Math.max(0L, count - 1L)).sum();
+        long returningVisitors = perVisitor.values().stream().filter(count -> count > 1).count();
+        long returnVisits = perVisitor.values().stream().mapToLong(count -> Math.max(0L, count - 1L)).sum();
         List<Event> newestFirst = new ArrayList<>(numbered);
         newestFirst.sort(Comparator.comparing(Event::getTimestamp).reversed());
+        newestFirst.removeIf(event -> "ZZ".equals(event.country));
         int limit = Math.max(1, mapEventLimit);
         boolean truncated = newestFirst.size() > limit;
         if (truncated) newestFirst = new ArrayList<>(newestFirst.subList(0, limit));
 
-        return new Snapshot(events.size(), perAddress.size(), returningVisitors, returnVisits,
-                recentVisits, recentAddresses.size(), dailySeries(daily, cutoff, today),
+        return new Snapshot(events.size(), perVisitor.size(), returningVisitors, returnVisits,
+                recentVisits, recentVisitors.size(), dailySeries(daily, cutoff, today),
                 hourlySeries(hourly, now), topRows(allPages, 8), topRows(recentPages, 8),
                 Collections.unmodifiableList(newestFirst), truncated,
-                visitors(perAddress, numbered, 200));
+                visitors(perVisitor, numbered, 200));
     }
 
     Path getPath() { return path; }
@@ -137,18 +154,19 @@ final class DeveloperVisitEventStore {
         return Collections.unmodifiableList(rows.subList(0, Math.min(limit, rows.size())));
     }
 
-    private static List<VisitorSummary> visitors(Map<String, Long> perAddress, List<Event> events, int limit) {
+    private static List<VisitorSummary> visitors(Map<String, Long> perVisitor, List<Event> events, int limit) {
         Map<String, Event> first = new LinkedHashMap<>();
         Map<String, Event> last = new LinkedHashMap<>();
         for (Event event : events) {
-            first.putIfAbsent(event.address, event);
-            last.put(event.address, event);
+            first.putIfAbsent(event.visitorKey, event);
+            last.put(event.visitorKey, event);
         }
         List<VisitorSummary> rows = new ArrayList<>();
-        for (Map.Entry<String, Long> entry : perAddress.entrySet()) {
+        for (Map.Entry<String, Long> entry : perVisitor.entrySet()) {
             Event firstEvent = first.get(entry.getKey());
             Event lastEvent = last.get(entry.getKey());
-            rows.add(new VisitorSummary(entry.getKey(), lastEvent.country, entry.getValue(),
+            rows.add(new VisitorSummary(lastEvent.address, lastEvent.visitorId, lastEvent.country,
+                    lastEvent.browser, lastEvent.operatingSystem, lastEvent.language, entry.getValue(),
                     firstEvent.timestamp, lastEvent.timestamp, lastEvent.path));
         }
         rows.sort(Comparator.comparingLong(VisitorSummary::getVisits).reversed()
@@ -158,13 +176,32 @@ final class DeveloperVisitEventStore {
 
     private static Event parse(String line) {
         String[] fields = line.split("\\t", -1);
-        if (fields.length != 4) return null;
+        if (fields.length != 4 && fields.length != 9) return null;
         try {
             Instant timestamp = Instant.parse(fields[0]);
             String address = decode(fields[1]);
-            String path = decode(fields[3]);
-            if (address == null || path == null || address.length() > 64 || path.length() > 160) return null;
-            return new Event(timestamp, address, CountryTrafficStore.normalizeCountry(fields[2]), path, 0L);
+            if (address == null || address.length() > 64) return null;
+            String visitorId = "";
+            String userAgentHash = "";
+            String browser = "";
+            String operatingSystem = "";
+            String language = "";
+            String path;
+            if (fields.length == 4) {
+                path = decode(fields[3]);
+            } else {
+                visitorId = safeText(decode(fields[3]), 80);
+                userAgentHash = safeText(decode(fields[4]), 80);
+                browser = safeText(decode(fields[5]), 48);
+                operatingSystem = safeText(decode(fields[6]), 48);
+                language = safeText(decode(fields[7]), 32);
+                path = decode(fields[8]);
+            }
+            if (path == null || path.length() > 160) return null;
+            String visitorKey = visitorKey(visitorId, address, userAgentHash);
+            return new Event(timestamp, address, CountryTrafficStore.normalizeCountry(fields[2]),
+                    visitorId, visitorKey, userAgentHash, browser, operatingSystem, language,
+                    path, 0L);
         } catch (RuntimeException ignored) {
             return null;
         }
@@ -184,6 +221,36 @@ final class DeveloperVisitEventStore {
     private static String decode(String value) {
         try { return new String(Base64.getUrlDecoder().decode(value), StandardCharsets.UTF_8); }
         catch (IllegalArgumentException ignored) { return null; }
+    }
+
+    private static String safeText(String value, int limit) {
+        if (value == null) return "";
+        String normalized = value.replaceAll("[\\r\\n\\t]", " ").trim();
+        return normalized.length() > limit ? normalized.substring(0, limit) : normalized;
+    }
+
+    private static String visitorKey(String visitorId, String address, String userAgentHash) {
+        if (visitorId != null && !visitorId.isBlank()) return "vid:" + visitorId;
+        String hash = userAgentHash == null || userAgentHash.isBlank() ? "legacy" : userAgentHash;
+        return "legacy:" + address + ":" + hash;
+    }
+
+    static final class UserContext {
+        private final String visitorId;
+        private final String userAgentHash;
+        private final String browser;
+        private final String operatingSystem;
+        private final String language;
+
+        UserContext(String visitorId, String userAgentHash, String browser, String operatingSystem, String language) {
+            this.visitorId = safeText(visitorId, 80);
+            this.userAgentHash = safeText(userAgentHash, 80);
+            this.browser = safeText(browser, 48);
+            this.operatingSystem = safeText(operatingSystem, 48);
+            this.language = safeText(language, 32);
+        }
+
+        static UserContext legacy() { return new UserContext("", "", "", "", ""); }
     }
 
     static final class Snapshot {
@@ -226,20 +293,42 @@ final class DeveloperVisitEventStore {
         private final Instant timestamp;
         private final String address;
         private final String country;
+        private final String visitorId;
+        private final String visitorKey;
+        private final String userAgentHash;
+        private final String browser;
+        private final String operatingSystem;
+        private final String language;
         private final String path;
         private final long visitNumber;
 
-        Event(Instant timestamp, String address, String country, String path, long visitNumber) {
+        Event(Instant timestamp, String address, String country, String visitorId, String visitorKey,
+              String userAgentHash, String browser, String operatingSystem, String language,
+              String path, long visitNumber) {
             this.timestamp = timestamp;
             this.address = address;
             this.country = country;
+            this.visitorId = visitorId;
+            this.visitorKey = visitorKey;
+            this.userAgentHash = userAgentHash;
+            this.browser = browser;
+            this.operatingSystem = operatingSystem;
+            this.language = language;
             this.path = path;
             this.visitNumber = visitNumber;
         }
-        Event withVisitNumber(long value) { return new Event(timestamp, address, country, path, value); }
+        Event withVisitNumber(long value) {
+            return new Event(timestamp, address, country, visitorId, visitorKey, userAgentHash,
+                    browser, operatingSystem, language, path, value);
+        }
         Instant getTimestamp() { return timestamp; }
         String getAddress() { return address; }
         String getCountry() { return country; }
+        String getVisitorId() { return visitorId; }
+        String getUserAgentHash() { return userAgentHash; }
+        String getBrowser() { return browser; }
+        String getOperatingSystem() { return operatingSystem; }
+        String getLanguage() { return language; }
         String getPath() { return path; }
         long getVisitNumber() { return visitNumber; }
     }
@@ -262,17 +351,28 @@ final class DeveloperVisitEventStore {
 
     static final class VisitorSummary {
         private final String address;
+        private final String visitorId;
         private final String country;
+        private final String browser;
+        private final String operatingSystem;
+        private final String language;
         private final long visits;
         private final Instant firstSeen;
         private final Instant lastSeen;
         private final String lastPath;
-        VisitorSummary(String address, String country, long visits, Instant firstSeen, Instant lastSeen, String lastPath) {
-            this.address = address; this.country = country; this.visits = visits;
+        VisitorSummary(String address, String visitorId, String country, String browser,
+                       String operatingSystem, String language, long visits,
+                       Instant firstSeen, Instant lastSeen, String lastPath) {
+            this.address = address; this.visitorId = visitorId; this.country = country;
+            this.browser = browser; this.operatingSystem = operatingSystem; this.language = language; this.visits = visits;
             this.firstSeen = firstSeen; this.lastSeen = lastSeen; this.lastPath = lastPath;
         }
         String getAddress() { return address; }
+        String getVisitorId() { return visitorId; }
         String getCountry() { return country; }
+        String getBrowser() { return browser; }
+        String getOperatingSystem() { return operatingSystem; }
+        String getLanguage() { return language; }
         long getVisits() { return visits; }
         Instant getFirstSeen() { return firstSeen; }
         Instant getLastSeen() { return lastSeen; }

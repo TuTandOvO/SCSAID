@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.Base64;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -23,6 +26,8 @@ public class AccessCounterFilter implements Filter {
     private static final String TOTAL_ATTRIBUTE = "totalCount";
     private static final String DAILY_ATTRIBUTE = "dailyCount";
     private static final String DATE_ATTRIBUTE = "currentDate";
+    private static final String VISITOR_COOKIE = "scsaid_vid";
+    private static final SecureRandom VISITOR_ID_RANDOM = new SecureRandom();
 
     private final Object counterLock = new Object();
     private FilterConfig filterConfig;
@@ -178,8 +183,55 @@ public class AccessCounterFilter implements Filter {
         String uri = request.getRequestURI();
         if (uri != null && (uri.endsWith("/developer-traffic.jsp")
                 || uri.endsWith("/country-traffic-stats"))) return false;
+        if (!isAnalyticsContentPath(pagePath(request))) return false;
         String accept = request.getHeader("Accept");
         return accept != null && accept.toLowerCase(Locale.ROOT).contains("text/html");
+    }
+
+    static boolean isAnalyticsContentPath(String path) {
+        if (path == null || path.isBlank()) return true;
+        String normalized = path.trim().toLowerCase(Locale.ROOT);
+        int query = normalized.indexOf('?');
+        if (query >= 0) normalized = normalized.substring(0, query);
+        if (!normalized.startsWith("/")) normalized = "/" + normalized;
+        if ("/".equals(normalized)) return true;
+        if (normalized.startsWith("/integrated_umap/")) return true;
+        switch (normalized) {
+            case "/index.jsp":
+            case "/home":
+            case "/browse":
+            case "/browse.jsp":
+            case "/details":
+            case "/details.jsp":
+            case "/gene-search":
+            case "/gene-search.jsp":
+            case "/deg-search.jsp":
+            case "/compare":
+            case "/compare.jsp":
+            case "/featureplot.jsp":
+            case "/download.jsp":
+            case "/help":
+            case "/help.jsp":
+            case "/method.jsp":
+            case "/feedback":
+            case "/feedback.jsp":
+            case "/contact":
+            case "/contact.jsp":
+            case "/cite.jsp":
+            case "/whats-new.jsp":
+            case "/about.jsp":
+            case "/psospotter.jsp":
+            case "/gene-details":
+            case "/gene-details.jsp":
+            case "/visualization.jsp":
+            case "/umap-explorer.jsp":
+            case "/enrichment-analysis.jsp":
+            case "/gene-set-scoring.jsp":
+            case "/sitemap.jsp":
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -211,8 +263,11 @@ public class AccessCounterFilter implements Filter {
         }
 
         Cookie counterCookie = findCounterCookie(httpRequest.getCookies());
+        Cookie visitorCookie = findVisitorCookie(httpRequest.getCookies());
+        String visitorId = visitorCookie == null ? newVisitorId() : visitorCookie.getValue();
         String todayValue = today.toString();
         boolean countVisit = counterCookie == null || !todayValue.equals(counterCookie.getValue());
+        boolean setVisitorCookie = visitorCookie == null;
 
         synchronized (counterLock) {
             boolean changed = false;
@@ -231,7 +286,8 @@ public class AccessCounterFilter implements Filter {
                             : countryResolver.resolve(httpRequest);
                     countryTrafficStore.record(today, location.getCountry());
                     developerVisitorStore.record(location, now);
-                    developerVisitEventStore.record(location, now, pagePath(httpRequest));
+                    developerVisitEventStore.record(location, userContext(visitorId, httpRequest),
+                            now, pagePath(httpRequest));
                 } catch (IOException error) {
                     context.log("Unable to persist country-level traffic aggregate to "
                             + countryTrafficStore.getPath(), error);
@@ -253,6 +309,15 @@ public class AccessCounterFilter implements Filter {
             updatedCookie.setSecure(true);
             httpResponse.addCookie(updatedCookie);
         }
+        if (setVisitorCookie) {
+            Cookie updatedVisitorCookie = new Cookie(VISITOR_COOKIE, visitorId);
+            String contextPath = httpRequest.getContextPath();
+            updatedVisitorCookie.setPath(contextPath == null || contextPath.isEmpty() ? "/" : contextPath);
+            updatedVisitorCookie.setMaxAge(60 * 60 * 24 * 365 * 2);
+            updatedVisitorCookie.setHttpOnly(true);
+            updatedVisitorCookie.setSecure(true);
+            httpResponse.addCookie(updatedVisitorCookie);
+        }
 
         chain.doFilter(request, response);
     }
@@ -263,6 +328,77 @@ public class AccessCounterFilter implements Filter {
             if ("count_cookie".equals(cookie.getName())) return cookie;
         }
         return null;
+    }
+
+    private Cookie findVisitorCookie(Cookie[] cookies) {
+        if (cookies == null) return null;
+        for (Cookie cookie : cookies) {
+            if (VISITOR_COOKIE.equals(cookie.getName())
+                    && cookie.getValue() != null
+                    && cookie.getValue().matches("[A-Za-z0-9_-]{22,64}")) return cookie;
+        }
+        return null;
+    }
+
+    private String newVisitorId() {
+        byte[] bytes = new byte[18];
+        VISITOR_ID_RANDOM.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+    }
+
+    private DeveloperVisitEventStore.UserContext userContext(String visitorId, HttpServletRequest request) {
+        String userAgent = header(request, "User-Agent");
+        String language = primaryLanguage(header(request, "Accept-Language"));
+        return new DeveloperVisitEventStore.UserContext(visitorId, sha256Prefix(userAgent),
+                browserFamily(userAgent), operatingSystemFamily(userAgent), language);
+    }
+
+    private static String header(HttpServletRequest request, String name) {
+        String value = request.getHeader(name);
+        if (value == null) return "";
+        return value.length() > 512 ? value.substring(0, 512) : value;
+    }
+
+    private static String primaryLanguage(String acceptLanguage) {
+        if (acceptLanguage == null || acceptLanguage.isBlank()) return "";
+        String primary = acceptLanguage.split(",", 2)[0].trim();
+        return primary.length() > 32 ? primary.substring(0, 32) : primary;
+    }
+
+    private static String sha256Prefix(String value) {
+        if (value == null || value.isBlank()) return "";
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(value.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder builder = new StringBuilder();
+            for (int index = 0; index < 12; index++) {
+                builder.append(String.format("%02x", hash[index]));
+            }
+            return builder.toString();
+        } catch (Exception ignored) {
+            return "";
+        }
+    }
+
+    private static String browserFamily(String userAgent) {
+        String value = userAgent == null ? "" : userAgent.toLowerCase(Locale.ROOT);
+        if (value.contains("edg/")) return "Edge";
+        if (value.contains("opr/") || value.contains("opera")) return "Opera";
+        if (value.contains("chrome/") || value.contains("crios/")) return "Chrome";
+        if (value.contains("firefox/") || value.contains("fxios/")) return "Firefox";
+        if (value.contains("safari/")) return "Safari";
+        if (value.contains("bot") || value.contains("crawler") || value.contains("spider")) return "Bot";
+        return value.isBlank() ? "" : "Other";
+    }
+
+    private static String operatingSystemFamily(String userAgent) {
+        String value = userAgent == null ? "" : userAgent.toLowerCase(Locale.ROOT);
+        if (value.contains("windows")) return "Windows";
+        if (value.contains("mac os") || value.contains("macintosh")) return "macOS";
+        if (value.contains("iphone") || value.contains("ipad") || value.contains("ios")) return "iOS";
+        if (value.contains("android")) return "Android";
+        if (value.contains("linux")) return "Linux";
+        return value.isBlank() ? "" : "Other";
     }
 
     /** The protected analytics ledger stores only the path, never query values. */

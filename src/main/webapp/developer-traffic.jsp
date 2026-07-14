@@ -6,21 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow, noarchive">
     <title>Private visitor analytics · scSAID</title>
+    <link rel="stylesheet" href="lib/leaflet/leaflet.css?v=1.9.4">
     <link rel="stylesheet" href="CSS/global.css?v=20260713a">
-    <link rel="stylesheet" href="CSS/developer-traffic.css?v=20260713a">
+    <link rel="stylesheet" href="CSS/developer-traffic.css?v=20260714a">
 </head>
 <body class="developer-analytics-page">
 <main class="developer-analytics" aria-labelledby="analyticsTitle">
     <header class="developer-analytics__hero">
         <p class="developer-analytics__eyebrow">Private developer view</p>
         <h1 id="analyticsTitle">Visitor analytics</h1>
-        <p class="developer-analytics__intro">A live, protected view of counted scSAID visits. Address-level data is never public; the map uses country-level placement rather than precise visitor locations.</p>
-        <p class="developer-analytics__privacy">Counted visit events, protected address aggregates, and recurrence history are retained indefinitely for site administration.</p>
+        <p class="developer-analytics__intro">A live, protected view of counted scSAID visits. Address-level data is private to this dashboard; the map uses country-level placement rather than precise visitor locations.</p>
+        <p class="developer-analytics__privacy">Counted visit events, visitor IDs, protected address aggregates, and recurrence history are retained indefinitely for site administration.</p>
     </header>
 
     <section class="developer-analytics__metrics" aria-label="All-time visitor metrics" aria-live="polite">
         <article class="developer-analytics__metric"><span>All-time visits</span><strong id="allTimeVisits">—</strong><small>counted browser-days</small></article>
-        <article class="developer-analytics__metric"><span>Unique visitors</span><strong id="uniqueVisitors">—</strong><small>protected address groups</small></article>
+        <article class="developer-analytics__metric"><span>Unique visitors</span><strong id="uniqueVisitors">—</strong><small>first-party visitor IDs</small></article>
         <article class="developer-analytics__metric"><span>Returning visitors</span><strong id="returningVisitors">—</strong><small id="returningDetail">— repeat visits</small></article>
         <article class="developer-analytics__metric"><span>Last 30 days</span><strong id="recentVisits">—</strong><small id="recentDetail">— unique visitors</small></article>
     </section>
@@ -34,27 +35,13 @@
             </div>
         </div>
         <div class="developer-analytics__map-layout">
-            <div class="developer-analytics__map-wrap">
-                <svg id="visitMap" class="developer-analytics__map" viewBox="0 0 1000 500" role="img" aria-labelledby="mapTitle mapCaption">
-                    <title>Country-level placement of counted visits</title>
-                    <g class="developer-analytics__graticule">
-                        <path d="M0 125H1000M0 250H1000M0 375H1000M250 0V500M500 0V500M750 0V500" />
-                    </g>
-                    <g class="developer-analytics__continents" aria-hidden="true">
-                        <path d="M68 87l54-39 84 8 40 47-9 52-38 29-25 64-53 1-35-42-32-56 8-37z" />
-                        <path d="M219 254l41 16 25 55-10 78-35 57-28-61 5-75z" />
-                        <path d="M418 86l85-35 98 17 57 42-29 37-72 11-24 52-74-6-34-43z" />
-                        <path d="M492 210l58 15 34 65-22 101-44 51-33-65 8-65z" />
-                        <path d="M657 80l73-23 96 31 88 9 47 47-51 40-57-7-57 39-51-31-49-41-42-8z" />
-                        <path d="M783 318l70-17 86 37 9 56-65 34-78-39z" />
-                    </g>
-                    <g id="mapDots" class="developer-analytics__map-dots"></g>
-                </svg>
+            <div class="developer-analytics__map-wrap" aria-labelledby="mapTitle mapCaption">
+                <div id="visitMap" class="developer-analytics__map" role="application" aria-label="Country-level visit map"></div>
             </div>
             <aside class="developer-analytics__map-detail" id="mapDetail" aria-live="polite">
                 <span class="developer-analytics__map-key"><i class="developer-analytics__dot-key"></i> first counted visit</span>
                 <span class="developer-analytics__map-key"><i class="developer-analytics__dot-key developer-analytics__dot-key--return"></i> returning visit</span>
-                <p id="mapCaption">Each dot is one counted visit, placed with small deterministic jitter around its country. Hover or select a dot for its protected visit record.</p>
+                <p id="mapCaption">Each marker is one counted visit, placed around its country centroid. Hover or select a marker for its protected visit record.</p>
             </aside>
         </div>
     </section>
@@ -82,8 +69,8 @@
     </div>
 
     <section class="developer-analytics__panel" aria-labelledby="visitorTitle">
-        <div class="developer-analytics__panel-head"><div><p class="developer-analytics__eyebrow">Recurrence</p><h2 id="visitorTitle">Returning visitor history</h2></div><span>All time · protected addresses</span></div>
-        <div class="developer-analytics__table-wrap"><table><thead><tr><th>IP address</th><th>Country</th><th>Visits</th><th>First seen (UTC)</th><th>Last seen (UTC)</th><th>Last page</th></tr></thead><tbody id="visitorRows"><tr><td colspan="6">Loading protected visitor history…</td></tr></tbody></table></div>
+        <div class="developer-analytics__panel-head"><div><p class="developer-analytics__eyebrow">Recurrence</p><h2 id="visitorTitle">Returning visitor history</h2></div><span>All time · visitor IDs</span></div>
+        <div class="developer-analytics__table-wrap"><table><thead><tr><th>Visitor ID</th><th>IP address</th><th>Country</th><th>Browser</th><th>OS</th><th>Language</th><th>Visits</th><th>First seen (UTC)</th><th>Last seen (UTC)</th><th>Last page</th></tr></thead><tbody id="visitorRows"><tr><td colspan="10">Loading protected visitor history…</td></tr></tbody></table></div>
     </section>
 
     <div class="developer-analytics__table-grid">
@@ -98,6 +85,7 @@
     </div>
     <p id="analyticsStatus" class="developer-analytics__status" aria-live="polite"></p>
 </main>
-<script src="JS/country-traffic.js?v=20260713a"></script>
+<script src="lib/leaflet/leaflet.js?v=1.9.4"></script>
+<script src="JS/country-traffic.js?v=20260714a"></script>
 </body>
 </html>

@@ -21,13 +21,21 @@
 .developer-analytics__chip:hover { color: #337ab7; }
 .developer-analytics__chip.is-active { background: #ddecf8; box-shadow: inset 0 -2px 0 #3d86c6; color: #337ab7; }
 .developer-analytics__map-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(15rem, 21rem); min-height: 24rem; }
-.developer-analytics__map-wrap { position: relative; min-height: 22rem; overflow: hidden; background: linear-gradient(135deg, #fbfdff 0%, #f5fafc 100%); }
-.developer-analytics__map { width: 100%; height: 100%; min-height: 22rem; display: block; }
-.developer-analytics__graticule path { stroke: #e2edf3; stroke-width: 1; fill: none; }
-.developer-analytics__continents path { fill: #eaf1f4; stroke: #d7e3e9; stroke-width: 1.2; }
-.developer-analytics__map-dots circle { fill: #54afe0; fill-opacity: .84; stroke: #fff; stroke-width: 1.2; cursor: pointer; transition: r .15s ease, fill .15s ease, opacity .15s ease; }
-.developer-analytics__map-dots circle.is-returning { fill: #337ab7; }
-.developer-analytics__map-dots circle:hover, .developer-analytics__map-dots circle:focus { fill: #1e6fae; opacity: 1; outline: none; r: 6.5; }
+.developer-analytics__map-wrap { position: relative; min-height: 24rem; overflow: hidden; background: #f5fafc; }
+.developer-analytics__map { width: 100%; height: 100%; min-height: 24rem; display: block; background: #f8fbfd; }
+.developer-analytics__country { fill: #e8eff3; stroke: #d2dee5; stroke-width: 1; transition: fill .16s ease, stroke .16s ease; }
+.developer-analytics__country.has-visits { fill: #ddecf8; stroke: #9fc7e2; }
+.developer-analytics__country.is-highlighted { fill: #b8daf2; stroke: #337ab7; }
+.developer-analytics__marker { align-items: center; background: #54afe0; border: 2px solid #fff; border-radius: 999px; box-shadow: 0 2px 8px rgba(31, 91, 126, .2); color: #fff; display: flex; font: 700 .68rem/1 var(--font-body, sans-serif); justify-content: center; min-height: 1.05rem; min-width: 1.05rem; padding: .16rem; transform: translate(-50%, -50%); }
+.developer-analytics__marker.is-returning { background: #337ab7; }
+.developer-analytics__marker.is-cluster { min-height: 1.45rem; min-width: 1.45rem; }
+.developer-analytics .leaflet-container { color: #323232; font: .82rem/1.45 var(--font-body, sans-serif); }
+.developer-analytics .leaflet-control-attribution { display: none; }
+.developer-analytics .leaflet-control-zoom { border: 1px solid #d8dfe4; box-shadow: 0 1px 2px rgba(30,58,80,.06); }
+.developer-analytics .leaflet-control-zoom a { color: #337ab7; }
+.developer-analytics .leaflet-popup-content-wrapper { border-radius: 2px; box-shadow: 0 4px 18px rgba(34, 55, 70, .16); }
+.developer-analytics .leaflet-popup-content { margin: .8rem .9rem; min-width: 13rem; }
+.developer-analytics .leaflet-popup-content p { margin: .2rem 0; }
 .developer-analytics__map-detail { padding: 1.4rem; border-left: 1px solid #dedede; background: #fbfcfd; color: #626f77; font-size: .84rem; line-height: 1.62; }
 .developer-analytics__map-detail p { margin: 1.05rem 0 0; }
 .developer-analytics__map-key { display: block; margin-bottom: .5rem; }
@@ -54,4 +62,4 @@
 .developer-analytics__status { min-height: 1.4rem; margin: 1rem 0 0; color: #777; font-size: .8rem; }
 @media (max-width: 980px) { .developer-analytics__metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .developer-analytics__map-layout { grid-template-columns: 1fr; } .developer-analytics__map-detail { border-left: 0; border-top: 1px solid #dedede; } }
 @media (max-width: 650px) { .developer-analytics { width: min(100% - 1.6rem, 84rem); padding-top: 2rem; } .developer-analytics__metrics, .developer-analytics__chart-grid, .developer-analytics__table-grid { grid-template-columns: 1fr; } .developer-analytics__panel-head { align-items: flex-start; flex-direction: column; } .developer-analytics__chart-grid .developer-analytics__panel + .developer-analytics__panel { margin-top: 0; } .developer-analytics th, .developer-analytics td { padding: .72rem .9rem; } }
-@media (prefers-reduced-motion: reduce) { .developer-analytics__chip, .developer-analytics__map-dots circle { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .developer-analytics__chip, .developer-analytics__country { transition: none; } }

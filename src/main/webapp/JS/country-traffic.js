@@ -1,11 +1,29 @@
-/* Protected developer analytics dashboard. No third-party tracking or map tiles. */
+/* Protected developer analytics dashboard. Self-hosted Leaflet, no remote map tiles. */
 (function () {
     "use strict";
     var POLL_MS = 30000;
     var latest = null;
     var mapScope = "all";
+    var map = null;
+    var countryLayer = null;
+    var markerLayer = null;
+    var countryCounts = {};
     var NS = "http://www.w3.org/2000/svg";
-    /* Approximate country-centroid coordinates, used only for country-level map placement. */
+    var countryCodeByIso3 = {
+        AFG:"AF", ALA:"AX", ALB:"AL", DZA:"DZ", ASM:"AS", AND:"AD", AGO:"AO", AIA:"AI", ATA:"AQ", ATG:"AG", ARG:"AR", ARM:"AM", ABW:"AW", AUS:"AU", AUT:"AT", AZE:"AZ",
+        BHS:"BS", BHR:"BH", BGD:"BD", BRB:"BB", BLR:"BY", BEL:"BE", BLZ:"BZ", BEN:"BJ", BMU:"BM", BTN:"BT", BOL:"BO", BES:"BQ", BIH:"BA", BWA:"BW", BVT:"BV", BRA:"BR", IOT:"IO", BRN:"BN", BGR:"BG", BFA:"BF", BDI:"BI",
+        CPV:"CV", KHM:"KH", CMR:"CM", CAN:"CA", CYM:"KY", CAF:"CF", TCD:"TD", CHL:"CL", CHN:"CN", CXR:"CX", CCK:"CC", COL:"CO", COM:"KM", COG:"CG", COD:"CD", COK:"CK", CRI:"CR", CIV:"CI", HRV:"HR", CUB:"CU", CUW:"CW", CYP:"CY", CZE:"CZ",
+        DNK:"DK", DJI:"DJ", DMA:"DM", DOM:"DO", ECU:"EC", EGY:"EG", SLV:"SV", GNQ:"GQ", ERI:"ER", EST:"EE", SWZ:"SZ", ETH:"ET", FLK:"FK", FRO:"FO", FJI:"FJ", FIN:"FI", FRA:"FR", GUF:"GF", PYF:"PF", ATF:"TF",
+        GAB:"GA", GMB:"GM", GEO:"GE", DEU:"DE", GHA:"GH", GIB:"GI", GRC:"GR", GRL:"GL", GRD:"GD", GLP:"GP", GUM:"GU", GTM:"GT", GGY:"GG", GIN:"GN", GNB:"GW", GUY:"GY",
+        HTI:"HT", HMD:"HM", VAT:"VA", HND:"HN", HKG:"HK", HUN:"HU", ISL:"IS", IND:"IN", IDN:"ID", IRN:"IR", IRQ:"IQ", IRL:"IE", IMN:"IM", ISR:"IL", ITA:"IT",
+        JAM:"JM", JPN:"JP", JEY:"JE", JOR:"JO", KAZ:"KZ", KEN:"KE", KIR:"KI", PRK:"KP", KOR:"KR", KWT:"KW", KGZ:"KG", LAO:"LA", LVA:"LV", LBN:"LB", LSO:"LS", LBR:"LR", LBY:"LY", LIE:"LI", LTU:"LT", LUX:"LU",
+        MAC:"MO", MDG:"MG", MWI:"MW", MYS:"MY", MDV:"MV", MLI:"ML", MLT:"MT", MHL:"MH", MTQ:"MQ", MRT:"MR", MUS:"MU", MYT:"YT", MEX:"MX", FSM:"FM", MDA:"MD", MCO:"MC", MNG:"MN", MNE:"ME", MSR:"MS", MAR:"MA", MOZ:"MZ", MMR:"MM",
+        NAM:"NA", NRU:"NR", NPL:"NP", NLD:"NL", NCL:"NC", NZL:"NZ", NIC:"NI", NER:"NE", NGA:"NG", NIU:"NU", NFK:"NF", MKD:"MK", MNP:"MP", NOR:"NO", OMN:"OM",
+        PAK:"PK", PLW:"PW", PSE:"PS", PAN:"PA", PNG:"PG", PRY:"PY", PER:"PE", PHL:"PH", PCN:"PN", POL:"PL", PRT:"PT", PRI:"PR", QAT:"QA", REU:"RE", ROU:"RO", RUS:"RU", RWA:"RW",
+        BLM:"BL", SHN:"SH", KNA:"KN", LCA:"LC", MAF:"MF", SPM:"PM", VCT:"VC", WSM:"WS", SMR:"SM", STP:"ST", SAU:"SA", SEN:"SN", SRB:"RS", SYC:"SC", SLE:"SL", SGP:"SG", SXM:"SX", SVK:"SK", SVN:"SI", SLB:"SB", SOM:"SO", ZAF:"ZA", SGS:"GS", SSD:"SS", ESP:"ES", LKA:"LK", SDN:"SD", SUR:"SR", SJM:"SJ", SWE:"SE", CHE:"CH", SYR:"SY", TWN:"TW",
+        TJK:"TJ", TZA:"TZ", THA:"TH", TLS:"TL", TGO:"TG", TKL:"TK", TON:"TO", TTO:"TT", TUN:"TN", TUR:"TR", TKM:"TM", TCA:"TC", TUV:"TV",
+        UGA:"UG", UKR:"UA", ARE:"AE", GBR:"GB", USA:"US", UMI:"UM", URY:"UY", UZB:"UZ", VUT:"VU", VEN:"VE", VNM:"VN", VGB:"VG", VIR:"VI", WLF:"WF", ESH:"EH", YEM:"YE", ZMB:"ZM", ZWE:"ZW"
+    };
     var countryCoordinates = {
         US:[39,-98], CA:[56,-106], MX:[23,-102], BR:[-10,-55], AR:[-34,-64], CL:[-35,-71], CO:[4,-72], PE:[-10,-76],
         GB:[54,-2], IE:[53,-8], FR:[46,2], DE:[51,10], ES:[40,-4], PT:[39,-8], IT:[42,12], NL:[52,5], BE:[50,4], CH:[47,8], AT:[47,14],
@@ -26,80 +44,153 @@
         });
     }
     function formatTime(value) {
-        if (!value) return "—";
+        if (!value) return "-";
         var date = new Date(value);
-        return isNaN(date.getTime()) ? "—" : date.toISOString().replace("T", " ").replace(".000Z", "Z");
+        return isNaN(date.getTime()) ? "-" : date.toISOString().replace("T", " ").replace(".000Z", "Z");
+    }
+    function display(value) {
+        return value == null || String(value).trim() === "" ? "-" : String(value);
+    }
+    function shortVisitorId(row) {
+        if (!row || !row.visitorId) return "legacy";
+        return row.visitorId.length > 12 ? row.visitorId.substring(0, 12) : row.visitorId;
     }
     function isRecent(event) {
         return new Date(event.timestamp).getTime() >= Date.now() - 30 * 24 * 60 * 60 * 1000;
     }
+    function mapEvents() {
+        if (!latest || !latest.visitAnalytics) return [];
+        var events = latest.visitAnalytics.mapEvents || [];
+        if (mapScope === "recent") events = events.filter(isRecent);
+        if (mapScope === "returning") events = events.filter(function (event) { return Number(event.visitNumber || 0) > 1; });
+        return events.filter(function (event) { return event.country && event.country !== "ZZ"; });
+    }
     function renderRows(id, rows) {
-        var target = document.getElementById(id);
-        target.innerHTML = rows && rows.length ? rows.map(function (row) {
+        var filtered = (rows || []).filter(function (row) { return row.country && row.country !== "ZZ"; });
+        document.getElementById(id).innerHTML = filtered.length ? filtered.map(function (row) {
             return "<tr><td>" + escapeHtml(row.label) + "</td><td><code>" + escapeHtml(row.country) +
                 "</code></td><td>" + number(row.visits) + "</td></tr>";
-        }).join("") : '<tr><td colspan="3">No country aggregates have been collected yet.</td></tr>';
+        }).join("") : '<tr><td colspan="3">No country-mapped visits have been collected yet.</td></tr>';
     }
     function renderPages(id, rows) {
         document.getElementById(id).innerHTML = rows && rows.length ? rows.map(function (row) {
             return "<tr><td><code>" + escapeHtml(row.path) + "</code></td><td>" + number(row.visits) + "</td></tr>";
-        }).join("") : '<tr><td colspan="2">No counted page visits have been recorded yet.</td></tr>';
+        }).join("") : '<tr><td colspan="2">No counted content-page visits have been recorded yet.</td></tr>';
     }
     function renderVisitors(rows) {
         var target = document.getElementById("visitorRows");
         target.innerHTML = rows && rows.length ? rows.map(function (row) {
-            return "<tr><td><code>" + escapeHtml(row.address) + "</code></td><td>" + escapeHtml(row.country || "ZZ") +
+            return "<tr><td><code>" + escapeHtml(shortVisitorId(row)) + "</code></td><td><code>" + escapeHtml(row.address) +
+                "</code></td><td>" + escapeHtml(display(row.country)) + "</td><td>" + escapeHtml(display(row.browser)) +
+                "</td><td>" + escapeHtml(display(row.operatingSystem)) + "</td><td>" + escapeHtml(display(row.language)) +
                 "</td><td>" + number(row.visits) + "</td><td>" + escapeHtml(formatTime(row.firstSeen)) + "</td><td>" +
                 escapeHtml(formatTime(row.lastSeen)) + "</td><td><code>" + escapeHtml(row.lastPath) + "</code></td></tr>";
-        }).join("") : '<tr><td colspan="6">No protected visitor addresses have been recorded yet.</td></tr>';
+        }).join("") : '<tr><td colspan="10">No protected visitor IDs have been recorded yet.</td></tr>';
     }
     function svgElement(name, attributes) {
         var element = document.createElementNS(NS, name);
         Object.keys(attributes || {}).forEach(function (key) { element.setAttribute(key, attributes[key]); });
         return element;
     }
-    function coordinateFor(event, index) {
+    function countryCode(feature) {
+        return countryCodeByIso3[feature.id] || feature.id;
+    }
+    function coordinatesFor(event, index) {
         var source = countryCoordinates[event.country];
         if (!source) return null;
-        var seed = 0, text = String(event.address) + String(event.timestamp) + index;
+        var seed = 0, text = String(event.visitorId || event.address) + String(event.timestamp) + index;
         for (var i = 0; i < text.length; i++) seed = ((seed << 5) - seed + text.charCodeAt(i)) | 0;
-        var jitterX = ((seed & 15) - 7.5) * 1.5;
-        var jitterY = (((seed >>> 4) & 15) - 7.5) * 1.1;
-        return { x: (source[1] + 180) / 360 * 1000 + jitterX, y: (90 - source[0]) / 180 * 500 + jitterY };
+        var latJitter = (((seed >>> 4) & 15) - 7.5) * .18;
+        var lngJitter = ((seed & 15) - 7.5) * .28;
+        return [source[0] + latJitter, source[1] + lngJitter];
+    }
+    function markerHtml(event, sameCountryCount) {
+        var count = sameCountryCount > 1 ? String(Math.min(sameCountryCount, 99)) : "";
+        return '<span class="developer-analytics__marker ' + (event.visitNumber > 1 ? "is-returning " : "") +
+            (sameCountryCount > 1 ? "is-cluster" : "") + '">' + escapeHtml(count) + '</span>';
+    }
+    function popupHtml(event) {
+        return "<p class=\"developer-analytics__eyebrow\">Protected visit record</p><p><strong>Visitor " +
+            escapeHtml(shortVisitorId(event)) + "</strong><br>" + escapeHtml(event.country) + " · " +
+            escapeHtml(formatTime(event.timestamp)) + "<br>Visit #" + number(event.visitNumber) + " · <code>" +
+            escapeHtml(event.path) + "</code></p><p>" + escapeHtml(display(event.browser)) + " · " +
+            escapeHtml(display(event.operatingSystem)) + " · " + escapeHtml(display(event.language)) + "</p>";
     }
     function showMapDetail(event, totalShown) {
-        var detail = document.getElementById("mapDetail");
-        detail.innerHTML = "<p class=\"developer-analytics__eyebrow\">Protected visit record</p><p><strong>" +
-            escapeHtml(event.address) + "</strong><br>" + escapeHtml(event.country || "ZZ") + " · " +
-            escapeHtml(formatTime(event.timestamp)) + "<br>Visit #" + number(event.visitNumber) + " · <code>" +
-            escapeHtml(event.path) + "</code></p><p>Showing " + number(totalShown) + " mapped counted visit" +
-            (totalShown === 1 ? "." : "s.") + " Country placement is approximate.</p>";
+        document.getElementById("mapDetail").innerHTML = popupHtml(event) + "<p>Showing " + number(totalShown) +
+            " mapped counted visit" + (totalShown === 1 ? "." : "s.") + " Placement is country-level approximate.</p>";
+    }
+    function updateCountryStyles() {
+        if (!countryLayer) return;
+        countryLayer.eachLayer(function (layer) {
+            var code = countryCode(layer.feature);
+            layer.setStyle({
+                className: "developer-analytics__country" + (countryCounts[code] ? " has-visits" : ""),
+                fillColor: countryCounts[code] ? "#ddecf8" : "#e8eff3",
+                color: countryCounts[code] ? "#9fc7e2" : "#d2dee5",
+                weight: countryCounts[code] ? 1.2 : .8,
+                fillOpacity: 1
+            });
+        });
     }
     function renderMap() {
-        var dots = document.getElementById("mapDots");
-        while (dots.firstChild) dots.removeChild(dots.firstChild);
-        if (!latest || !latest.visitAnalytics) return;
-        var events = latest.visitAnalytics.mapEvents || [];
-        if (mapScope === "recent") events = events.filter(isRecent);
-        var mapped = 0;
+        if (!map || !markerLayer) return;
+        var events = mapEvents();
+        markerLayer.clearLayers();
+        countryCounts = {};
+        events.forEach(function (event) { countryCounts[event.country] = (countryCounts[event.country] || 0) + 1; });
+        updateCountryStyles();
         events.forEach(function (event, index) {
-            var point = coordinateFor(event, index);
-            if (!point) return;
-            mapped++;
-            var circle = svgElement("circle", { cx: point.x.toFixed(1), cy: point.y.toFixed(1), r: event.visitNumber > 1 ? 4.5 : 3.7,
-                tabindex: "0", role: "button", "aria-label": "Protected visit from " + event.country + ", visit " + event.visitNumber });
-            if (event.visitNumber > 1) circle.setAttribute("class", "is-returning");
-            circle.addEventListener("mouseenter", function () { showMapDetail(event, mapped); });
-            circle.addEventListener("focus", function () { showMapDetail(event, mapped); });
-            circle.addEventListener("click", function () { showMapDetail(event, mapped); });
-            dots.appendChild(circle);
+            var coordinates = coordinatesFor(event, index);
+            if (!coordinates) return;
+            var marker = L.marker(coordinates, {
+                icon: L.divIcon({
+                    className: "",
+                    html: markerHtml(event, countryCounts[event.country] || 1),
+                    iconSize: [26, 26],
+                    iconAnchor: [13, 13]
+                }),
+                keyboard: true,
+                title: "Visitor " + shortVisitorId(event)
+            });
+            marker.bindPopup(popupHtml(event));
+            marker.on("mouseover focus click", function () { showMapDetail(event, events.length); });
+            marker.addTo(markerLayer);
         });
-        if (!mapped) document.getElementById("mapDetail").innerHTML = "<p>No country-mapped visits are available for this period yet.</p>";
-        else if (latest.visitAnalytics.mapEventsTruncated) document.getElementById("mapDetail").innerHTML += "<p>For performance, the map shows the latest 5,000 retained events.</p>";
+        if (!events.length) {
+            document.getElementById("mapDetail").innerHTML = "<p>No country-mapped visits are available for this period yet.</p>";
+        } else if (latest.visitAnalytics && latest.visitAnalytics.mapEventsTruncated) {
+            document.getElementById("mapDetail").innerHTML += "<p>For performance, the map shows the latest 5,000 retained events.</p>";
+        }
+    }
+    function initMap() {
+        map = L.map("visitMap", {
+            attributionControl: false,
+            worldCopyJump: true,
+            minZoom: 1,
+            maxZoom: 5
+        }).setView([23, 8], 2);
+        markerLayer = L.layerGroup().addTo(map);
+        fetch("/map_resources/world-countries.geojson", { cache: "force-cache" })
+            .then(function (response) { if (!response.ok) throw new Error("map"); return response.json(); })
+            .then(function (geojson) {
+                countryLayer = L.geoJSON(geojson, {
+                    style: function () { return { className:"developer-analytics__country", color:"#d2dee5", weight:.8, fillColor:"#e8eff3", fillOpacity:1 }; },
+                    onEachFeature: function (feature, layer) {
+                        layer.bindTooltip(feature.properties && feature.properties.name ? feature.properties.name : countryCode(feature));
+                    }
+                }).addTo(map);
+                countryLayer.bringToBack();
+                renderMap();
+            })
+            .catch(function () {
+                document.getElementById("mapDetail").innerHTML = "<p>The local map file could not be loaded.</p>";
+            });
     }
     function renderChart(id, rows, labelMode) {
         var svg = document.getElementById(id);
         while (svg.firstChild) svg.removeChild(svg.firstChild);
+        rows = rows && rows.length ? rows : [{ label:"", visits:0 }];
         var width = 640, height = 230, left = 36, top = 17, right = 14, bottom = 31;
         var innerWidth = width - left - right, innerHeight = height - top - bottom;
         var values = rows.map(function (row) { return Number(row.visits || 0); });
@@ -152,6 +243,7 @@
             .then(render).catch(function () { document.getElementById("analyticsStatus").textContent = "Protected analytics are temporarily unavailable."; });
     }
     function init() {
+        initMap();
         Array.prototype.forEach.call(document.querySelectorAll("[data-map-scope]"), function (button) {
             button.addEventListener("click", function () {
                 mapScope = button.getAttribute("data-map-scope");

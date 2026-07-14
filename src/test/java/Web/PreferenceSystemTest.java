@@ -46,6 +46,7 @@ class PreferenceSystemTest {
 
         assertTrue(header.contains("id=\"storage-notice\""));
         assertTrue(header.contains("We do not use advertising or third-party tracking cookies."));
+        assertTrue(header.contains("random visitor ID"));
         assertFalse(header.contains("mapmyvisitors.com/map.js"));
         assertFalse(header.contains("href=\"privacy.jsp\""));
         assertTrue(Files.notExists(WEBAPP.resolve("privacy.jsp")));
