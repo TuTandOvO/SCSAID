@@ -88,6 +88,6 @@
 </main>
 <script src="lib/leaflet/leaflet.js?v=1.9.4"></script>
 <script src="lib/topojson-client.min.js?v=3.1.0"></script>
-<script src="JS/country-traffic.js?v=20260714a"></script>
+<script src="JS/country-traffic.js?v=20260714b"></script>
 </body>
 </html>
