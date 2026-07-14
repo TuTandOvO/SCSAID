@@ -23,6 +23,7 @@
         AFG:"AF", ALB:"AL", DZA:"DZ", ARG:"AR", ARM:"AM", AUS:"AU", AUT:"AT", AZE:"AZ", BGD:"BD", BEL:"BE", BOL:"BO", BRA:"BR", BGR:"BG", CAN:"CA", CHL:"CL", CHN:"CN", COL:"CO", COG:"CG", COD:"CD", CRI:"CR", HRV:"HR", CUB:"CU", CYP:"CY", CZE:"CZ", DNK:"DK", DOM:"DO", ECU:"EC", EGY:"EG", EST:"EE", FIN:"FI", FRA:"FR", DEU:"DE", GHA:"GH", GRC:"GR", GRL:"GL", HKG:"HK", HUN:"HU", ISL:"IS", IND:"IN", IDN:"ID", IRN:"IR", IRQ:"IQ", IRL:"IE", ISR:"IL", ITA:"IT", JPN:"JP", KAZ:"KZ", KEN:"KE", KOR:"KR", LVA:"LV", LTU:"LT", LUX:"LU", MAC:"MO", MYS:"MY", MEX:"MX", MNG:"MN", MAR:"MA", NLD:"NL", NZL:"NZ", NGA:"NG", NOR:"NO", PAK:"PK", PER:"PE", PHL:"PH", POL:"PL", PRT:"PT", ROU:"RO", RUS:"RU", SAU:"SA", SRB:"RS", SGP:"SG", SVK:"SK", SVN:"SI", ZAF:"ZA", ESP:"ES", LKA:"LK", SWE:"SE", CHE:"CH", TWN:"TW", THA:"TH", TUR:"TR", UKR:"UA", ARE:"AE", GBR:"GB", USA:"US", VNM:"VN"
     };
     var countryNames = { CN:"China", GB:"United Kingdom", HK:"Hong Kong", MO:"Macao", US:"United States" };
+    var countryCenterFallbacks = { SG:[1.3521, 103.8198] };
     var chinaSubdivisionNames = {
         AH:"安徽省", BJ:"北京市", CQ:"重庆市", FJ:"福建省", GD:"广东省", GS:"甘肃省", GX:"广西壮族自治区", GZ:"贵州省", HA:"河南省", HB:"湖北省", HE:"河北省", HI:"海南省", HK:"香港特别行政区", HL:"黑龙江省", HN:"湖南省", JL:"吉林省", JS:"江苏省", JX:"江西省", LN:"辽宁省", MO:"澳门特别行政区", NM:"内蒙古自治区", NX:"宁夏回族自治区", QH:"青海省", SC:"四川省", SD:"山东省", SH:"上海市", SN:"陕西省", SX:"山西省", TJ:"天津市", XJ:"新疆维吾尔自治区", XZ:"西藏自治区", YN:"云南省", ZJ:"浙江省"
     };
@@ -287,7 +288,9 @@
     }
 
     function layerCenter(group) {
-        return validLayerCenter(regionLayers[group.key]) || validLayerCenter(countryLayers[group.country]);
+        var fallback = countryCenterFallbacks[group.country];
+        return validLayerCenter(regionLayers[group.key]) || validLayerCenter(countryLayers[group.country]) ||
+            (fallback ? L.latLng(fallback[0], fallback[1]) : null);
     }
 
     function markerSize(group) {
