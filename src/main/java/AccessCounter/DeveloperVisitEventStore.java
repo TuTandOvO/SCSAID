@@ -29,6 +29,7 @@ import java.util.TreeMap;
  */
 final class DeveloperVisitEventStore {
     private static final DateTimeFormatter DAY_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE;
+    private static final int RETURN_HISTORY_LIMIT = 100;
     private final Path path;
 
     DeveloperVisitEventStore(Path path) {
@@ -159,17 +160,30 @@ final class DeveloperVisitEventStore {
     private static List<VisitorSummary> visitors(Map<String, Long> perVisitor, List<Event> events, int limit) {
         Map<String, Event> first = new LinkedHashMap<>();
         Map<String, Event> last = new LinkedHashMap<>();
+        Map<String, List<Event>> history = new LinkedHashMap<>();
         for (Event event : events) {
             first.putIfAbsent(event.visitorKey, event);
             last.put(event.visitorKey, event);
+            history.computeIfAbsent(event.visitorKey, ignored -> new ArrayList<>()).add(event);
         }
         List<VisitorSummary> rows = new ArrayList<>();
         for (Map.Entry<String, Long> entry : perVisitor.entrySet()) {
+            if (entry.getValue() < 2) continue;
             Event firstEvent = first.get(entry.getKey());
             Event lastEvent = last.get(entry.getKey());
+            List<Event> visitEvents = new ArrayList<>(history.getOrDefault(entry.getKey(), Collections.emptyList()));
+            visitEvents.sort(Comparator.comparing(Event::getTimestamp).reversed());
+            boolean historyTruncated = visitEvents.size() > RETURN_HISTORY_LIMIT;
+            if (historyTruncated) {
+                visitEvents = new ArrayList<>(visitEvents.subList(0, RETURN_HISTORY_LIMIT));
+            }
+            List<VisitRecord> visitHistory = new ArrayList<>(visitEvents.size());
+            for (Event event : visitEvents) visitHistory.add(VisitRecord.from(event));
             rows.add(new VisitorSummary(lastEvent.address, lastEvent.visitorId, lastEvent.country,
-                    lastEvent.browser, lastEvent.operatingSystem, lastEvent.language, entry.getValue(),
-                    firstEvent.timestamp, lastEvent.timestamp, lastEvent.path));
+                    lastEvent.regionCode, lastEvent.regionName, lastEvent.browser,
+                    lastEvent.operatingSystem, lastEvent.language, entry.getValue(),
+                    firstEvent.timestamp, lastEvent.timestamp, lastEvent.path,
+                    Collections.unmodifiableList(visitHistory), historyTruncated));
         }
         rows.sort(Comparator.comparingLong(VisitorSummary::getVisits).reversed()
                 .thenComparing(VisitorSummary::getLastSeen, Comparator.reverseOrder()));
@@ -372,6 +386,8 @@ final class DeveloperVisitEventStore {
         private final String address;
         private final String visitorId;
         private final String country;
+        private final String regionCode;
+        private final String regionName;
         private final String browser;
         private final String operatingSystem;
         private final String language;
@@ -379,16 +395,24 @@ final class DeveloperVisitEventStore {
         private final Instant firstSeen;
         private final Instant lastSeen;
         private final String lastPath;
-        VisitorSummary(String address, String visitorId, String country, String browser,
+        private final List<VisitRecord> history;
+        private final boolean historyTruncated;
+        VisitorSummary(String address, String visitorId, String country, String regionCode,
+                       String regionName, String browser,
                        String operatingSystem, String language, long visits,
-                       Instant firstSeen, Instant lastSeen, String lastPath) {
+                       Instant firstSeen, Instant lastSeen, String lastPath,
+                       List<VisitRecord> history, boolean historyTruncated) {
             this.address = address; this.visitorId = visitorId; this.country = country;
+            this.regionCode = regionCode; this.regionName = regionName;
             this.browser = browser; this.operatingSystem = operatingSystem; this.language = language; this.visits = visits;
             this.firstSeen = firstSeen; this.lastSeen = lastSeen; this.lastPath = lastPath;
+            this.history = history; this.historyTruncated = historyTruncated;
         }
         String getAddress() { return address; }
         String getVisitorId() { return visitorId; }
         String getCountry() { return country; }
+        String getRegionCode() { return regionCode; }
+        String getRegionName() { return regionName; }
         String getBrowser() { return browser; }
         String getOperatingSystem() { return operatingSystem; }
         String getLanguage() { return language; }
@@ -396,5 +420,49 @@ final class DeveloperVisitEventStore {
         Instant getFirstSeen() { return firstSeen; }
         Instant getLastSeen() { return lastSeen; }
         String getLastPath() { return lastPath; }
+        List<VisitRecord> getHistory() { return history; }
+        boolean isHistoryTruncated() { return historyTruncated; }
+    }
+
+    static final class VisitRecord {
+        private final long visitNumber;
+        private final Instant timestamp;
+        private final String path;
+        private final String address;
+        private final String country;
+        private final String regionCode;
+        private final String regionName;
+        private final String browser;
+        private final String operatingSystem;
+
+        private VisitRecord(long visitNumber, Instant timestamp, String path, String address,
+                            String country, String regionCode, String regionName,
+                            String browser, String operatingSystem) {
+            this.visitNumber = visitNumber;
+            this.timestamp = timestamp;
+            this.path = path;
+            this.address = address;
+            this.country = country;
+            this.regionCode = regionCode;
+            this.regionName = regionName;
+            this.browser = browser;
+            this.operatingSystem = operatingSystem;
+        }
+
+        static VisitRecord from(Event event) {
+            return new VisitRecord(event.visitNumber, event.timestamp, event.path, event.address,
+                    event.country, event.regionCode, event.regionName,
+                    event.browser, event.operatingSystem);
+        }
+
+        long getVisitNumber() { return visitNumber; }
+        Instant getTimestamp() { return timestamp; }
+        String getPath() { return path; }
+        String getAddress() { return address; }
+        String getCountry() { return country; }
+        String getRegionCode() { return regionCode; }
+        String getRegionName() { return regionName; }
+        String getBrowser() { return browser; }
+        String getOperatingSystem() { return operatingSystem; }
     }
 }

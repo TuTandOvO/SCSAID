@@ -5,6 +5,8 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -45,12 +47,43 @@ class DeveloperVisitEventStoreTest {
         assertEquals(2, snapshot.returningVisitorRows.get(0).getVisits());
         assertEquals("visitor-alpha", snapshot.returningVisitorRows.get(0).getVisitorId());
         assertEquals("Chrome", snapshot.returningVisitorRows.get(0).getBrowser());
+        assertEquals(1, snapshot.returningVisitorRows.size());
+        assertEquals(List.of(2L, 1L), snapshot.returningVisitorRows.get(0).getHistory().stream()
+                .map(DeveloperVisitEventStore.VisitRecord::getVisitNumber).collect(Collectors.toList()));
+        assertEquals("/details.jsp", snapshot.returningVisitorRows.get(0).getHistory().get(0).getPath());
+        assertFalse(snapshot.returningVisitorRows.get(0).isHistoryTruncated());
         assertEquals("CA", snapshot.mapEvents.stream().filter(event -> "US".equals(event.getCountry()))
                 .findFirst().orElseThrow().getRegionCode());
         assertEquals("California", snapshot.mapEvents.stream().filter(event -> "US".equals(event.getCountry()))
                 .findFirst().orElseThrow().getRegionName());
         assertEquals(2, snapshot.mapEvents.stream().filter(event -> event.getVisitorId().equals("visitor-alpha"))
                 .mapToLong(DeveloperVisitEventStore.Event::getVisitNumber).max().orElse(0));
+    }
+
+    @Test
+    void returningHistoryFollowsVisitorAcrossAddressesAndCapsTheDisplayedTimeline() throws Exception {
+        DeveloperVisitEventStore store = new DeveloperVisitEventStore(
+                temporaryDirectory.resolve("return-history.tsv"));
+        DeveloperVisitEventStore.UserContext visitor = new DeveloperVisitEventStore.UserContext(
+                "travelling-visitor", "agent", "Safari", "macOS", "en-GB");
+        Instant start = Instant.parse("2026-01-01T00:00:00Z");
+        for (int index = 0; index < 105; index++) {
+            CountryResolver.VisitorLocation location = index < 50
+                    ? new CountryResolver.VisitorLocation("8.8.8.8", "GB", "ENG", "England")
+                    : new CountryResolver.VisitorLocation("1.1.1.1", "US", "CA", "California");
+            store.record(location, visitor, start.plusSeconds(index * 60L), "/details.jsp?visit=" + index);
+        }
+
+        DeveloperVisitEventStore.Snapshot snapshot = store.snapshot(start.plusSeconds(106 * 60L), 500);
+        DeveloperVisitEventStore.VisitorSummary summary = snapshot.returningVisitorRows.get(0);
+
+        assertEquals(105, summary.getVisits());
+        assertEquals(100, summary.getHistory().size());
+        assertEquals(105, summary.getHistory().get(0).getVisitNumber());
+        assertEquals(6, summary.getHistory().get(99).getVisitNumber());
+        assertEquals("1.1.1.1", summary.getHistory().get(0).getAddress());
+        assertEquals("California", summary.getHistory().get(0).getRegionName());
+        assertEquals(true, summary.isHistoryTruncated());
     }
 
     @Test
