@@ -6,33 +6,25 @@
     var mapScope = "all";
     var map = null;
     var countryLayer = null;
+    var regionLayer = null;
     var markerLayer = null;
     var countryCounts = {};
+    var regionCounts = {};
+    var regionLayers = {};
+    var regionFeatureLayers = [];
     var NS = "http://www.w3.org/2000/svg";
     var countryCodeByIso3 = {
-        AFG:"AF", ALA:"AX", ALB:"AL", DZA:"DZ", ASM:"AS", AND:"AD", AGO:"AO", AIA:"AI", ATA:"AQ", ATG:"AG", ARG:"AR", ARM:"AM", ABW:"AW", AUS:"AU", AUT:"AT", AZE:"AZ",
-        BHS:"BS", BHR:"BH", BGD:"BD", BRB:"BB", BLR:"BY", BEL:"BE", BLZ:"BZ", BEN:"BJ", BMU:"BM", BTN:"BT", BOL:"BO", BES:"BQ", BIH:"BA", BWA:"BW", BVT:"BV", BRA:"BR", IOT:"IO", BRN:"BN", BGR:"BG", BFA:"BF", BDI:"BI",
-        CPV:"CV", KHM:"KH", CMR:"CM", CAN:"CA", CYM:"KY", CAF:"CF", TCD:"TD", CHL:"CL", CHN:"CN", CXR:"CX", CCK:"CC", COL:"CO", COM:"KM", COG:"CG", COD:"CD", COK:"CK", CRI:"CR", CIV:"CI", HRV:"HR", CUB:"CU", CUW:"CW", CYP:"CY", CZE:"CZ",
-        DNK:"DK", DJI:"DJ", DMA:"DM", DOM:"DO", ECU:"EC", EGY:"EG", SLV:"SV", GNQ:"GQ", ERI:"ER", EST:"EE", SWZ:"SZ", ETH:"ET", FLK:"FK", FRO:"FO", FJI:"FJ", FIN:"FI", FRA:"FR", GUF:"GF", PYF:"PF", ATF:"TF",
-        GAB:"GA", GMB:"GM", GEO:"GE", DEU:"DE", GHA:"GH", GIB:"GI", GRC:"GR", GRL:"GL", GRD:"GD", GLP:"GP", GUM:"GU", GTM:"GT", GGY:"GG", GIN:"GN", GNB:"GW", GUY:"GY",
-        HTI:"HT", HMD:"HM", VAT:"VA", HND:"HN", HKG:"HK", HUN:"HU", ISL:"IS", IND:"IN", IDN:"ID", IRN:"IR", IRQ:"IQ", IRL:"IE", IMN:"IM", ISR:"IL", ITA:"IT",
-        JAM:"JM", JPN:"JP", JEY:"JE", JOR:"JO", KAZ:"KZ", KEN:"KE", KIR:"KI", PRK:"KP", KOR:"KR", KWT:"KW", KGZ:"KG", LAO:"LA", LVA:"LV", LBN:"LB", LSO:"LS", LBR:"LR", LBY:"LY", LIE:"LI", LTU:"LT", LUX:"LU",
-        MAC:"MO", MDG:"MG", MWI:"MW", MYS:"MY", MDV:"MV", MLI:"ML", MLT:"MT", MHL:"MH", MTQ:"MQ", MRT:"MR", MUS:"MU", MYT:"YT", MEX:"MX", FSM:"FM", MDA:"MD", MCO:"MC", MNG:"MN", MNE:"ME", MSR:"MS", MAR:"MA", MOZ:"MZ", MMR:"MM",
-        NAM:"NA", NRU:"NR", NPL:"NP", NLD:"NL", NCL:"NC", NZL:"NZ", NIC:"NI", NER:"NE", NGA:"NG", NIU:"NU", NFK:"NF", MKD:"MK", MNP:"MP", NOR:"NO", OMN:"OM",
-        PAK:"PK", PLW:"PW", PSE:"PS", PAN:"PA", PNG:"PG", PRY:"PY", PER:"PE", PHL:"PH", PCN:"PN", POL:"PL", PRT:"PT", PRI:"PR", QAT:"QA", REU:"RE", ROU:"RO", RUS:"RU", RWA:"RW",
-        BLM:"BL", SHN:"SH", KNA:"KN", LCA:"LC", MAF:"MF", SPM:"PM", VCT:"VC", WSM:"WS", SMR:"SM", STP:"ST", SAU:"SA", SEN:"SN", SRB:"RS", SYC:"SC", SLE:"SL", SGP:"SG", SXM:"SX", SVK:"SK", SVN:"SI", SLB:"SB", SOM:"SO", ZAF:"ZA", SGS:"GS", SSD:"SS", ESP:"ES", LKA:"LK", SDN:"SD", SUR:"SR", SJM:"SJ", SWE:"SE", CHE:"CH", SYR:"SY", TWN:"TW",
-        TJK:"TJ", TZA:"TZ", THA:"TH", TLS:"TL", TGO:"TG", TKL:"TK", TON:"TO", TTO:"TT", TUN:"TN", TUR:"TR", TKM:"TM", TCA:"TC", TUV:"TV",
-        UGA:"UG", UKR:"UA", ARE:"AE", GBR:"GB", USA:"US", UMI:"UM", URY:"UY", UZB:"UZ", VUT:"VU", VEN:"VE", VNM:"VN", VGB:"VG", VIR:"VI", WLF:"WF", ESH:"EH", YEM:"YE", ZMB:"ZM", ZWE:"ZW"
+        AFG:"AF", ALB:"AL", DZA:"DZ", ARG:"AR", ARM:"AM", AUS:"AU", AUT:"AT", AZE:"AZ", BGD:"BD", BEL:"BE", BOL:"BO", BRA:"BR", BGR:"BG", CAN:"CA", CHL:"CL", CHN:"CN", COL:"CO", COG:"CG", COD:"CD", CRI:"CR", HRV:"HR", CUB:"CU", CYP:"CY", CZE:"CZ", DNK:"DK", DOM:"DO", ECU:"EC", EGY:"EG", EST:"EE", FIN:"FI", FRA:"FR", DEU:"DE", GHA:"GH", GRC:"GR", GRL:"GL", HUN:"HU", ISL:"IS", IND:"IN", IDN:"ID", IRN:"IR", IRQ:"IQ", IRL:"IE", ISR:"IL", ITA:"IT", JPN:"JP", KAZ:"KZ", KEN:"KE", KOR:"KR", LVA:"LV", LTU:"LT", LUX:"LU", MYS:"MY", MEX:"MX", MNG:"MN", MAR:"MA", NLD:"NL", NZL:"NZ", NGA:"NG", NOR:"NO", PAK:"PK", PER:"PE", PHL:"PH", POL:"PL", PRT:"PT", ROU:"RO", RUS:"RU", SAU:"SA", SRB:"RS", SGP:"SG", SVK:"SK", SVN:"SI", ZAF:"ZA", ESP:"ES", LKA:"LK", SWE:"SE", CHE:"CH", TWN:"TW", THA:"TH", TUR:"TR", UKR:"UA", ARE:"AE", GBR:"GB", USA:"US", VNM:"VN"
     };
     var countryCoordinates = {
-        US:[39,-98], CA:[56,-106], MX:[23,-102], BR:[-10,-55], AR:[-34,-64], CL:[-35,-71], CO:[4,-72], PE:[-10,-76],
-        GB:[54,-2], IE:[53,-8], FR:[46,2], DE:[51,10], ES:[40,-4], PT:[39,-8], IT:[42,12], NL:[52,5], BE:[50,4], CH:[47,8], AT:[47,14],
-        DK:[56,10], NO:[62,10], SE:[62,15], FI:[64,26], IS:[65,-19], PL:[52,20], CZ:[50,15], HU:[47,19], RO:[46,25], GR:[39,22], TR:[39,35],
-        UA:[49,32], RU:[61,105], EE:[59,26], LV:[57,25], LT:[56,24], RS:[44,21], HR:[45,16], BG:[43,25], SK:[49,20], SI:[46,15],
-        MA:[32,-6], DZ:[28,2], TN:[34,9], EG:[27,30], ZA:[-30,25], NG:[9,8], KE:[1,38], ET:[9,40], GH:[8,-2], TZ:[-6,35], UG:[1,32],
-        SA:[24,45], AE:[24,54], IL:[31,35], IR:[32,53], IQ:[33,44], JO:[31,36], PK:[30,70], IN:[22,79], BD:[24,90], LK:[7,81], NP:[28,84],
-        CN:[35,104], JP:[36,138], KR:[36,128], TW:[24,121], HK:[22,114], SG:[1,104], MY:[4,102], TH:[15,101], VN:[16,108], ID:[-2,118], PH:[12,122],
-        AU:[-25,134], NZ:[-41,174], FJ:[-17,178]
+        US:[39,-98], CN:[35,104], GB:[54,-2], CA:[56,-106], BR:[-10,-55], FR:[46,2], DE:[51,10], IN:[22,79],
+        JP:[36,138], KR:[36,128], SG:[1,104], AU:[-25,134], NZ:[-41,174], IT:[42,12], ES:[40,-4], NL:[52,5]
+    };
+    var chinaSubdivisionNames = {
+        AH:"安徽省", BJ:"北京市", CQ:"重庆市", FJ:"福建省", GD:"广东省", GS:"甘肃省", GX:"广西壮族自治区", GZ:"贵州省", HA:"河南省", HB:"湖北省", HE:"河北省", HI:"海南省", HK:"香港特别行政区", HL:"黑龙江省", HN:"湖南省", JL:"吉林省", JS:"江苏省", JX:"江西省", LN:"辽宁省", MO:"澳门特别行政区", NM:"内蒙古自治区", NX:"宁夏回族自治区", QH:"青海省", SC:"四川省", SD:"山东省", SH:"上海市", SN:"陕西省", SX:"山西省", TJ:"天津市", XJ:"新疆维吾尔自治区", XZ:"西藏自治区", YN:"云南省", ZJ:"浙江省"
+    };
+    var chinaEnglishNames = {
+        anhui:"安徽省", beijing:"北京市", chongqing:"重庆市", fujian:"福建省", guangdong:"广东省", gansu:"甘肃省", guangxi:"广西壮族自治区", guizhou:"贵州省", henan:"河南省", hubei:"湖北省", hebei:"河北省", hainan:"海南省", hongkong:"香港特别行政区", "hong kong":"香港特别行政区", heilongjiang:"黑龙江省", hunan:"湖南省", jilin:"吉林省", jiangsu:"江苏省", jiangxi:"江西省", liaoning:"辽宁省", macao:"澳门特别行政区", macau:"澳门特别行政区", "inner mongolia":"内蒙古自治区", ningxia:"宁夏回族自治区", qinghai:"青海省", sichuan:"四川省", shandong:"山东省", shanghai:"上海市", shaanxi:"陕西省", shanxi:"山西省", tianjin:"天津市", xinjiang:"新疆维吾尔自治区", tibet:"西藏自治区", yunnan:"云南省", zhejiang:"浙江省"
     };
 
     function number(value, digits) {
@@ -51,12 +43,35 @@
     function display(value) {
         return value == null || String(value).trim() === "" ? "-" : String(value);
     }
+    function normalizeName(value) {
+        return String(value || "").toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9\u4e00-\u9fff]+/g, " ").trim();
+    }
+    function isRecent(event) {
+        return new Date(event.timestamp).getTime() >= Date.now() - 30 * 24 * 60 * 60 * 1000;
+    }
     function shortVisitorId(row) {
         if (!row || !row.visitorId) return "legacy";
         return row.visitorId.length > 12 ? row.visitorId.substring(0, 12) : row.visitorId;
     }
-    function isRecent(event) {
-        return new Date(event.timestamp).getTime() >= Date.now() - 30 * 24 * 60 * 60 * 1000;
+    function chinaRegionName(event) {
+        var code = String(event.regionCode || "").toUpperCase();
+        if (chinaSubdivisionNames[code]) return chinaSubdivisionNames[code];
+        return chinaEnglishNames[normalizeName(event.regionName)] || event.regionName || "";
+    }
+    function regionLabel(event) {
+        if (event.country === "CN") return chinaRegionName(event) || "China";
+        if ((event.country === "US" || event.country === "GB") && event.regionName) return event.regionName;
+        return event.country;
+    }
+    function regionKey(event) {
+        if (event.country === "CN") {
+            var chinaName = chinaRegionName(event);
+            return chinaName ? "CN:" + normalizeName(chinaName) : "country:CN";
+        }
+        if ((event.country === "US" || event.country === "GB") && event.regionName) {
+            return event.country + ":" + normalizeName(event.regionName);
+        }
+        return "country:" + event.country;
     }
     function mapEvents() {
         if (!latest || !latest.visitAnalytics) return [];
@@ -65,12 +80,25 @@
         if (mapScope === "returning") events = events.filter(function (event) { return Number(event.visitNumber || 0) > 1; });
         return events.filter(function (event) { return event.country && event.country !== "ZZ"; });
     }
+    function aggregateEvents(events) {
+        var groups = {};
+        events.forEach(function (event) {
+            var key = regionKey(event);
+            if (!groups[key]) {
+                groups[key] = { key:key, country:event.country, label:regionLabel(event), visits:0, returning:0, latest:null };
+            }
+            groups[key].visits++;
+            if (Number(event.visitNumber || 0) > 1) groups[key].returning++;
+            if (!groups[key].latest || new Date(event.timestamp) > new Date(groups[key].latest.timestamp)) groups[key].latest = event;
+        });
+        return Object.keys(groups).map(function (key) { return groups[key]; });
+    }
     function renderRows(id, rows) {
         var filtered = (rows || []).filter(function (row) { return row.country && row.country !== "ZZ"; });
         document.getElementById(id).innerHTML = filtered.length ? filtered.map(function (row) {
             return "<tr><td>" + escapeHtml(row.label) + "</td><td><code>" + escapeHtml(row.country) +
                 "</code></td><td>" + number(row.visits) + "</td></tr>";
-        }).join("") : '<tr><td colspan="3">No country-mapped visits have been collected yet.</td></tr>';
+        }).join("") : '<tr><td colspan="3">No mapped visits have been collected yet.</td></tr>';
     }
     function renderPages(id, rows) {
         document.getElementById(id).innerHTML = rows && rows.length ? rows.map(function (row) {
@@ -95,34 +123,40 @@
     function countryCode(feature) {
         return countryCodeByIso3[feature.id] || feature.id;
     }
-    function coordinatesFor(event, index) {
-        var source = countryCoordinates[event.country];
-        if (!source) return null;
-        var seed = 0, text = String(event.visitorId || event.address) + String(event.timestamp) + index;
-        for (var i = 0; i < text.length; i++) seed = ((seed << 5) - seed + text.charCodeAt(i)) | 0;
-        var latJitter = (((seed >>> 4) & 15) - 7.5) * .18;
-        var lngJitter = ((seed & 15) - 7.5) * .28;
-        return [source[0] + latJitter, source[1] + lngJitter];
+    function layerCenter(group) {
+        var layer = regionLayers[group.key];
+        if (layer) return layer.getBounds().getCenter();
+        var source = countryCoordinates[group.country];
+        return source ? L.latLng(source[0], source[1]) : L.latLng(20, 0);
     }
-    function markerHtml(event, sameCountryCount) {
-        var count = sameCountryCount > 1 ? String(Math.min(sameCountryCount, 99)) : "";
-        return '<span class="developer-analytics__marker ' + (event.visitNumber > 1 ? "is-returning " : "") +
-            (sameCountryCount > 1 ? "is-cluster" : "") + '">' + escapeHtml(count) + '</span>';
+    function markerSize(group) {
+        return Math.max(18, Math.min(46, 16 + Math.sqrt(group.visits) * 7));
     }
-    function popupHtml(event) {
-        return "<p class=\"developer-analytics__eyebrow\">Protected visit record</p><p><strong>Visitor " +
-            escapeHtml(shortVisitorId(event)) + "</strong><br>" + escapeHtml(event.country) + " · " +
-            escapeHtml(formatTime(event.timestamp)) + "<br>Visit #" + number(event.visitNumber) + " · <code>" +
-            escapeHtml(event.path) + "</code></p><p>" + escapeHtml(display(event.browser)) + " · " +
-            escapeHtml(display(event.operatingSystem)) + " · " + escapeHtml(display(event.language)) + "</p>";
+    function markerColor(group) {
+        var share = group.visits ? group.returning / group.visits : 0;
+        var start = [84, 175, 224], end = [51, 122, 183];
+        var rgb = start.map(function (value, index) { return Math.round(value + (end[index] - value) * share); });
+        return "rgb(" + rgb.join(",") + ")";
     }
-    function showMapDetail(event, totalShown) {
-        document.getElementById("mapDetail").innerHTML = popupHtml(event) + "<p>Showing " + number(totalShown) +
-            " mapped counted visit" + (totalShown === 1 ? "." : "s.") + " Placement is country-level approximate.</p>";
+    function markerHtml(group) {
+        var size = markerSize(group);
+        return '<span class="developer-analytics__marker" style="width:' + size + 'px;height:' + size +
+            'px;background:' + markerColor(group) + '">' + escapeHtml(String(Math.min(group.visits, 99))) + '</span>';
     }
-    function updateCountryStyles() {
-        if (!countryLayer) return;
-        countryLayer.eachLayer(function (layer) {
+    function popupHtml(group) {
+        var share = group.visits ? Math.round(group.returning / group.visits * 100) : 0;
+        return "<p class=\"developer-analytics__eyebrow\">Mapped visit aggregate</p><p><strong>" +
+            escapeHtml(group.label) + "</strong><br>" + escapeHtml(group.country) + " · " + number(group.visits) +
+            " visits<br>" + number(group.returning) + " returning visits · " + share + "% returning share</p><p>Latest: " +
+            escapeHtml(formatTime(group.latest && group.latest.timestamp)) + " · <code>" +
+            escapeHtml(group.latest && group.latest.path) + "</code></p>";
+    }
+    function showMapDetail(group, totalShown) {
+        document.getElementById("mapDetail").innerHTML = popupHtml(group) + "<p>Showing " + number(totalShown) +
+            " mapped region aggregate" + (totalShown === 1 ? "." : "s.") + " Marker size is visits; color is returning share.</p>";
+    }
+    function updateLayerStyles() {
+        if (countryLayer) countryLayer.eachLayer(function (layer) {
             var code = countryCode(layer.feature);
             layer.setStyle({
                 className: "developer-analytics__country" + (countryCounts[code] ? " has-visits" : ""),
@@ -132,60 +166,87 @@
                 fillOpacity: 1
             });
         });
+        regionFeatureLayers.forEach(function (layer) {
+            var key = layer._scsaidRegionKey;
+            layer.setStyle({
+                className: "developer-analytics__region" + (regionCounts[key] ? " has-visits" : ""),
+                fillColor: regionCounts[key] ? "#b8daf2" : "#ddecf8",
+                color: regionCounts[key] ? "#6ca8cf" : "rgba(88,145,184,.42)",
+                weight: regionCounts[key] ? 1.2 : .7,
+                fillOpacity: regionCounts[key] ? .62 : .35
+            });
+        });
     }
     function renderMap() {
         if (!map || !markerLayer) return;
-        var events = mapEvents();
+        var groups = aggregateEvents(mapEvents());
         markerLayer.clearLayers();
         countryCounts = {};
-        events.forEach(function (event) { countryCounts[event.country] = (countryCounts[event.country] || 0) + 1; });
-        updateCountryStyles();
-        events.forEach(function (event, index) {
-            var coordinates = coordinatesFor(event, index);
-            if (!coordinates) return;
-            var marker = L.marker(coordinates, {
-                icon: L.divIcon({
-                    className: "",
-                    html: markerHtml(event, countryCounts[event.country] || 1),
-                    iconSize: [26, 26],
-                    iconAnchor: [13, 13]
-                }),
+        regionCounts = {};
+        groups.forEach(function (group) {
+            countryCounts[group.country] = (countryCounts[group.country] || 0) + group.visits;
+            regionCounts[group.key] = group.visits;
+        });
+        updateLayerStyles();
+        groups.forEach(function (group) {
+            var size = markerSize(group);
+            var marker = L.marker(layerCenter(group), {
+                icon: L.divIcon({ className:"", html:markerHtml(group), iconSize:[size, size], iconAnchor:[size / 2, size / 2] }),
                 keyboard: true,
-                title: "Visitor " + shortVisitorId(event)
+                title: group.label
             });
-            marker.bindPopup(popupHtml(event));
-            marker.on("mouseover focus click", function () { showMapDetail(event, events.length); });
+            marker.bindPopup(popupHtml(group));
+            marker.on("mouseover focus click", function () { showMapDetail(group, groups.length); });
             marker.addTo(markerLayer);
         });
-        if (!events.length) {
-            document.getElementById("mapDetail").innerHTML = "<p>No country-mapped visits are available for this period yet.</p>";
+        if (!groups.length) {
+            document.getElementById("mapDetail").innerHTML = "<p>No mapped visits are available for this period yet.</p>";
         } else if (latest.visitAnalytics && latest.visitAnalytics.mapEventsTruncated) {
-            document.getElementById("mapDetail").innerHTML += "<p>For performance, the map shows the latest 5,000 retained events.</p>";
+            document.getElementById("mapDetail").innerHTML += "<p>For performance, the map uses the latest 5,000 retained events.</p>";
         }
     }
+    function addRegionLayer(geojson, country, nameSelector) {
+        var layer = L.geoJSON(geojson, {
+            style: function () { return { className:"developer-analytics__region", color:"rgba(88,145,184,.42)", weight:.7, fillColor:"#ddecf8", fillOpacity:.35 }; },
+            onEachFeature: function (feature, item) {
+                var name = nameSelector(feature);
+                var key = country + ":" + normalizeName(name);
+                item._scsaidRegionKey = key;
+                regionLayers[key] = item;
+                regionFeatureLayers.push(item);
+                item.bindTooltip(name);
+            }
+        });
+        return layer;
+    }
     function initMap() {
-        map = L.map("visitMap", {
-            attributionControl: false,
-            worldCopyJump: true,
-            minZoom: 1,
-            maxZoom: 5
-        }).setView([23, 8], 2);
+        map = L.map("visitMap", { attributionControl:false, worldCopyJump:true, minZoom:1, maxZoom:7 }).setView([23, 8], 2);
         markerLayer = L.layerGroup().addTo(map);
-        fetch("/map_resources/world-countries.geojson", { cache: "force-cache" })
-            .then(function (response) { if (!response.ok) throw new Error("map"); return response.json(); })
-            .then(function (geojson) {
-                countryLayer = L.geoJSON(geojson, {
-                    style: function () { return { className:"developer-analytics__country", color:"#d2dee5", weight:.8, fillColor:"#e8eff3", fillOpacity:1 }; },
-                    onEachFeature: function (feature, layer) {
-                        layer.bindTooltip(feature.properties && feature.properties.name ? feature.properties.name : countryCode(feature));
-                    }
-                }).addTo(map);
-                countryLayer.bringToBack();
-                renderMap();
-            })
-            .catch(function () {
-                document.getElementById("mapDetail").innerHTML = "<p>The local map file could not be loaded.</p>";
-            });
+        Promise.all([
+            fetch("/map_resources/world-countries.geojson", { cache:"force-cache" }).then(function (r) { return r.json(); }),
+            fetch("/map_resources/us-states.geojson", { cache:"force-cache" }).then(function (r) { return r.json(); }),
+            fetch("/map_resources/china-provinces.json", { cache:"force-cache" }).then(function (r) { return r.json(); }),
+            fetch("/map_resources/uk-local-authorities.topojson", { cache:"force-cache" }).then(function (r) { return r.json(); })
+        ]).then(function (assets) {
+            countryLayer = L.geoJSON(assets[0], {
+                style: function () { return { className:"developer-analytics__country", color:"#d2dee5", weight:.8, fillColor:"#e8eff3", fillOpacity:1 }; },
+                onEachFeature: function (feature, layer) {
+                    layer.bindTooltip(feature.properties && feature.properties.name ? feature.properties.name : countryCode(feature));
+                }
+            }).addTo(map);
+            countryLayer.bringToBack();
+            regionLayer = L.layerGroup().addTo(map);
+            addRegionLayer(assets[1], "US", function (feature) { return feature.properties.name; }).addTo(regionLayer);
+            addRegionLayer(assets[2], "CN", function (feature) { return feature.properties.name; }).addTo(regionLayer);
+            if (window.topojson && assets[3].objects && assets[3].objects.lad) {
+                addRegionLayer(window.topojson.feature(assets[3], assets[3].objects.lad), "GB", function (feature) {
+                    return feature.properties.LAD13NM;
+                }).addTo(regionLayer);
+            }
+            renderMap();
+        }).catch(function () {
+            document.getElementById("mapDetail").innerHTML = "<p>The local regional map files could not be loaded.</p>";
+        });
     }
     function renderChart(id, rows, labelMode) {
         var svg = document.getElementById(id);
@@ -238,7 +299,7 @@
         document.getElementById("analyticsStatus").textContent = payload.privacy + " Updated " + new Date().toLocaleTimeString() + ".";
     }
     function refresh() {
-        fetch("/country-traffic-stats?_=" + Date.now(), { credentials: "same-origin", cache: "no-store", headers: { "Accept":"application/json" } })
+        fetch("/country-traffic-stats?_=" + Date.now(), { credentials:"same-origin", cache:"no-store", headers:{ "Accept":"application/json" } })
             .then(function (response) { if (!response.ok) throw new Error("Unable to load analytics."); return response.json(); })
             .then(render).catch(function () { document.getElementById("analyticsStatus").textContent = "Protected analytics are temporarily unavailable."; });
     }

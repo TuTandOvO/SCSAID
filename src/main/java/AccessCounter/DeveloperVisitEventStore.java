@@ -45,6 +45,8 @@ final class DeveloperVisitEventStore {
         String line = timestamp.toString()
                 + "\t" + encode(location.getAddress())
                 + "\t" + CountryTrafficStore.normalizeCountry(location.getCountry())
+                + "\t" + encode(safeText(location.getRegionCode(), 24))
+                + "\t" + encode(safeText(location.getRegionName(), 80))
                 + "\t" + encode(normalizedContext.visitorId)
                 + "\t" + encode(normalizedContext.userAgentHash)
                 + "\t" + encode(normalizedContext.browser)
@@ -176,11 +178,13 @@ final class DeveloperVisitEventStore {
 
     private static Event parse(String line) {
         String[] fields = line.split("\\t", -1);
-        if (fields.length != 4 && fields.length != 9) return null;
+        if (fields.length != 4 && fields.length != 9 && fields.length != 11) return null;
         try {
             Instant timestamp = Instant.parse(fields[0]);
             String address = decode(fields[1]);
             if (address == null || address.length() > 64) return null;
+            String regionCode = "";
+            String regionName = "";
             String visitorId = "";
             String userAgentHash = "";
             String browser = "";
@@ -189,18 +193,27 @@ final class DeveloperVisitEventStore {
             String path;
             if (fields.length == 4) {
                 path = decode(fields[3]);
-            } else {
+            } else if (fields.length == 9) {
                 visitorId = safeText(decode(fields[3]), 80);
                 userAgentHash = safeText(decode(fields[4]), 80);
                 browser = safeText(decode(fields[5]), 48);
                 operatingSystem = safeText(decode(fields[6]), 48);
                 language = safeText(decode(fields[7]), 32);
                 path = decode(fields[8]);
+            } else {
+                regionCode = safeText(decode(fields[3]), 24);
+                regionName = safeText(decode(fields[4]), 80);
+                visitorId = safeText(decode(fields[5]), 80);
+                userAgentHash = safeText(decode(fields[6]), 80);
+                browser = safeText(decode(fields[7]), 48);
+                operatingSystem = safeText(decode(fields[8]), 48);
+                language = safeText(decode(fields[9]), 32);
+                path = decode(fields[10]);
             }
             if (path == null || path.length() > 160) return null;
             String visitorKey = visitorKey(visitorId, address, userAgentHash);
             return new Event(timestamp, address, CountryTrafficStore.normalizeCountry(fields[2]),
-                    visitorId, visitorKey, userAgentHash, browser, operatingSystem, language,
+                    regionCode, regionName, visitorId, visitorKey, userAgentHash, browser, operatingSystem, language,
                     path, 0L);
         } catch (RuntimeException ignored) {
             return null;
@@ -293,6 +306,8 @@ final class DeveloperVisitEventStore {
         private final Instant timestamp;
         private final String address;
         private final String country;
+        private final String regionCode;
+        private final String regionName;
         private final String visitorId;
         private final String visitorKey;
         private final String userAgentHash;
@@ -302,12 +317,14 @@ final class DeveloperVisitEventStore {
         private final String path;
         private final long visitNumber;
 
-        Event(Instant timestamp, String address, String country, String visitorId, String visitorKey,
-              String userAgentHash, String browser, String operatingSystem, String language,
+        Event(Instant timestamp, String address, String country, String regionCode, String regionName,
+              String visitorId, String visitorKey, String userAgentHash, String browser, String operatingSystem, String language,
               String path, long visitNumber) {
             this.timestamp = timestamp;
             this.address = address;
             this.country = country;
+            this.regionCode = regionCode;
+            this.regionName = regionName;
             this.visitorId = visitorId;
             this.visitorKey = visitorKey;
             this.userAgentHash = userAgentHash;
@@ -318,12 +335,14 @@ final class DeveloperVisitEventStore {
             this.visitNumber = visitNumber;
         }
         Event withVisitNumber(long value) {
-            return new Event(timestamp, address, country, visitorId, visitorKey, userAgentHash,
+            return new Event(timestamp, address, country, regionCode, regionName, visitorId, visitorKey, userAgentHash,
                     browser, operatingSystem, language, path, value);
         }
         Instant getTimestamp() { return timestamp; }
         String getAddress() { return address; }
         String getCountry() { return country; }
+        String getRegionCode() { return regionCode; }
+        String getRegionName() { return regionName; }
         String getVisitorId() { return visitorId; }
         String getUserAgentHash() { return userAgentHash; }
         String getBrowser() { return browser; }

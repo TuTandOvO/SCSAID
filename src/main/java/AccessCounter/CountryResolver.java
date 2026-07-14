@@ -2,7 +2,9 @@ package AccessCounter;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.AddressNotFoundException;
+import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.model.CountryResponse;
+import com.maxmind.geoip2.record.Subdivision;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Closeable;
@@ -30,6 +32,17 @@ final class CountryResolver implements Closeable {
         try {
             InetAddress inetAddress = InetAddress.getByName(location.getAddress());
             if (!isPublic(inetAddress)) return VisitorLocation.unavailable();
+            try {
+                CityResponse response = database.city(inetAddress);
+                String country = CountryTrafficStore.normalizeCountry(response.getCountry().getIsoCode());
+                Subdivision subdivision = response.getMostSpecificSubdivision();
+                return new VisitorLocation(location.getAddress(), country,
+                        normalizeSubdivisionCode(subdivision == null ? null : subdivision.getIsoCode()),
+                        normalizeSubdivisionName(subdivision == null ? null : subdivision.getName()));
+            } catch (Exception ignored) {
+                // Some deployments may temporarily carry a country-only MaxMind
+                // database. Country analytics should keep working in that case.
+            }
             CountryResponse response = database.country(inetAddress);
             return new VisitorLocation(location.getAddress(),
                     CountryTrafficStore.normalizeCountry(response.getCountry().getIsoCode()));
@@ -114,16 +127,38 @@ final class CountryResolver implements Closeable {
     static final class VisitorLocation {
         private final String address;
         private final String country;
+        private final String regionCode;
+        private final String regionName;
 
         VisitorLocation(String address, String country) {
+            this(address, country, "", "");
+        }
+
+        VisitorLocation(String address, String country, String regionCode, String regionName) {
             this.address = address;
             this.country = country;
+            this.regionCode = regionCode == null ? "" : regionCode;
+            this.regionName = regionName == null ? "" : regionName;
         }
 
         static VisitorLocation unavailable() { return new VisitorLocation(null, "ZZ"); }
         boolean hasPublicAddress() { return address != null; }
         String getAddress() { return address; }
         String getCountry() { return country; }
+        String getRegionCode() { return regionCode; }
+        String getRegionName() { return regionName; }
+    }
+
+    private static String normalizeSubdivisionCode(String value) {
+        if (value == null) return "";
+        String normalized = value.trim();
+        return normalized.length() > 24 ? normalized.substring(0, 24) : normalized;
+    }
+
+    private static String normalizeSubdivisionName(String value) {
+        if (value == null) return "";
+        String normalized = value.replaceAll("[\\r\\n\\t]", " ").trim();
+        return normalized.length() > 80 ? normalized.substring(0, 80) : normalized;
     }
 
     @Override

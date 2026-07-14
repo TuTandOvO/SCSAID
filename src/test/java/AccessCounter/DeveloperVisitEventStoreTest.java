@@ -18,7 +18,8 @@ class DeveloperVisitEventStoreTest {
         DeveloperVisitEventStore store = new DeveloperVisitEventStore(
                 temporaryDirectory.resolve("developer-visit-events.tsv"));
         CountryResolver.VisitorLocation uk = new CountryResolver.VisitorLocation("8.8.8.8", "GB");
-        CountryResolver.VisitorLocation us = new CountryResolver.VisitorLocation("1.1.1.1", "US");
+        CountryResolver.VisitorLocation us = new CountryResolver.VisitorLocation(
+                "1.1.1.1", "US", "CA", "California");
         DeveloperVisitEventStore.UserContext returning = new DeveloperVisitEventStore.UserContext(
                 "visitor-alpha", "agent-a", "Chrome", "macOS", "en-GB");
         DeveloperVisitEventStore.UserContext another = new DeveloperVisitEventStore.UserContext(
@@ -44,6 +45,10 @@ class DeveloperVisitEventStoreTest {
         assertEquals(2, snapshot.returningVisitorRows.get(0).getVisits());
         assertEquals("visitor-alpha", snapshot.returningVisitorRows.get(0).getVisitorId());
         assertEquals("Chrome", snapshot.returningVisitorRows.get(0).getBrowser());
+        assertEquals("CA", snapshot.mapEvents.stream().filter(event -> "US".equals(event.getCountry()))
+                .findFirst().orElseThrow().getRegionCode());
+        assertEquals("California", snapshot.mapEvents.stream().filter(event -> "US".equals(event.getCountry()))
+                .findFirst().orElseThrow().getRegionName());
         assertEquals(2, snapshot.mapEvents.stream().filter(event -> event.getVisitorId().equals("visitor-alpha"))
                 .mapToLong(DeveloperVisitEventStore.Event::getVisitNumber).max().orElse(0));
     }

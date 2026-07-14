@@ -19,6 +19,7 @@ class DeveloperAnalyticsDashboardTest {
 
         assertTrue(jsp.contains("lib/leaflet/leaflet.css"));
         assertTrue(jsp.contains("lib/leaflet/leaflet.js"));
+        assertTrue(jsp.contains("topojson-client.min.js"));
         assertTrue(jsp.contains("id=\"visitMap\""));
         assertTrue(jsp.contains("id=\"dailyChart\""));
         assertTrue(jsp.contains("id=\"hourlyChart\""));
@@ -26,7 +27,12 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(jsp.contains("Most visited pages"));
         assertTrue(js.contains("L.map(\"visitMap\""));
         assertTrue(js.contains("/map_resources/world-countries.geojson"));
+        assertTrue(js.contains("/map_resources/us-states.geojson"));
+        assertTrue(js.contains("/map_resources/china-provinces.json"));
+        assertTrue(js.contains("/map_resources/uk-local-authorities.topojson"));
         assertTrue(js.contains("mapScope === \"returning\""));
+        assertTrue(js.contains("function markerSize"));
+        assertTrue(js.contains("function markerColor"));
         assertTrue(js.contains("data-map-scope"));
         assertTrue(js.contains("function renderMap"));
         assertFalse(jsp.contains("<svg id=\"visitMap\""));

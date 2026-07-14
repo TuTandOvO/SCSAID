@@ -15,7 +15,7 @@
     <header class="developer-analytics__hero">
         <p class="developer-analytics__eyebrow">Private developer view</p>
         <h1 id="analyticsTitle">Visitor analytics</h1>
-        <p class="developer-analytics__intro">A live, protected view of counted scSAID visits. Address-level data is private to this dashboard; the map uses country-level placement rather than precise visitor locations.</p>
+        <p class="developer-analytics__intro">A live, protected view of counted scSAID visits. Address-level data is private to this dashboard; the map uses country, state, province, or UK shire-level placement rather than precise visitor locations.</p>
         <p class="developer-analytics__privacy">Counted visit events, visitor IDs, protected address aggregates, and recurrence history are retained indefinitely for site administration.</p>
     </header>
 
@@ -32,16 +32,17 @@
             <div class="developer-analytics__controls" role="group" aria-label="Map period">
                 <button type="button" class="developer-analytics__chip is-active" data-map-scope="all">All time</button>
                 <button type="button" class="developer-analytics__chip" data-map-scope="recent">30 days</button>
+                <button type="button" class="developer-analytics__chip" data-map-scope="returning">Returning</button>
             </div>
         </div>
         <div class="developer-analytics__map-layout">
             <div class="developer-analytics__map-wrap" aria-labelledby="mapTitle mapCaption">
-                <div id="visitMap" class="developer-analytics__map" role="application" aria-label="Country-level visit map"></div>
+                <div id="visitMap" class="developer-analytics__map" role="application" aria-label="Regional visit map"></div>
             </div>
             <aside class="developer-analytics__map-detail" id="mapDetail" aria-live="polite">
-                <span class="developer-analytics__map-key"><i class="developer-analytics__dot-key"></i> first counted visit</span>
-                <span class="developer-analytics__map-key"><i class="developer-analytics__dot-key developer-analytics__dot-key--return"></i> returning visit</span>
-                <p id="mapCaption">Each marker is one counted visit, placed around its country centroid. Hover or select a marker for its protected visit record.</p>
+                <span class="developer-analytics__map-key"><i class="developer-analytics__dot-key"></i> lower returning share</span>
+                <span class="developer-analytics__map-key"><i class="developer-analytics__dot-key developer-analytics__dot-key--return"></i> higher returning share</span>
+                <p id="mapCaption">Markers aggregate visits by country, or by state/province/shire where available. Marker size follows visit count; color darkens as returning share increases.</p>
             </aside>
         </div>
     </section>
@@ -86,6 +87,7 @@
     <p id="analyticsStatus" class="developer-analytics__status" aria-live="polite"></p>
 </main>
 <script src="lib/leaflet/leaflet.js?v=1.9.4"></script>
+<script src="lib/topojson-client.min.js?v=3.1.0"></script>
 <script src="JS/country-traffic.js?v=20260714a"></script>
 </body>
 </html>
