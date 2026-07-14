@@ -13,6 +13,7 @@
     var countryLayers = {};
     var regionLayers = {};
     var regionFeatureLayers = [];
+    var mapAssetWarning = "";
     var expandedVisitors = {};
     var NS = "http://www.w3.org/2000/svg";
     var localTimeZone = detectTimeZone();
@@ -389,6 +390,7 @@
             " mapped area" + (plottedGroups === 1 ? "" : "s") : "No mapped visits for this period";
         if (unmappedVisits) status += " · " + number(unmappedVisits) + " unresolved";
         if (latest && latest.visitAnalytics && latest.visitAnalytics.mapEventsTruncated) status += " · latest 5,000 events";
+        if (mapAssetWarning) status += " · " + mapAssetWarning;
         document.getElementById("mapStatus").textContent = status;
     }
 
@@ -421,12 +423,19 @@
     function initMap() {
         map = L.map("visitMap", { attributionControl:false, worldCopyJump:true, minZoom:1, maxZoom:7 }).setView([23, 8], 2);
         markerLayer = L.layerGroup().addTo(map);
+        function fetchJson(url) {
+            return fetch(url, { cache:"force-cache" }).then(function (response) {
+                if (!response.ok) throw new Error("Unable to load " + url);
+                return response.json();
+            });
+        }
         Promise.all([
-            fetch("/map_resources/world-countries.geojson", { cache:"force-cache" }).then(function (response) { return response.json(); }),
-            fetch("/map_resources/us-states.geojson", { cache:"force-cache" }).then(function (response) { return response.json(); }),
-            fetch("/map_resources/china-provinces.json", { cache:"force-cache" }).then(function (response) { return response.json(); }),
-            fetch("/map_resources/uk-local-authorities.topojson", { cache:"force-cache" }).then(function (response) { return response.json(); })
+            fetchJson("/map_resources/world-countries.geojson"),
+            fetchJson("/map_resources/us-states.geojson").catch(function () { return null; }),
+            fetchJson("/map_resources/china-provinces.json").catch(function () { return null; }),
+            fetchJson("/map_resources/uk-local-authorities.topojson").catch(function () { return null; })
         ]).then(function (assets) {
+            var missing = [];
             countryLayer = L.geoJSON(assets[0], {
                 style:function () { return { className:"developer-analytics__country", color:"#cfd9df", weight:.8, fillColor:"#e9eef1", fillOpacity:1 }; },
                 onEachFeature:function (feature, layer) {
@@ -436,14 +445,16 @@
                 }
             }).addTo(map);
             countryLayer.bringToBack();
-            addRegionLayer(assets[1], "US", function (feature) { return feature.properties.name; }).addTo(map);
-            addRegionLayer(assets[2], "CN", function (feature) { return feature.properties.name; }).addTo(map);
-            if (window.topojson && assets[3].objects && assets[3].objects.lad) {
+            if (assets[1]) addRegionLayer(assets[1], "US", function (feature) { return feature.properties.name; }).addTo(map);
+            else missing.push("United States");
+            if (assets[2]) addRegionLayer(assets[2], "CN", function (feature) { return feature.properties.name; }).addTo(map);
+            else missing.push("China");
+            if (window.topojson && assets[3] && assets[3].objects && assets[3].objects.lad) {
                 addRegionLayer(window.topojson.feature(assets[3], assets[3].objects.lad), "GB", function (feature) {
                     return feature.properties.LAD13NM;
                 }).addTo(map);
-            }
-            markerLayer.bringToFront();
+            } else missing.push("United Kingdom");
+            mapAssetWarning = missing.length ? "regional detail unavailable for " + missing.join(", ") : "";
             renderMap();
         }).catch(function () {
             document.getElementById("mapStatus").textContent = "The local regional map files could not be loaded.";

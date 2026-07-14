@@ -47,7 +47,10 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(js.contains("marker.bindTooltip(tooltipHtml(group)"));
         assertTrue(js.contains("regionLayers[alias] = item"));
         assertTrue(js.contains("countryLayers[group.country]"));
+        assertTrue(js.contains("function fetchJson"));
+        assertTrue(js.contains("regional detail unavailable for"));
         assertFalse(js.contains("L.latLng(20, 0)"));
+        assertFalse(js.contains("markerLayer.bringToFront"));
         assertFalse(js.contains("marker.bindPopup"));
         assertFalse(js.contains("toISOString()"));
         assertTrue(js.contains("data-map-scope"));
