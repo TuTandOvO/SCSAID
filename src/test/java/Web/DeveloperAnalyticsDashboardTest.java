@@ -33,6 +33,8 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(js.contains("mapScope === \"returning\""));
         assertTrue(js.contains("function markerSize"));
         assertTrue(js.contains("function markerColor"));
+        assertTrue(js.contains("function instantMillis"));
+        assertTrue(js.contains("value.seconds"));
         assertTrue(js.contains("data-map-scope"));
         assertTrue(js.contains("function renderMap"));
         assertFalse(jsp.contains("<svg id=\"visitMap\""));

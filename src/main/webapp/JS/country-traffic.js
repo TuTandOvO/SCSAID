@@ -35,9 +35,17 @@
             return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character];
         });
     }
+    function instantMillis(value) {
+        if (!value) return NaN;
+        if (typeof value === "number") return value;
+        if (typeof value === "string") return new Date(value).getTime();
+        if (typeof value.seconds === "number") {
+            return value.seconds * 1000 + Math.floor(Number(value.nanos || 0) / 1000000);
+        }
+        return NaN;
+    }
     function formatTime(value) {
-        if (!value) return "-";
-        var date = new Date(value);
+        var date = new Date(instantMillis(value));
         return isNaN(date.getTime()) ? "-" : date.toISOString().replace("T", " ").replace(".000Z", "Z");
     }
     function display(value) {
@@ -47,7 +55,7 @@
         return String(value || "").toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9\u4e00-\u9fff]+/g, " ").trim();
     }
     function isRecent(event) {
-        return new Date(event.timestamp).getTime() >= Date.now() - 30 * 24 * 60 * 60 * 1000;
+        return instantMillis(event.timestamp) >= Date.now() - 30 * 24 * 60 * 60 * 1000;
     }
     function shortVisitorId(row) {
         if (!row || !row.visitorId) return "legacy";
@@ -89,7 +97,7 @@
             }
             groups[key].visits++;
             if (Number(event.visitNumber || 0) > 1) groups[key].returning++;
-            if (!groups[key].latest || new Date(event.timestamp) > new Date(groups[key].latest.timestamp)) groups[key].latest = event;
+            if (!groups[key].latest || instantMillis(event.timestamp) > instantMillis(groups[key].latest.timestamp)) groups[key].latest = event;
         });
         return Object.keys(groups).map(function (key) { return groups[key]; });
     }
