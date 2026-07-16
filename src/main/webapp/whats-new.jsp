@@ -239,17 +239,8 @@
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">Analysis</p>
-                        <h3>Expanded enrichment and comparison workflows</h3>
-                        <ul>
-                            <li>Added over-representation analysis alongside pre-ranked GSEA in dataset detail pages.</li>
-                            <li>Added live comparison-suitability guidance before real-time condition analysis.</li>
-                            <li>Renamed Feature Plot to Expression for a clearer site-wide destination.</li>
-                        </ul>
-                    </article>
-                    <article class="release-entry">
-                        <p class="release-entry__type release-entry__type--improved">Export</p>
-                        <h3>Publication-ready figures and improved gene entry</h3>
-                        <p>Added high-resolution PNG and vector PDF downloads, full-screen result figures, real-time partial and typo-tolerant gene autocomplete, and fixes for autocomplete menus clipped by their parent cards.</p>
+                        <h3>Over-representation analysis</h3>
+                        <p>Added ORA alongside pre-ranked GSEA in dataset detail pages, enabling users to test pathway over-representation among significant markers or pathway-level shifts across the full ranked gene list.</p>
                     </article>
                 </section>
 
