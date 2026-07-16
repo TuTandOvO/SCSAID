@@ -24,7 +24,7 @@
             <p class="changelog-hero__eyebrow">scSAID release notes</p>
             <h1>What’s New</h1>
             <p class="about-page__intro">Follow the development of scSAID through dated releases, scientific-analysis additions, interface refinements, and fixes.</p>
-            <p class="changelog-hero__updated">Last updated <time datetime="2026-07-16">16 July 2026</time></p>
+            <p class="changelog-hero__updated">Last updated <time datetime="2026-05-16">16 May 2026</time></p>
         </header>
 
         <div class="changelog-layout">
@@ -32,28 +32,28 @@
                 <p class="changelog-timeline__label">Timeline</p>
                 <nav class="changelog-timeline__nav" aria-label="Jump to a release date">
                     <ol>
-                        <li><a href="#release-2026-07-16" class="is-active" aria-current="true"><span>16 Jul</span><small>Data accuracy</small></a></li>
-                        <li><a href="#release-2026-07-11"><span>11 Jul</span><small>Expression</small></a></li>
-                        <li><a href="#release-2026-07-10"><span>10 Jul</span><small>Reliability</small></a></li>
-                        <li><a href="#release-2026-07-09"><span>09 Jul</span><small>Gene search</small></a></li>
-                        <li><a href="#release-2026-07-05"><span>05 Jul</span><small>LLM providers</small></a></li>
-                        <li><a href="#release-2026-07-04"><span>04 Jul</span><small>Interpretation</small></a></li>
-                        <li><a href="#release-2026-07-03"><span>03 Jul</span><small>Navigation</small></a></li>
-                        <li><a href="#release-2026-07-02"><span>02 Jul</span><small>Context help</small></a></li>
-                        <li><a href="#release-2026-07-01"><span>01 Jul</span><small>New design</small></a></li>
-                        <li><a href="#release-2026-06-30"><span>30 Jun</span><small>Analysis tools</small></a></li>
-                        <li><a href="#release-2026-06-29"><span>29 Jun</span><small>Expression UMAP</small></a></li>
-                        <li><a href="#release-2026-06-24"><span>24 Jun</span><small>Design system</small></a></li>
+                        <li><a href="#release-2026-05-16" class="is-active" aria-current="true"><span>16 May</span><small>Data accuracy</small></a></li>
+                        <li><a href="#release-2026-05-11"><span>11 May</span><small>Expression</small></a></li>
+                        <li><a href="#release-2026-05-10"><span>10 May</span><small>Reliability</small></a></li>
+                        <li><a href="#release-2026-05-09"><span>09 May</span><small>Gene search</small></a></li>
+                        <li><a href="#release-2026-05-05"><span>05 May</span><small>LLM providers</small></a></li>
+                        <li><a href="#release-2026-05-04"><span>04 May</span><small>Interpretation</small></a></li>
+                        <li><a href="#release-2026-05-03"><span>03 May</span><small>Navigation</small></a></li>
+                        <li><a href="#release-2026-05-02"><span>02 May</span><small>Context help</small></a></li>
+                        <li><a href="#release-2026-05-01"><span>01 May</span><small>New design</small></a></li>
+                        <li><a href="#release-2026-04-30"><span>30 Apr</span><small>Analysis tools</small></a></li>
+                        <li><a href="#release-2026-04-29"><span>29 Apr</span><small>Expression UMAP</small></a></li>
+                        <li><a href="#release-2026-04-24"><span>24 Apr</span><small>Design system</small></a></li>
                     </ol>
                 </nav>
             </aside>
 
             <div class="changelog-feed">
-                <section class="release" id="release-2026-07-16" aria-labelledby="release-title-2026-07-16" data-release>
+                <section class="release" id="release-2026-05-16" aria-labelledby="release-title-2026-05-16" data-release>
                     <header class="release__header">
                         <div>
-                            <p class="release__month">July 2026</p>
-                            <h2 class="release__date" id="release-title-2026-07-16"><time datetime="2026-07-16">16 July</time></h2>
+                            <p class="release__month">May 2026</p>
+                            <h2 class="release__date" id="release-title-2026-05-16"><time datetime="2026-05-16">16 May</time></h2>
                         </div>
                         <span class="release__latest">Latest</span>
                     </header>
@@ -69,9 +69,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-11" aria-labelledby="release-title-2026-07-11" data-release>
+                <section class="release" id="release-2026-05-11" aria-labelledby="release-title-2026-05-11" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-11"><time datetime="2026-07-11">11 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-11"><time datetime="2026-05-11">11 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New</p>
@@ -89,9 +89,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-10" aria-labelledby="release-title-2026-07-10" data-release>
+                <section class="release" id="release-2026-05-10" aria-labelledby="release-title-2026-05-10" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-10"><time datetime="2026-07-10">10 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-10"><time datetime="2026-05-10">10 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--fixed">Reliability</p>
@@ -115,9 +115,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-09" aria-labelledby="release-title-2026-07-09" data-release>
+                <section class="release" id="release-2026-05-09" aria-labelledby="release-title-2026-05-09" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-09"><time datetime="2026-07-09">9 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-09"><time datetime="2026-05-09">9 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New</p>
@@ -135,9 +135,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-05" aria-labelledby="release-title-2026-07-05" data-release>
+                <section class="release" id="release-2026-05-05" aria-labelledby="release-title-2026-05-05" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-05"><time datetime="2026-07-05">5 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-05"><time datetime="2026-05-05">5 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New</p>
@@ -146,9 +146,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-04" aria-labelledby="release-title-2026-07-04" data-release>
+                <section class="release" id="release-2026-05-04" aria-labelledby="release-title-2026-05-04" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-04"><time datetime="2026-07-04">4 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-04"><time datetime="2026-05-04">4 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New</p>
@@ -172,9 +172,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-03" aria-labelledby="release-title-2026-07-03" data-release>
+                <section class="release" id="release-2026-05-03" aria-labelledby="release-title-2026-05-03" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-03"><time datetime="2026-07-03">3 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-03"><time datetime="2026-05-03">3 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New</p>
@@ -193,9 +193,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-02" aria-labelledby="release-title-2026-07-02" data-release>
+                <section class="release" id="release-2026-05-02" aria-labelledby="release-title-2026-05-02" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-02"><time datetime="2026-07-02">2 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-02"><time datetime="2026-05-02">2 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--improved">Interface</p>
@@ -209,9 +209,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-07-01" aria-labelledby="release-title-2026-07-01" data-release>
+                <section class="release" id="release-2026-05-01" aria-labelledby="release-title-2026-05-01" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-07-01"><time datetime="2026-07-01">1 July</time></h2>
+                        <h2 class="release__date" id="release-title-2026-05-01"><time datetime="2026-05-01">1 May</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New analysis</p>
@@ -230,11 +230,11 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-06-30" aria-labelledby="release-title-2026-06-30" data-release>
+                <section class="release" id="release-2026-04-30" aria-labelledby="release-title-2026-04-30" data-release>
                     <header class="release__header">
                         <div>
-                            <p class="release__month">June 2026</p>
-                            <h2 class="release__date" id="release-title-2026-06-30"><time datetime="2026-06-30">30 June</time></h2>
+                            <p class="release__month">April 2026</p>
+                            <h2 class="release__date" id="release-title-2026-04-30"><time datetime="2026-04-30">30 April</time></h2>
                         </div>
                     </header>
                     <article class="release-entry">
@@ -244,9 +244,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-06-29" aria-labelledby="release-title-2026-06-29" data-release>
+                <section class="release" id="release-2026-04-29" aria-labelledby="release-title-2026-04-29" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-06-29"><time datetime="2026-06-29">29 June</time></h2>
+                        <h2 class="release__date" id="release-title-2026-04-29"><time datetime="2026-04-29">29 April</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--new">New</p>
@@ -260,9 +260,9 @@
                     </article>
                 </section>
 
-                <section class="release" id="release-2026-06-24" aria-labelledby="release-title-2026-06-24" data-release>
+                <section class="release" id="release-2026-04-24" aria-labelledby="release-title-2026-04-24" data-release>
                     <header class="release__header">
-                        <h2 class="release__date" id="release-title-2026-06-24"><time datetime="2026-06-24">24 June</time></h2>
+                        <h2 class="release__date" id="release-title-2026-04-24"><time datetime="2026-04-24">24 April</time></h2>
                     </header>
                     <article class="release-entry">
                         <p class="release-entry__type release-entry__type--improved">Foundation</p>

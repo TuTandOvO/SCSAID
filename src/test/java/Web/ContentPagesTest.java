@@ -54,8 +54,8 @@ class ContentPagesTest {
         assertTrue(cite.contains("[Authors]"));
         assertTrue(news.contains("<h1>What’s New</h1>"));
         assertTrue(news.contains("class=\"changelog-timeline\""));
-        assertTrue(news.contains("href=\"#release-2026-07-16\""));
-        assertTrue(news.contains("id=\"release-2026-06-24\""));
+        assertTrue(news.contains("href=\"#release-2026-05-16\""));
+        assertTrue(news.contains("id=\"release-2026-04-24\""));
         assertTrue(news.contains("Post-QC cell totals across every dataset"));
         assertTrue(news.contains("LLM Interpretation on dataset detail pages"));
         assertFalse(news.toLowerCase().contains("visitor"));
