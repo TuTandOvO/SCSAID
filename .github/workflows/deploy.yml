@@ -48,6 +48,17 @@ jobs:
             set -e
             DEPLOY_DIR=/tmp/scsaid-${{ github.sha }}
             WAR=$(ls "$DEPLOY_DIR"/target/*.war | head -n1)
+            SCSAID_PYTHON=/opt/miniconda3/envs/scrna/bin/python
+            if [ ! -x "$SCSAID_PYTHON" ]; then
+              SCSAID_PYTHON=/root/miniconda3/envs/scrna/bin/python
+            fi
+            if [ ! -x "$SCSAID_PYTHON" ]; then
+              echo "scSAID Python environment is unavailable"; exit 1
+            fi
+            # Keep the public metadata counts aligned with the post-QC cells
+            # used by the Cell Proportion analysis. This runs before Tomcat is
+            # stopped and replaces each CSV atomically.
+            unzip -p "$WAR" WEB-INF/services/sync_post_qc_cell_counts.py | "$SCSAID_PYTHON" - /opt/SkinDB
             # Private country dashboard credentials are generated only on the
             # server. They are never committed, printed by CI, or returned by
             # the site. The root-only copy is the recovery path for the site
