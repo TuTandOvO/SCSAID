@@ -92,6 +92,312 @@
 
 .release-entry + .release-entry { margin-top: 1.25rem; }
 
+/* Dated product changelog: editorial release feed with a persistent timeline. */
+.changelog-page {
+    width: min(100% - 2rem, 74rem);
+}
+
+.changelog-hero {
+    position: relative;
+    padding: 1.2rem 0 2rem;
+}
+
+.changelog-hero__eyebrow,
+.release__month,
+.changelog-timeline__label {
+    margin: 0 0 0.45rem;
+    color: var(--primary-blue, #3484c3);
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.changelog-hero__updated {
+    position: absolute;
+    right: 0;
+    bottom: 1.95rem;
+    margin: 0;
+    color: var(--text-muted, #8a8a8a);
+    font-size: 0.8rem;
+}
+
+.changelog-layout {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    gap: clamp(2.25rem, 5vw, 5.5rem);
+    align-items: start;
+}
+
+.changelog-timeline {
+    position: sticky;
+    top: calc(var(--header-height, 50px) + 1.75rem);
+    max-height: calc(100vh - var(--header-height, 50px) - 3.5rem);
+    padding-top: 2.25rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.changelog-timeline__nav ol {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.changelog-timeline__nav ol::before {
+    position: absolute;
+    top: 0.8rem;
+    bottom: 0.8rem;
+    left: 0.24rem;
+    width: 1px;
+    background: var(--border-light, #dedede);
+    content: "";
+}
+
+.changelog-timeline__nav li {
+    margin: 0;
+}
+
+.changelog-timeline__nav a {
+    position: relative;
+    display: grid;
+    gap: 0.05rem;
+    min-height: 2.9rem;
+    padding: 0.35rem 0.25rem 0.35rem 1.2rem;
+    color: var(--text-secondary, #737373);
+    text-decoration: none;
+    transition: color 160ms ease, transform 160ms ease;
+}
+
+.changelog-timeline__nav a::before {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    width: 0.52rem;
+    height: 0.52rem;
+    border: 1px solid #bfc4c8;
+    border-radius: 50%;
+    background: #fff;
+    content: "";
+    transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.changelog-timeline__nav a span {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.changelog-timeline__nav a small {
+    color: var(--text-muted, #999);
+    font-size: 0.68rem;
+    line-height: 1.25;
+}
+
+.changelog-timeline__nav a:hover,
+.changelog-timeline__nav a:focus-visible,
+.changelog-timeline__nav a.is-active {
+    color: var(--primary-blue, #3484c3);
+}
+
+.changelog-timeline__nav a:hover,
+.changelog-timeline__nav a:focus-visible {
+    transform: translateX(0.12rem);
+}
+
+.changelog-timeline__nav a.is-active::before {
+    border-color: var(--primary-blue, #3484c3);
+    background: var(--primary-blue, #3484c3);
+    box-shadow: 0 0 0 3px #e9f3fb;
+    transform: scale(1.05);
+}
+
+.changelog-timeline__nav a:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid var(--primary-blue, #3484c3);
+    outline-offset: 2px;
+}
+
+.changelog-feed {
+    min-width: 0;
+}
+
+.changelog-feed .release {
+    scroll-margin-top: calc(var(--header-height, 50px) + 1.5rem);
+    padding: 2.25rem 0 2.8rem;
+}
+
+.release__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.35rem;
+}
+
+.changelog-feed .release__date {
+    margin: 0;
+    color: var(--text-primary, #333);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+}
+
+.release__latest {
+    margin-top: 0.25rem;
+    padding: 0.18rem 0.5rem;
+    border: 1px solid #b9d7ed;
+    border-radius: 999px;
+    color: var(--primary-blue, #3484c3);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+.changelog-feed .release-entry {
+    position: relative;
+    padding-left: 1.2rem;
+    border-left: 2px solid #e5e7e9;
+}
+
+.changelog-feed .release-entry + .release-entry {
+    margin-top: 1.75rem;
+}
+
+.changelog-feed .release-entry h3 {
+    margin: 0.2rem 0 0.55rem;
+    color: var(--text-primary, #343434);
+    font-size: 1.08rem;
+    font-weight: 600;
+}
+
+.changelog-feed .release-entry p,
+.changelog-feed .release-entry li {
+    max-width: 76ch;
+    font-size: 0.93rem;
+    line-height: 1.65;
+}
+
+.changelog-feed .release-entry p:last-child,
+.changelog-feed .release-entry ul:last-child {
+    margin-bottom: 0;
+}
+
+.changelog-feed .release-entry ul {
+    margin: 0.55rem 0 0 1.05rem;
+    padding: 0;
+}
+
+.changelog-feed .release-entry li + li {
+    margin-top: 0.35rem;
+}
+
+.release-entry__type {
+    margin: 0;
+    color: var(--primary-blue, #3484c3) !important;
+    font-size: 0.66rem !important;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    line-height: 1.2 !important;
+    text-transform: uppercase;
+}
+
+.release-entry__type--fixed { color: #a35c39 !important; }
+.release-entry__type--improved { color: #55717f !important; }
+.release-entry__type--data { color: #4f7b69 !important; }
+
+.changelog-feed strong {
+    color: var(--text-primary, #343434);
+    font-weight: 600;
+}
+
+@media (max-width: 760px) {
+    .changelog-hero {
+        padding-bottom: 1.35rem;
+    }
+
+    .changelog-hero__updated {
+        position: static;
+        margin-top: 1rem;
+    }
+
+    .changelog-layout {
+        display: block;
+    }
+
+    .changelog-timeline {
+        position: sticky;
+        z-index: 5;
+        top: var(--header-height, 50px);
+        max-height: none;
+        margin-inline: -0.75rem;
+        padding: 0.65rem 0.75rem 0.55rem;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border-light, #dedede);
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(8px);
+    }
+
+    .changelog-timeline__label {
+        margin-bottom: 0.35rem;
+    }
+
+    .changelog-timeline__nav {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .changelog-timeline__nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .changelog-timeline__nav ol {
+        display: flex;
+        width: max-content;
+        gap: 0.2rem;
+    }
+
+    .changelog-timeline__nav ol::before,
+    .changelog-timeline__nav a::before,
+    .changelog-timeline__nav a small {
+        display: none;
+    }
+
+    .changelog-timeline__nav a {
+        display: block;
+        min-height: auto;
+        padding: 0.35rem 0.65rem;
+        border-radius: 999px;
+        background: #f5f6f7;
+        white-space: nowrap;
+    }
+
+    .changelog-timeline__nav a:hover,
+    .changelog-timeline__nav a:focus-visible {
+        transform: none;
+    }
+
+    .changelog-timeline__nav a.is-active {
+        background: #e9f3fb;
+    }
+
+    .changelog-feed .release {
+        scroll-margin-top: calc(var(--header-height, 50px) + 5.4rem);
+        padding-block: 1.8rem 2.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .changelog-timeline__nav a,
+    .changelog-timeline__nav a::before {
+        scroll-behavior: auto;
+        transition: none;
+    }
+}
+
 @media (max-width: 600px) {
     .about-page {
         width: min(100% - 1.5rem, 62.5rem);

@@ -44,16 +44,23 @@ class ContentPagesTest {
     }
 
     @Test
-    void aboutPagesContainEditableEditorialTemplates() throws Exception {
+    void aboutPagesContainEditorialCitationAndDatedReleaseTimeline() throws Exception {
         String cite = read("src/main/webapp/cite.jsp");
         String news = read("src/main/webapp/whats-new.jsp");
+        String newsScript = read("src/main/webapp/JS/whats-new.js");
 
         assertTrue(cite.contains("Citing scSAID"));
         assertTrue(cite.contains("Additional references"));
         assertTrue(cite.contains("[Authors]"));
-        assertTrue(news.contains("What’s New in scSAID"));
-        assertTrue(news.contains("LLM Interpretation panel"));
-        assertTrue(news.contains("Regulon and regulatory-network interpretation"));
+        assertTrue(news.contains("<h1>What’s New</h1>"));
+        assertTrue(news.contains("class=\"changelog-timeline\""));
+        assertTrue(news.contains("href=\"#release-2026-07-16\""));
+        assertTrue(news.contains("id=\"release-2026-06-24\""));
+        assertTrue(news.contains("Post-QC cell totals across every dataset"));
+        assertTrue(news.contains("LLM Interpretation on dataset detail pages"));
+        assertFalse(news.toLowerCase().contains("visitor"));
+        assertTrue(newsScript.contains("IntersectionObserver"));
+        assertTrue(newsScript.contains("aria-current"));
     }
 
     @Test
