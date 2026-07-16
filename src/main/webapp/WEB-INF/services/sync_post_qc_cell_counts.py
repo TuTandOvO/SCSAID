@@ -66,7 +66,7 @@ def synchronize_metadata(data_root: Path, species: str, relative_csv: Path) -> t
         if not said or not gse or not gsm:
             skipped.append(f"row {row_number}: missing accession")
             continue
-        h5ad_path = data_root / "download_data" / "10X" / species / gse / gsm / f"{gse}_{gsm}.h5ad"
+        h5ad_path = data_root / "download_data" / species / gse / gsm / f"{gse}_{gsm}.h5ad"
         if not h5ad_path.is_file():
             skipped.append(f"{said}: H5AD missing")
             continue
