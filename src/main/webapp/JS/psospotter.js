@@ -27,11 +27,16 @@
         trainH5ad: document.getElementById("trainH5ad"),
         testH5ad: document.getElementById("testH5ad"),
         runBtn: document.getElementById("runBtn"),
-        statusEmpty: document.getElementById("statusEmpty"),
+        formError: document.getElementById("formError"),
+        geneCount: document.getElementById("geneCount"),
+        statusPanel: document.getElementById("psospotterStatus"),
         statusBody: document.getElementById("statusBody"),
-        progressBar: document.getElementById("progressBar"),
+        jobState: document.getElementById("jobState"),
+        jobLoader: document.getElementById("jobLoader"),
         progressLabel: document.getElementById("progressLabel"),
+        progressPercent: document.getElementById("progressPercent"),
         queueLabel: document.getElementById("queueLabel"),
+        runStateBadge: document.getElementById("runStateBadge"),
         statusMessage: document.getElementById("statusMessage"),
         errorBox: document.getElementById("errorBox"),
         resultSummary: document.getElementById("resultSummary"),
@@ -67,7 +72,9 @@
     }
 
     function setDisabled(disabled) {
+        form.setAttribute("aria-busy", disabled ? "true" : "false");
         els.runBtn.disabled = disabled;
+        els.runBtn.textContent = disabled ? "Running…" : "Run psoSpotter";
         els.singleSpecies.disabled = disabled;
         els.crossDirection.disabled = disabled;
         els.panelK.disabled = disabled;
@@ -76,6 +83,12 @@
         els.trainH5ad.disabled = disabled;
         els.testH5ad.disabled = disabled;
         for (var i = 0; i < els.modeInputs.length; i++) els.modeInputs[i].disabled = disabled;
+        if (els.quickstartBtn) els.quickstartBtn.disabled = disabled;
+        if (els.quickstartChips) {
+            Array.prototype.forEach.call(els.quickstartChips.querySelectorAll("button"), function (button) {
+                button.disabled = disabled;
+            });
+        }
     }
 
     function clearNode(node) {
@@ -129,18 +142,32 @@
         return n.toFixed(digits || 3);
     }
 
-    function showMessage(text, error) {
+    function showFormError(message) {
+        els.formError.textContent = message || "";
+        els.formError.hidden = !message;
+    }
+
+    function showMessage(text, error, kind) {
         els.statusMessage.textContent = text || "";
         els.statusMessage.hidden = !text;
+        els.statusMessage.className = (kind === "success" ? "status-success" : "info-bar") + " psospotter-info";
         els.errorBox.textContent = error || "";
         els.errorBox.hidden = !error;
     }
 
     function setProgress(percent, label, queueText) {
         var value = Math.max(0, Math.min(100, Number(percent) || 0));
-        els.progressBar.style.width = value + "%";
-        els.progressLabel.textContent = label || (value >= 100 ? "Complete" : "Running");
+        var statusLabel = label || (value >= 100 ? "Complete" : "Running");
+        var normalized = statusLabel.toLowerCase();
+        var runState = normalized.indexOf("fail") >= 0 || normalized.indexOf("error") >= 0
+            ? "failed"
+            : (value >= 100 ? "complete" : "running");
+        els.statusPanel.setAttribute("data-run-state", runState);
+        els.progressLabel.textContent = statusLabel;
+        els.progressPercent.textContent = value + "%";
         els.queueLabel.textContent = queueText || "";
+        els.runStateBadge.textContent = statusLabel;
+        els.jobLoader.hidden = runState !== "running";
     }
 
     function updateModeUi() {
@@ -158,6 +185,7 @@
     function saveGeneText() {
         var prefs = preferences();
         if (prefs) prefs.set("psospotterGeneList", els.geneList.value);
+        updateGeneCount();
     }
 
     function normalizeGenes(text) {
@@ -167,6 +195,11 @@
             .filter(function (gene, index, arr) {
                 return gene && arr.indexOf(gene) === index;
             });
+    }
+
+    function updateGeneCount() {
+        var count = normalizeGenes(els.geneList.value).length;
+        els.geneCount.textContent = count + (count === 1 ? " unique gene" : " unique genes");
     }
 
     function setGeneList(text) {
@@ -200,11 +233,12 @@
 
     function validate() {
         var genes = (els.geneList.value || "").trim();
-        if (!genes) return "Enter a gene list first.";
+        if (!genes) return { message: "Enter at least one candidate gene.", field: els.geneList };
         if (currentMode() === "single") {
-            if (!selectedFiles().single) return "Upload one h5ad file.";
+            if (!selectedFiles().single) return { message: "Choose an h5ad file for single-species analysis.", field: els.singleH5ad };
         } else {
-            if (!selectedFiles().train || !selectedFiles().test) return "Upload both train and test h5ad files.";
+            if (!selectedFiles().train) return { message: "Choose a training h5ad file.", field: els.trainH5ad };
+            if (!selectedFiles().test) return { message: "Choose a test h5ad file.", field: els.testH5ad };
         }
         return null;
     }
@@ -296,7 +330,7 @@
 
         var coeffSection = section("Coefficients");
         var coeffTable = document.createElement("table");
-        coeffTable.className = "psospotter-table";
+        coeffTable.className = "psospotter-table hb-table";
         coeffTable.appendChild(thead(["Feature", "Beta"]));
         var coeffBody = document.createElement("tbody");
         coeffs.forEach(function (row) {
@@ -306,11 +340,11 @@
             coeffBody.appendChild(tr);
         });
         coeffTable.appendChild(coeffBody);
-        coeffSection.appendChild(coeffTable);
+        coeffSection.appendChild(tableShell(coeffTable));
 
         var stabSection = section("Stability");
         var stabTable = document.createElement("table");
-        stabTable.className = "psospotter-table";
+        stabTable.className = "psospotter-table hb-table";
         stabTable.appendChild(thead(["Gene", "Freq", "Consistency", "Mean |beta|"]));
         var stabBody = document.createElement("tbody");
         stability.slice(0, 25).forEach(function (row) {
@@ -322,7 +356,7 @@
             stabBody.appendChild(tr);
         });
         stabTable.appendChild(stabBody);
-        stabSection.appendChild(stabTable);
+        stabSection.appendChild(tableShell(stabTable));
 
         var metricsSection = section("Metrics");
         var metricGrid = document.createElement("div");
@@ -358,7 +392,7 @@
 
         var panelSection = section("Mapped panel");
         var table = document.createElement("table");
-        table.className = "psospotter-table";
+        table.className = "psospotter-table hb-table";
         table.appendChild(thead(["Train gene", "Test gene"]));
         var body = document.createElement("tbody");
         panel.forEach(function (row) {
@@ -368,11 +402,11 @@
             body.appendChild(tr);
         });
         table.appendChild(body);
-        panelSection.appendChild(table);
+        panelSection.appendChild(tableShell(table));
 
         var stabSection = section("Stability");
         var stabTable = document.createElement("table");
-        stabTable.className = "psospotter-table";
+        stabTable.className = "psospotter-table hb-table";
         stabTable.appendChild(thead(["Gene", "Freq", "Consistency", "Mean |beta|"]));
         var stabBody = document.createElement("tbody");
         stability.slice(0, 25).forEach(function (row) {
@@ -384,7 +418,7 @@
             stabBody.appendChild(tr);
         });
         stabTable.appendChild(stabBody);
-        stabSection.appendChild(stabTable);
+        stabSection.appendChild(tableShell(stabTable));
 
         var metricsSection = section("Metrics");
         var metricGrid = document.createElement("div");
@@ -425,6 +459,13 @@
         });
         head.appendChild(tr);
         return head;
+    }
+
+    function tableShell(table) {
+        var shell = document.createElement("div");
+        shell.className = "table-wrapper hb-table-shell psospotter-table-shell";
+        shell.appendChild(table);
+        return shell;
     }
 
     function downloadResult() {
@@ -469,7 +510,7 @@
                 } else if (status.status === "failed") {
                     stopPolling();
                     setDisabled(false);
-                    showMessage("Job finished.", status.error || "The run failed.");
+                    showMessage("", status.error || "The run failed.");
                     setProgress(100, "Failed", "");
                 } else {
                     state.pollTimer = window.setTimeout(pollStatus, 2000);
@@ -479,6 +520,7 @@
                 stopPolling();
                 setDisabled(false);
                 showMessage("", error.message || "Unable to read job status.");
+                setProgress(0, "Status error", "");
             });
     }
 
@@ -496,7 +538,7 @@
                 state.lastResultText = text;
                 state.lastResult = JSON.parse(text);
                 setDisabled(false);
-                showMessage("Job completed successfully.", "");
+                showMessage("Job completed successfully.", "", "success");
                 setProgress(100, "Complete", "");
                 renderSummary(state.lastResult);
                 if (state.lastResult.mode === "cross") renderCross(state.lastResult);
@@ -506,6 +548,7 @@
             .catch(function (error) {
                 setDisabled(false);
                 showMessage("", error.message || "Unable to load results.");
+                setProgress(100, "Result error", "");
             });
     }
 
@@ -513,11 +556,15 @@
         event.preventDefault();
         var validation = validate();
         if (validation) {
-            showMessage("", validation);
+            showFormError(validation.message);
+            validation.field.focus();
             return;
         }
 
+        showFormError("");
         resetResults();
+        setVisible(els.statusPanel, true);
+        setVisible(els.statusBody, true);
         setDisabled(true);
         showMessage("Submitting job…", "");
         setProgress(5, "Submitting", "");
@@ -536,8 +583,6 @@
             })
             .then(function (payload) {
                 state.jobId = payload.jobId;
-                setVisible(els.statusEmpty, false);
-                setVisible(els.statusBody, true);
                 setProgress(0, "Queued", payload.queue ? "Queue: " + payload.queue : "");
                 showMessage("Job queued.", "");
                 pollStatus();
@@ -545,9 +590,7 @@
             .catch(function (error) {
                 setDisabled(false);
                 showMessage("", error.message || "Failed to submit the job.");
-                setProgress(0, "Queued", "");
-                setVisible(els.statusEmpty, true);
-                setVisible(els.statusBody, false);
+                setProgress(0, "Submission failed", "");
             });
     }
 
@@ -558,7 +601,7 @@
             state.jobId = null;
             setDisabled(false);
             resetResults();
-            setVisible(els.statusEmpty, true);
+            setVisible(els.statusPanel, false);
             setVisible(els.statusBody, false);
             setProgress(0, "Queued", "");
             showMessage("", "");
@@ -569,7 +612,13 @@
                 updateModeUi();
             });
         });
-        els.geneList.addEventListener("input", saveGeneText);
+        els.geneList.addEventListener("input", function () {
+            saveGeneText();
+            showFormError("");
+        });
+        [els.singleH5ad, els.trainH5ad, els.testH5ad].forEach(function (input) {
+            input.addEventListener("change", function () { showFormError(""); });
+        });
         els.singleSpecies.addEventListener("change", function () {
             var prefs = preferences();
             if (prefs) prefs.set("psospotterSpecies", els.singleSpecies.value);
@@ -611,13 +660,15 @@
         els.singleSpecies.value = species === "mouse" ? "mouse" : "human";
         els.panelK.value = String(panelK);
         els.geneList.value = geneList || "";
+        updateGeneCount();
         updateModeUi();
     }
 
     restoreState();
     bindEvents();
     updateModeUi();
-    setVisible(els.statusEmpty, true);
+    updateGeneCount();
+    setVisible(els.statusPanel, false);
     setVisible(els.statusBody, false);
     setProgress(0, "Queued", "");
 })();

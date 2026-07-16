@@ -44,6 +44,27 @@ class ContentPagesTest {
     }
 
     @Test
+    void psospotterMatchesSearchToolUiAndRevealsResultsProgressively() throws Exception {
+        String jsp = read("src/main/webapp/psospotter.jsp");
+        String css = read("src/main/webapp/CSS/psospotter.css");
+        String js = read("src/main/webapp/JS/psospotter.js");
+
+        assertTrue(jsp.contains("class=\"search-page psospotter-page\""));
+        assertTrue(jsp.contains("class=\"search-hero psospotter-hero\""));
+        assertTrue(jsp.contains("CSS/humanbase-tables.css"));
+        assertTrue(jsp.contains("id=\"psospotterStatus\"") && jsp.contains("data-run-state=\"running\" hidden"));
+        assertTrue(jsp.contains("panel-loader psospotter-job-state__loader"));
+        assertFalse(jsp.contains("psospotter-progress__track"));
+        assertFalse(jsp.contains("id=\"statusEmpty\""));
+        assertTrue(js.contains("setVisible(els.statusPanel, true)"));
+        assertTrue(js.contains("updateGeneCount"));
+        assertTrue(js.contains("table-wrapper hb-table-shell psospotter-table-shell"));
+        assertTrue(css.contains("@media (max-width: 760px)"));
+        assertTrue(css.contains("@media (max-width: 420px)"));
+        assertFalse(css.contains("linear-gradient"));
+    }
+
+    @Test
     void aboutPagesContainEditorialCitationAndDatedReleaseTimeline() throws Exception {
         String cite = read("src/main/webapp/cite.jsp");
         String news = read("src/main/webapp/whats-new.jsp");

@@ -1,145 +1,284 @@
-/* psoSpotter page layout.
-   Built on the shared scSAID design tokens and panel primitives. */
+/* psoSpotter — aligned with the Search DEG tool surface. */
 
 .psospotter-page {
-    padding-bottom: var(--space-2xl);
+    --panel-gap: var(--space-lg);
+    --control-radius: var(--radius-control);
+    --panel-pad-x: 2rem;
+    --panel-pad-y: 1.75rem;
+    --eyebrow-size: 0.72rem;
+}
+
+.psospotter-hero__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+}
+
+.psospotter-hero__title .feature-status {
+    margin: 0;
+    transform: translateY(0.08rem);
 }
 
 .psospotter-quickstart {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.6rem 0.65rem;
-    margin-top: 1.15rem;
+    margin-top: 0;
 }
 
 .psospotter-quickstart__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.3rem;
-    height: 2.3rem;
+    width: 2rem;
+    height: 2rem;
     padding: 0;
-    border: 1px solid rgba(51, 122, 183, 0.2);
-    border-radius: 999px;
-    background: rgba(51, 122, 183, 0.08);
-    color: #337ab7;
-    box-shadow: none;
-    transition: transform 150ms ease, background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background: var(--bg-surface);
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .psospotter-quickstart__button svg {
-    width: 1rem;
-    height: 1rem;
-    fill: currentColor;
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
     stroke: currentColor;
-    stroke-width: 1.9;
+    stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-.psospotter-quickstart__button:hover,
-.psospotter-quickstart__button:focus-visible {
-    background: rgba(51, 122, 183, 0.14);
-    border-color: rgba(51, 122, 183, 0.32);
-    transform: translateY(-1px);
+.psospotter-quickstart__button:hover {
+    border-color: var(--color-accent);
+    background: var(--bg-muted);
+    color: var(--color-secondary-dark);
 }
 
-.psospotter-quickstart__label {
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+.psospotter-quickstart__button:disabled,
+.psospotter-quickstart .search-examples__btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+.psospotter-quickstart__button:focus-visible,
+.psospotter-quickstart .search-examples__btn:focus-visible {
+    outline: 2px solid var(--focus-border);
+    outline-offset: 2px;
 }
 
 .psospotter-quickstart__chips {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 0.55rem;
-}
-
-.psospotter-quickstart__chip {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.4rem;
-    padding: 0.3rem 1.15rem;
-    border: 1px solid #d6d6d6;
-    border-radius: 999px;
-    background: #fff;
-    color: #337ab7;
-    font-size: 0.95rem;
-    font-weight: 300;
-    letter-spacing: 0.01em;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-    transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease, transform 150ms ease;
-}
-
-.psospotter-quickstart__chip:hover,
-.psospotter-quickstart__chip:focus-visible {
-    background: #fbfdff;
-    border-color: rgba(51, 122, 183, 0.45);
-    color: #2a5c91;
-    transform: translateY(-1px);
+    gap: 0.5rem;
 }
 
 .psospotter-shell {
-    width: min(1400px, calc(100% - 2rem));
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
-    gap: var(--space-xl);
-    align-items: start;
+    padding-bottom: var(--space-2xl);
 }
 
 .psospotter-shell > .panel {
+    width: 100%;
     margin: 0;
 }
 
-.psospotter-form__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.psospotter-config .panel-description {
+    max-width: 68ch;
 }
 
-.psospotter-form__grid .filter-card--wide {
-    grid-column: 1 / -1;
+.psospotter-form {
+    display: grid;
+    gap: var(--space-lg);
+}
+
+.psospotter-form__basics {
+    display: grid;
+    grid-template-columns: minmax(15rem, 1.6fr) minmax(10rem, 1fr) minmax(8rem, 0.75fr);
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--control-radius);
+    background: var(--bg-muted);
+}
+
+.psospotter-control {
+    align-self: end;
+}
+
+.psospotter-control .form-select,
+.psospotter-control .species-toggle {
+    width: 100%;
+    max-width: none;
+    min-height: 40px;
+}
+
+.psospotter-control .species-toggle {
+    --segmented-height: 38px;
+}
+
+.psospotter-form__inputs {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+    gap: var(--space-xl);
+    align-items: stretch;
+}
+
+.psospotter-field {
+    min-width: 0;
+}
+
+.psospotter-field__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: 0.45rem;
+}
+
+.psospotter-field__meta {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    white-space: nowrap;
 }
 
 .psospotter-textarea {
-    min-height: 11rem;
+    min-height: 12rem;
+    padding: 0.75rem 0.85rem;
     resize: vertical;
-    line-height: 1.5;
+    line-height: 1.55;
+}
+
+.psospotter-textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+.psospotter-field--files {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--control-radius);
+    background: var(--bg-muted);
 }
 
 .psospotter-file {
     display: block;
     width: 100%;
-    padding: 0.45rem 0;
+    min-height: 42px;
+    margin-top: 0.45rem;
+    padding: 0.32rem;
+    border: 1px solid var(--input-border);
+    border-radius: var(--control-radius);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font: inherit;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.psospotter-file::file-selector-button {
+    min-height: 30px;
+    margin-right: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--input-border);
+    border-radius: var(--control-radius);
+    background: var(--bg-surface);
     color: var(--text-primary);
     font: inherit;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.psospotter-file:hover,
+.psospotter-file:hover::file-selector-button {
+    border-color: var(--border-medium);
+}
+
+.psospotter-file:hover::file-selector-button {
+    background: var(--btn-default-hover);
+}
+
+.psospotter-file:focus-visible {
+    outline: none;
+    border-color: var(--focus-border);
+    box-shadow: var(--focus-shadow);
+}
+
+.psospotter-file:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
 }
 
 .psospotter-upload-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-md);
+    margin-top: 0.45rem;
 }
 
 .psospotter-upload {
-    display: grid;
-    gap: 0.35rem;
+    min-width: 0;
 }
 
 .psospotter-upload__label {
-    font-size: 0.9rem;
+    display: block;
     color: var(--text-secondary);
+    font-size: 0.82rem;
 }
 
 .psospotter-helpline {
-    margin-top: 0.35rem;
+    margin: 0.45rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.psospotter-helpline code {
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+}
+
+.psospotter-form__footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border-light);
+}
+
+.psospotter-retention {
+    margin: 0;
     color: var(--text-muted);
     font-size: 0.82rem;
-    line-height: 1.45;
+    line-height: 1.5;
+}
+
+.psospotter-form__error {
+    margin-top: var(--space-sm);
+}
+
+.psospotter-run-button {
+    min-width: 10.5rem;
+    min-height: 40px;
+    flex-shrink: 0;
+}
+
+.psospotter-form[aria-busy="true"] .psospotter-quickstart__button,
+.psospotter-form[aria-busy="true"] .search-examples__btn {
+    pointer-events: none;
+}
+
+.psospotter-form[aria-busy="true"] .species-toggle {
+    opacity: 0.65;
 }
 
 .psospotter-status__body {
@@ -147,34 +286,77 @@
     gap: var(--space-lg);
 }
 
-.psospotter-progress {
-    display: grid;
-    gap: 0.45rem;
-}
-
-.psospotter-progress__track {
-    height: 10px;
+.psospotter-run-state {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.7rem;
+    padding: 0.18rem 0.55rem;
     border: 1px solid var(--border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: var(--bg-muted);
-    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.2;
 }
 
-.psospotter-progress__bar {
-    height: 100%;
-    width: 0%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
-    transition: width 180ms ease;
+.psospotter-status[data-run-state="complete"] .psospotter-run-state {
+    border-color: color-mix(in srgb, var(--color-success) 30%, var(--border-light));
+    background: color-mix(in srgb, var(--color-success) 8%, var(--bg-surface));
+    color: var(--color-success);
 }
 
-.psospotter-progress__meta {
+.psospotter-status[data-run-state="failed"] .psospotter-run-state {
+    border-color: color-mix(in srgb, var(--color-danger) 30%, var(--border-light));
+    background: color-mix(in srgb, var(--color-danger) 8%, var(--bg-surface));
+    color: var(--color-danger-dark);
+}
+
+.psospotter-job-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 11rem;
+    padding: var(--space-lg);
+    background: var(--bg-muted);
+    border-radius: var(--control-radius);
+    text-align: center;
+}
+
+.psospotter-job-state__loader {
+    min-height: 6rem;
+    max-width: 10rem;
+    padding: 0;
+}
+
+.psospotter-job-state__copy {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-md);
-    font-size: 0.85rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+}
+
+.psospotter-progress__label {
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.psospotter-progress__percent,
+.psospotter-progress__queue {
     color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+.psospotter-progress__queue:not(:empty)::before {
+    content: "·";
+    margin-right: 0.65rem;
+}
+
+.psospotter-status[data-run-state="complete"] .psospotter-job-state,
+.psospotter-status[data-run-state="failed"] .psospotter-job-state {
+    min-height: 0;
+    padding: 0.75rem 1rem;
 }
 
 .psospotter-info {
@@ -183,52 +365,65 @@
 
 .psospotter-summary {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    background: var(--border-light);
 }
 
 .psospotter-summary__item {
-    padding: 0.85rem 0.95rem;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-sm);
-    background: var(--bg-muted);
+    min-width: 0;
+    padding: 0.8rem 0.9rem;
+    background: var(--bg-surface);
 }
 
-.psospotter-summary__label {
+.psospotter-summary__label,
+.psospotter-metric__label {
     display: block;
     margin-bottom: 0.2rem;
     color: var(--text-muted);
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
     text-transform: uppercase;
 }
 
-.psospotter-summary__value {
+.psospotter-summary__value,
+.psospotter-metric__value {
     display: block;
     color: var(--text-primary);
-    font-size: 0.98rem;
+    font-size: 0.9rem;
     line-height: 1.4;
-    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .psospotter-panels,
 .psospotter-tables,
 .psospotter-metrics {
     display: grid;
-    gap: var(--space-md);
+    gap: var(--space-lg);
+}
+
+.psospotter-tables {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+
+.psospotter-tables:has(> :only-child) {
+    grid-template-columns: 1fr;
 }
 
 .psospotter-section {
-    padding: 0.95rem 1rem;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-sm);
-    background: var(--bg-surface);
+    min-width: 0;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-light);
 }
 
 .psospotter-section__title {
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.7rem;
     color: var(--text-primary);
     font-size: 1rem;
+    line-height: 1.4;
 }
 
 .psospotter-chip-list {
@@ -243,113 +438,105 @@
     min-height: 1.85rem;
     padding: 0.2rem 0.6rem;
     border: 1px solid var(--border-light);
-    border-radius: 999px;
-    background: #fff;
-    font-size: 0.82rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-surface);
+    color: var(--color-secondary-dark);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
     line-height: 1;
 }
 
-.psospotter-table {
+.psospotter-page .psospotter-table-shell {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    border: 2px solid var(--border-light);
+    border-radius: var(--control-radius);
+    background: var(--bg-surface);
 }
 
-.psospotter-table th,
-.psospotter-table td {
-    padding: 0.58rem 0.6rem;
-    border-bottom: 1px solid var(--border-light);
-    text-align: left;
-    vertical-align: top;
-}
-
-.psospotter-table thead th {
-    background: var(--bg-muted);
-    color: var(--text-secondary);
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-}
-
-.psospotter-table tbody tr:hover {
-    background: rgba(51, 122, 183, 0.05);
+.psospotter-page table.psospotter-table {
+    min-width: 28rem;
+    margin-bottom: 0 !important;
 }
 
 .psospotter-metric-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 1px;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    background: var(--border-light);
 }
 
 .psospotter-metric {
-    padding: 0.85rem 0.95rem;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-sm);
-    background: var(--bg-muted);
-}
-
-.psospotter-metric__label {
-    display: block;
-    margin-bottom: 0.2rem;
-    color: var(--text-muted);
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-}
-
-.psospotter-metric__value {
-    display: block;
-    font-size: 1rem;
-    color: var(--text-primary);
+    min-width: 0;
+    padding: 0.8rem 0.9rem;
+    background: var(--bg-surface);
 }
 
 .psospotter-actions {
-    margin-top: 0.25rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    margin: 0;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-light);
 }
 
 .psospotter-actions .btn-secondary,
 .psospotter-actions .btn-outline {
-    min-width: 9.5rem;
+    min-width: 9rem;
+    min-height: 38px;
 }
 
 .psospotter-empty-note {
+    margin: 0;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
 }
 
-@media (max-width: 1100px) {
-    .psospotter-shell {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 767px) {
-    .psospotter-shell {
-        width: min(100%, calc(100% - 1rem));
-        gap: var(--space-lg);
-    }
-
-    .psospotter-quickstart {
-        margin-top: 0.95rem;
-        gap: 0.5rem 0.55rem;
-    }
-
-    .psospotter-form__grid {
+@media (max-width: 980px) {
+    .psospotter-form__inputs,
+    .psospotter-tables {
         grid-template-columns: 1fr;
     }
 
+    .psospotter-field--files {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 760px) {
+    .psospotter-page {
+        --panel-pad-x: var(--space-lg);
+        --panel-pad-y: var(--space-lg);
+    }
+
+    .psospotter-hero__title {
+        flex-wrap: wrap;
+    }
+
+    .psospotter-form__basics,
     .psospotter-upload-grid {
         grid-template-columns: 1fr;
     }
 
-    .psospotter-quickstart__chip {
-        padding-inline: 0.95rem;
-        font-size: 0.9rem;
+    .psospotter-form__inputs {
+        gap: var(--space-lg);
     }
 
-    .psospotter-progress__meta {
+    .psospotter-form__footer {
+        align-items: stretch;
         flex-direction: column;
-        align-items: flex-start;
+    }
+
+    .psospotter-run-button,
+    .psospotter-actions .btn-secondary,
+    .psospotter-actions .btn-outline {
+        width: 100%;
+        min-height: 44px;
     }
 
     .psospotter-actions {
@@ -357,8 +544,48 @@
         grid-template-columns: 1fr;
     }
 
-    .psospotter-actions .btn-secondary,
-    .psospotter-actions .btn-outline {
+    .psospotter-summary,
+    .psospotter-metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 420px) {
+    .psospotter-quickstart__button {
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+
+    .psospotter-quickstart__chips {
         width: 100%;
+    }
+
+    .psospotter-quickstart .search-examples__btn {
+        min-height: 44px;
+    }
+
+    .psospotter-field__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .psospotter-file {
+        min-height: 48px;
+    }
+
+    .psospotter-summary,
+    .psospotter-metric-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .psospotter-quickstart__button,
+    .psospotter-file,
+    .psospotter-file::file-selector-button {
+        transition: none;
     }
 }
