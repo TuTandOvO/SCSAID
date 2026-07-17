@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="CSS/header.css?v=20260712a">
     <link rel="stylesheet" href="CSS/details.css?v=20260710b">
     <link rel="stylesheet" href="CSS/search.css?v=20260711b">
-    <link rel="stylesheet" href="CSS/psospotter.css?v=20260717a">
+    <link rel="stylesheet" href="CSS/psospotter.css?v=20260717b">
     <link rel="stylesheet" href="CSS/humanbase-tables.css?v=20260703b">
 </head>
 <body>

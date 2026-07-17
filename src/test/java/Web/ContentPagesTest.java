@@ -60,7 +60,9 @@ class ContentPagesTest {
         assertTrue(js.contains("updateGeneCount"));
         assertTrue(js.contains("table-wrapper hb-table-shell psospotter-table-shell"));
         assertTrue(css.contains("@media (max-width: 760px)"));
+        assertTrue(css.contains("@media (max-width: 520px)"));
         assertTrue(css.contains("@media (max-width: 420px)"));
+        assertTrue(css.contains("min-height: 8.5rem"));
         assertFalse(css.contains("linear-gradient"));
     }
 
