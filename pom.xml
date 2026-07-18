@@ -66,6 +66,8 @@
                 <targetPath>literature</targetPath>
                 <includes>
                     <include>registry.json</include>
+                    <include>sample_context.json</include>
+                    <include>canonical_sample_papers.json</include>
                 </includes>
             </resource>
         </resources>

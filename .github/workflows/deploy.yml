@@ -55,6 +55,26 @@ jobs:
             if [ ! -x "$SCSAID_PYTHON" ]; then
               echo "scSAID Python environment is unavailable"; exit 1
             fi
+            # Full papers and sample-resolution indexes are private deployment
+            # data. Refuse to activate a WAR that would silently fall back to
+            # abstracts or a study-level publication match.
+            LITERATURE_ROOT=/srv/scsaid-literature
+            LITERATURE_VERIFY="$LITERATURE_ROOT/tools/verify_runtime_context.py"
+            CORPUS_VERIFY="$LITERATURE_ROOT/tools/verify_corpus.py"
+            test -r "$LITERATURE_ROOT/text/manifest.tsv"
+            test -r "$LITERATURE_ROOT/papers/manifest.tsv"
+            test -r "$LITERATURE_ROOT/index/papers.tsv"
+            test -r "$LITERATURE_ROOT/index/sample_context.json"
+            test -r "$LITERATURE_ROOT/index/canonical_sample_papers.json"
+            "$SCSAID_PYTHON" "$CORPUS_VERIFY" \
+              --registry "$LITERATURE_ROOT/index/papers.tsv" \
+              --corpus "$LITERATURE_ROOT/papers" \
+              --expect-downloaded 56
+            "$SCSAID_PYTHON" "$LITERATURE_VERIFY" \
+              --root "$LITERATURE_ROOT" \
+              --registry "$LITERATURE_ROOT/index/registry.json" \
+              --samples "$LITERATURE_ROOT/index/sample_context.json" \
+              --selection "$LITERATURE_ROOT/index/canonical_sample_papers.json"
             # Keep the public metadata counts aligned with the post-QC cells
             # used by the Cell Proportion analysis. This runs before Tomcat is
             # stopped and replaces each CSV atomically.
@@ -66,6 +86,7 @@ jobs:
             ANALYTICS_DIR=/etc/scsaid
             ANALYTICS_ENV="$ANALYTICS_DIR/private-analytics.env"
             ANALYTICS_DROPIN=/etc/systemd/system/tomcat.service.d/70-private-analytics.conf
+            LITERATURE_DROPIN=/etc/systemd/system/tomcat.service.d/80-private-literature.conf
             install -d -m 0750 "$ANALYTICS_DIR" /etc/systemd/system/tomcat.service.d
             if [ -n "${SCSAID_ANALYTICS_USER:-}" ] && [ -n "${SCSAID_ANALYTICS_PASSWORD:-}" ]; then
               printf 'SCSAID_ANALYTICS_USER=%s\nSCSAID_ANALYTICS_PASSWORD=%s\n' "$SCSAID_ANALYTICS_USER" "$SCSAID_ANALYTICS_PASSWORD" > "$ANALYTICS_ENV"
@@ -81,6 +102,8 @@ jobs:
             chmod 0640 "$ANALYTICS_ENV"
             printf '[Service]\nEnvironmentFile=%s\n' "$ANALYTICS_ENV" > "$ANALYTICS_DROPIN"
             chmod 0644 "$ANALYTICS_DROPIN"
+            printf '[Service]\nEnvironment=SCSAID_LITERATURE_ROOT=/srv/scsaid-literature\n' > "$LITERATURE_DROPIN"
+            chmod 0644 "$LITERATURE_DROPIN"
             systemctl daemon-reload
             # Nginx logs operational fields for this site but omits client IP
             # addresses and user-agent strings. Existing historical logs are

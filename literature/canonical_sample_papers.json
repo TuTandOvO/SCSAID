@@ -1,0 +1,2543 @@
+{
+  "schema_version": 1,
+  "selection_policy": "verified primary publication only",
+  "count": 252,
+  "samples": [
+    {
+      "said": "SAID001",
+      "sample_accession": "GSM8316001",
+      "study_accession": "GSE269455",
+      "status": "verified_primary",
+      "paper_id": "PMID_39483478",
+      "pmid": "39483478",
+      "doi": "10.3389/fimmu.2024.1444777",
+      "title": "Humanized CXCL12 antibody delays onset and modulates immune response in alopecia areata mice: insights from single-cell RNA sequencing.",
+      "journal": "Frontiers in immunology",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID002",
+      "sample_accession": "GSM8316002",
+      "study_accession": "GSE269455",
+      "status": "verified_primary",
+      "paper_id": "PMID_39483478",
+      "pmid": "39483478",
+      "doi": "10.3389/fimmu.2024.1444777",
+      "title": "Humanized CXCL12 antibody delays onset and modulates immune response in alopecia areata mice: insights from single-cell RNA sequencing.",
+      "journal": "Frontiers in immunology",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID003",
+      "sample_accession": "GSM8316003",
+      "study_accession": "GSE269455",
+      "status": "verified_primary",
+      "paper_id": "PMID_39483478",
+      "pmid": "39483478",
+      "doi": "10.3389/fimmu.2024.1444777",
+      "title": "Humanized CXCL12 antibody delays onset and modulates immune response in alopecia areata mice: insights from single-cell RNA sequencing.",
+      "journal": "Frontiers in immunology",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID004",
+      "sample_accession": "GSM8138118",
+      "study_accession": "GSE261227",
+      "status": "verified_primary",
+      "paper_id": "PMID_38613320",
+      "pmid": "38613320",
+      "doi": "10.1111/pcmr.13169",
+      "title": "Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing.",
+      "journal": "Pigment cell & melanoma research",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261227.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID005",
+      "sample_accession": "GSM8138119",
+      "study_accession": "GSE261227",
+      "status": "verified_primary",
+      "paper_id": "PMID_38613320",
+      "pmid": "38613320",
+      "doi": "10.1111/pcmr.13169",
+      "title": "Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing.",
+      "journal": "Pigment cell & melanoma research",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261227.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID006",
+      "sample_accession": "GSM8138120",
+      "study_accession": "GSE261227",
+      "status": "verified_primary",
+      "paper_id": "PMID_38613320",
+      "pmid": "38613320",
+      "doi": "10.1111/pcmr.13169",
+      "title": "Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing.",
+      "journal": "Pigment cell & melanoma research",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261227.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID007",
+      "sample_accession": "GSM8138121",
+      "study_accession": "GSE261227",
+      "status": "verified_primary",
+      "paper_id": "PMID_38613320",
+      "pmid": "38613320",
+      "doi": "10.1111/pcmr.13169",
+      "title": "Molecular heterogeneity of quiescent melanocyte stem cells revealed by single-cell RNA-sequencing.",
+      "journal": "Pigment cell & melanoma research",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261227.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID008",
+      "sample_accession": "GSM7461430",
+      "study_accession": "GSE234269",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID009",
+      "sample_accession": "GSM7461431",
+      "study_accession": "GSE234269",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID010",
+      "sample_accession": "GSM7225686",
+      "study_accession": "GSE230512",
+      "status": "verified_primary",
+      "paper_id": "PMID_38393304",
+      "pmid": "38393304",
+      "doi": "10.1084/jem.20231425",
+      "title": "CXCL12+ dermal fibroblasts promote neutrophil recruitment and host defense by recognition of IL-17.",
+      "journal": "The Journal of experimental medicine",
+      "year": "2024",
+      "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID011",
+      "sample_accession": "GSM7225687",
+      "study_accession": "GSE230512",
+      "status": "verified_primary",
+      "paper_id": "PMID_38393304",
+      "pmid": "38393304",
+      "doi": "10.1084/jem.20231425",
+      "title": "CXCL12+ dermal fibroblasts promote neutrophil recruitment and host defense by recognition of IL-17.",
+      "journal": "The Journal of experimental medicine",
+      "year": "2024",
+      "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID012",
+      "sample_accession": "GSM7225688",
+      "study_accession": "GSE230512",
+      "status": "verified_primary",
+      "paper_id": "PMID_38393304",
+      "pmid": "38393304",
+      "doi": "10.1084/jem.20231425",
+      "title": "CXCL12+ dermal fibroblasts promote neutrophil recruitment and host defense by recognition of IL-17.",
+      "journal": "The Journal of experimental medicine",
+      "year": "2024",
+      "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID013",
+      "sample_accession": "GSM7225689",
+      "study_accession": "GSE230512",
+      "status": "verified_primary",
+      "paper_id": "PMID_38393304",
+      "pmid": "38393304",
+      "doi": "10.1084/jem.20231425",
+      "title": "CXCL12+ dermal fibroblasts promote neutrophil recruitment and host defense by recognition of IL-17.",
+      "journal": "The Journal of experimental medicine",
+      "year": "2024",
+      "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID014",
+      "sample_accession": "GSM6970228",
+      "study_accession": "GSE223660",
+      "status": "verified_primary",
+      "paper_id": "PMID_38127424",
+      "pmid": "38127424",
+      "doi": "10.7554/eLife.86269",
+      "title": "Apoptosis recognition receptors regulate skin tissue repair in mice.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID015",
+      "sample_accession": "GSM6502671",
+      "study_accession": "GSE211810",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID016",
+      "sample_accession": "GSM6502672",
+      "study_accession": "GSE211810",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID017",
+      "sample_accession": "GSM6502673",
+      "study_accession": "GSE211810",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID018",
+      "sample_accession": "GSM6502674",
+      "study_accession": "GSE211810",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID019",
+      "sample_accession": "GSM6468127",
+      "study_accession": "GSE211381",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID020",
+      "sample_accession": "GSM6468128",
+      "study_accession": "GSE211381",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID021",
+      "sample_accession": "GSM6468129",
+      "study_accession": "GSE211381",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID022",
+      "sample_accession": "GSM6468130",
+      "study_accession": "GSE211381",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID023",
+      "sample_accession": "GSM6468131",
+      "study_accession": "GSE211381",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID024",
+      "sample_accession": "GSM6468132",
+      "study_accession": "GSE211381",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID025",
+      "sample_accession": "GSM6460378",
+      "study_accession": "GSE211279",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID026",
+      "sample_accession": "GSM6423811",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID027",
+      "sample_accession": "GSM6423812",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID028",
+      "sample_accession": "GSM6423813",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID029",
+      "sample_accession": "GSM6423814",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID030",
+      "sample_accession": "GSM6423815",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID031",
+      "sample_accession": "GSM6423816",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID032",
+      "sample_accession": "GSM6423817",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID033",
+      "sample_accession": "GSM6423818",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID034",
+      "sample_accession": "GSM6423819",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID035",
+      "sample_accession": "GSM6423820",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID036",
+      "sample_accession": "GSM6423821",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID037",
+      "sample_accession": "GSM6423822",
+      "study_accession": "GSE210224",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID038",
+      "sample_accession": "GSM6204200",
+      "study_accession": "GSE205020",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID039",
+      "sample_accession": "GSM6204201",
+      "study_accession": "GSE205020",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID040",
+      "sample_accession": "GSM5898068",
+      "study_accession": "GSE196677",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID041",
+      "sample_accession": "GSM5898069",
+      "study_accession": "GSE196677",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID042",
+      "sample_accession": "GSM5898070",
+      "study_accession": "GSE196677",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID043",
+      "sample_accession": "GSM5696148",
+      "study_accession": "GSE189210",
+      "status": "verified_primary",
+      "paper_id": "PMID_34922949",
+      "pmid": "34922949",
+      "doi": "10.1016/j.jid.2021.11.032",
+      "title": "Parallel Single-Cell Multiomics Analysis of Neonatal Skin Reveals the Transitional Fibroblast States that Restrict Differentiation into Distinct Fates.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID044",
+      "sample_accession": "GSM4805563",
+      "study_accession": "GSE158691",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID045",
+      "sample_accession": "GSM4805560",
+      "study_accession": "GSE158691",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID046",
+      "sample_accession": "GSM4805558",
+      "study_accession": "GSE158691",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID047",
+      "sample_accession": "GSM4647785",
+      "study_accession": "GSE153596",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID048",
+      "sample_accession": "GSM4647786",
+      "study_accession": "GSE153596",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID049",
+      "sample_accession": "GSM4647787",
+      "study_accession": "GSE153596",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID050",
+      "sample_accession": "GSM4647788",
+      "study_accession": "GSE153596",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID051",
+      "sample_accession": "GSM4647789",
+      "study_accession": "GSE153596",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID052",
+      "sample_accession": "GSM4647790",
+      "study_accession": "GSE153596",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID053",
+      "sample_accession": "GSM4378540",
+      "study_accession": "GSE146122",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID054",
+      "sample_accession": "GSM4378541",
+      "study_accession": "GSE146122",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID055",
+      "sample_accession": "GSM4378542",
+      "study_accession": "GSE146122",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID056",
+      "sample_accession": "GSM3453536",
+      "study_accession": "GSE122043",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID057",
+      "sample_accession": "GSM3453538",
+      "study_accession": "GSE122043",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID058",
+      "sample_accession": "GSM8150922",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID059",
+      "sample_accession": "GSM8150923",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID060",
+      "sample_accession": "GSM8150924",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID061",
+      "sample_accession": "GSM8150925",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID062",
+      "sample_accession": "GSM8150926",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID063",
+      "sample_accession": "GSM8150927",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID064",
+      "sample_accession": "GSM8150928",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID065",
+      "sample_accession": "GSM8150929",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID066",
+      "sample_accession": "GSM8150930",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID067",
+      "sample_accession": "GSM8150931",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID068",
+      "sample_accession": "GSM8150932",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID069",
+      "sample_accession": "GSM8150933",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID070",
+      "sample_accession": "GSM8150934",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID071",
+      "sample_accession": "GSM8150935",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID072",
+      "sample_accession": "GSM8150936",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID073",
+      "sample_accession": "GSM8150937",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID074",
+      "sample_accession": "GSM8150938",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID075",
+      "sample_accession": "GSM8150940",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID076",
+      "sample_accession": "GSM8150941",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID077",
+      "sample_accession": "GSM8150944",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID078",
+      "sample_accession": "GSM8150946",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID079",
+      "sample_accession": "GSM8150947",
+      "study_accession": "GSE261766",
+      "status": "verified_primary",
+      "paper_id": "PMID_38815020",
+      "pmid": "38815020",
+      "doi": "10.1126/science.adi7453",
+      "title": "Stem-cell states converge in multistage cutaneous squamous cell carcinoma development.",
+      "journal": "Science (New York, N.Y.)",
+      "year": "2024",
+      "evidence": "The article data-availability statement names GSE261766.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID080",
+      "sample_accession": "GSM6588784",
+      "study_accession": "GSE213528",
+      "status": "verified_primary",
+      "paper_id": "PMID_37543242",
+      "pmid": "37543242",
+      "doi": "10.1016/j.jid.2023.07.005",
+      "title": "ΔNp63 Regulates Homeostasis, Stemness, and Suppression of Inflammation in the Adult Epidermis.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2024",
+      "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID081",
+      "sample_accession": "GSM6588785",
+      "study_accession": "GSE213528",
+      "status": "verified_primary",
+      "paper_id": "PMID_37543242",
+      "pmid": "37543242",
+      "doi": "10.1016/j.jid.2023.07.005",
+      "title": "ΔNp63 Regulates Homeostasis, Stemness, and Suppression of Inflammation in the Adult Epidermis.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2024",
+      "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID082",
+      "sample_accession": "GSM6588786",
+      "study_accession": "GSE213528",
+      "status": "verified_primary",
+      "paper_id": "PMID_37543242",
+      "pmid": "37543242",
+      "doi": "10.1016/j.jid.2023.07.005",
+      "title": "ΔNp63 Regulates Homeostasis, Stemness, and Suppression of Inflammation in the Adult Epidermis.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2024",
+      "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID083",
+      "sample_accession": "GSM6588787",
+      "study_accession": "GSE213528",
+      "status": "verified_primary",
+      "paper_id": "PMID_37543242",
+      "pmid": "37543242",
+      "doi": "10.1016/j.jid.2023.07.005",
+      "title": "ΔNp63 Regulates Homeostasis, Stemness, and Suppression of Inflammation in the Adult Epidermis.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2024",
+      "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID084",
+      "sample_accession": "GSM8403737",
+      "study_accession": "GSE272509",
+      "status": "verified_primary",
+      "paper_id": "PMID_39153998",
+      "pmid": "39153998",
+      "doi": "10.1038/s41419-024-06994-y",
+      "title": "TLR9 activation in large wound induces tissue repair and hair follicle regeneration via γδT cells.",
+      "journal": "Cell death & disease",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID085",
+      "sample_accession": "GSM8403738",
+      "study_accession": "GSE272509",
+      "status": "verified_primary",
+      "paper_id": "PMID_39153998",
+      "pmid": "39153998",
+      "doi": "10.1038/s41419-024-06994-y",
+      "title": "TLR9 activation in large wound induces tissue repair and hair follicle regeneration via γδT cells.",
+      "journal": "Cell death & disease",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID086",
+      "sample_accession": "GSM7585467",
+      "study_accession": "GSE236918",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID087",
+      "sample_accession": "GSM7585468",
+      "study_accession": "GSE236918",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID088",
+      "sample_accession": "GSM7585469",
+      "study_accession": "GSE236918",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID089",
+      "sample_accession": "GSM7585470",
+      "study_accession": "GSE236918",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID090",
+      "sample_accession": "GSM5024746",
+      "study_accession": "GSE165021",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID091",
+      "sample_accession": "GSM5024747",
+      "study_accession": "GSE165021",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID092",
+      "sample_accession": "GSM5024748",
+      "study_accession": "GSE165021",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID093",
+      "sample_accession": "GSM5024749",
+      "study_accession": "GSE165021",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID094",
+      "sample_accession": "GSM5024750",
+      "study_accession": "GSE165021",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID095",
+      "sample_accession": "GSM5024751",
+      "study_accession": "GSE165021",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID096",
+      "sample_accession": "GSM6543169",
+      "study_accession": "GSE212673",
+      "status": "verified_primary",
+      "paper_id": "PMID_37318953",
+      "pmid": "37318953",
+      "doi": "10.1016/j.celrep.2023.112643",
+      "title": "Transcriptomic landscape of early hair follicle and epidermal development.",
+      "journal": "Cell reports",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID097",
+      "sample_accession": "GSM6543170",
+      "study_accession": "GSE212673",
+      "status": "verified_primary",
+      "paper_id": "PMID_37318953",
+      "pmid": "37318953",
+      "doi": "10.1016/j.celrep.2023.112643",
+      "title": "Transcriptomic landscape of early hair follicle and epidermal development.",
+      "journal": "Cell reports",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID098",
+      "sample_accession": "GSM6543171",
+      "study_accession": "GSE212673",
+      "status": "verified_primary",
+      "paper_id": "PMID_37318953",
+      "pmid": "37318953",
+      "doi": "10.1016/j.celrep.2023.112643",
+      "title": "Transcriptomic landscape of early hair follicle and epidermal development.",
+      "journal": "Cell reports",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID099",
+      "sample_accession": "SAMC438600",
+      "study_accession": "CRA004660",
+      "status": "verified_primary",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "title": "Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues.",
+      "journal": "Cell stem cell",
+      "year": "2022",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID100",
+      "sample_accession": "SAMC438601",
+      "study_accession": "CRA004660",
+      "status": "verified_primary",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "title": "Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues.",
+      "journal": "Cell stem cell",
+      "year": "2022",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID101",
+      "sample_accession": "SAMC438602",
+      "study_accession": "CRA004660",
+      "status": "verified_primary",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "title": "Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues.",
+      "journal": "Cell stem cell",
+      "year": "2022",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID102",
+      "sample_accession": "SAMC438603",
+      "study_accession": "CRA004660",
+      "status": "verified_primary",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "title": "Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues.",
+      "journal": "Cell stem cell",
+      "year": "2022",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID103",
+      "sample_accession": "SAMC703634",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID104",
+      "sample_accession": "SAMC703635",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID105",
+      "sample_accession": "SAMC703636",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID106",
+      "sample_accession": "SAMC703637",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID107",
+      "sample_accession": "SAMC703638",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID108",
+      "sample_accession": "SAMC703639",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID109",
+      "sample_accession": "SAMC703640",
+      "study_accession": "CRA006512",
+      "status": "verified_primary",
+      "paper_id": "PMID_37285263",
+      "pmid": "37285263",
+      "doi": "10.1093/procel/pwac062",
+      "title": "Single-cell profiling reveals a potent role of quercetin in promoting hair regeneration.",
+      "journal": "Protein & cell",
+      "year": "2023",
+      "evidence": "The article data-availability statement names CRA006512.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID110",
+      "sample_accession": "SAMC5706929",
+      "study_accession": "CRA028265",
+      "status": "verified_primary",
+      "paper_id": "PMID_40817122",
+      "pmid": "40817122",
+      "doi": "10.1038/s41467-025-62874-9",
+      "title": "CCR7+ dendritic cells expressing both IL-23A and IL-12B potentially contribute to psoriasis relapse.",
+      "journal": "Nature communications",
+      "year": "2025",
+      "evidence": "The article data-availability statement names CRA028265.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID111",
+      "sample_accession": "SAMC5706930",
+      "study_accession": "CRA028265",
+      "status": "verified_primary",
+      "paper_id": "PMID_40817122",
+      "pmid": "40817122",
+      "doi": "10.1038/s41467-025-62874-9",
+      "title": "CCR7+ dendritic cells expressing both IL-23A and IL-12B potentially contribute to psoriasis relapse.",
+      "journal": "Nature communications",
+      "year": "2025",
+      "evidence": "The article data-availability statement names CRA028265.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID112",
+      "sample_accession": "SAMC5773650",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID113",
+      "sample_accession": "SAMC5773651",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID114",
+      "sample_accession": "SAMC5773652",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID115",
+      "sample_accession": "SAMC5773653",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID116",
+      "sample_accession": "SAMC5773654",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID117",
+      "sample_accession": "SAMC5773655",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID118",
+      "sample_accession": "SAMC5773656",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID119",
+      "sample_accession": "SAMC5773657",
+      "study_accession": "CRA028974",
+      "status": "verified_primary",
+      "paper_id": "PMID_41329515",
+      "pmid": "41329515",
+      "doi": "10.1172/JCI188827",
+      "title": "CARD9-dependent macrophage plasticity regulates effective fungal clearance.",
+      "journal": "The Journal of clinical investigation",
+      "year": "2026",
+      "evidence": "The article data-availability statement names CRA028974.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID120",
+      "sample_accession": "GSM7964420",
+      "study_accession": "GSE249793",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID121",
+      "sample_accession": "GSM7964422",
+      "study_accession": "GSE249793",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID122",
+      "sample_accession": "GSM7964423",
+      "study_accession": "GSE249793",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID123",
+      "sample_accession": "GSM7964424",
+      "study_accession": "GSE249793",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID124",
+      "sample_accession": "GSM7754887",
+      "study_accession": "GSE155850",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID125",
+      "sample_accession": "GSM7754889",
+      "study_accession": "GSE155850",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID126",
+      "sample_accession": "GSM7754890",
+      "study_accession": "GSE155850",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID127",
+      "sample_accession": "GSM5352392",
+      "study_accession": "GSE175990",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID128",
+      "sample_accession": "GSM5352393",
+      "study_accession": "GSE175990",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID129",
+      "sample_accession": "GSM5352394",
+      "study_accession": "GSE175990",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID130",
+      "sample_accession": "GSM5352395",
+      "study_accession": "GSE175990",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID131",
+      "sample_accession": "GSM5420670",
+      "study_accession": "GSE179565",
+      "status": "verified_primary",
+      "paper_id": "PMID_34380039",
+      "pmid": "34380039",
+      "doi": "10.1016/j.celrep.2021.109524",
+      "title": "Single-cell transcriptome analysis reveals the dynamics of human immune cells during early fetal skin development.",
+      "journal": "Cell reports",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID132",
+      "sample_accession": "GSM3758115",
+      "study_accession": "GSE130973",
+      "status": "verified_primary",
+      "paper_id": "PMID_32327715",
+      "pmid": "32327715",
+      "doi": "10.1038/s42003-020-0922-4",
+      "title": "Single-cell transcriptomes of the human skin reveal age-related loss of fibroblast priming.",
+      "journal": "Communications biology",
+      "year": "2020",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID133",
+      "sample_accession": "GSM3758116",
+      "study_accession": "GSE130973",
+      "status": "verified_primary",
+      "paper_id": "PMID_32327715",
+      "pmid": "32327715",
+      "doi": "10.1038/s42003-020-0922-4",
+      "title": "Single-cell transcriptomes of the human skin reveal age-related loss of fibroblast priming.",
+      "journal": "Communications biology",
+      "year": "2020",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID134",
+      "sample_accession": "GSM3758117",
+      "study_accession": "GSE130973",
+      "status": "verified_primary",
+      "paper_id": "PMID_32327715",
+      "pmid": "32327715",
+      "doi": "10.1038/s42003-020-0922-4",
+      "title": "Single-cell transcriptomes of the human skin reveal age-related loss of fibroblast priming.",
+      "journal": "Communications biology",
+      "year": "2020",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID135",
+      "sample_accession": "GSM3758119",
+      "study_accession": "GSE130973",
+      "status": "verified_primary",
+      "paper_id": "PMID_32327715",
+      "pmid": "32327715",
+      "doi": "10.1038/s42003-020-0922-4",
+      "title": "Single-cell transcriptomes of the human skin reveal age-related loss of fibroblast priming.",
+      "journal": "Communications biology",
+      "year": "2020",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID136",
+      "sample_accession": "GSM7764406",
+      "study_accession": "GSE242477",
+      "status": "verified_primary",
+      "paper_id": "PMID_39630887",
+      "pmid": "39630887",
+      "doi": "10.1126/scitranslmed.adk8832",
+      "title": "Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment.",
+      "journal": "Science translational medicine",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID137",
+      "sample_accession": "GSM7764408",
+      "study_accession": "GSE242477",
+      "status": "verified_primary",
+      "paper_id": "PMID_39630887",
+      "pmid": "39630887",
+      "doi": "10.1126/scitranslmed.adk8832",
+      "title": "Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment.",
+      "journal": "Science translational medicine",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID138",
+      "sample_accession": "GSM7764410",
+      "study_accession": "GSE242477",
+      "status": "verified_primary",
+      "paper_id": "PMID_39630887",
+      "pmid": "39630887",
+      "doi": "10.1126/scitranslmed.adk8832",
+      "title": "Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment.",
+      "journal": "Science translational medicine",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID139",
+      "sample_accession": "GSM7764411",
+      "study_accession": "GSE242477",
+      "status": "verified_primary",
+      "paper_id": "PMID_39630887",
+      "pmid": "39630887",
+      "doi": "10.1126/scitranslmed.adk8832",
+      "title": "Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment.",
+      "journal": "Science translational medicine",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID140",
+      "sample_accession": "GSM7764412",
+      "study_accession": "GSE242477",
+      "status": "verified_primary",
+      "paper_id": "PMID_39630887",
+      "pmid": "39630887",
+      "doi": "10.1126/scitranslmed.adk8832",
+      "title": "Single-cell profiling of acral melanoma infiltrating lymphocytes reveals a suppressive tumor microenvironment.",
+      "journal": "Science translational medicine",
+      "year": "2024",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID141",
+      "sample_accession": "GSM7951925",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID142",
+      "sample_accession": "GSM7951926",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID143",
+      "sample_accession": "GSM7951927",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID144",
+      "sample_accession": "GSM7951930",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID145",
+      "sample_accession": "GSM7951931",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID146",
+      "sample_accession": "GSM7951932",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID147",
+      "sample_accession": "GSM7951934",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID148",
+      "sample_accession": "GSM7951935",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID149",
+      "sample_accession": "GSM7951936",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID150",
+      "sample_accession": "GSM7951937",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID151",
+      "sample_accession": "GSM7951938",
+      "study_accession": "GSE249622",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID152",
+      "sample_accession": "GSM6152838",
+      "study_accession": "GSE203034",
+      "status": "verified_primary",
+      "paper_id": "PMID_37727050",
+      "pmid": "37727050",
+      "doi": "10.1111/exd.14929",
+      "title": "Single-cell analysis of human dermal fibroblasts isolated from a single male donor over 35 years.",
+      "journal": "Experimental dermatology",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID153",
+      "sample_accession": "GSM5788491",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID154",
+      "sample_accession": "GSM5788492",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID155",
+      "sample_accession": "GSM5788493",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID156",
+      "sample_accession": "GSM5788494",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID157",
+      "sample_accession": "GSM5788495",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID158",
+      "sample_accession": "GSM5788496",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID159",
+      "sample_accession": "GSM5788497",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID160",
+      "sample_accession": "GSM5788498",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID161",
+      "sample_accession": "GSM5788499",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID162",
+      "sample_accession": "GSM5788500",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID163",
+      "sample_accession": "GSM5788501",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID164",
+      "sample_accession": "GSM5788503",
+      "study_accession": "GSE193304",
+      "status": "verified_primary",
+      "paper_id": "PMID_38099574",
+      "pmid": "38099574",
+      "doi": "10.7554/eLife.85270",
+      "title": "Single-cell sequencing highlights heterogeneity and malignant progression in actinic keratosis and cutaneous squamous cell carcinoma.",
+      "journal": "eLife",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID165",
+      "sample_accession": "GSM5847946",
+      "study_accession": "GSE195674",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID166",
+      "sample_accession": "GSM7648532",
+      "study_accession": "GSE237754",
+      "status": "verified_primary",
+      "paper_id": "PMID_38242738",
+      "pmid": "38242738",
+      "doi": "10.1016/j.jdermsci.2023.12.007",
+      "title": "Transcriptome network analysis of inflammation and fibrosis in keloids.",
+      "journal": "Journal of dermatological science",
+      "year": "2024",
+      "evidence": "The article title and experiment description match GSE237754.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID167",
+      "sample_accession": "GSM7648533",
+      "study_accession": "GSE237754",
+      "status": "verified_primary",
+      "paper_id": "PMID_38242738",
+      "pmid": "38242738",
+      "doi": "10.1016/j.jdermsci.2023.12.007",
+      "title": "Transcriptome network analysis of inflammation and fibrosis in keloids.",
+      "journal": "Journal of dermatological science",
+      "year": "2024",
+      "evidence": "The article title and experiment description match GSE237754.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID168",
+      "sample_accession": "GSM7849998",
+      "study_accession": "GSE245859",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID169",
+      "sample_accession": "GSM7849999",
+      "study_accession": "GSE245859",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID170",
+      "sample_accession": "GSM7906167",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID171",
+      "sample_accession": "GSM7906168",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID172",
+      "sample_accession": "GSM7906169",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID173",
+      "sample_accession": "GSM7906170",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID174",
+      "sample_accession": "GSM7906171",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID175",
+      "sample_accession": "GSM7906172",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID176",
+      "sample_accession": "GSM7906173",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID177",
+      "sample_accession": "GSM7906174",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID178",
+      "sample_accession": "GSM7906175",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID179",
+      "sample_accession": "GSM7906176",
+      "study_accession": "GSE248121",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID180",
+      "sample_accession": "GSM6595205",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID181",
+      "sample_accession": "GSM6595206",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID182",
+      "sample_accession": "GSM6595208",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID183",
+      "sample_accession": "GSM6595209",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID184",
+      "sample_accession": "GSM6595210",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID185",
+      "sample_accession": "GSM6595211",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID186",
+      "sample_accession": "GSM6595212",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID187",
+      "sample_accession": "GSM6595215",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID188",
+      "sample_accession": "GSM6595217",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID189",
+      "sample_accession": "GSM6595218",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID190",
+      "sample_accession": "GSM6595219",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID191",
+      "sample_accession": "GSM6595220",
+      "study_accession": "GSE213849",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID192",
+      "sample_accession": "GSM7401927",
+      "study_accession": "GSE233137",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID193",
+      "sample_accession": "GSM7401928",
+      "study_accession": "GSE233137",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID194",
+      "sample_accession": "HRR060114",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID195",
+      "sample_accession": "HRR060115",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID196",
+      "sample_accession": "HRR060116",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID197",
+      "sample_accession": "HRR060118",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID198",
+      "sample_accession": "HRR060122",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID199",
+      "sample_accession": "HRR060124",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID200",
+      "sample_accession": "HRR060128",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID201",
+      "sample_accession": "HRR060130",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID202",
+      "sample_accession": "HRR060132",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID203",
+      "sample_accession": "HRR060134",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID204",
+      "sample_accession": "HRR060136",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID205",
+      "sample_accession": "HRR060138",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID206",
+      "sample_accession": "HRR060140",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID207",
+      "sample_accession": "HRR060142",
+      "study_accession": "HRA000166",
+      "status": "verified_primary",
+      "paper_id": "PMID_35241665",
+      "pmid": "35241665",
+      "doi": "10.1038/s41467-022-28799-3",
+      "title": "Single-cell transcriptomics links malignant T cells to the tumor immune landscape in cutaneous T cell lymphoma.",
+      "journal": "Nature communications",
+      "year": "2022",
+      "evidence": "The article data-availability statement names HRA000166.",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID208",
+      "sample_accession": "GSM3892569",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID209",
+      "sample_accession": "GSM3892577",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID210",
+      "sample_accession": "GSM3892578",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID211",
+      "sample_accession": "GSM3892579",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID212",
+      "sample_accession": "GSM3892580",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID213",
+      "sample_accession": "GSM3892581",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID214",
+      "sample_accession": "GSM3892582",
+      "study_accession": "GSE132802",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID215",
+      "sample_accession": "GSM6165459",
+      "study_accession": "GSE203262",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID216",
+      "sample_accession": "GSM6165460",
+      "study_accession": "GSE203262",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID217",
+      "sample_accession": "GSM6165462",
+      "study_accession": "GSE203262",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID218",
+      "sample_accession": "GSM6165463",
+      "study_accession": "GSE203262",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID219",
+      "sample_accession": "GSM6165464",
+      "study_accession": "GSE203262",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID220",
+      "sample_accession": "GSM6165465",
+      "study_accession": "GSE203262",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID221",
+      "sample_accession": "GSM4815800",
+      "study_accession": "GSE158924",
+      "status": "verified_primary",
+      "paper_id": "PMID_33317858",
+      "pmid": "33317858",
+      "doi": "10.1016/j.jaci.2020.10.012",
+      "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+      "journal": "The Journal of allergy and clinical immunology",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID222",
+      "sample_accession": "GSM4815801",
+      "study_accession": "GSE158924",
+      "status": "verified_primary",
+      "paper_id": "PMID_33317858",
+      "pmid": "33317858",
+      "doi": "10.1016/j.jaci.2020.10.012",
+      "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+      "journal": "The Journal of allergy and clinical immunology",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID223",
+      "sample_accession": "GSM4815802",
+      "study_accession": "GSE158924",
+      "status": "verified_primary",
+      "paper_id": "PMID_33317858",
+      "pmid": "33317858",
+      "doi": "10.1016/j.jaci.2020.10.012",
+      "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+      "journal": "The Journal of allergy and clinical immunology",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID224",
+      "sample_accession": "GSM4815803",
+      "study_accession": "GSE158924",
+      "status": "verified_primary",
+      "paper_id": "PMID_33317858",
+      "pmid": "33317858",
+      "doi": "10.1016/j.jaci.2020.10.012",
+      "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+      "journal": "The Journal of allergy and clinical immunology",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID225",
+      "sample_accession": "GSM4815804",
+      "study_accession": "GSE158924",
+      "status": "verified_primary",
+      "paper_id": "PMID_33317858",
+      "pmid": "33317858",
+      "doi": "10.1016/j.jaci.2020.10.012",
+      "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+      "journal": "The Journal of allergy and clinical immunology",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID226",
+      "sample_accession": "GSM4815805",
+      "study_accession": "GSE158924",
+      "status": "verified_primary",
+      "paper_id": "PMID_33317858",
+      "pmid": "33317858",
+      "doi": "10.1016/j.jaci.2020.10.012",
+      "title": "Treatment of granuloma annulare and suppression of proinflammatory cytokine activity with tofacitinib.",
+      "journal": "The Journal of allergy and clinical immunology",
+      "year": "2021",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID227",
+      "sample_accession": "GSM5494438",
+      "study_accession": "GSE181297",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID228",
+      "sample_accession": "GSM8486557",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID229",
+      "sample_accession": "GSM8486558",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID230",
+      "sample_accession": "GSM8486559",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID231",
+      "sample_accession": "GSM8486560",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID232",
+      "sample_accession": "GSM8486561",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID233",
+      "sample_accession": "GSM8486562",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID234",
+      "sample_accession": "GSM8486564",
+      "study_accession": "GSE275846",
+      "status": "no_verified_primary"
+    },
+    {
+      "said": "SAID235",
+      "sample_accession": "GSM6532919",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID236",
+      "sample_accession": "GSM6532920",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID237",
+      "sample_accession": "GSM6532921",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID238",
+      "sample_accession": "GSM6532922",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID239",
+      "sample_accession": "GSM6532923",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID240",
+      "sample_accession": "GSM6532924",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID241",
+      "sample_accession": "GSM6532925",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID242",
+      "sample_accession": "GSM6532926",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID243",
+      "sample_accession": "GSM6532927",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID244",
+      "sample_accession": "GSM6532928",
+      "study_accession": "GSE212447",
+      "status": "verified_primary",
+      "paper_id": "PMID_37500727",
+      "pmid": "37500727",
+      "doi": "10.1038/s41588-023-01445-4",
+      "title": "Integrated single-cell chromatin and transcriptomic analyses of human scalp identify gene-regulatory programs and critical cell types for hair and skin diseases.",
+      "journal": "Nature genetics",
+      "year": "2023",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID245",
+      "sample_accession": "GSM5264341",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID246",
+      "sample_accession": "GSM5264342",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID247",
+      "sample_accession": "GSM5264344",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID248",
+      "sample_accession": "GSM5264345",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID249",
+      "sample_accession": "GSM5264346",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID250",
+      "sample_accession": "GSM5264347",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID251",
+      "sample_accession": "GSM5264348",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID252",
+      "sample_accession": "GSM5264349",
+      "study_accession": "GSE173252",
+      "status": "verified_primary",
+      "paper_id": "PMID_34274346",
+      "pmid": "34274346",
+      "doi": "10.1016/j.jid.2021.05.030",
+      "title": "Deciphering Mesenchymal Drivers of Human Dupuytren's Disease at Single-Cell Level.",
+      "journal": "The Journal of investigative dermatology",
+      "year": "2022",
+      "evidence": "PubMed identifier recorded in AllData.xlsx",
+      "verified_on": "2026-07-18"
+    }
+  ]
+}

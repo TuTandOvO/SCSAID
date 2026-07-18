@@ -422,7 +422,7 @@
     <script src="lib/jspdf.umd.min.js?v=20260630"></script>
     <script src="lib/svg2pdf.umd.min.js?v=20260630"></script>
     <script src="JS/figure-export.js?v=<%= System.currentTimeMillis() %>"></script>
-    <script defer src="JS/ai-interpretation.js?v=20260704a"></script>
+    <script defer src="JS/ai-interpretation.js?v=20260718a"></script>
 </head>
 <body style="background: var(--bg-body);">
 
@@ -1102,7 +1102,7 @@
             <div class="cluster ai-interpretation" id="AIInterpretation"
                  data-said="<%= saidVal %>"
                  data-endpoint="<%= request.getContextPath() %>/ai-interpretation"
-                 data-consent-version="2026-07-05"
+                 data-consent-version="2026-07-18"
                  data-csrf="<%= aiInterpretationCsrf %>">
                 <div class="header">
                     <div class="header-content">
@@ -1111,7 +1111,7 @@
                                 <span>LLM Interpretation</span>
                                 <span class="feature-status" aria-label="Beta feature">Beta</span>
                             </div>
-                            <p class="ai-interpretation__lede">Interpret selected scSAID analyses in the context of this dataset and its linked publication.</p>
+                            <p class="ai-interpretation__lede">Interpret selected scSAID analyses using exact sample metadata, a verified full paper, and optional current-literature search.</p>
                         </div>
                     </div>
                 </div>
@@ -1126,15 +1126,36 @@
 
                     <section class="ai-privacy" id="aiPrivacyGate" hidden aria-labelledby="aiPrivacyTitle">
                         <h3 id="aiPrivacyTitle">Privacy statement</h3>
-                        <p>Your API key is sent over HTTPS to the scSAID server, held only for this request, and forwarded to the provider. It is not saved in a database, session, cookie, browser storage, cache, or application log, and the key field is cleared after submission.</p>
-                        <p>The selected analysis results, dataset metadata, linked publication abstract, and GEO study context are sent to the provider. Provider processing and retention follow your provider account and its terms. Charges may apply. LLM output can be incorrect and is not medical advice.</p>
+                        <p>Your API key is sent over HTTPS to the scSAID server, held only in worker memory for this request, and forwarded to the selected provider. It is not saved in a database, session, cookie, browser storage, cache, job file, analytics record, or application log. The browser key field is cleared immediately after submission. The interpretation result is retained only in server memory for 30 minutes, then deleted.</p>
+                        <p>The exact GSM/SAMC/HRR metadata, scSAID annotations, selected analysis results, complete text of the verified primary publication, and—when enabled—search queries and results are sent to the provider. Provider charges and retention rules apply. LLM output can be incorrect and is not medical advice.</p>
+                        <ul class="ai-provider-terms">
+                            <li><strong>OpenAI:</strong> API data is not used for training by default; standard abuse-monitoring retention may apply unless eligible controls are enabled.</li>
+                            <li><strong>Claude:</strong> default API retention and optional zero-data-retention arrangements depend on the organization’s agreement.</li>
+                            <li><strong>Gemini:</strong> handling differs between paid and unpaid services, and Google Search grounding has additional processing and display requirements.</li>
+                            <li><strong>DeepSeek:</strong> data may be processed in the People’s Republic of China and may be used for model improvement under its current policy unless applicable controls are exercised.</li>
+                        </ul>
+                        <div class="ai-policy-links" aria-label="Provider data policies">
+                            <a href="https://openai.com/business-data/" target="_blank" rel="noopener noreferrer">OpenAI data controls</a>
+                            <a href="https://privacy.anthropic.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener noreferrer">Anthropic retention</a>
+                            <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener noreferrer">Gemini API terms</a>
+                            <a href="https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html" target="_blank" rel="noopener noreferrer">DeepSeek privacy policy</a>
+                        </div>
                         <label class="ai-consent">
                             <input type="checkbox" id="aiPrivacyConsent">
-                            <span>I understand what will be sent and agree to this one-page-session use.</span>
+                            <span>I understand what will be transmitted and agree to this session-bound request.</span>
+                        </label>
+                        <label class="ai-consent">
+                            <input type="checkbox" id="aiPublicationConsent">
+                            <span>I confirm that I am authorized to transmit the linked publication content to my selected provider.</span>
                         </label>
                     </section>
 
                     <div id="aiInterpretWorkspace" class="ai-workspace" hidden>
+                        <section class="ai-context-summary" aria-live="polite">
+                            <span class="ai-kicker">Exact evidence context</span>
+                            <div id="aiContextSummary"><span>Checking sample and publication mapping…</span></div>
+                        </section>
+
                         <fieldset class="ai-fieldset">
                             <legend>1. Select analysis results</legend>
                             <p class="help-text">A source becomes available after its result has loaded on this page.</p>
@@ -1156,18 +1177,27 @@
                                 <label><input type="radio" name="aiProvider" value="claude"><span>Claude<small>Sonnet 5</small></span></label>
                                 <label><input type="radio" name="aiProvider" value="gemini"><span>Gemini<small>3.5 Flash</small></span></label>
                             </div>
+                            <p class="help-text ai-provider-disclosure" id="aiProviderDisclosure"></p>
                         </fieldset>
+
+                        <label class="ai-search-option">
+                            <input type="checkbox" id="aiSearchCurrentLiterature" checked>
+                            <span><strong>Search current literature</strong><small>Enabled by default. OpenAI, Claude, and Gemini use their native search tools; DeepSeek uses scSAID’s PubMed/Europe PMC bridge.</small></span>
+                        </label>
 
                         <div class="ai-key-row">
                             <div class="control-group ai-key-control">
                                 <label class="panel-label" for="aiProviderKey">3. Provider API key</label>
-                                <input class="form-input" id="aiProviderKey" type="password" autocomplete="new-password" spellcheck="false" inputmode="text" placeholder="Key is used once and then cleared">
+                                <input class="form-input" id="aiProviderKey" type="password" autocomplete="off" spellcheck="false" inputmode="text" placeholder="Key is used once and then cleared">
                             </div>
                             <button type="button" class="btn-primary" id="aiInterpretRun">Generate interpretation</button>
                         </div>
                     </div>
 
-                    <div id="aiInterpretLoading" class="panel-loader ai-interpretation__loader" role="status" aria-label="Generating LLM interpretation" hidden></div>
+                    <div id="aiInterpretLoading" class="ai-interpretation__loading" role="status" aria-label="Generating LLM interpretation" hidden>
+                        <span class="panel-loader" aria-hidden="true"></span>
+                        <span id="aiInterpretProgress">Preparing the verified full paper…</span>
+                    </div>
                     <div id="aiInterpretError" class="status-error" role="alert" hidden></div>
 
                     <section id="aiInterpretResult" class="ai-result" hidden aria-live="polite">
@@ -1176,6 +1206,10 @@
                             <span class="ai-result__time"></span>
                         </header>
                         <div class="ai-result__content"></div>
+                        <section class="ai-result__web-sources" hidden>
+                            <h3>Current-literature sources</h3>
+                            <div class="ai-result__source-list"></div>
+                        </section>
                         <footer class="ai-result__footer">
                             <div class="ai-result__references"></div>
                             <button type="button" class="btn-ghost" id="aiInterpretReset">New interpretation</button>

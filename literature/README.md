@@ -41,9 +41,14 @@ python3 literature/build_registry.py \
 if a referenced PMID is missing from the supplied XML.
 
 Registry schema version 2 also includes one canonical metadata record per SAID
-and author abstracts parsed from the supplied PubMed XML. Maven packages only
-`registry.json` into the application classpath; the TSV files and per-paper
-directories remain the human-auditable source registry.
+and author abstracts parsed from the supplied PubMed XML.
+
+`build_sample_context.py` adds two runtime-safe indexes:
+
+- `sample_context.json` contains the exact GSM, SAMC, or HRR repository record
+  for every SAID. GSE descriptions are never used as a sample substitute.
+- `canonical_sample_papers.json` contains exactly one row per SAID and chooses a
+  paper only when its relation is `primary_dataset_publication`.
 
 ## Full text policy
 
@@ -76,3 +81,16 @@ Production stores the private corpus under `/srv/scsaid-literature/papers`,
 with registry indexes in `/srv/scsaid-literature/index` and reproducibility
 tools in `/srv/scsaid-literature/tools`. These directories are restricted to
 the server's `tomcat` account and are not exposed as public downloads.
+
+Owner-supplied lawful copies can be added without committing publisher files:
+
+```sh
+python3 literature/ingest_supplied_papers.py \
+  --source /path/to/private/pdfs \
+  --corpus /srv/scsaid-literature/papers
+python3 literature/build_full_text.py \
+  --corpus /srv/scsaid-literature/papers \
+  --output /srv/scsaid-literature/text
+python3 literature/verify_runtime_context.py \
+  --root /srv/scsaid-literature
+```

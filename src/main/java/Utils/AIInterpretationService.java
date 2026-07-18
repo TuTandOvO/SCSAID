@@ -3,13 +3,14 @@ package Utils;
 import com.google.gson.*;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 
-/** Builds a server-side scientific prompt and performs one transient provider call. */
+/** Builds a sample-resolved, full-paper scientific prompt and calls one provider. */
 public class AIInterpretationService {
     public static final String OPENAI_MODEL = "gpt-5-mini";
     public static final String DEEPSEEK_MODEL = "deepseek-v4-flash";
@@ -17,11 +18,9 @@ public class AIInterpretationService {
     public static final String GEMINI_MODEL = "gemini-3.5-flash";
 
     private static final int CONNECT_TIMEOUT_MS = 15_000;
-    // Stay below the common 60-second reverse-proxy default. This makes a slow
-    // provider fail cleanly through the application instead of leaving the
-    // browser with an opaque gateway timeout.
-    private static final int READ_TIMEOUT_MS = 55_000;
-    private static final int MAX_PROMPT_CHARS = 60_000;
+    private static final int READ_TIMEOUT_MS = 240_000;
+    private static final int MAX_RESPONSE_CHARS = 4_000_000;
+    private static final int MAX_SEARCH_USES = 3;
 
     private final Gson gson = new Gson();
     private final String openAiUrl;
@@ -29,222 +28,249 @@ public class AIInterpretationService {
     private final String claudeUrl;
     private final String geminiUrl;
     private final String systemPrompt;
-    private final Map<String, JsonObject> datasets = new HashMap<>();
-    private final Map<String, JsonObject> papers = new HashMap<>();
-    private final Map<String, List<JsonObject>> linksBySaid = new HashMap<>();
+    private final LiteratureContextRepository literature;
+    private final BiomedicalLiteratureSearch biomedicalSearch;
 
     public AIInterpretationService() throws IOException {
-        this("https://api.openai.com/v1/responses",
+        this(
+                "https://api.openai.com/v1/responses",
                 "https://api.deepseek.com/chat/completions",
                 "https://api.anthropic.com/v1/messages",
-                "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent");
+                "https://generativelanguage.googleapis.com/v1beta/models/"
+                        + GEMINI_MODEL + ":generateContent",
+                new LiteratureContextRepository(),
+                new BiomedicalLiteratureSearch()
+        );
     }
 
-    AIInterpretationService(String openAiUrl, String deepSeekUrl, String claudeUrl, String geminiUrl)
-            throws IOException {
+    AIInterpretationService(String openAiUrl, String deepSeekUrl, String claudeUrl,
+                            String geminiUrl, Path literatureRoot) throws IOException {
+        this(openAiUrl, deepSeekUrl, claudeUrl, geminiUrl,
+                new LiteratureContextRepository(literatureRoot),
+                new BiomedicalLiteratureSearch());
+    }
+
+    AIInterpretationService(String openAiUrl, String deepSeekUrl, String claudeUrl,
+                            String geminiUrl, LiteratureContextRepository literature,
+                            BiomedicalLiteratureSearch biomedicalSearch) throws IOException {
         this.openAiUrl = openAiUrl;
         this.deepSeekUrl = deepSeekUrl;
         this.claudeUrl = claudeUrl;
         this.geminiUrl = geminiUrl;
+        this.literature = literature;
+        this.biomedicalSearch = biomedicalSearch;
         this.systemPrompt = readResource("ai/interpretation-system.txt");
-        loadRegistry();
     }
 
-    public JsonObject interpret(String said, String provider, JsonArray sources, String apiKey)
+    public JsonObject contextSummary(String said) throws IOException {
+        return literature.publicSummary(said);
+    }
+
+    public JsonObject interpret(String said, String provider, JsonArray sources,
+                                String apiKey, boolean searchCurrentLiterature)
             throws IOException, ProviderException {
-        JsonObject dataset = datasets.get(said);
-        if (dataset == null) {
-            throw new IllegalArgumentException("Unknown dataset identifier.");
-        }
+        LiteratureContextRepository.Context context = literature.resolve(said);
+        String prompt = buildPrompt(context, sources, searchCurrentLiterature);
+        enforceContextLimit(provider, prompt.length());
 
-        PaperContext paperContext = selectPaperContext(said);
-        String prompt = buildPrompt(dataset, paperContext, sources);
-        if (prompt.length() > MAX_PROMPT_CHARS) {
-            throw new IllegalArgumentException("The selected results are too large to interpret together.");
-        }
-
+        ProviderResult providerResult;
         String model;
-        String interpretation;
-        if ("openai".equals(provider)) {
-            model = OPENAI_MODEL;
-            interpretation = callOpenAi(apiKey, prompt);
-        } else if ("deepseek".equals(provider)) {
-            model = DEEPSEEK_MODEL;
-            interpretation = callDeepSeek(apiKey, prompt);
-        } else if ("claude".equals(provider)) {
-            model = CLAUDE_MODEL;
-            interpretation = callClaude(apiKey, prompt);
-        } else if ("gemini".equals(provider)) {
-            model = GEMINI_MODEL;
-            interpretation = callGemini(apiKey, prompt);
-        } else {
-            throw new IllegalArgumentException("Unsupported provider.");
+        switch (provider) {
+            case "openai":
+                model = OPENAI_MODEL;
+                providerResult = callOpenAi(apiKey, prompt, searchCurrentLiterature);
+                break;
+            case "deepseek":
+                model = DEEPSEEK_MODEL;
+                providerResult = callDeepSeek(apiKey, prompt, searchCurrentLiterature);
+                break;
+            case "claude":
+                model = CLAUDE_MODEL;
+                providerResult = callClaude(apiKey, prompt, searchCurrentLiterature);
+                break;
+            case "gemini":
+                model = GEMINI_MODEL;
+                providerResult = callGemini(apiKey, prompt, searchCurrentLiterature);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported provider.");
         }
 
         JsonObject result = new JsonObject();
         result.addProperty("provider", provider);
         result.addProperty("model", model);
-        result.addProperty("interpretation", interpretation);
+        result.addProperty("interpretation", providerResult.text);
         result.addProperty("generatedAt", Instant.now().toString());
-        result.add("papers", paperContext.references);
-        result.addProperty("paperContextMode", paperContext.mode);
+        result.addProperty("searchCurrentLiterature", searchCurrentLiterature);
+        result.add("webSources", deduplicateSources(providerResult.sources));
+        result.add("searchSuggestions", providerResult.searchSuggestions.deepCopy());
+        result.add("publication", publicationReference(context.publication));
+        result.addProperty("paperContextMode",
+                context.publication == null ? "no-verified-primary" : "verified-primary-full-text");
         return result;
     }
 
-    private void loadRegistry() throws IOException {
-        JsonObject registry = JsonParser.parseString(readResource("literature/registry.json")).getAsJsonObject();
-        for (JsonElement item : registry.getAsJsonArray("datasets")) {
-            JsonObject dataset = item.getAsJsonObject();
-            datasets.put(dataset.get("said").getAsString(), dataset);
-        }
-        for (JsonElement item : registry.getAsJsonArray("papers")) {
-            JsonObject paper = item.getAsJsonObject();
-            papers.put(paper.get("paper_id").getAsString(), paper);
-        }
-        for (JsonElement item : registry.getAsJsonArray("dataset_paper_links")) {
-            JsonObject link = item.getAsJsonObject();
-            linksBySaid.computeIfAbsent(link.get("said").getAsString(), key -> new ArrayList<>()).add(link);
-        }
-    }
-
-    private String buildPrompt(JsonObject dataset, PaperContext paperContext, JsonArray sources) {
-        JsonObject compactDataset = new JsonObject();
-        for (String key : Arrays.asList("said", "study_accession", "sample_accession", "species", "cells",
-                "condition", "age", "sex", "tissue", "fine_cell_types", "gross_cell_types",
-                "study_title", "study_summary", "overall_design")) {
-            if (dataset.has(key)) compactDataset.add(key, dataset.get(key));
+    private String buildPrompt(LiteratureContextRepository.Context context,
+                               JsonArray sources, boolean searchEnabled) {
+        JsonObject publication = new JsonObject();
+        if (context.publication == null) {
+            publication.addProperty("status", "no_verified_primary_publication");
+        } else {
+            publication.addProperty("status", "verified_primary_full_text");
+            publication.add("citation", context.publication.deepCopy());
+            publication.addProperty("full_text", context.fullText);
         }
 
-        StringBuilder prompt = new StringBuilder(16_384);
-        prompt.append("Interpret the selected scSAID results for this dataset.\n\n")
-                .append("<dataset_context>\n").append(gson.toJson(compactDataset)).append("\n</dataset_context>\n\n")
-                .append("<publication_context mode=\"").append(paperContext.mode).append("\">\n")
-                .append(gson.toJson(paperContext.promptPapers)).append("\n</publication_context>\n\n")
-                .append("<scsaid_analysis_results>\n").append(gson.toJson(sources))
+        JsonObject searchPolicy = new JsonObject();
+        searchPolicy.addProperty("enabled", searchEnabled);
+        searchPolicy.addProperty(
+                "instruction",
+                searchEnabled
+                        ? "Search current literature when it materially improves interpretation. "
+                        + "Keep web findings separate and cite returned URLs, PMID, or DOI."
+                        : "Do not search online. Use only the supplied sample, publication, and analysis evidence."
+        );
+
+        StringBuilder prompt = new StringBuilder(64_000 + context.fullText.length());
+        prompt.append("Interpret the selected scSAID results for this exact sample.\n\n")
+                .append("<sample_context>\n")
+                .append(gson.toJson(context.sampleContext))
+                .append("\n</sample_context>\n\n")
+                .append("<scsaid_annotations>\n")
+                .append(gson.toJson(context.annotations))
+                .append("\n</scsaid_annotations>\n\n")
+                .append("<publication_context>\n")
+                .append(gson.toJson(publication))
+                .append("\n</publication_context>\n\n")
+                .append("<online_literature_policy>\n")
+                .append(gson.toJson(searchPolicy))
+                .append("\n</online_literature_policy>\n\n")
+                .append("<scsaid_analysis_results>\n")
+                .append(gson.toJson(sources))
                 .append("\n</scsaid_analysis_results>\n");
         return prompt.toString();
     }
 
-    private PaperContext selectPaperContext(String said) {
-        List<JsonObject> links = new ArrayList<>(linksBySaid.getOrDefault(said, Collections.emptyList()));
-        links.sort(Comparator.comparingInt(link -> relationRank(string(link, "relation"))));
-        JsonArray promptPapers = new JsonArray();
-        JsonArray references = new JsonArray();
-        Set<String> seen = new HashSet<>();
-        boolean hasAbstract = false;
-        for (JsonObject link : links) {
-            if (promptPapers.size() >= 2) break;
-            String relation = string(link, "relation");
-            if ("correction".equals(relation)) continue;
-            String paperId = string(link, "paper_id");
-            if (!seen.add(paperId)) continue;
-            JsonObject paper = papers.get(paperId);
-            if (paper == null) continue;
-
-            JsonObject context = new JsonObject();
-            for (String key : Arrays.asList("title", "pmid", "doi", "journal", "year", "abstract")) {
-                if (paper.has(key)) context.add(key, paper.get(key));
-            }
-            context.addProperty("relation", relation);
-            hasAbstract = hasAbstract || !string(paper, "abstract").trim().isEmpty();
-            promptPapers.add(context);
-
-            JsonObject reference = new JsonObject();
-            reference.addProperty("title", string(paper, "title"));
-            reference.addProperty("pmid", string(paper, "pmid"));
-            reference.addProperty("doi", string(paper, "doi"));
-            reference.addProperty("relation", relation);
-            references.add(reference);
+    private void enforceContextLimit(String provider, int characters) {
+        int limit;
+        switch (provider) {
+            case "deepseek":
+                limit = 480_000;
+                break;
+            case "openai":
+            case "claude":
+                limit = 700_000;
+                break;
+            case "gemini":
+                limit = 1_500_000;
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported provider.");
         }
-        return new PaperContext(promptPapers, references, hasAbstract ? "abstract-plus-geo" : "geo-fallback");
+        if (characters > limit) {
+            throw new IllegalArgumentException(
+                    "The complete paper and selected results exceed " + provider
+                            + " context capacity. Select fewer analysis results or choose another provider."
+            );
+        }
     }
 
-    private int relationRank(String relation) {
-        if ("primary_dataset_publication".equals(relation)) return 0;
-        if ("repository_linked_publication".equals(relation)) return 1;
-        if ("preprint".equals(relation)) return 2;
-        return 3;
-    }
-
-    private String callOpenAi(String apiKey, String prompt) throws IOException, ProviderException {
+    private ProviderResult callOpenAi(String apiKey, String prompt, boolean search)
+            throws IOException, ProviderException {
         JsonObject body = new JsonObject();
         body.addProperty("model", OPENAI_MODEL);
         body.addProperty("instructions", systemPrompt);
         body.addProperty("input", prompt);
         body.addProperty("store", false);
-        body.addProperty("max_output_tokens", 3000);
+        body.addProperty("max_output_tokens", 5000);
+        if (search) {
+            JsonArray tools = new JsonArray();
+            JsonObject webSearch = new JsonObject();
+            webSearch.addProperty("type", "web_search");
+            tools.add(webSearch);
+            body.add("tools", tools);
+        }
         JsonObject response = postJson(openAiUrl, body, "OpenAI",
                 Collections.singletonMap("Authorization", "Bearer " + apiKey));
         StringBuilder output = new StringBuilder();
-        JsonArray items = response.has("output") && response.get("output").isJsonArray()
-                ? response.getAsJsonArray("output") : new JsonArray();
+        JsonArray sources = new JsonArray();
+        JsonArray items = array(response, "output");
         for (JsonElement itemElement : items) {
+            if (!itemElement.isJsonObject()) continue;
             JsonObject item = itemElement.getAsJsonObject();
-            if (!item.has("content") || !item.get("content").isJsonArray()) continue;
-            for (JsonElement contentElement : item.getAsJsonArray("content")) {
+            for (JsonElement contentElement : array(item, "content")) {
+                if (!contentElement.isJsonObject()) continue;
                 JsonObject content = contentElement.getAsJsonObject();
                 if ("output_text".equals(string(content, "type")) && content.has("text")) {
-                    if (output.length() > 0) output.append('\n');
-                    output.append(content.get("text").getAsString());
+                    appendLine(output, content.get("text").getAsString());
+                }
+                for (JsonElement annotationElement : array(content, "annotations")) {
+                    if (!annotationElement.isJsonObject()) continue;
+                    JsonObject annotation = annotationElement.getAsJsonObject();
+                    JsonObject citation = annotation.has("url_citation")
+                            && annotation.get("url_citation").isJsonObject()
+                            ? annotation.getAsJsonObject("url_citation") : annotation;
+                    addSource(sources, string(citation, "title"), "OpenAI web search",
+                            "", "", string(citation, "url"), "openai");
                 }
             }
         }
         if (output.length() == 0) throw new ProviderException(502, "OpenAI returned no interpretation.");
-        return output.toString();
+        return new ProviderResult(output.toString(), sources);
     }
 
-    private String callDeepSeek(String apiKey, String prompt) throws IOException, ProviderException {
-        JsonObject body = new JsonObject();
-        body.addProperty("model", DEEPSEEK_MODEL);
-        JsonArray messages = new JsonArray();
-        messages.add(message("system", systemPrompt));
-        messages.add(message("user", prompt));
-        body.add("messages", messages);
-        JsonObject thinking = new JsonObject();
-        thinking.addProperty("type", "disabled");
-        body.add("thinking", thinking);
-        body.addProperty("max_tokens", 3000);
-        body.addProperty("stream", false);
-        JsonObject response = postJson(deepSeekUrl, body, "DeepSeek",
-                Collections.singletonMap("Authorization", "Bearer " + apiKey));
-        try {
-            String output = response.getAsJsonArray("choices").get(0).getAsJsonObject()
-                    .getAsJsonObject("message").get("content").getAsString();
-            if (output.trim().isEmpty()) throw new IllegalStateException();
-            return output;
-        } catch (RuntimeException ex) {
-            throw new ProviderException(502, "DeepSeek returned no interpretation.");
-        }
-    }
-
-    private String callClaude(String apiKey, String prompt) throws IOException, ProviderException {
+    private ProviderResult callClaude(String apiKey, String prompt, boolean search)
+            throws IOException, ProviderException {
         JsonObject body = new JsonObject();
         body.addProperty("model", CLAUDE_MODEL);
-        body.addProperty("max_tokens", 3000);
+        body.addProperty("max_tokens", 5000);
         body.addProperty("system", systemPrompt);
         JsonArray messages = new JsonArray();
         messages.add(message("user", prompt));
         body.add("messages", messages);
+        if (search) {
+            JsonArray tools = new JsonArray();
+            JsonObject webSearch = new JsonObject();
+            webSearch.addProperty("type", "web_search_20250305");
+            webSearch.addProperty("name", "web_search");
+            webSearch.addProperty("max_uses", 5);
+            tools.add(webSearch);
+            body.add("tools", tools);
+        }
 
         Map<String, String> headers = new LinkedHashMap<>();
         headers.put("x-api-key", apiKey);
         headers.put("anthropic-version", "2023-06-01");
         JsonObject response = postJson(claudeUrl, body, "Claude", headers);
         StringBuilder output = new StringBuilder();
-        JsonArray blocks = response.has("content") && response.get("content").isJsonArray()
-                ? response.getAsJsonArray("content") : new JsonArray();
-        for (JsonElement blockElement : blocks) {
+        JsonArray sources = new JsonArray();
+        for (JsonElement blockElement : array(response, "content")) {
+            if (!blockElement.isJsonObject()) continue;
             JsonObject block = blockElement.getAsJsonObject();
             if ("text".equals(string(block, "type")) && block.has("text")) {
-                if (output.length() > 0) output.append('\n');
-                output.append(block.get("text").getAsString());
+                appendLine(output, block.get("text").getAsString());
+            }
+            for (JsonElement citationElement : array(block, "citations")) {
+                if (!citationElement.isJsonObject()) continue;
+                JsonObject citation = citationElement.getAsJsonObject();
+                addSource(sources, string(citation, "title"), "Claude web search",
+                        "", "", first(string(citation, "url"), string(citation, "source")), "claude");
+            }
+            if ("web_search_tool_result".equals(string(block, "type"))) {
+                for (JsonElement resultElement : array(block, "content")) {
+                    if (!resultElement.isJsonObject()) continue;
+                    JsonObject item = resultElement.getAsJsonObject();
+                    addSource(sources, string(item, "title"), "Claude web search",
+                            "", "", string(item, "url"), "claude");
+                }
             }
         }
         if (output.length() == 0) throw new ProviderException(502, "Claude returned no interpretation.");
-        return output.toString();
+        return new ProviderResult(output.toString(), sources);
     }
 
-    private String callGemini(String apiKey, String prompt) throws IOException, ProviderException {
+    private ProviderResult callGemini(String apiKey, String prompt, boolean search)
+            throws IOException, ProviderException {
         JsonObject body = new JsonObject();
         JsonObject systemInstruction = new JsonObject();
         JsonArray systemParts = new JsonArray();
@@ -265,27 +291,132 @@ public class AIInterpretationService {
         contents.add(userContent);
         body.add("contents", contents);
         JsonObject generationConfig = new JsonObject();
-        generationConfig.addProperty("maxOutputTokens", 3000);
+        generationConfig.addProperty("maxOutputTokens", 5000);
         body.add("generationConfig", generationConfig);
+        if (search) {
+            JsonArray tools = new JsonArray();
+            JsonObject tool = new JsonObject();
+            tool.add("google_search", new JsonObject());
+            tools.add(tool);
+            body.add("tools", tools);
+        }
 
         JsonObject response = postJson(geminiUrl, body, "Gemini",
                 Collections.singletonMap("x-goog-api-key", apiKey));
         StringBuilder output = new StringBuilder();
+        JsonArray sources = new JsonArray();
+        JsonArray queries = new JsonArray();
         try {
-            JsonArray parts = response.getAsJsonArray("candidates").get(0).getAsJsonObject()
-                    .getAsJsonObject("content").getAsJsonArray("parts");
-            for (JsonElement partElement : parts) {
+            JsonObject candidate = response.getAsJsonArray("candidates").get(0).getAsJsonObject();
+            for (JsonElement partElement : candidate.getAsJsonObject("content").getAsJsonArray("parts")) {
                 JsonObject part = partElement.getAsJsonObject();
-                if (part.has("text")) {
-                    if (output.length() > 0) output.append('\n');
-                    output.append(part.get("text").getAsString());
+                if (part.has("text")) appendLine(output, part.get("text").getAsString());
+            }
+            if (candidate.has("groundingMetadata")) {
+                JsonObject grounding = candidate.getAsJsonObject("groundingMetadata");
+                for (JsonElement chunkElement : array(grounding, "groundingChunks")) {
+                    if (!chunkElement.isJsonObject()) continue;
+                    JsonObject chunk = chunkElement.getAsJsonObject();
+                    JsonObject web = chunk.has("web") && chunk.get("web").isJsonObject()
+                            ? chunk.getAsJsonObject("web") : chunk;
+                    addSource(sources, string(web, "title"), "Google Search",
+                            "", "", string(web, "uri"), "gemini");
+                }
+                for (JsonElement query : array(grounding, "webSearchQueries")) {
+                    if (query.isJsonPrimitive()) queries.add(query.getAsString());
                 }
             }
         } catch (RuntimeException ignored) {
-            // Normalized below so provider payload details are not exposed to the browser.
+            // Normalized below; provider payload details never reach the browser.
         }
         if (output.length() == 0) throw new ProviderException(502, "Gemini returned no interpretation.");
-        return output.toString();
+        return new ProviderResult(output.toString(), sources, queries);
+    }
+
+    private ProviderResult callDeepSeek(String apiKey, String prompt, boolean search)
+            throws IOException, ProviderException {
+        JsonArray messages = new JsonArray();
+        messages.add(message("system", systemPrompt));
+        messages.add(message("user", prompt));
+        JsonArray accumulatedSources = new JsonArray();
+
+        for (int use = 0; use <= MAX_SEARCH_USES; use++) {
+            JsonObject body = new JsonObject();
+            body.addProperty("model", DEEPSEEK_MODEL);
+            body.add("messages", messages.deepCopy());
+            JsonObject thinking = new JsonObject();
+            thinking.addProperty("type", "disabled");
+            body.add("thinking", thinking);
+            body.addProperty("max_tokens", 5000);
+            body.addProperty("stream", false);
+            if (search) body.add("tools", deepSeekSearchTools());
+
+            JsonObject response = postJson(deepSeekUrl, body, "DeepSeek",
+                    Collections.singletonMap("Authorization", "Bearer " + apiKey));
+            JsonObject assistant;
+            try {
+                assistant = response.getAsJsonArray("choices").get(0).getAsJsonObject()
+                        .getAsJsonObject("message");
+            } catch (RuntimeException ex) {
+                throw new ProviderException(502, "DeepSeek returned no interpretation.");
+            }
+            JsonArray toolCalls = array(assistant, "tool_calls");
+            if (!search || toolCalls.size() == 0) {
+                String output = string(assistant, "content");
+                if (output.trim().isEmpty()) {
+                    throw new ProviderException(502, "DeepSeek returned no interpretation.");
+                }
+                return new ProviderResult(output, accumulatedSources);
+            }
+            if (use == MAX_SEARCH_USES) {
+                throw new ProviderException(502, "DeepSeek exceeded the literature-search limit.");
+            }
+            messages.add(assistant.deepCopy());
+            for (JsonElement callElement : toolCalls) {
+                JsonObject call = callElement.getAsJsonObject();
+                JsonObject function = call.getAsJsonObject("function");
+                if (!"search_biomedical_literature".equals(string(function, "name"))) continue;
+                String query;
+                try {
+                    query = JsonParser.parseString(string(function, "arguments"))
+                            .getAsJsonObject().get("query").getAsString();
+                } catch (RuntimeException ex) {
+                    throw new ProviderException(502, "DeepSeek requested an invalid literature search.");
+                }
+                BiomedicalLiteratureSearch.SearchResult searched = biomedicalSearch.search(query);
+                accumulatedSources.addAll(searched.sources);
+                JsonObject toolMessage = message("tool", searched.toolJson);
+                toolMessage.addProperty("tool_call_id", string(call, "id"));
+                messages.add(toolMessage);
+            }
+        }
+        throw new ProviderException(502, "DeepSeek could not complete the interpretation.");
+    }
+
+    private JsonArray deepSeekSearchTools() {
+        JsonObject parameters = new JsonObject();
+        parameters.addProperty("type", "object");
+        JsonObject properties = new JsonObject();
+        JsonObject query = new JsonObject();
+        query.addProperty("type", "string");
+        query.addProperty("description", "A concise biomedical literature query.");
+        properties.add("query", query);
+        parameters.add("properties", properties);
+        JsonArray required = new JsonArray();
+        required.add("query");
+        parameters.add("required", required);
+
+        JsonObject function = new JsonObject();
+        function.addProperty("name", "search_biomedical_literature");
+        function.addProperty("description",
+                "Search current PubMed-indexed biomedical literature through Europe PMC.");
+        function.add("parameters", parameters);
+        JsonObject tool = new JsonObject();
+        tool.addProperty("type", "function");
+        tool.add("function", function);
+        JsonArray tools = new JsonArray();
+        tools.add(tool);
+        return tools;
     }
 
     private JsonObject postJson(String endpoint, JsonObject body, String providerName,
@@ -308,13 +439,25 @@ public class AIInterpretationService {
         }
 
         int status = connection.getResponseCode();
-        InputStream stream = status >= 200 && status < 300 ? connection.getInputStream() : connection.getErrorStream();
-        String responseBody = stream == null ? "" : readLimited(stream, 1_000_000);
+        InputStream stream = status >= 200 && status < 300
+                ? connection.getInputStream() : connection.getErrorStream();
+        String responseBody = stream == null ? "" : readLimited(stream, MAX_RESPONSE_CHARS);
         connection.disconnect();
         if (status < 200 || status >= 300) {
-            if (status == 401 || status == 403) throw new ProviderException(401, providerName + " rejected the API key.");
-            if (status == 402) throw new ProviderException(402, providerName + " reports insufficient account credit.");
-            if (status == 429) throw new ProviderException(429, providerName + " rate-limited the request. Please try again later.");
+            if (status == 401 || status == 403) {
+                throw new ProviderException(401, providerName + " rejected the API key.");
+            }
+            if (status == 402) {
+                throw new ProviderException(402, providerName + " reports insufficient account credit.");
+            }
+            if (status == 413) {
+                throw new ProviderException(413,
+                        providerName + " rejected the complete paper because the request is too large.");
+            }
+            if (status == 429) {
+                throw new ProviderException(429,
+                        providerName + " rate-limited the request. Please try again later.");
+            }
             throw new ProviderException(502, providerName + " could not complete the request.");
         }
         try {
@@ -322,6 +465,46 @@ public class AIInterpretationService {
         } catch (RuntimeException ex) {
             throw new ProviderException(502, providerName + " returned an unreadable response.");
         }
+    }
+
+    private JsonObject publicationReference(JsonObject publication) {
+        JsonObject reference = new JsonObject();
+        if (publication == null) {
+            reference.addProperty("status", "no_verified_primary");
+            return reference;
+        }
+        reference.addProperty("status", "verified_primary");
+        for (String key : Arrays.asList("title", "pmid", "doi", "journal", "year")) {
+            if (publication.has(key)) reference.add(key, publication.get(key).deepCopy());
+        }
+        return reference;
+    }
+
+    private JsonArray deduplicateSources(JsonArray sources) {
+        JsonArray result = new JsonArray();
+        Set<String> seen = new LinkedHashSet<>();
+        for (JsonElement element : sources) {
+            if (!element.isJsonObject()) continue;
+            JsonObject source = element.getAsJsonObject();
+            String key = first(string(source, "url"), string(source, "doi"),
+                    string(source, "pmid"), string(source, "title"));
+            if (!key.isEmpty() && seen.add(key)) result.add(source);
+        }
+        return result;
+    }
+
+    private void addSource(JsonArray target, String title, String source, String pmid,
+                           String doi, String url, String provider) {
+        if (url == null || !url.matches("https://.+")) return;
+        JsonObject item = new JsonObject();
+        item.addProperty("title", title == null || title.trim().isEmpty() ? url : title);
+        item.addProperty("source", source);
+        item.addProperty("pmid", pmid);
+        item.addProperty("doi", doi);
+        item.addProperty("url", url);
+        item.addProperty("provider", provider);
+        item.addProperty("retrievedAt", LocalDate.now().toString());
+        target.add(item);
     }
 
     private JsonObject message(String role, String content) {
@@ -334,35 +517,60 @@ public class AIInterpretationService {
     private String readResource(String path) throws IOException {
         InputStream stream = AIInterpretationService.class.getClassLoader().getResourceAsStream(path);
         if (stream == null) throw new FileNotFoundException("Missing application resource: " + path);
-        return readLimited(stream, 8_000_000);
+        return readLimited(stream, 1_000_000);
     }
 
     private String readLimited(InputStream stream, int limit) throws IOException {
         try (Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-            char[] buffer = new char[4096];
+            char[] buffer = new char[8192];
             StringBuilder value = new StringBuilder();
             int count;
             while ((count = reader.read(buffer)) != -1) {
-                if (value.length() + count > limit) throw new IOException("Response exceeded the allowed size.");
+                if (value.length() + count > limit) {
+                    throw new IOException("Provider response exceeded the allowed size.");
+                }
                 value.append(buffer, 0, count);
             }
             return value.toString();
         }
     }
 
-    private static String string(JsonObject object, String key) {
-        return object.has(key) && !object.get(key).isJsonNull() ? object.get(key).getAsString() : "";
+    private static JsonArray array(JsonObject object, String key) {
+        return object != null && object.has(key) && object.get(key).isJsonArray()
+                ? object.getAsJsonArray(key) : new JsonArray();
     }
 
-    private static final class PaperContext {
-        final JsonArray promptPapers;
-        final JsonArray references;
-        final String mode;
+    private static String string(JsonObject object, String key) {
+        return object != null && object.has(key) && !object.get(key).isJsonNull()
+                ? object.get(key).getAsString() : "";
+    }
 
-        PaperContext(JsonArray promptPapers, JsonArray references, String mode) {
-            this.promptPapers = promptPapers;
-            this.references = references;
-            this.mode = mode;
+    private static String first(String... values) {
+        for (String value : values) {
+            if (value != null && !value.trim().isEmpty()) return value;
+        }
+        return "";
+    }
+
+    private static void appendLine(StringBuilder target, String value) {
+        if (value == null || value.trim().isEmpty()) return;
+        if (target.length() > 0) target.append('\n');
+        target.append(value);
+    }
+
+    private static final class ProviderResult {
+        final String text;
+        final JsonArray sources;
+        final JsonArray searchSuggestions;
+
+        ProviderResult(String text, JsonArray sources) {
+            this(text, sources, new JsonArray());
+        }
+
+        ProviderResult(String text, JsonArray sources, JsonArray searchSuggestions) {
+            this.text = text;
+            this.sources = sources;
+            this.searchSuggestions = searchSuggestions;
         }
     }
 

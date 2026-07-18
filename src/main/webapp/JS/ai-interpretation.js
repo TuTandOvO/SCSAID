@@ -10,6 +10,12 @@
         enrichment: "Enrichment analysis",
         regulatory_network: "Regulatory network"
     };
+    var providerDisclosures = {
+        openai: "OpenAI API data is not used for training by default; standard abuse-monitoring retention may apply unless eligible account controls are enabled.",
+        claude: "Anthropic API retention follows your organization’s agreement; default retention and optional zero-data-retention arrangements may differ.",
+        gemini: "Gemini handling differs between paid and unpaid services. Google Search grounding has additional processing and display requirements.",
+        deepseek: "DeepSeek may process data in the People’s Republic of China and may use submitted content for model improvement under its current policy unless applicable controls are exercised."
+    };
 
     function clone(value) {
         try { return JSON.parse(JSON.stringify(value)); }
@@ -42,8 +48,8 @@
         return element;
     }
 
-    // Purposefully small Markdown renderer. Every provider character is assigned
-    // through textContent, so model output can never create executable markup.
+    // Provider output is assigned only through text nodes. This deliberately
+    // supports only the small Markdown subset needed by the response template.
     function renderSafeMarkdown(container, markdown) {
         container.replaceChildren();
         var lines = String(markdown || "").replace(/\r/g, "").split("\n");
@@ -92,12 +98,22 @@
         flushCode();
     }
 
-    function setBusy(card, busy) {
+    function safeHttpsUrl(value) {
+        try {
+            var parsed = new URL(String(value || ""), window.location.href);
+            return parsed.protocol === "https:" ? parsed.href : "";
+        } catch (error) {
+            return "";
+        }
+    }
+
+    function setBusy(card, busy, progress) {
         var run = card.querySelector("#aiInterpretRun");
-        var loader = card.querySelector("#aiInterpretLoading");
+        var loading = card.querySelector("#aiInterpretLoading");
         run.disabled = busy;
-        loader.hidden = !busy;
+        loading.hidden = !busy;
         card.setAttribute("aria-busy", busy ? "true" : "false");
+        if (progress) card.querySelector("#aiInterpretProgress").textContent = progress;
     }
 
     function showError(card, message) {
@@ -106,9 +122,49 @@
         error.hidden = false;
     }
 
+    function fetchJson(url, options) {
+        return fetch(url, options || {}).then(function (response) {
+            return response.json().catch(function () { return {}; }).then(function (data) {
+                if (!response.ok) {
+                    var problem = new Error(data.error || "The interpretation request failed.");
+                    problem.status = response.status;
+                    throw problem;
+                }
+                return data;
+            });
+        });
+    }
+
+    function renderContextSummary(card, context) {
+        var container = card.querySelector("#aiContextSummary");
+        container.replaceChildren();
+        appendText(container, "strong", context.sampleAccession || card.dataset.said);
+        appendText(container, "span", context.repository || "Exact sample record");
+        var sampleUrl = safeHttpsUrl(context.sampleSourceUrl);
+        if (sampleUrl) {
+            var sampleLink = appendText(container, "a", "Repository record");
+            sampleLink.href = sampleUrl;
+            sampleLink.target = "_blank";
+            sampleLink.rel = "noopener noreferrer";
+        }
+        if (context.hasVerifiedPrimaryPaper && context.publication) {
+            appendText(container, "span", context.publication.title || "Verified primary publication");
+            var paperUrl = context.publication.pmid
+                ? "https://pubmed.ncbi.nlm.nih.gov/" + encodeURIComponent(context.publication.pmid) + "/"
+                : "https://doi.org/" + encodeURIComponent(context.publication.doi || "");
+            var paperLink = appendText(container, "a",
+                context.publication.pmid ? "PMID " + context.publication.pmid : "DOI " + context.publication.doi);
+            paperLink.href = paperUrl;
+            paperLink.target = "_blank";
+            paperLink.rel = "noopener noreferrer";
+        } else {
+            appendText(container, "span",
+                "No verified primary publication — interpretation will not substitute an ambiguous paper.");
+        }
+    }
+
     function renderResult(card, result) {
         var panel = card.querySelector("#aiInterpretResult");
-        var content = panel.querySelector(".ai-result__content");
         var providerNames = {
             openai: "OpenAI",
             deepseek: "DeepSeek",
@@ -117,23 +173,86 @@
         };
         panel.querySelector(".ai-result__provider").textContent =
             (providerNames[result.provider] || result.provider) + " · " + result.model;
-        panel.querySelector(".ai-result__time").textContent = new Date(result.generatedAt).toLocaleString();
-        renderSafeMarkdown(content, result.interpretation);
+        panel.querySelector(".ai-result__time").textContent =
+            new Date(result.generatedAt).toLocaleString();
+        renderSafeMarkdown(panel.querySelector(".ai-result__content"), result.interpretation);
 
         var references = panel.querySelector(".ai-result__references");
         references.replaceChildren();
-        (result.papers || []).forEach(function (paper) {
-            var link = document.createElement("a");
+        var publication = result.publication || {};
+        if (publication.status === "verified_primary") {
+            var paperLink = document.createElement("a");
+            paperLink.target = "_blank";
+            paperLink.rel = "noopener noreferrer";
+            paperLink.href = publication.pmid
+                ? "https://pubmed.ncbi.nlm.nih.gov/" + encodeURIComponent(publication.pmid) + "/"
+                : "https://doi.org/" + encodeURIComponent(publication.doi || "");
+            paperLink.textContent = publication.pmid
+                ? "Verified primary paper · PMID " + publication.pmid
+                : "Verified primary paper · DOI " + publication.doi;
+            references.appendChild(paperLink);
+        } else {
+            appendText(references, "span", "No verified primary publication was supplied.");
+        }
+
+        var sourceSection = panel.querySelector(".ai-result__web-sources");
+        var sourceList = panel.querySelector(".ai-result__source-list");
+        sourceList.replaceChildren();
+        (result.webSources || []).forEach(function (source) {
+            var url = safeHttpsUrl(source.url);
+            if (!url) return;
+            var row = document.createElement("div");
+            var link = appendText(row, "a", source.title || url);
+            link.href = url;
             link.target = "_blank";
             link.rel = "noopener noreferrer";
-            link.href = paper.pmid ? "https://pubmed.ncbi.nlm.nih.gov/" + encodeURIComponent(paper.pmid) + "/"
-                : "https://doi.org/" + encodeURIComponent(paper.doi || "");
-            link.textContent = paper.pmid ? "PMID " + paper.pmid : "DOI " + paper.doi;
-            references.appendChild(link);
+            var identity = source.pmid ? "PMID " + source.pmid
+                : (source.doi ? "DOI " + source.doi : source.source || "");
+            if (identity) appendText(row, "small", " · " + identity);
+            sourceList.appendChild(row);
         });
-        if (!references.childNodes.length) appendText(references, "span", "GEO study context used; no linked abstract was available.");
+        (result.searchSuggestions || []).forEach(function (query) {
+            var row = document.createElement("div");
+            appendText(row, "small", "Google Search suggestion · " + query);
+            sourceList.appendChild(row);
+        });
+        sourceSection.hidden = !sourceList.childNodes.length;
         panel.hidden = false;
         panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function delay(milliseconds) {
+        return new Promise(function (resolve) { window.setTimeout(resolve, milliseconds); });
+    }
+
+    function pollJob(card, jobId) {
+        var started = Date.now();
+        function next() {
+            var query = "?action=status&jobId=" + encodeURIComponent(jobId)
+                + "&csrfToken=" + encodeURIComponent(card.dataset.csrf);
+            return fetchJson(card.dataset.endpoint + query, {
+                credentials: "same-origin",
+                cache: "no-store"
+            }).then(function (status) {
+                setBusy(card, true, status.progress || "Generating interpretation…");
+                if (status.status === "completed") {
+                    return fetchJson(card.dataset.endpoint + "?action=result&jobId="
+                        + encodeURIComponent(jobId) + "&csrfToken="
+                        + encodeURIComponent(card.dataset.csrf), {
+                        credentials: "same-origin",
+                        cache: "no-store"
+                    });
+                }
+                if (status.status === "failed") {
+                    throw new Error(status.error || "The interpretation job failed.");
+                }
+                if (Date.now() - started > 20 * 60 * 1000) {
+                    throw new Error("The interpretation is still running. Please try again shortly.");
+                }
+                return delay(1500).then(next);
+            });
+        }
+        return next();
     }
 
     function init() {
@@ -141,20 +260,46 @@
         if (!card) return;
         var activate = card.querySelector("#aiInterpretActivate");
         var gate = card.querySelector("#aiPrivacyGate");
-        var consent = card.querySelector("#aiPrivacyConsent");
+        var privacyConsent = card.querySelector("#aiPrivacyConsent");
+        var publicationConsent = card.querySelector("#aiPublicationConsent");
         var workspace = card.querySelector("#aiInterpretWorkspace");
         var run = card.querySelector("#aiInterpretRun");
         var keyInput = card.querySelector("#aiProviderKey");
+        var disclosure = card.querySelector("#aiProviderDisclosure");
+
+        function updateConsentGate() {
+            workspace.hidden = !(privacyConsent.checked && publicationConsent.checked);
+            if (!workspace.hidden) keyInput.focus();
+        }
+
+        function updateProviderDisclosure() {
+            var selected = card.querySelector('input[name="aiProvider"]:checked');
+            disclosure.textContent = selected ? providerDisclosures[selected.value] || "" : "";
+        }
+
+        fetchJson(card.dataset.endpoint + "?action=context&said="
+            + encodeURIComponent(card.dataset.said), {
+            credentials: "same-origin",
+            cache: "no-store"
+        }).then(function (context) {
+            renderContextSummary(card, context);
+        }).catch(function (error) {
+            card.querySelector("#aiContextSummary").textContent =
+                error.message || "Sample context is temporarily unavailable.";
+        });
 
         activate.addEventListener("click", function () {
             activate.closest(".ai-intro").hidden = true;
             gate.hidden = false;
-            consent.focus();
+            privacyConsent.focus();
         });
-        consent.addEventListener("change", function () {
-            workspace.hidden = !consent.checked;
-            if (consent.checked) keyInput.focus();
+        privacyConsent.addEventListener("change", updateConsentGate);
+        publicationConsent.addEventListener("change", updateConsentGate);
+        card.querySelectorAll('input[name="aiProvider"]').forEach(function (input) {
+            input.addEventListener("change", updateProviderDisclosure);
         });
+        updateProviderDisclosure();
+
         card.querySelector("#aiInterpretReset").addEventListener("click", function () {
             card.querySelector("#aiInterpretResult").hidden = true;
             card.querySelector("#aiInterpretError").hidden = true;
@@ -171,19 +316,31 @@
             card.querySelector("#aiInterpretError").hidden = true;
             card.querySelector("#aiInterpretResult").hidden = true;
 
-            if (!selected.length) { showError(card, "Select at least one ready analysis result."); return; }
-            if (!providerInput) { showError(card, "Choose an LLM provider."); return; }
-            if (key.length < 8) { showError(card, "Enter the API key for the selected provider."); return; }
+            if (!selected.length) {
+                showError(card, "Select at least one ready analysis result."); return;
+            }
+            if (!providerInput) {
+                showError(card, "Choose an LLM provider."); return;
+            }
+            if (key.length < 8) {
+                showError(card, "Enter the API key for the selected provider."); return;
+            }
+            if (!privacyConsent.checked || !publicationConsent.checked) {
+                showError(card, "Both consent confirmations are required."); return;
+            }
 
             var payload = {
                 said: card.dataset.said,
                 provider: providerInput.value,
                 consentVersion: card.dataset.consentVersion,
+                privacyConsent: true,
+                publicationRightsConfirmed: true,
+                searchCurrentLiterature: card.querySelector("#aiSearchCurrentLiterature").checked,
                 csrfToken: card.dataset.csrf,
                 sources: selected
             };
-            setBusy(card, true);
-            var request = fetch(card.dataset.endpoint, {
+            setBusy(card, true, "Queuing the full-paper interpretation…");
+            var request = fetchJson(card.dataset.endpoint, {
                 method: "POST",
                 credentials: "same-origin",
                 cache: "no-store",
@@ -196,11 +353,8 @@
             keyInput.value = "";
             key = null;
 
-            request.then(function (response) {
-                return response.json().catch(function () { return {}; }).then(function (data) {
-                    if (!response.ok) throw new Error(data.error || "The interpretation request failed.");
-                    return data;
-                });
+            request.then(function (accepted) {
+                return pollJob(card, accepted.jobId);
             }).then(function (result) {
                 renderResult(card, result);
             }).catch(function (error) {
@@ -211,7 +365,13 @@
         });
     }
 
-    window.ScsaidAIInterpretation = { publish: publish, renderSafeMarkdown: renderSafeMarkdown };
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-    else init();
+    window.ScsaidAIInterpretation = {
+        publish: publish,
+        renderSafeMarkdown: renderSafeMarkdown
+    };
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
 }());

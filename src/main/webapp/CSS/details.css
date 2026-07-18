@@ -1572,6 +1572,25 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 
 .ai-privacy h3 { margin: 0 0 var(--space-md); font-size: 1.15rem; font-weight: 600; }
 .ai-privacy p { max-width: 78ch; margin: 0 0 var(--space-md); color: var(--text-secondary); }
+.ai-policy-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    margin: 0 0 var(--space-lg);
+    font-size: 0.76rem;
+}
+.ai-policy-links a { color: var(--color-secondary-dark); }
+.ai-provider-terms {
+    display: grid;
+    gap: 0.35rem;
+    max-width: 82ch;
+    margin: 0 0 var(--space-lg);
+    padding-left: 1.15rem;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+.ai-provider-terms strong { color: var(--text-primary); font-weight: 600; }
 
 .ai-consent {
     display: flex;
@@ -1582,6 +1601,7 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
     color: var(--ai-ink);
     font-weight: 600;
 }
+.ai-consent + .ai-consent { margin-top: var(--space-md); }
 
 .ai-consent input,
 .ai-source input {
@@ -1593,6 +1613,22 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 }
 
 .ai-workspace { display: grid; gap: var(--space-xl); }
+
+.ai-context-summary {
+    padding: var(--space-lg);
+    border: 1px solid var(--border-light);
+    background: var(--bg-muted);
+}
+.ai-context-summary #aiContextSummary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.8rem;
+    margin-top: 0.4rem;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+.ai-context-summary strong { color: var(--text-primary); font-weight: 600; }
+.ai-context-summary a { color: var(--color-secondary-dark); }
 
 .ai-fieldset {
     min-width: 0;
@@ -1660,6 +1696,26 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .ai-provider-options input:checked + span { background: var(--color-secondary); color: #fff; }
 .ai-provider-options input:checked + span small { color: rgba(255,255,255,0.78); }
 .ai-provider-options input:focus-visible + span { outline: 2px solid var(--color-secondary); outline-offset: 2px; }
+.ai-provider-disclosure { max-width: 72ch; margin: var(--space-sm) 0 0; }
+
+.ai-search-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    max-width: 54rem;
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--border-light);
+    cursor: pointer;
+}
+.ai-search-option input {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.18rem;
+    accent-color: var(--color-secondary);
+}
+.ai-search-option > span { display: grid; gap: 0.2rem; }
+.ai-search-option strong { font-size: 0.86rem; font-weight: 600; }
+.ai-search-option small { color: var(--text-muted); font-size: 0.75rem; line-height: 1.45; }
 
 .ai-key-row {
     display: grid;
@@ -1670,7 +1726,17 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .ai-key-control { margin: 0; }
 .ai-key-control .form-input { width: 100%; }
 
-.ai-interpretation__loader { min-height: 9rem; }
+.ai-interpretation__loading {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-md);
+    min-height: 9rem;
+    align-content: center;
+    color: var(--text-secondary);
+    text-align: center;
+}
+.ai-interpretation__loading[hidden] { display: none; }
+.ai-interpretation__loading .panel-loader { min-height: 3rem; }
 
 .ai-result {
     border: 1px solid var(--border-medium);
@@ -1705,6 +1771,26 @@ table.dataTable td.num { font-family: var(--font-mono); font-size: 0.85rem; }
 .ai-result__content ul { margin: 0 0 1rem; padding-left: 1.25rem; }
 .ai-result__content li + li { margin-top: 0.35rem; }
 .ai-result__content pre { padding: var(--space-md); overflow-x: auto; background: var(--bg-dark); color: var(--text-inverse); }
+
+.ai-result__web-sources {
+    padding: 0 var(--space-xl) var(--space-xl);
+}
+.ai-result__web-sources h3 {
+    margin: 0 0 var(--space-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.ai-result__source-list {
+    display: grid;
+    gap: 0.45rem;
+}
+.ai-result__source-list a {
+    width: fit-content;
+    color: var(--color-secondary-dark);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+}
+.ai-result__source-list small { color: var(--text-muted); }
 
 .ai-result__footer { border-top: 1px solid var(--border-light); }
 .ai-result__references { display: flex; flex-wrap: wrap; gap: 0.45rem 0.9rem; color: var(--text-muted); font-size: 0.78rem; }

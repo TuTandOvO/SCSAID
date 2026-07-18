@@ -4,15 +4,20 @@ import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AIInterpretationServiceTest {
+    @TempDir
+    Path literatureRoot;
     private HttpServer server;
     private String baseUrl;
     private final AtomicReference<String> authorization = new AtomicReference<>();
@@ -22,6 +27,13 @@ class AIInterpretationServiceTest {
 
     @BeforeEach
     void startServer() throws IOException {
+        Files.createDirectories(literatureRoot.resolve("text"));
+        Files.writeString(
+                literatureRoot.resolve("text/PMID_39483478.txt"),
+                "Paper ID: PMID_39483478\nPMID: 39483478\nDOI: 10.3389/fimmu.2024.1444777\n"
+                        + "Complete canonical article text. ".repeat(100),
+                StandardCharsets.UTF_8
+        );
         server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         baseUrl = "http://127.0.0.1:" + server.getAddress().getPort();
         server.start();
@@ -39,7 +51,7 @@ class AIInterpretationServiceTest {
         AIInterpretationService service = service();
         String secret = "sk-test-secret-never-log";
 
-        JsonObject result = service.interpret("SAID001", "openai", sourcePayload(), secret);
+        JsonObject result = service.interpret("SAID001", "openai", sourcePayload(), secret, false);
 
         assertEquals("Bearer " + secret, authorization.get());
         assertFalse(requestBody.get().contains(secret));
@@ -47,7 +59,12 @@ class AIInterpretationServiceTest {
         assertEquals(AIInterpretationService.OPENAI_MODEL, upstream.get("model").getAsString());
         assertFalse(upstream.get("store").getAsBoolean());
         assertTrue(upstream.get("input").getAsString().contains("SAID001"));
-        assertTrue(upstream.get("input").getAsString().contains("publication_context"));
+        String prompt = upstream.get("input").getAsString();
+        assertTrue(prompt.contains("<sample_context>"));
+        assertTrue(prompt.contains("\"sample_accession\":\"GSM8316001\""));
+        assertTrue(prompt.contains("Complete canonical article text"));
+        assertFalse(prompt.contains("\"study_summary\""));
+        assertTrue(prompt.contains("<publication_context>"));
         assertEquals("## Executive interpretation\nResult", result.get("interpretation").getAsString());
         assertFalse(result.toString().contains(secret));
     }
@@ -58,7 +75,8 @@ class AIInterpretationServiceTest {
                 "{\"choices\":[{\"message\":{\"content\":\"## Executive interpretation\\nDeepSeek result\"}}]}"));
         AIInterpretationService service = service();
 
-        JsonObject result = service.interpret("SAID001", "deepseek", sourcePayload(), "sk-deepseek-test");
+        JsonObject result = service.interpret(
+                "SAID001", "deepseek", sourcePayload(), "sk-deepseek-test", false);
 
         JsonObject upstream = JsonParser.parseString(requestBody.get()).getAsJsonObject();
         assertEquals(AIInterpretationService.DEEPSEEK_MODEL, upstream.get("model").getAsString());
@@ -74,7 +92,7 @@ class AIInterpretationServiceTest {
         AIInterpretationService service = service();
         String secret = "sk-ant-test-secret";
 
-        JsonObject result = service.interpret("SAID001", "claude", sourcePayload(), secret);
+        JsonObject result = service.interpret("SAID001", "claude", sourcePayload(), secret, true);
 
         assertEquals(secret, providerKey.get());
         assertEquals("2023-06-01", anthropicVersion.get());
@@ -82,6 +100,8 @@ class AIInterpretationServiceTest {
         assertFalse(requestBody.get().contains(secret));
         JsonObject upstream = JsonParser.parseString(requestBody.get()).getAsJsonObject();
         assertEquals(AIInterpretationService.CLAUDE_MODEL, upstream.get("model").getAsString());
+        assertEquals("web_search_20250305", upstream.getAsJsonArray("tools").get(0)
+                .getAsJsonObject().get("type").getAsString());
         assertTrue(upstream.get("system").getAsString().contains("computational skin biologist"));
         assertEquals("user", upstream.getAsJsonArray("messages").get(0).getAsJsonObject()
                 .get("role").getAsString());
@@ -96,7 +116,7 @@ class AIInterpretationServiceTest {
         AIInterpretationService service = service();
         String secret = "AIza-test-secret";
 
-        JsonObject result = service.interpret("SAID001", "gemini", sourcePayload(), secret);
+        JsonObject result = service.interpret("SAID001", "gemini", sourcePayload(), secret, true);
 
         assertEquals(secret, providerKey.get());
         assertNull(authorization.get());
@@ -106,7 +126,8 @@ class AIInterpretationServiceTest {
                 .get(0).getAsJsonObject().get("text").getAsString().contains("computational skin biologist"));
         assertEquals("user", upstream.getAsJsonArray("contents").get(0).getAsJsonObject()
                 .get("role").getAsString());
-        assertEquals(3000, upstream.getAsJsonObject("generationConfig").get("maxOutputTokens").getAsInt());
+        assertEquals(5000, upstream.getAsJsonObject("generationConfig").get("maxOutputTokens").getAsInt());
+        assertTrue(upstream.getAsJsonArray("tools").get(0).getAsJsonObject().has("google_search"));
         assertEquals(AIInterpretationService.GEMINI_MODEL, result.get("model").getAsString());
         assertTrue(result.get("interpretation").getAsString().contains("Gemini result"));
     }
@@ -120,11 +141,75 @@ class AIInterpretationServiceTest {
 
         AIInterpretationService.ProviderException error = assertThrows(
                 AIInterpretationService.ProviderException.class,
-                () -> service.interpret("SAID001", "openai", sourcePayload(), secret));
+                () -> service.interpret("SAID001", "openai", sourcePayload(), secret, false));
 
         assertEquals(401, error.getStatus());
         assertFalse(error.getMessage().contains(secret));
         assertFalse(error.getMessage().contains("upstream details"));
+    }
+
+    @Test
+    void rejectsCompleteArticleThatExceedsProviderContextWithoutTruncatingIt() throws Exception {
+        Files.writeString(
+                literatureRoot.resolve("text/PMID_39483478.txt"),
+                "Complete canonical article text. ".repeat(24_000),
+                StandardCharsets.UTF_8
+        );
+        AIInterpretationService service = service();
+
+        IllegalArgumentException error = assertThrows(
+                IllegalArgumentException.class,
+                () -> service.interpret(
+                        "SAID001", "openai", sourcePayload(), "sk-context-test", false
+                )
+        );
+
+        assertTrue(error.getMessage().contains("complete paper"));
+        assertNull(requestBody.get());
+    }
+
+    @Test
+    void deepSeekUsesBoundedBiomedicalSearchToolLoop() throws Exception {
+        AtomicInteger calls = new AtomicInteger();
+        server.createContext("/deepseek-search", exchange -> {
+            if (calls.getAndIncrement() == 0) {
+                respond(exchange, 200, "{\"choices\":[{\"message\":{\"content\":\"\","
+                        + "\"tool_calls\":[{\"id\":\"call-1\",\"type\":\"function\","
+                        + "\"function\":{\"name\":\"search_biomedical_literature\","
+                        + "\"arguments\":\"{\\\"query\\\":\\\"skin fibrosis single cell\\\"}\"}}]}}]}");
+            } else {
+                respond(exchange, 200, "{\"choices\":[{\"message\":{\"content\":"
+                        + "\"## Deep interpretation\\nSearch-backed result\"}}]}");
+            }
+        });
+        BiomedicalLiteratureSearch search = new BiomedicalLiteratureSearch() {
+            @Override
+            public SearchResult search(String query) {
+                JsonArray sources = new JsonArray();
+                JsonObject source = new JsonObject();
+                source.addProperty("title", "Verified search result");
+                source.addProperty("source", "Europe PMC / PubMed");
+                source.addProperty("pmid", "123456");
+                source.addProperty("doi", "");
+                source.addProperty("url", "https://pubmed.ncbi.nlm.nih.gov/123456/");
+                source.addProperty("provider", "deepseek");
+                sources.add(source);
+                return new SearchResult("{\"results\":[{\"pmid\":\"123456\"}]}", sources);
+            }
+        };
+        AIInterpretationService service = new AIInterpretationService(
+                baseUrl + "/openai", baseUrl + "/deepseek-search",
+                baseUrl + "/claude", baseUrl + "/gemini",
+                new LiteratureContextRepository(literatureRoot), search
+        );
+
+        JsonObject result = service.interpret(
+                "SAID001", "deepseek", sourcePayload(), "sk-deepseek-test", true);
+
+        assertEquals(2, calls.get());
+        assertTrue(result.get("interpretation").getAsString().contains("Search-backed"));
+        assertEquals("123456", result.getAsJsonArray("webSources").get(0)
+                .getAsJsonObject().get("pmid").getAsString());
     }
 
     private JsonArray sourcePayload() {
@@ -139,7 +224,7 @@ class AIInterpretationServiceTest {
 
     private AIInterpretationService service() throws IOException {
         return new AIInterpretationService(baseUrl + "/openai", baseUrl + "/deepseek",
-                baseUrl + "/claude", baseUrl + "/gemini");
+                baseUrl + "/claude", baseUrl + "/gemini", literatureRoot);
     }
 
     private void respond(HttpExchange exchange, int status, String response) throws IOException {

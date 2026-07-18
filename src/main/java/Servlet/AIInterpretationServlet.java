@@ -1,5 +1,6 @@
 package Servlet;
 
+import Utils.AIInterpretationJobManager;
 import Utils.AIInterpretationService;
 import com.google.gson.*;
 
@@ -9,44 +10,60 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.concurrent.RejectedExecutionException;
 
-/** One-shot relay for user-authorized scientific interpretation requests. */
+/** Consent-gated, session-bound job API for full-paper scientific interpretation. */
 public class AIInterpretationServlet extends HttpServlet {
-    public static final String CONSENT_VERSION = "2026-07-05";
-    private static final int MAX_BODY_CHARS = 262_144;
+    public static final String CONSENT_VERSION = "2026-07-18";
+    private static final int MAX_BODY_CHARS = 524_288;
     private static final int MAX_SOURCES = 6;
     private static final int MAX_ROWS = 100;
     private static final int MAX_OBJECT_KEYS = 30;
     private static final int MAX_STRING_CHARS = 500;
-    private static final Set<String> SOURCE_TYPES = Collections.unmodifiableSet(new LinkedHashSet<>(Arrays.asList(
-            "cell_proportion", "deg", "gene_set_scoring", "cell_communication", "enrichment", "regulatory_network"
-    )));
+    private static final Set<String> SOURCE_TYPES = Collections.unmodifiableSet(
+            new LinkedHashSet<>(Arrays.asList(
+                    "cell_proportion", "deg", "gene_set_scoring",
+                    "cell_communication", "enrichment", "regulatory_network"
+            ))
+    );
 
     private final Gson gson = new Gson();
-    private AIInterpretationService service;
+    private AIInterpretationJobManager jobs;
 
     @Override
     public void init() throws ServletException {
         try {
-            service = new AIInterpretationService();
+            jobs = new AIInterpretationJobManager(new AIInterpretationService());
         } catch (IOException ex) {
             throw new ServletException("LLM interpretation resources could not be loaded.", ex);
         }
     }
 
     @Override
+    public void destroy() {
+        if (jobs != null) jobs.close();
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         secureJson(response);
-        String apiKey = request.getHeader("X-scSAID-Provider-Key");
+        String headerKey = request.getHeader("X-scSAID-Provider-Key");
+        char[] apiKey = headerKey == null ? new char[0] : headerKey.toCharArray();
+        headerKey = null;
         try {
-            if (apiKey == null || apiKey.length() < 8 || apiKey.length() > 1024
-                    || apiKey.indexOf('\r') >= 0 || apiKey.indexOf('\n') >= 0) {
+            if (!validApiKey(apiKey)) {
                 sendError(response, 400, "Enter a valid provider API key.");
                 return;
             }
             JsonObject body = readBody(request);
-            if (!CONSENT_VERSION.equals(string(body, "consentVersion"))) {
-                sendError(response, 400, "Privacy consent is required for this request.");
+            if (!CONSENT_VERSION.equals(string(body, "consentVersion"))
+                    || !booleanValue(body, "privacyConsent")) {
+                sendError(response, 400, "Current privacy consent is required.");
+                return;
+            }
+            if (!booleanValue(body, "publicationRightsConfirmed")) {
+                sendError(response, 400,
+                        "Confirm that you may transmit the linked publication to the provider.");
                 return;
             }
             if (!validCsrf(request, string(body, "csrfToken"))) {
@@ -60,37 +77,87 @@ public class AIInterpretationServlet extends HttpServlet {
                 return;
             }
             String provider = string(body, "provider").toLowerCase(Locale.ROOT);
-            if (!"openai".equals(provider) && !"deepseek".equals(provider)
-                    && !"claude".equals(provider) && !"gemini".equals(provider)) {
+            if (!Arrays.asList("openai", "deepseek", "claude", "gemini").contains(provider)) {
                 sendError(response, 400, "Choose OpenAI, DeepSeek, Claude, or Gemini.");
                 return;
             }
-
             JsonArray sources = normalizeSources(body.get("sources"));
-            JsonObject result = service.interpret(said, provider, sources, apiKey);
-            JsonArray selected = new JsonArray();
-            for (JsonElement item : sources) selected.add(item.getAsJsonObject().get("type"));
-            result.add("selectedSources", selected);
-            response.setStatus(200);
-            gson.toJson(result, response.getWriter());
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                sendError(response, 403, "This page session is no longer valid. Refresh and try again.");
+                return;
+            }
+            String jobId = jobs.submit(
+                    session.getId(), said, provider, sources, apiKey,
+                    !body.has("searchCurrentLiterature")
+                            || booleanValue(body, "searchCurrentLiterature")
+            );
+            apiKey = new char[0]; // ownership transferred to the worker
+            JsonObject accepted = new JsonObject();
+            accepted.addProperty("jobId", jobId);
+            accepted.addProperty("status", "queued");
+            response.setStatus(202);
+            gson.toJson(accepted, response.getWriter());
         } catch (IllegalArgumentException ex) {
             sendError(response, 400, ex.getMessage());
-        } catch (AIInterpretationService.ProviderException ex) {
-            sendError(response, ex.getStatus(), ex.getMessage());
-        } catch (java.net.SocketTimeoutException ex) {
-            sendError(response, 504, "The provider took too long to respond. Please try again.");
-        } catch (IOException ex) {
-            sendError(response, 502, "The provider request could not be completed.");
+        } catch (RejectedExecutionException ex) {
+            sendError(response, 503, "The interpretation queue is busy. Please try again shortly.");
         } finally {
-            // Do not retain the credential in servlet fields, sessions, logs, or response objects.
-            apiKey = null;
+            Arrays.fill(apiKey, '\0');
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         secureJson(response);
-        sendError(response, 405, "Use POST for interpretation requests.");
+        String action = request.getParameter("action");
+        try {
+            if ("context".equals(action)) {
+                String said = Optional.ofNullable(request.getParameter("said")).orElse("");
+                if (!said.matches("SAID\\d{3}")) {
+                    sendError(response, 400, "Invalid dataset identifier.");
+                    return;
+                }
+                gson.toJson(jobs.contextSummary(said), response.getWriter());
+                return;
+            }
+            if (!"status".equals(action) && !"result".equals(action)) {
+                sendError(response, 400, "Choose a supported interpretation action.");
+                return;
+            }
+            if (!validCsrf(request, Optional.ofNullable(request.getParameter("csrfToken")).orElse(""))) {
+                sendError(response, 403, "This page session is no longer valid. Refresh and try again.");
+                return;
+            }
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                sendError(response, 404, "Interpretation job not found.");
+                return;
+            }
+            String jobId = request.getParameter("jobId");
+            JsonObject result = "status".equals(action)
+                    ? jobs.status(jobId, session.getId())
+                    : jobs.result(jobId, session.getId());
+            gson.toJson(result, response.getWriter());
+        } catch (NoSuchElementException ex) {
+            sendError(response, 404, "Interpretation job not found.");
+        } catch (IllegalStateException ex) {
+            sendError(response, 409, ex.getMessage());
+        } catch (AIInterpretationJobManager.JobFailedException ex) {
+            sendError(response, ex.getStatus(), ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            sendError(response, 400, ex.getMessage());
+        } catch (IOException ex) {
+            sendError(response, 503, "The private literature context is temporarily unavailable.");
+        }
+    }
+
+    private boolean validApiKey(char[] key) {
+        if (key.length < 8 || key.length > 1024) return false;
+        for (char character : key) {
+            if (character == '\r' || character == '\n' || character == '\0') return false;
+        }
+        return true;
     }
 
     private JsonObject readBody(HttpServletRequest request) throws IOException {
@@ -126,7 +193,9 @@ public class AIInterpretationServlet extends HttpServlet {
         JsonArray normalized = new JsonArray();
         Set<String> seen = new HashSet<>();
         for (JsonElement element : input) {
-            if (!element.isJsonObject()) throw new IllegalArgumentException("Invalid analysis result payload.");
+            if (!element.isJsonObject()) {
+                throw new IllegalArgumentException("Invalid analysis result payload.");
+            }
             JsonObject source = element.getAsJsonObject();
             String type = string(source, "type");
             if (!SOURCE_TYPES.contains(type) || !seen.add(type)) {
@@ -151,21 +220,26 @@ public class AIInterpretationServlet extends HttpServlet {
                 double number = primitive.getAsDouble();
                 return Double.isFinite(number) ? new JsonPrimitive(number) : JsonNull.INSTANCE;
             }
-            String string = primitive.getAsString();
-            if (string.length() > MAX_STRING_CHARS) string = string.substring(0, MAX_STRING_CHARS) + "…";
-            return new JsonPrimitive(string);
+            String valueString = primitive.getAsString();
+            if (valueString.length() > MAX_STRING_CHARS) {
+                valueString = valueString.substring(0, MAX_STRING_CHARS) + "…";
+            }
+            return new JsonPrimitive(valueString);
         }
         if (value.isJsonArray()) {
             JsonArray clean = new JsonArray();
             int limit = Math.min(value.getAsJsonArray().size(), MAX_ROWS);
-            for (int i = 0; i < limit; i++) clean.add(normalizeValue(value.getAsJsonArray().get(i), depth + 1));
+            for (int index = 0; index < limit; index++) {
+                clean.add(normalizeValue(value.getAsJsonArray().get(index), depth + 1));
+            }
             return clean;
         }
         JsonObject clean = new JsonObject();
         int keys = 0;
         for (Map.Entry<String, JsonElement> entry : value.getAsJsonObject().entrySet()) {
             if (++keys > MAX_OBJECT_KEYS) break;
-            String key = entry.getKey().length() > 80 ? entry.getKey().substring(0, 80) : entry.getKey();
+            String key = entry.getKey().length() > 80
+                    ? entry.getKey().substring(0, 80) : entry.getKey();
             clean.add(key, normalizeValue(entry.getValue(), depth + 1));
         }
         return clean;
@@ -175,8 +249,16 @@ public class AIInterpretationServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Object expected = session == null ? null : session.getAttribute("aiInterpretationCsrf");
         if (!(expected instanceof String) || supplied.isEmpty()) return false;
-        return MessageDigest.isEqual(((String) expected).getBytes(StandardCharsets.UTF_8),
-                supplied.getBytes(StandardCharsets.UTF_8));
+        return MessageDigest.isEqual(
+                ((String) expected).getBytes(StandardCharsets.UTF_8),
+                supplied.getBytes(StandardCharsets.UTF_8)
+        );
+    }
+
+    private boolean booleanValue(JsonObject object, String key) {
+        return object.has(key) && object.get(key).isJsonPrimitive()
+                && object.get(key).getAsJsonPrimitive().isBoolean()
+                && object.get(key).getAsBoolean();
     }
 
     private void secureJson(HttpServletResponse response) {
@@ -189,11 +271,15 @@ public class AIInterpretationServlet extends HttpServlet {
     private void sendError(HttpServletResponse response, int status, String message) throws IOException {
         response.setStatus(status);
         JsonObject error = new JsonObject();
-        error.addProperty("error", message == null || message.trim().isEmpty() ? "Request failed." : message);
+        error.addProperty(
+                "error",
+                message == null || message.trim().isEmpty() ? "Request failed." : message
+        );
         gson.toJson(error, response.getWriter());
     }
 
     private String string(JsonObject object, String key) {
-        return object.has(key) && !object.get(key).isJsonNull() ? object.get(key).getAsString() : "";
+        return object.has(key) && !object.get(key).isJsonNull()
+                ? object.get(key).getAsString() : "";
     }
 }
