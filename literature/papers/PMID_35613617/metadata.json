@@ -1,0 +1,81 @@
+{
+  "paper_id": "PMID_35613617",
+  "pmid": "35613617",
+  "pmcid": "",
+  "doi": "10.1016/j.stem.2022.04.017",
+  "title": "Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues.",
+  "authors": [
+    "Shuai Ma",
+    "Si Wang",
+    "Yanxia Ye",
+    "Jie Ren",
+    "Ruiqing Chen",
+    "Wei Li",
+    "Jiaming Li",
+    "Liyun Zhao",
+    "Qian Zhao",
+    "Guoqiang Sun",
+    "Ying Jing",
+    "Yuesheng Zuo",
+    "Muzhao Xiong",
+    "Yuanhan Yang",
+    "Qiaoran Wang",
+    "Jinghui Lei",
+    "Shuhui Sun",
+    "Xiao Long",
+    "Moshi Song",
+    "Shuyang Yu",
+    "Piu Chan",
+    "Jianwei Wang",
+    "Qi Zhou",
+    "Juan Carlos Izpisua Belmonte",
+    "Jing Qu",
+    "Weiqi Zhang",
+    "Guang-Hui Liu"
+  ],
+  "journal": "Cell stem cell",
+  "journal_abbreviation": "Cell Stem Cell",
+  "publication_date": "2022-Jun-02",
+  "year": "2022",
+  "volume": "29",
+  "issue": "6",
+  "pages": "990-1005.e10",
+  "publication_types": [
+    "Journal Article",
+    "Research Support, Non-U.S. Gov't"
+  ],
+  "language": "eng",
+  "abstract": "The young circulatory milieu capable of delaying aging in individual tissues is of interest as rejuvenation strategies, but how it achieves cellular- and systemic-level effects has remained unclear. Here, we constructed a single-cell transcriptomic atlas across aged tissues/organs and their rejuvenation in heterochronic parabiosis (HP), a classical model to study systemic aging. In general, HP rejuvenated adult stem cells and their niches across tissues. In particular, we identified hematopoietic stem and progenitor cells (HSPCs) as one of the most responsive cell types to young blood exposure, from which a continuum of cell state changes across the hematopoietic and immune system emanated, through the restoration of a youthful transcriptional regulatory program and cytokine-mediated cell-cell communications in HSPCs. Moreover, the reintroduction of the identified rejuvenating factors alleviated age-associated lymphopoiesis decline. Overall, we provide comprehensive frameworks to explore aging and rejuvenating trajectories at single-cell resolution and revealed cellular and molecular programs that instruct systemic revitalization by blood-borne factors.",
+  "urls": {
+    "pubmed": "https://pubmed.ncbi.nlm.nih.gov/35613617/",
+    "doi": "https://doi.org/10.1016/j.stem.2022.04.017",
+    "pmc": ""
+  },
+  "citation": "Shuai Ma, Si Wang, Yanxia Ye, Jie Ren, Ruiqing Chen, Wei Li, et al. Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues. Cell Stem Cell. 2022. doi:10.1016/j.stem.2022.04.017. PMID:35613617.",
+  "dataset_links": [
+    {
+      "said": "SAID099",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438600",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID100",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438601",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID101",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438602",
+      "relation": "primary_dataset_publication"
+    },
+    {
+      "said": "SAID102",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438603",
+      "relation": "primary_dataset_publication"
+    }
+  ]
+}

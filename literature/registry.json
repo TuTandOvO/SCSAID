@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_on": "2026-07-04",
+  "generated_on": "2026-07-18",
   "counts": {
     "datasets": 252,
     "studies": 49,
-    "papers": 55,
-    "dataset_paper_links": 300,
-    "unresolved_studies": 2
+    "papers": 56,
+    "dataset_paper_links": 304,
+    "unresolved_studies": 1
   },
   "datasets": [
     {
@@ -4316,6 +4316,22 @@
       "full_text_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9021607/"
     },
     {
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "pmcid": "",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "title": "Heterochronic parabiosis induces stem cell revitalization and systemic rejuvenation across aged tissues.",
+      "authors": "Shuai Ma; Si Wang; Yanxia Ye; Jie Ren; Ruiqing Chen; Wei Li; Jiaming Li; Liyun Zhao; Qian Zhao; Guoqiang Sun; Ying Jing; Yuesheng Zuo; Muzhao Xiong; Yuanhan Yang; Qiaoran Wang; Jinghui Lei; Shuhui Sun; Xiao Long; Moshi Song; Shuyang Yu; Piu Chan; Jianwei Wang; Qi Zhou; Juan Carlos Izpisua Belmonte; Jing Qu; Weiqi Zhang; Guang-Hui Liu",
+      "journal": "Cell stem cell",
+      "year": "2022",
+      "publication_types": "Journal Article; Research Support, Non-U.S. Gov't",
+      "abstract": "The young circulatory milieu capable of delaying aging in individual tissues is of interest as rejuvenation strategies, but how it achieves cellular- and systemic-level effects has remained unclear. Here, we constructed a single-cell transcriptomic atlas across aged tissues/organs and their rejuvenation in heterochronic parabiosis (HP), a classical model to study systemic aging. In general, HP rejuvenated adult stem cells and their niches across tissues. In particular, we identified hematopoietic stem and progenitor cells (HSPCs) as one of the most responsive cell types to young blood exposure, from which a continuum of cell state changes across the hematopoietic and immune system emanated, through the restoration of a youthful transcriptional regulatory program and cytokine-mediated cell-cell communications in HSPCs. Moreover, the reintroduction of the identified rejuvenating factors alleviated age-associated lymphopoiesis decline. Overall, we provide comprehensive frameworks to explore aging and rejuvenating trajectories at single-cell resolution and revealed cellular and molecular programs that instruct systemic revitalization by blood-borne factors.",
+      "study_count": 1,
+      "dataset_count": 4,
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/35613617/",
+      "full_text_url": "https://doi.org/10.1016/j.stem.2022.04.017"
+    },
+    {
       "paper_id": "PMID_35653192",
       "pmid": "35653192",
       "pmcid": "PMC9310536",
@@ -4926,6 +4942,62 @@
   ],
   "dataset_paper_links": [
     {
+      "said": "SAID099",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438600",
+      "study_title": "",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "relation": "primary_dataset_publication",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "provenance": "study_publication_overrides.json",
+      "title_similarity": "",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID100",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438601",
+      "study_title": "",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "relation": "primary_dataset_publication",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "provenance": "study_publication_overrides.json",
+      "title_similarity": "",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID101",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438602",
+      "study_title": "",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "relation": "primary_dataset_publication",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "provenance": "study_publication_overrides.json",
+      "title_similarity": "",
+      "verified_on": "2026-07-18"
+    },
+    {
+      "said": "SAID102",
+      "study_accession": "CRA004660",
+      "sample_accession": "SAMC438603",
+      "study_title": "",
+      "paper_id": "PMID_35613617",
+      "pmid": "35613617",
+      "doi": "10.1016/j.stem.2022.04.017",
+      "relation": "primary_dataset_publication",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication.",
+      "provenance": "study_publication_overrides.json",
+      "title_similarity": "",
+      "verified_on": "2026-07-18"
+    },
+    {
       "said": "SAID103",
       "study_accession": "CRA006512",
       "sample_accession": "SAMC703634",
@@ -4937,7 +5009,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID104",
@@ -4951,7 +5023,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID105",
@@ -4965,7 +5037,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID106",
@@ -4979,7 +5051,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID107",
@@ -4993,7 +5065,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID108",
@@ -5007,7 +5079,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID109",
@@ -5021,7 +5093,7 @@
       "evidence": "The article data-availability statement names CRA006512.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID103",
@@ -5035,7 +5107,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID104",
@@ -5049,7 +5121,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID105",
@@ -5063,7 +5135,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID106",
@@ -5077,7 +5149,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID107",
@@ -5091,7 +5163,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID108",
@@ -5105,7 +5177,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID109",
@@ -5119,7 +5191,7 @@
       "evidence": "Published correction to PMID 37285263.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID110",
@@ -5133,7 +5205,7 @@
       "evidence": "The article data-availability statement names CRA028265.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID111",
@@ -5147,7 +5219,7 @@
       "evidence": "The article data-availability statement names CRA028265.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID112",
@@ -5161,7 +5233,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID113",
@@ -5175,7 +5247,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID114",
@@ -5189,7 +5261,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID115",
@@ -5203,7 +5275,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID116",
@@ -5217,7 +5289,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID117",
@@ -5231,7 +5303,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID118",
@@ -5245,7 +5317,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID119",
@@ -5259,7 +5331,7 @@
       "evidence": "The article data-availability statement names CRA028974.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID056",
@@ -5273,7 +5345,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.437",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID057",
@@ -5287,7 +5359,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.437",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID132",
@@ -5301,7 +5373,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.897",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID133",
@@ -5315,7 +5387,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.897",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID134",
@@ -5329,7 +5401,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.897",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID135",
@@ -5343,7 +5415,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.897",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID208",
@@ -5357,7 +5429,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID209",
@@ -5371,7 +5443,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID210",
@@ -5385,7 +5457,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID211",
@@ -5399,7 +5471,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID212",
@@ -5413,7 +5485,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID213",
@@ -5427,7 +5499,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID214",
@@ -5441,7 +5513,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.490",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID053",
@@ -5455,7 +5527,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.367",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID054",
@@ -5469,7 +5541,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.367",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID055",
@@ -5483,7 +5555,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.367",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID047",
@@ -5497,7 +5569,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.333",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID048",
@@ -5511,7 +5583,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.333",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID049",
@@ -5525,7 +5597,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.333",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID050",
@@ -5539,7 +5611,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.333",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID051",
@@ -5553,7 +5625,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.333",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID052",
@@ -5567,7 +5639,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.333",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID124",
@@ -5581,7 +5653,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.242",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID125",
@@ -5595,7 +5667,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.242",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID126",
@@ -5609,7 +5681,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.242",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID044",
@@ -5623,7 +5695,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.245",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID045",
@@ -5637,7 +5709,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.245",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID046",
@@ -5651,7 +5723,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.245",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID221",
@@ -5665,7 +5737,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.948",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID222",
@@ -5679,7 +5751,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.948",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID223",
@@ -5693,7 +5765,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.948",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID224",
@@ -5707,7 +5779,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.948",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID225",
@@ -5721,7 +5793,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.948",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID226",
@@ -5735,7 +5807,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.948",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID090",
@@ -5749,7 +5821,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID091",
@@ -5763,7 +5835,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID092",
@@ -5777,7 +5849,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID093",
@@ -5791,7 +5863,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID094",
@@ -5805,7 +5877,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID095",
@@ -5819,7 +5891,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID090",
@@ -5833,7 +5905,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.278",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID091",
@@ -5847,7 +5919,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.278",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID092",
@@ -5861,7 +5933,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.278",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID093",
@@ -5875,7 +5947,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.278",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID094",
@@ -5889,7 +5961,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.278",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID095",
@@ -5903,7 +5975,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.278",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID245",
@@ -5917,7 +5989,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID246",
@@ -5931,7 +6003,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID247",
@@ -5945,7 +6017,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID248",
@@ -5959,7 +6031,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID249",
@@ -5973,7 +6045,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID250",
@@ -5987,7 +6059,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID251",
@@ -6001,7 +6073,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID252",
@@ -6015,7 +6087,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.994",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID127",
@@ -6029,7 +6101,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.573",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID128",
@@ -6043,7 +6115,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.573",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID129",
@@ -6057,7 +6129,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.573",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID130",
@@ -6071,7 +6143,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.573",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID131",
@@ -6085,7 +6157,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID227",
@@ -6099,7 +6171,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.695",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID043",
@@ -6113,7 +6185,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.983",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID153",
@@ -6127,7 +6199,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID154",
@@ -6141,7 +6213,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID155",
@@ -6155,7 +6227,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID156",
@@ -6169,7 +6241,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID157",
@@ -6183,7 +6255,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID158",
@@ -6197,7 +6269,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID159",
@@ -6211,7 +6283,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID160",
@@ -6225,7 +6297,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID161",
@@ -6239,7 +6311,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID162",
@@ -6253,7 +6325,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID163",
@@ -6267,7 +6339,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID164",
@@ -6281,7 +6353,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID165",
@@ -6295,7 +6367,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.320",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID040",
@@ -6309,7 +6381,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.348",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID041",
@@ -6323,7 +6395,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.348",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID042",
@@ -6337,7 +6409,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.348",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID152",
@@ -6351,7 +6423,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID215",
@@ -6365,7 +6437,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.318",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID216",
@@ -6379,7 +6451,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.318",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID217",
@@ -6393,7 +6465,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.318",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID218",
@@ -6407,7 +6479,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.318",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID219",
@@ -6421,7 +6493,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.318",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID220",
@@ -6435,7 +6507,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.318",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID038",
@@ -6449,7 +6521,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.443",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID039",
@@ -6463,7 +6535,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.443",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID026",
@@ -6477,7 +6549,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID027",
@@ -6491,7 +6563,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID028",
@@ -6505,7 +6577,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID029",
@@ -6519,7 +6591,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID030",
@@ -6533,7 +6605,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID031",
@@ -6547,7 +6619,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID032",
@@ -6561,7 +6633,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID033",
@@ -6575,7 +6647,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID034",
@@ -6589,7 +6661,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID035",
@@ -6603,7 +6675,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID036",
@@ -6617,7 +6689,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID037",
@@ -6631,7 +6703,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.400",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID025",
@@ -6645,7 +6717,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.656",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID019",
@@ -6659,7 +6731,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.618",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID020",
@@ -6673,7 +6745,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.618",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID021",
@@ -6687,7 +6759,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.618",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID022",
@@ -6701,7 +6773,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.618",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID023",
@@ -6715,7 +6787,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.618",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID024",
@@ -6729,7 +6801,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.618",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID019",
@@ -6743,7 +6815,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.692",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID020",
@@ -6757,7 +6829,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.692",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID021",
@@ -6771,7 +6843,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.692",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID022",
@@ -6785,7 +6857,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.692",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID023",
@@ -6799,7 +6871,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.692",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID024",
@@ -6813,7 +6885,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.692",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID015",
@@ -6827,7 +6899,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID016",
@@ -6841,7 +6913,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID017",
@@ -6855,7 +6927,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID018",
@@ -6869,7 +6941,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.351",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID235",
@@ -6883,7 +6955,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID236",
@@ -6897,7 +6969,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID237",
@@ -6911,7 +6983,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID238",
@@ -6925,7 +6997,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID239",
@@ -6939,7 +7011,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID240",
@@ -6953,7 +7025,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID241",
@@ -6967,7 +7039,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID242",
@@ -6981,7 +7053,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID243",
@@ -6995,7 +7067,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID244",
@@ -7009,7 +7081,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.726",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID235",
@@ -7023,7 +7095,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID236",
@@ -7037,7 +7109,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID237",
@@ -7051,7 +7123,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID238",
@@ -7065,7 +7137,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID239",
@@ -7079,7 +7151,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID240",
@@ -7093,7 +7165,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID241",
@@ -7107,7 +7179,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID242",
@@ -7121,7 +7193,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID243",
@@ -7135,7 +7207,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID244",
@@ -7149,7 +7221,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.289",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID096",
@@ -7163,7 +7235,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.936",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID097",
@@ -7177,7 +7249,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.936",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID098",
@@ -7191,7 +7263,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.936",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID080",
@@ -7205,7 +7277,7 @@
       "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID081",
@@ -7219,7 +7291,7 @@
       "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID082",
@@ -7233,7 +7305,7 @@
       "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID083",
@@ -7247,7 +7319,7 @@
       "evidence": "NCBI GEO links GSE213528 to this PubMed record.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID180",
@@ -7261,7 +7333,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID181",
@@ -7275,7 +7347,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID182",
@@ -7289,7 +7361,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID183",
@@ -7303,7 +7375,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID184",
@@ -7317,7 +7389,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID185",
@@ -7331,7 +7403,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID186",
@@ -7345,7 +7417,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID187",
@@ -7359,7 +7431,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID188",
@@ -7373,7 +7445,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID189",
@@ -7387,7 +7459,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID190",
@@ -7401,7 +7473,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID191",
@@ -7415,7 +7487,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.550",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID014",
@@ -7429,7 +7501,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID010",
@@ -7443,7 +7515,7 @@
       "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID011",
@@ -7457,7 +7529,7 @@
       "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID012",
@@ -7471,7 +7543,7 @@
       "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID013",
@@ -7485,7 +7557,7 @@
       "evidence": "The article reports the experiment represented by GSE230512/GSE230513.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID192",
@@ -7499,7 +7571,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.272",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID193",
@@ -7513,7 +7585,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.272",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID008",
@@ -7527,7 +7599,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.520",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID009",
@@ -7541,7 +7613,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.520",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID086",
@@ -7555,7 +7627,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.365",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID087",
@@ -7569,7 +7641,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.365",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID088",
@@ -7583,7 +7655,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.365",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID089",
@@ -7597,7 +7669,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.365",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID166",
@@ -7611,7 +7683,7 @@
       "evidence": "The article title and experiment description match GSE237754.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID167",
@@ -7625,7 +7697,7 @@
       "evidence": "The article title and experiment description match GSE237754.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID136",
@@ -7639,7 +7711,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID137",
@@ -7653,7 +7725,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID138",
@@ -7667,7 +7739,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID139",
@@ -7681,7 +7753,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID140",
@@ -7695,7 +7767,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID136",
@@ -7709,7 +7781,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.167",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID137",
@@ -7723,7 +7795,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.167",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID138",
@@ -7737,7 +7809,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.167",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID139",
@@ -7751,7 +7823,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.167",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID140",
@@ -7765,7 +7837,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.167",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID168",
@@ -7779,7 +7851,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.306",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID169",
@@ -7793,7 +7865,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.306",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID170",
@@ -7807,7 +7879,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID171",
@@ -7821,7 +7893,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID172",
@@ -7835,7 +7907,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID173",
@@ -7849,7 +7921,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID174",
@@ -7863,7 +7935,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID175",
@@ -7877,7 +7949,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID176",
@@ -7891,7 +7963,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID177",
@@ -7905,7 +7977,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID178",
@@ -7919,7 +7991,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID179",
@@ -7933,7 +8005,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.416",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID141",
@@ -7947,7 +8019,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID142",
@@ -7961,7 +8033,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID143",
@@ -7975,7 +8047,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID144",
@@ -7989,7 +8061,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID145",
@@ -8003,7 +8075,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID146",
@@ -8017,7 +8089,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID147",
@@ -8031,7 +8103,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID148",
@@ -8045,7 +8117,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID149",
@@ -8059,7 +8131,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID150",
@@ -8073,7 +8145,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID151",
@@ -8087,7 +8159,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.310",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID141",
@@ -8101,7 +8173,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID142",
@@ -8115,7 +8187,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID143",
@@ -8129,7 +8201,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID144",
@@ -8143,7 +8215,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID145",
@@ -8157,7 +8229,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID146",
@@ -8171,7 +8243,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID147",
@@ -8185,7 +8257,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID148",
@@ -8199,7 +8271,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID149",
@@ -8213,7 +8285,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID150",
@@ -8227,7 +8299,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID151",
@@ -8241,7 +8313,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.324",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID120",
@@ -8255,7 +8327,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.295",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID121",
@@ -8269,7 +8341,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.295",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID122",
@@ -8283,7 +8355,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.295",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID123",
@@ -8297,7 +8369,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.295",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID120",
@@ -8311,7 +8383,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.268",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID121",
@@ -8325,7 +8397,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.268",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID122",
@@ -8339,7 +8411,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.268",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID123",
@@ -8353,7 +8425,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.268",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID004",
@@ -8367,7 +8439,7 @@
       "evidence": "Preprint version of PMID 38613320.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID005",
@@ -8381,7 +8453,7 @@
       "evidence": "Preprint version of PMID 38613320.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID006",
@@ -8395,7 +8467,7 @@
       "evidence": "Preprint version of PMID 38613320.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID007",
@@ -8409,7 +8481,7 @@
       "evidence": "Preprint version of PMID 38613320.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID004",
@@ -8423,7 +8495,7 @@
       "evidence": "The article data-availability statement names GSE261227.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID005",
@@ -8437,7 +8509,7 @@
       "evidence": "The article data-availability statement names GSE261227.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID006",
@@ -8451,7 +8523,7 @@
       "evidence": "The article data-availability statement names GSE261227.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID007",
@@ -8465,7 +8537,7 @@
       "evidence": "The article data-availability statement names GSE261227.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID058",
@@ -8479,7 +8551,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID059",
@@ -8493,7 +8565,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID060",
@@ -8507,7 +8579,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID061",
@@ -8521,7 +8593,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID062",
@@ -8535,7 +8607,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID063",
@@ -8549,7 +8621,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID064",
@@ -8563,7 +8635,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID065",
@@ -8577,7 +8649,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID066",
@@ -8591,7 +8663,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID067",
@@ -8605,7 +8677,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID068",
@@ -8619,7 +8691,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID069",
@@ -8633,7 +8705,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID070",
@@ -8647,7 +8719,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID071",
@@ -8661,7 +8733,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID072",
@@ -8675,7 +8747,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID073",
@@ -8689,7 +8761,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID074",
@@ -8703,7 +8775,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID075",
@@ -8717,7 +8789,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID076",
@@ -8731,7 +8803,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID077",
@@ -8745,7 +8817,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID078",
@@ -8759,7 +8831,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID079",
@@ -8773,7 +8845,7 @@
       "evidence": "The article data-availability statement names GSE261766.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID001",
@@ -8787,7 +8859,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.818",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID002",
@@ -8801,7 +8873,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.818",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID003",
@@ -8815,7 +8887,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.818",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID001",
@@ -8829,7 +8901,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.402",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID002",
@@ -8843,7 +8915,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.402",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID003",
@@ -8857,7 +8929,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.402",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID001",
@@ -8871,7 +8943,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.430",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID002",
@@ -8885,7 +8957,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.430",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID003",
@@ -8899,7 +8971,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "0.430",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID084",
@@ -8913,7 +8985,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID085",
@@ -8927,7 +8999,7 @@
       "evidence": "PubMed identifier recorded in AllData.xlsx",
       "provenance": "AllData.xlsx",
       "title_similarity": "1.000",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID194",
@@ -8941,7 +9013,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID195",
@@ -8955,7 +9027,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID196",
@@ -8969,7 +9041,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID197",
@@ -8983,7 +9055,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID198",
@@ -8997,7 +9069,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID199",
@@ -9011,7 +9083,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID200",
@@ -9025,7 +9097,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID201",
@@ -9039,7 +9111,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID202",
@@ -9053,7 +9125,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID203",
@@ -9067,7 +9139,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID204",
@@ -9081,7 +9153,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID205",
@@ -9095,7 +9167,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID206",
@@ -9109,7 +9181,7 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     },
     {
       "said": "SAID207",
@@ -9123,23 +9195,16 @@
       "evidence": "The article data-availability statement names HRA000166.",
       "provenance": "study_publication_overrides.json",
       "title_similarity": "",
-      "verified_on": "2026-07-04"
+      "verified_on": "2026-07-18"
     }
   ],
   "unresolved_studies": [
-    {
-      "study_accession": "CRA004660",
-      "study_title": "",
-      "dataset_count": 4,
-      "status": "no_primary_publication_verified",
-      "checked_on": "2026-07-04"
-    },
     {
       "study_accession": "GSE275846",
       "study_title": "Single cell transcriptomics of human epidermis shows decreased expression of several structural genes associated with skin barrier development in aged skin",
       "dataset_count": 7,
       "status": "no_primary_publication_verified",
-      "checked_on": "2026-07-04"
+      "checked_on": "2026-07-18"
     }
   ]
 }

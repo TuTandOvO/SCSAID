@@ -51,3 +51,28 @@ The repository stores paper records, citations, and stable official links. It
 does not copy publisher PDFs. When PubMed Central provides open full text, the
 paper record includes that URL. This keeps the registry copyright-safe and
 prevents large binary files from inflating the application repository.
+
+For a private external corpus, `acquire_full_text.py` resolves only freely
+available full text from the NCBI PMC article dataset, Europe PMC, Unpaywall,
+and reviewed institutional-repository deposits. It validates each download and
+writes a checksum-bearing manifest:
+
+```sh
+python3 literature/acquire_full_text.py \
+  --output /external/path/scsaid-literature/papers
+```
+
+The output directory must remain outside this Git repository. The downloader
+does not bypass paywalls or copy subscription-only files.
+
+Audit an existing corpus against the complete registry with:
+
+```sh
+python3 literature/verify_corpus.py \
+  --corpus /external/path/scsaid-literature/papers
+```
+
+Production stores the private corpus under `/srv/scsaid-literature/papers`,
+with registry indexes in `/srv/scsaid-literature/index` and reproducibility
+tools in `/srv/scsaid-literature/tools`. These directories are restricted to
+the server's `tomcat` account and are not exposed as public downloads.

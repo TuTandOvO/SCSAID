@@ -71,5 +71,12 @@
       "relation": "primary_dataset_publication",
       "evidence": "The article data-availability statement names HRA000166."
     }
+  ],
+  "CRA004660": [
+    {
+      "pmid": "35613617",
+      "relation": "primary_dataset_publication",
+      "evidence": "The Cell Stem Cell article reports the heterochronic-parabiosis atlas deposited as CRA004660; the accession title, design, submitter Jiaming Li, and study description match the publication."
+    }
   ]
 }
