@@ -72,10 +72,11 @@ class ContentPagesTest {
         String news = read("src/main/webapp/whats-new.jsp");
         String newsScript = read("src/main/webapp/JS/whats-new.js");
 
-        assertTrue(cite.contains("Citing scSAID"));
-        assertTrue(cite.contains("Additional references"));
+        assertTrue(cite.contains("Citation information for the atlas and the analysis methods used in a study."));
         assertTrue(cite.contains("Ren, Y., Shen, Y., Jin, L., Huang, Y., Deng, Y., Xiao, Y., &amp; Wang, C. (2026)."));
         assertTrue(cite.contains("https://doi.org/[DOI]"));
+        assertFalse(cite.contains("Citing scSAID"));
+        assertFalse(cite.contains("Additional references"));
         assertTrue(news.contains("<h1>What’s New</h1>"));
         assertTrue(news.contains("class=\"changelog-timeline\""));
         assertTrue(news.contains("href=\"#release-2026-05-16\""));
