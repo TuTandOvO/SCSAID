@@ -27,11 +27,8 @@
 
         <section class="about-section" aria-labelledby="cite-scsaid-title">
             <h2 id="cite-scsaid-title">Citing scSAID</h2>
-            <div class="template-note">Template: replace the bracketed fields with the final manuscript citation and DOI.</div>
             <p>If scSAID contributed data, analysis, or visualizations to your research, please cite:</p>
-            <blockquote class="citation-template">
-                <span class="template-placeholder">[Authors]. scSAID: [manuscript title]. [Journal] ([Year]). https://doi.org/[DOI]</span>
-            </blockquote>
+            <p>Ren, Y., Shen, Y., Jin, L., Huang, Y., Deng, Y., Xiao, Y., &amp; Wang, C. (2026). scSAID: A comprehensive cross-species single-cell skin atlas reveals species-specific responses to psoriasis. bioRxiv. https://doi.org/[DOI]</p>
             <p>Citations help document use of the resource and support its continued maintenance.</p>
         </section>
 
