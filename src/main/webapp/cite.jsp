@@ -24,7 +24,7 @@
             <h1>How to Cite scSAID</h1>
             <p class="about-page__intro">Citation information for the atlas and the analysis methods used in a study.</p>
         </header>
-        <p>Ren, Y., Shen, Y., Jin, L., Huang, Y., Deng, Y., Xiao, Y., &amp; Wang, C. (2026). scSAID: A comprehensive cross-species single-cell skin atlas reveals species-specific responses to psoriasis. bioRxiv. https://doi.org/[DOI]</p>
+        <p>Ren, Y., Shen, Y., Jin, L., Huang, Y., Deng, Y., Xiao, Y., &amp; Wang, C. (2026). scSAID: A comprehensive cross-species single-cell skin atlas reveals species-specific responses to psoriasis. bioRxiv. <a href="https://doi.org/10.64898/2026.07.20.739409" target="_blank" rel="noopener noreferrer">https://doi.org/10.64898/2026.07.20.739409</a></p>
     </main>
 </body>
 </html>

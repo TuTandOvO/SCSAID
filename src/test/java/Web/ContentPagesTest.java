@@ -74,7 +74,9 @@ class ContentPagesTest {
 
         assertTrue(cite.contains("Citation information for the atlas and the analysis methods used in a study."));
         assertTrue(cite.contains("Ren, Y., Shen, Y., Jin, L., Huang, Y., Deng, Y., Xiao, Y., &amp; Wang, C. (2026)."));
-        assertTrue(cite.contains("https://doi.org/[DOI]"));
+        assertTrue(cite.contains("href=\"https://doi.org/10.64898/2026.07.20.739409\""));
+        assertTrue(cite.contains(">https://doi.org/10.64898/2026.07.20.739409</a>"));
+        assertFalse(cite.contains("https://doi.org/[DOI]"));
         assertFalse(cite.contains("Citing scSAID"));
         assertFalse(cite.contains("Additional references"));
         assertTrue(news.contains("<h1>What’s New</h1>"));
