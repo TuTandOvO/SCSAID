@@ -28,6 +28,7 @@ public class TrafficStatsServlet extends HttpServlet {
         TrafficHistoryStore.Snapshot snapshot =
                 ((TrafficHistoryStore) storeObject).snapshot(Instant.now());
         Map<String, Object> payload = new LinkedHashMap<>();
+        payload.put("runtime", getServletContext().getAttribute("visitorAnalyticsRuntime"));
         payload.put("generatedAt", Instant.now().toString());
         payload.put("timezone", "UTC");
         payload.put("historySince", snapshot.historyStart == null

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,10 +26,11 @@ public final class CountryTrafficStatsServlet extends HttpServlet {
         }
 
         CountryTrafficStore.Snapshot snapshot =
-                ((CountryTrafficStore) value).snapshot(LocalDate.now());
+                ((CountryTrafficStore) value).snapshot(LocalDate.now(ZoneOffset.UTC));
         Object developerValue = getServletContext().getAttribute("developerVisitorStore");
         Object eventValue = getServletContext().getAttribute("developerVisitEventStore");
         Map<String, Object> payload = new LinkedHashMap<>();
+        payload.put("runtime", getServletContext().getAttribute("visitorAnalyticsRuntime"));
         payload.put("allTimeTotal", snapshot.allTimeTotal);
         payload.put("allTime", snapshot.allTime);
         payload.put("recent30DaysTotal", snapshot.recent30DaysTotal);

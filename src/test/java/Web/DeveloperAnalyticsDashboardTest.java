@@ -17,7 +17,7 @@ class DeveloperAnalyticsDashboardTest {
         String css = Files.readString(Path.of("src/main/webapp/CSS/developer-traffic.css"), StandardCharsets.UTF_8);
         String chinaMap = Files.readString(Path.of("src/main/webapp/map_resources/china-provinces.json"), StandardCharsets.UTF_8);
         String servlet = Files.readString(Path.of("src/main/java/AccessCounter/CountryTrafficStatsServlet.java"), StandardCharsets.UTF_8);
-        String filter = Files.readString(Path.of("src/main/java/AccessCounter/AccessCounterFilter.java"), StandardCharsets.UTF_8);
+        String filter = Files.readString(Path.of("src/main/java/AccessCounter/VisitorAnalyticsFilter.java"), StandardCharsets.UTF_8);
 
         assertTrue(jsp.contains("lib/leaflet/leaflet.css"));
         assertTrue(jsp.contains("lib/leaflet/leaflet.js"));
@@ -65,6 +65,7 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(chinaMap.contains("\"name\":\"香港特别行政区\""));
         assertTrue(chinaMap.contains("\"centroid\":[114.134357,22.377366]"));
         assertTrue(servlet.contains("visitAnalytics"));
+        assertTrue(servlet.contains("visitorAnalyticsRuntime"));
         assertTrue(filter.contains("DeveloperVisitEventStore"));
         assertTrue(filter.contains("developer-visit-events.tsv"));
         assertTrue(filter.contains("scsaid_vid"));

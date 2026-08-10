@@ -56,7 +56,7 @@ class PreferenceSystemTest {
     @Test
     void existingFirstPartyCookiesRemainConfigured() throws Exception {
         String counter = Files.readString(
-                Path.of("src/main/java/AccessCounter/AccessCounterFilter.java"), StandardCharsets.UTF_8);
+                Path.of("src/main/java/AccessCounter/VisitorAnalyticsFilter.java"), StandardCharsets.UTF_8);
         String webXml = read("WEB-INF/web.xml");
 
         assertTrue(counter.contains("new Cookie(\"count_cookie\""));

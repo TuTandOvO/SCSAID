@@ -82,7 +82,7 @@ final class DeveloperVisitEventStore {
             long visitorVisitNumber = perVisitor.getOrDefault(event.visitorKey, 0L) + 1L;
             perVisitor.put(event.visitorKey, visitorVisitNumber);
             numbered.add(event.withVisitNumber(visitorVisitNumber));
-            if (AccessCounterFilter.isAnalyticsContentPath(event.path)) {
+            if (VisitorAnalyticsFilter.isAnalyticsContentPath(event.path)) {
                 allPages.put(event.path, allPages.getOrDefault(event.path, 0L) + 1L);
             }
             LocalDate day = event.timestamp.atZone(ZoneOffset.UTC).toLocalDate();
@@ -90,7 +90,7 @@ final class DeveloperVisitEventStore {
             if (!day.isBefore(cutoff) && !day.isAfter(today)) {
                 recentVisits++;
                 recentVisitors.add(event.visitorKey);
-                if (AccessCounterFilter.isAnalyticsContentPath(event.path)) {
+                if (VisitorAnalyticsFilter.isAnalyticsContentPath(event.path)) {
                     recentPages.put(event.path, recentPages.getOrDefault(event.path, 0L) + 1L);
                 }
             }

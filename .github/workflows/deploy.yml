@@ -184,6 +184,10 @@ jobs:
             fi
             chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"
             chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"
+            for state_file in "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"; do
+              runuser -u tomcat -- test -r "$state_file"
+              runuser -u tomcat -- test -w "$state_file"
+            done
             if [ -f "$GEOIP_DATABASE" ]; then
               chown tomcat:tomcat "$GEOIP_DATABASE"
               chmod 640 "$GEOIP_DATABASE"
@@ -208,4 +212,19 @@ jobs:
             if [ -z "$ok" ]; then
               echo "Tomcat did not return 200 after deploy"; tail -40 /opt/tomcat/logs/catalina.out || true; exit 1
             fi
+            # A 200 homepage is insufficient: the JSP can render while a stale
+            # legacy counter filter leaves both traffic APIs without stores.
+            # Validate the uniquely named analytics runtime and both public and
+            # protected JSON endpoints before declaring the deployment healthy.
+            PUBLIC_TRAFFIC_CHECK=/tmp/scsaid-public-traffic-check.json
+            PRIVATE_TRAFFIC_CHECK=/tmp/scsaid-private-traffic-check.json
+            curl -fsS http://127.0.0.1:8080/traffic-stats > "$PUBLIC_TRAFFIC_CHECK"
+            set -a
+            . "$ANALYTICS_ENV"
+            set +a
+            curl -fsS --config <(printf 'user = "%s:%s"\n' "$SCSAID_ANALYTICS_USER" "$SCSAID_ANALYTICS_PASSWORD") \
+              http://127.0.0.1:8080/country-traffic-stats > "$PRIVATE_TRAFFIC_CHECK"
+            "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert isinstance(p.get("totalVisits"), int); assert isinstance(p.get("todayVisits"), int)' "$PUBLIC_TRAFFIC_CHECK"
+            "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert "visitAnalytics" in p; assert "allTimeTotal" in p' "$PRIVATE_TRAFFIC_CHECK"
+            rm -f "$PUBLIC_TRAFFIC_CHECK" "$PRIVATE_TRAFFIC_CHECK"
             echo "Deploy OK: Tomcat serving on 8080"

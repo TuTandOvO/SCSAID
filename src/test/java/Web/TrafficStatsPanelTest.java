@@ -15,7 +15,7 @@ class TrafficStatsPanelTest {
         String jsp = Files.readString(Path.of("src/main/webapp/index.jsp"), StandardCharsets.UTF_8);
         String js = Files.readString(Path.of("src/main/webapp/JS/traffic-stats.js"), StandardCharsets.UTF_8);
         String filter = Files.readString(
-                Path.of("src/main/java/AccessCounter/AccessCounterFilter.java"), StandardCharsets.UTF_8);
+                Path.of("src/main/java/AccessCounter/VisitorAnalyticsFilter.java"), StandardCharsets.UTF_8);
         String webXml = Files.readString(
                 Path.of("src/main/webapp/WEB-INF/web.xml"), StandardCharsets.UTF_8);
 
@@ -34,6 +34,8 @@ class TrafficStatsPanelTest {
         assertTrue(filter.contains("LocalDate.now(ZoneOffset.UTC)"));
         assertTrue(filter.contains("now.atZone(ZoneOffset.UTC).toLocalDate()"));
         assertTrue(webXml.contains("<url-pattern>/traffic-stats</url-pattern>"));
+        assertTrue(webXml.contains("<filter-class>AccessCounter.VisitorAnalyticsFilter</filter-class>"));
+        assertFalse(webXml.contains("<filter-class>AccessCounter.AccessCounterFilter</filter-class>"));
         assertTrue(webXml.contains("/opt/SkinDB/runtime/traffic-history.properties"));
     }
 }

@@ -18,8 +18,8 @@
     </context-param>
 
     <filter>
-        <filter-name>AccessCounterFilter</filter-name>
-        <filter-class>AccessCounter.AccessCounterFilter</filter-class>
+        <filter-name>VisitorAnalyticsFilter</filter-name>
+        <filter-class>AccessCounter.VisitorAnalyticsFilter</filter-class>
         <init-param>
             <param-name>counterFile</param-name>
             <param-value>/opt/SkinDB/runtime/access-counter.properties</param-value>
@@ -52,7 +52,7 @@
         </init-param>
     </filter>
     <filter-mapping>
-        <filter-name>AccessCounterFilter</filter-name>
+        <filter-name>VisitorAnalyticsFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

@@ -22,7 +22,14 @@ import java.util.Base64;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AccessCounterFilter implements Filter {
+/**
+ * Initializes the shared traffic stores and records one eligible page view per
+ * browser and UTC day.
+ *
+ * <p>The deliberately specific class name avoids colliding with the legacy
+ * AccessCounterFilter that was installed by early scSAID deployments.</p>
+ */
+public final class VisitorAnalyticsFilter implements Filter {
     private static final String TOTAL_ATTRIBUTE = "totalCount";
     private static final String DAILY_ATTRIBUTE = "dailyCount";
     private static final String DATE_ATTRIBUTE = "currentDate";
@@ -72,7 +79,8 @@ public class AccessCounterFilter implements Filter {
         context.setAttribute(TOTAL_ATTRIBUTE, new AtomicLong(snapshot.total));
         context.setAttribute(DAILY_ATTRIBUTE, new AtomicLong(snapshot.daily));
         context.setAttribute(DATE_ATTRIBUTE, snapshot.date);
-        context.log("Access counter loaded from " + counterPath
+        context.setAttribute("visitorAnalyticsRuntime", "visitor-analytics-v2");
+        context.log("Visitor analytics runtime initialized from " + counterPath
                 + ": total=" + snapshot.total + ", daily=" + snapshot.daily);
         try {
             trafficHistoryStore.load();
@@ -280,17 +288,27 @@ public class AccessCounterFilter implements Filter {
                     context.log("Unable to persist hourly traffic history to "
                             + trafficHistoryStore.getPath(), error);
                 }
+                CountryResolver.VisitorLocation location = countryResolver == null
+                        ? CountryResolver.locate(httpRequest)
+                        : countryResolver.resolve(httpRequest);
                 try {
-                    CountryResolver.VisitorLocation location = countryResolver == null
-                            ? CountryResolver.locate(httpRequest)
-                            : countryResolver.resolve(httpRequest);
                     countryTrafficStore.record(today, location.getCountry());
-                    developerVisitorStore.record(location, now);
-                    developerVisitEventStore.record(location, userContext(visitorId, httpRequest),
-                            now, pagePath(httpRequest));
                 } catch (IOException error) {
                     context.log("Unable to persist country-level traffic aggregate to "
                             + countryTrafficStore.getPath(), error);
+                }
+                try {
+                    developerVisitorStore.record(location, now);
+                } catch (IOException error) {
+                    context.log("Unable to persist developer visitor aggregate to "
+                            + developerVisitorStore.getPath(), error);
+                }
+                try {
+                    developerVisitEventStore.record(location, userContext(visitorId, httpRequest),
+                            now, pagePath(httpRequest));
+                } catch (IOException error) {
+                    context.log("Unable to append developer visit event to "
+                            + developerVisitEventStore.getPath(), error);
                 }
                 changed = true;
             }

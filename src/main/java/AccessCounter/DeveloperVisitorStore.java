@@ -79,6 +79,8 @@ final class DeveloperVisitorStore {
         return rows.subList(0, Math.min(Math.max(0, limit), rows.size()));
     }
 
+    Path getPath() { return path; }
+
     private void prune(Instant now) {
         if (retentionDays <= 0) return;
         Instant cutoff = now.minus(retentionDays, java.time.temporal.ChronoUnit.DAYS);
