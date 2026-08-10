@@ -151,8 +151,12 @@ jobs:
             DEVELOPER_VISITOR_FILE="$COUNTER_DIR/developer-visitor-addresses.properties"
             DEVELOPER_VISIT_EVENTS_FILE="$COUNTER_DIR/developer-visit-events.tsv"
             GEOIP_DATABASE="$COUNTER_DIR/GeoLite2-City.mmdb"
+            GEOIP_ASN_DATABASE="$COUNTER_DIR/GeoLite2-ASN.mmdb"
             OLD_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT/WEB-INF/GeoLite2-City.mmdb
             LEGACY_GEOIP_DATABASE=/opt/tomcat/webapps/ROOT.colleague_0619_exploded/WEB-INF/GeoLite2-City.mmdb
+            OLD_GEOIP_ASN_DATABASE=/opt/tomcat/webapps/ROOT/WEB-INF/GeoLite2-ASN.mmdb
+            LEGACY_GEOIP_ASN_DATABASE=/opt/tomcat/webapps/ROOT.colleague_0619_exploded/WEB-INF/GeoLite2-ASN.mmdb
+            SYSTEM_GEOIP_ASN_DATABASE=/usr/share/GeoIP/GeoLite2-ASN.mmdb
             OLD_COUNTER=/opt/tomcat/webapps/ROOT/WEB-INF/counter.properties
             install -d -o tomcat -g tomcat "$COUNTER_DIR"
             if [ ! -f "$COUNTER_FILE" ] && [ -f "$OLD_COUNTER" ]; then
@@ -182,6 +186,15 @@ jobs:
             if [ ! -f "$GEOIP_DATABASE" ] && [ -f "$LEGACY_GEOIP_DATABASE" ]; then
               cp "$LEGACY_GEOIP_DATABASE" "$GEOIP_DATABASE"
             fi
+            if [ ! -f "$GEOIP_ASN_DATABASE" ] && [ -f "$OLD_GEOIP_ASN_DATABASE" ]; then
+              cp "$OLD_GEOIP_ASN_DATABASE" "$GEOIP_ASN_DATABASE"
+            fi
+            if [ ! -f "$GEOIP_ASN_DATABASE" ] && [ -f "$LEGACY_GEOIP_ASN_DATABASE" ]; then
+              cp "$LEGACY_GEOIP_ASN_DATABASE" "$GEOIP_ASN_DATABASE"
+            fi
+            if [ ! -f "$GEOIP_ASN_DATABASE" ] && [ -f "$SYSTEM_GEOIP_ASN_DATABASE" ]; then
+              cp "$SYSTEM_GEOIP_ASN_DATABASE" "$GEOIP_ASN_DATABASE"
+            fi
             chown tomcat:tomcat "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"
             chmod 640 "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"
             for state_file in "$COUNTER_FILE" "$TRAFFIC_FILE" "$COUNTRY_TRAFFIC_FILE" "$DEVELOPER_VISITOR_FILE" "$DEVELOPER_VISIT_EVENTS_FILE"; do
@@ -193,6 +206,12 @@ jobs:
               chmod 640 "$GEOIP_DATABASE"
             else
               echo "Local GeoLite database missing; country analytics will report Unknown until it is restored."
+            fi
+            if [ -f "$GEOIP_ASN_DATABASE" ]; then
+              chown tomcat:tomcat "$GEOIP_ASN_DATABASE"
+              chmod 640 "$GEOIP_ASN_DATABASE"
+            else
+              echo "Optional local GeoLite2-ASN database missing; network organization will remain unavailable."
             fi
             # Clear old app, compiled-JSP cache and stale PID before swapping in.
             rm -rf /opt/tomcat/webapps/ROOT \
@@ -229,6 +248,6 @@ jobs:
               'http://127.0.0.1:8080/developer-visit-events?limit=1' > "$PRIVATE_EVENTS_CHECK"
             "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert isinstance(p.get("totalVisits"), int); assert isinstance(p.get("todayVisits"), int)' "$PUBLIC_TRAFFIC_CHECK"
             "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert "visitAnalytics" in p; assert "allTimeTotal" in p' "$PRIVATE_TRAFFIC_CHECK"
-            "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert "retainedFields" in p; assert "events" in p.get("page", {})' "$PRIVATE_EVENTS_CHECK"
+            "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; f=p.get("retainedFields", []); assert all(x in f for x in ("cityName", "accuracyLabel", "networkOrganization")); assert "events" in p.get("page", {})' "$PRIVATE_EVENTS_CHECK"
             rm -f "$PUBLIC_TRAFFIC_CHECK" "$PRIVATE_TRAFFIC_CHECK" "$PRIVATE_EVENTS_CHECK"
             echo "Deploy OK: Tomcat serving on 8080"

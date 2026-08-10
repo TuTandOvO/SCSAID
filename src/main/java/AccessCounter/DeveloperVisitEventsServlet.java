@@ -38,8 +38,9 @@ public final class DeveloperVisitEventsServlet extends HttpServlet {
         payload.put("timezone", "UTC");
         payload.put("retainedFields", List.of(
                 "timestamp", "visitNumber", "visitorId", "address", "country",
-                "regionCode", "regionName", "browser", "operatingSystem",
-                "language", "userAgentHash", "path"));
+                "regionCode", "regionName", "cityName", "accuracyRadiusKm",
+                "accuracyLabel", "asnNumber", "networkOrganization", "browser",
+                "operatingSystem", "language", "userAgentHash", "path"));
         payload.put("page", page);
 
         response.setContentType("application/json;charset=UTF-8");

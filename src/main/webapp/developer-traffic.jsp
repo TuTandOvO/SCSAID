@@ -8,7 +8,7 @@
     <title>Private visitor analytics · scSAID</title>
     <link rel="stylesheet" href="lib/leaflet/leaflet.css?v=1.9.4">
     <link rel="stylesheet" href="CSS/design-system.css?v=20260714a">
-    <link rel="stylesheet" href="CSS/developer-traffic.css?v=20260810a">
+    <link rel="stylesheet" href="CSS/developer-traffic.css?v=20260810b">
 </head>
 <body class="developer-analytics-page">
 <main class="developer-analytics" aria-labelledby="analyticsTitle">
@@ -18,7 +18,7 @@
             <span class="developer-analytics__protected"><i aria-hidden="true"></i> Private developer view</span>
         </div>
         <h1 id="analyticsTitle">Visitor traffic</h1>
-        <p class="developer-analytics__intro">Live site activity, recurrence, content use, and region-level geography. The map never displays a visitor's exact location.</p>
+        <p class="developer-analytics__intro">Live site activity, recurrence, content use, and approximate city/region geography. IP geolocation is not a street, household, or building location.</p>
         <p class="developer-analytics__privacy">Counted visit events, first-party visitor IDs, protected address records, and recurrence history are retained for site administration.</p>
     </header>
 
@@ -31,7 +31,7 @@
 
     <section class="developer-analytics__panel developer-analytics__map-panel" aria-labelledby="mapTitle">
         <div class="developer-analytics__panel-head">
-            <div><h2 id="mapTitle">Visit map</h2><p>Hover a marker for its regional aggregate.</p></div>
+            <div><h2 id="mapTitle">Visit map</h2><p>Hover a marker for its regional aggregate and latest approximate GeoIP evidence.</p></div>
             <div class="developer-analytics__controls" role="group" aria-label="Map period">
                 <button type="button" class="developer-analytics__chip is-active" data-map-scope="all">All time</button>
                 <button type="button" class="developer-analytics__chip" data-map-scope="recent">30 days</button>
@@ -77,7 +77,7 @@
         <div class="developer-analytics__panel-head developer-analytics__ledger-head">
             <div>
                 <h2 id="eventLedgerTitle">Visit event ledger</h2>
-                <p>Every retained field for each counted visit, newest first. Times use your current time zone.</p>
+                <p>Every retained field for each counted visit, newest first. Locations are approximate GeoIP estimates; times use your current time zone.</p>
             </div>
             <form id="eventSearchForm" class="developer-analytics__event-search" role="search">
                 <label class="sr-only" for="eventSearchInput">Filter visit events</label>
@@ -91,11 +91,12 @@
             <table class="developer-analytics__event-table">
                 <thead><tr>
                     <th scope="col">Time</th><th scope="col">Visit</th><th scope="col">Visitor ID</th>
-                    <th scope="col">IP address</th><th scope="col">Country / region</th>
+                    <th scope="col">IP address</th><th scope="col">Approximate location</th>
+                    <th scope="col">Accuracy</th><th scope="col">Registered network</th>
                     <th scope="col">Client</th><th scope="col">Language</th>
                     <th scope="col">UA fingerprint</th><th scope="col">Page</th>
                 </tr></thead>
-                <tbody id="eventRows"><tr><td colspan="9">Loading the protected visit ledger…</td></tr></tbody>
+                <tbody id="eventRows"><tr><td colspan="11">Loading the protected visit ledger…</td></tr></tbody>
             </table>
         </div>
         <footer class="developer-analytics__ledger-footer">
@@ -135,6 +136,6 @@
 </main>
 <script src="lib/leaflet/leaflet.js?v=1.9.4"></script>
 <script src="lib/topojson-client.min.js?v=3.1.0"></script>
-<script src="JS/country-traffic.js?v=20260810a"></script>
+<script src="JS/country-traffic.js?v=20260810b"></script>
 </body>
 </html>

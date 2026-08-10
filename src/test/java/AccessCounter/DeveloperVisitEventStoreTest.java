@@ -3,8 +3,11 @@ package AccessCounter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -140,7 +143,8 @@ class DeveloperVisitEventStoreTest {
         DeveloperVisitEventStore.UserContext visitor = new DeveloperVisitEventStore.UserContext(
                 "visitor-full", "0123456789abcdef", "Firefox", "Linux", "zh-CN");
         CountryResolver.VisitorLocation location = new CountryResolver.VisitorLocation(
-                "8.8.8.8", "US", "NY", "New York");
+                "8.8.8.8", "US", "NY", "New York", "New York City", 20,
+                "Approximate city · 67% confidence radius 20 km", "15169", "Google LLC");
         store.record(location, visitor, Instant.parse("2026-08-10T10:00:00Z"), "/browse.jsp");
         store.record(location, visitor, Instant.parse("2026-08-10T11:00:00Z"), "/details.jsp");
 
@@ -158,6 +162,11 @@ class DeveloperVisitEventStoreTest {
         assertEquals("US", event.getCountry());
         assertEquals("NY", event.getRegionCode());
         assertEquals("New York", event.getRegionName());
+        assertEquals("New York City", event.getCityName());
+        assertEquals(20, event.getAccuracyRadiusKm());
+        assertEquals("Approximate city · 67% confidence radius 20 km", event.getAccuracyLabel());
+        assertEquals("15169", event.getAsnNumber());
+        assertEquals("Google LLC", event.getNetworkOrganization());
         assertEquals("Firefox", event.getBrowser());
         assertEquals("Linux", event.getOperatingSystem());
         assertEquals("zh-CN", event.getLanguage());
@@ -169,5 +178,46 @@ class DeveloperVisitEventStoreTest {
         assertTrue(second.isHasPrevious());
         assertFalse(second.isHasNext());
         assertEquals("/browse.jsp", second.getEvents().get(0).getPath());
+    }
+
+    @Test
+    void regionOnlyEventsRemainExplicitWithoutInventingCityOrNetworkEvidence() throws Exception {
+        Path ledger = temporaryDirectory.resolve("region-only-ledger.tsv");
+        DeveloperVisitEventStore store = new DeveloperVisitEventStore(ledger);
+        CountryResolver.VisitorLocation legacy = new CountryResolver.VisitorLocation(
+                "1.1.1.1", "AU", "NSW", "New South Wales");
+        store.record(legacy, new DeveloperVisitEventStore.UserContext(
+                        "legacy-compatible", "agent", "Chrome", "Linux", "en"),
+                Instant.parse("2026-08-10T12:00:00Z"), "/browse.jsp");
+
+        DeveloperVisitEventStore.Event event = store.eventPage(0, 10, "legacy-compatible")
+                .getEvents().get(0);
+        assertEquals("", event.getCityName());
+        assertEquals(null, event.getAccuracyRadiusKm());
+        assertEquals("Region-level estimate", event.getAccuracyLabel());
+        assertEquals("", event.getAsnNumber());
+        assertEquals("", event.getNetworkOrganization());
+    }
+
+    @Test
+    void readsThePreviouslyDeployedElevenFieldLedgerFormat() throws Exception {
+        Path ledger = temporaryDirectory.resolve("legacy-eleven-fields.tsv");
+        String line = String.join("\t", "2026-08-09T10:00:00Z", encoded("8.8.8.8"), "US",
+                encoded("CA"), encoded("California"), encoded("old-visitor"), encoded("agent"),
+                encoded("Chrome"), encoded("Linux"), encoded("en"), encoded("/details.jsp")) + "\n";
+        Files.writeString(ledger, line, StandardCharsets.UTF_8);
+
+        DeveloperVisitEventStore.Event event = new DeveloperVisitEventStore(ledger)
+                .eventPage(0, 10, "old-visitor").getEvents().get(0);
+        assertEquals("California", event.getRegionName());
+        assertEquals("", event.getCityName());
+        assertEquals(null, event.getAccuracyRadiusKm());
+        assertEquals("", event.getAccuracyLabel());
+        assertEquals("/details.jsp", event.getPath());
+    }
+
+    private static String encoded(String value) {
+        return Base64.getUrlEncoder().withoutPadding()
+                .encodeToString(value.getBytes(StandardCharsets.UTF_8));
     }
 }

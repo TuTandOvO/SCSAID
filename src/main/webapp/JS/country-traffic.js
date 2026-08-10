@@ -279,8 +279,32 @@
         var country = countryName(event.country || "") + " (" + display(event.country) + ")";
         var region = String(event.regionName || "").trim();
         var code = String(event.regionCode || "").trim();
-        if (!region && !code) return country;
-        return country + " · " + (region || "—") + (code ? " (" + code + ")" : "");
+        var city = String(event.cityName || "").trim();
+        var parts = [];
+        if (city) parts.push(city);
+        if (region && normalizeName(region) !== normalizeName(city)) {
+            parts.push(region + (code ? " (" + code + ")" : ""));
+        } else if (!region && code) {
+            parts.push(code);
+        }
+        parts.push(country);
+        return parts.join(" · ");
+    }
+
+    function eventAccuracy(event) {
+        var label = String(event.accuracyLabel || "").trim();
+        if (label) return label;
+        if (event.accuracyRadiusKm != null && event.accuracyRadiusKm !== "") {
+            return "67% confidence radius " + number(event.accuracyRadiusKm) + " km";
+        }
+        return "Not recorded for this event";
+    }
+
+    function eventNetwork(event) {
+        var organization = String(event.networkOrganization || "").trim();
+        var asn = String(event.asnNumber || "").trim();
+        if (!organization && !asn) return "Not available in local ASN data";
+        return (asn ? "AS" + asn : "ASN unavailable") + (organization ? " · " + organization : "");
     }
 
     function renderEventLedger(payload) {
@@ -294,12 +318,14 @@
                 number(event.visitNumber) + '</strong></td><td><code class="developer-analytics__ledger-value">' +
                 escapeHtml(display(event.visitorId)) + '</code></td><td><code class="developer-analytics__ledger-value">' +
                 escapeHtml(display(event.address)) + '</code></td><td><span class="developer-analytics__ledger-location">' +
-                escapeHtml(eventLocation(event)) + '</span></td><td>' + escapeHtml(client) +
+                escapeHtml(eventLocation(event)) + '</span></td><td><span class="developer-analytics__ledger-accuracy">' +
+                escapeHtml(eventAccuracy(event)) + '</span></td><td><span class="developer-analytics__ledger-network">' +
+                escapeHtml(eventNetwork(event)) + '</span></td><td>' + escapeHtml(client) +
                 '</td><td>' + escapeHtml(display(event.language)) +
                 '</td><td><code class="developer-analytics__ledger-value">' + escapeHtml(display(event.userAgentHash)) +
                 '</code></td><td><code class="developer-analytics__ledger-path" title="' +
                 escapeHtml(display(event.path)) + '">' + escapeHtml(display(event.path)) + '</code></td></tr>';
-        }).join("") : '<tr><td colspan="9">No retained visit events match this filter.</td></tr>';
+        }).join("") : '<tr><td colspan="11">No retained visit events match this filter.</td></tr>';
 
         var matched = Number(page.matchedEvents || 0);
         var total = Number(page.totalEvents || 0);
@@ -376,6 +402,7 @@
 
     function tooltipHtml(group) {
         var share = group.visits ? Math.round(group.returning / group.visits * 100) : 0;
+        var latest = group.latest || {};
         return '<div class="developer-analytics__tooltip-title">' + escapeHtml(group.label) +
             '<span class="developer-analytics__tooltip-code">' + escapeHtml(group.country) + '</span></div>' +
             '<dl class="developer-analytics__tooltip-grid"><dt>Visits</dt><dd>' + number(group.visits) +
@@ -383,9 +410,12 @@
             '</dd><dt>Returning visits</dt><dd>' + number(group.returning) +
             '</dd><dt>Returning share</dt><dd>' + number(share) +
             '%</dd><dt>Common client</dt><dd>' + escapeHtml(group.topBrowser + " · " + group.topSystem) +
+            '</dd><dt>Latest approximate location</dt><dd>' + escapeHtml(eventLocation(latest)) +
+            '</dd><dt>GeoIP accuracy</dt><dd>' + escapeHtml(eventAccuracy(latest)) +
+            '</dd><dt>Registered network</dt><dd>' + escapeHtml(eventNetwork(latest)) +
             '</dd></dl><p class="developer-analytics__tooltip-latest">Latest: ' +
-            escapeHtml(formatLocalTime(group.latest && group.latest.timestamp)) + '<code>' +
-            escapeHtml(group.latest && group.latest.path) + '</code></p>';
+            escapeHtml(formatLocalTime(latest.timestamp)) + '<code>' +
+            escapeHtml(latest.path) + '</code></p>';
     }
 
     function updateLayerStyles() {

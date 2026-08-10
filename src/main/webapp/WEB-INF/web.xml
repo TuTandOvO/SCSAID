@@ -50,6 +50,10 @@
             <param-name>geoIpDatabase</param-name>
             <param-value>/opt/SkinDB/runtime/GeoLite2-City.mmdb</param-value>
         </init-param>
+        <init-param>
+            <param-name>geoIpAsnDatabase</param-name>
+            <param-value>/opt/SkinDB/runtime/GeoLite2-ASN.mmdb</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>VisitorAnalyticsFilter</filter-name>

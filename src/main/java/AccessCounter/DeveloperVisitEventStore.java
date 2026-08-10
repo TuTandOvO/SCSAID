@@ -31,9 +31,14 @@ final class DeveloperVisitEventStore {
     private static final DateTimeFormatter DAY_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE;
     private static final int RETURN_HISTORY_LIMIT = 100;
     private final Path path;
+    private volatile CountryResolver countryResolver;
 
     DeveloperVisitEventStore(Path path) {
         this.path = path;
+    }
+
+    void setCountryResolver(CountryResolver countryResolver) {
+        this.countryResolver = countryResolver;
     }
 
     synchronized void record(CountryResolver.VisitorLocation location, UserContext userContext,
@@ -48,6 +53,12 @@ final class DeveloperVisitEventStore {
                 + "\t" + CountryTrafficStore.normalizeCountry(location.getCountry())
                 + "\t" + encode(safeText(location.getRegionCode(), 24))
                 + "\t" + encode(safeText(location.getRegionName(), 80))
+                + "\t" + encode(safeText(location.getCityName(), 100))
+                + "\t" + encode(location.getAccuracyRadiusKm() == null
+                        ? "" : String.valueOf(location.getAccuracyRadiusKm()))
+                + "\t" + encode(safeText(location.getAccuracyLabel(), 120))
+                + "\t" + encode(safeText(location.getAsnNumber(), 24))
+                + "\t" + encode(safeText(location.getNetworkOrganization(), 160))
                 + "\t" + encode(normalizedContext.visitorId)
                 + "\t" + encode(normalizedContext.userAgentHash)
                 + "\t" + encode(normalizedContext.browser)
@@ -153,6 +164,10 @@ final class DeveloperVisitEventStore {
             String line;
             while ((line = reader.readLine()) != null) {
                 Event event = parse(line);
+                if (event != null && fieldCount(line) < 16 && countryResolver != null) {
+                    CountryResolver.VisitorLocation location = countryResolver.resolveAddress(event.address);
+                    if (location.hasPublicAddress()) event = event.withLocation(location);
+                }
                 if (event != null) events.add(event);
             }
         }
@@ -219,13 +234,19 @@ final class DeveloperVisitEventStore {
 
     private static Event parse(String line) {
         String[] fields = line.split("\\t", -1);
-        if (fields.length != 4 && fields.length != 9 && fields.length != 11) return null;
+        if (fields.length != 4 && fields.length != 9 && fields.length != 11
+                && fields.length != 16) return null;
         try {
             Instant timestamp = Instant.parse(fields[0]);
             String address = decode(fields[1]);
             if (address == null || address.length() > 64) return null;
             String regionCode = "";
             String regionName = "";
+            String cityName = "";
+            Integer accuracyRadiusKm = null;
+            String accuracyLabel = "";
+            String asnNumber = "";
+            String networkOrganization = "";
             String visitorId = "";
             String userAgentHash = "";
             String browser = "";
@@ -241,7 +262,7 @@ final class DeveloperVisitEventStore {
                 operatingSystem = safeText(decode(fields[6]), 48);
                 language = safeText(decode(fields[7]), 32);
                 path = decode(fields[8]);
-            } else {
+            } else if (fields.length == 11) {
                 regionCode = safeText(decode(fields[3]), 24);
                 regionName = safeText(decode(fields[4]), 80);
                 visitorId = safeText(decode(fields[5]), 80);
@@ -250,12 +271,27 @@ final class DeveloperVisitEventStore {
                 operatingSystem = safeText(decode(fields[8]), 48);
                 language = safeText(decode(fields[9]), 32);
                 path = decode(fields[10]);
+            } else {
+                regionCode = safeText(decode(fields[3]), 24);
+                regionName = safeText(decode(fields[4]), 80);
+                cityName = safeText(decode(fields[5]), 100);
+                accuracyRadiusKm = parseRadius(decode(fields[6]));
+                accuracyLabel = safeText(decode(fields[7]), 120);
+                asnNumber = safeText(decode(fields[8]), 24);
+                networkOrganization = safeText(decode(fields[9]), 160);
+                visitorId = safeText(decode(fields[10]), 80);
+                userAgentHash = safeText(decode(fields[11]), 80);
+                browser = safeText(decode(fields[12]), 48);
+                operatingSystem = safeText(decode(fields[13]), 48);
+                language = safeText(decode(fields[14]), 32);
+                path = decode(fields[15]);
             }
             if (path == null || path.length() > 160) return null;
             String visitorKey = visitorKey(visitorId, address, userAgentHash);
             return new Event(timestamp, address, CountryTrafficStore.normalizeCountry(fields[2]),
-                    regionCode, regionName, visitorId, visitorKey, userAgentHash, browser, operatingSystem, language,
-                    path, 0L);
+                    regionCode, regionName, cityName, accuracyRadiusKm, accuracyLabel,
+                    asnNumber, networkOrganization, visitorId, visitorKey, userAgentHash,
+                    browser, operatingSystem, language, path, 0L);
         } catch (RuntimeException ignored) {
             return null;
         }
@@ -281,6 +317,24 @@ final class DeveloperVisitEventStore {
         if (value == null) return "";
         String normalized = value.replaceAll("[\\r\\n\\t]", " ").trim();
         return normalized.length() > limit ? normalized.substring(0, limit) : normalized;
+    }
+
+    private static Integer parseRadius(String value) {
+        if (value == null || value.isBlank()) return null;
+        try {
+            int radius = Integer.parseInt(value.trim());
+            return radius < 0 || radius > 20000 ? null : radius;
+        } catch (NumberFormatException ignored) {
+            return null;
+        }
+    }
+
+    private static int fieldCount(String line) {
+        int count = 1;
+        for (int index = 0; index < line.length(); index++) {
+            if (line.charAt(index) == '\t') count++;
+        }
+        return count;
     }
 
     private static String visitorKey(String visitorId, String address, String userAgentHash) {
@@ -349,6 +403,11 @@ final class DeveloperVisitEventStore {
         private final String country;
         private final String regionCode;
         private final String regionName;
+        private final String cityName;
+        private final Integer accuracyRadiusKm;
+        private final String accuracyLabel;
+        private final String asnNumber;
+        private final String networkOrganization;
         private final String visitorId;
         private final String visitorKey;
         private final String userAgentHash;
@@ -359,13 +418,19 @@ final class DeveloperVisitEventStore {
         private final long visitNumber;
 
         Event(Instant timestamp, String address, String country, String regionCode, String regionName,
-              String visitorId, String visitorKey, String userAgentHash, String browser, String operatingSystem, String language,
-              String path, long visitNumber) {
+              String cityName, Integer accuracyRadiusKm, String accuracyLabel, String asnNumber,
+              String networkOrganization, String visitorId, String visitorKey, String userAgentHash,
+              String browser, String operatingSystem, String language, String path, long visitNumber) {
             this.timestamp = timestamp;
             this.address = address;
             this.country = country;
             this.regionCode = regionCode;
             this.regionName = regionName;
+            this.cityName = cityName;
+            this.accuracyRadiusKm = accuracyRadiusKm;
+            this.accuracyLabel = accuracyLabel;
+            this.asnNumber = asnNumber;
+            this.networkOrganization = networkOrganization;
             this.visitorId = visitorId;
             this.visitorKey = visitorKey;
             this.userAgentHash = userAgentHash;
@@ -376,13 +441,22 @@ final class DeveloperVisitEventStore {
             this.visitNumber = visitNumber;
         }
         Event withVisitNumber(long value) {
-            return new Event(timestamp, address, country, regionCode, regionName, visitorId, visitorKey, userAgentHash,
-                    browser, operatingSystem, language, path, value);
+            return new Event(timestamp, address, country, regionCode, regionName, cityName,
+                    accuracyRadiusKm, accuracyLabel, asnNumber, networkOrganization,
+                    visitorId, visitorKey, userAgentHash, browser, operatingSystem, language, path, value);
+        }
+        Event withLocation(CountryResolver.VisitorLocation location) {
+            return new Event(timestamp, address, location.getCountry(), location.getRegionCode(),
+                    location.getRegionName(), location.getCityName(), location.getAccuracyRadiusKm(),
+                    location.getAccuracyLabel(), location.getAsnNumber(), location.getNetworkOrganization(),
+                    visitorId, visitorKey, userAgentHash, browser, operatingSystem, language, path, visitNumber);
         }
         boolean matches(String query) {
             return (timestamp + "\n" + address + "\n" + country + "\n" + regionCode + "\n"
-                    + regionName + "\n" + visitorId + "\n" + userAgentHash + "\n" + browser + "\n"
-                    + operatingSystem + "\n" + language + "\n" + path + "\n" + visitNumber)
+                    + regionName + "\n" + cityName + "\n" + accuracyRadiusKm + "\n" + accuracyLabel
+                    + "\n" + asnNumber + "\n" + networkOrganization + "\n" + visitorId + "\n"
+                    + userAgentHash + "\n" + browser + "\n" + operatingSystem + "\n" + language
+                    + "\n" + path + "\n" + visitNumber)
                     .toLowerCase(java.util.Locale.ROOT).contains(query);
         }
         Instant getTimestamp() { return timestamp; }
@@ -390,6 +464,11 @@ final class DeveloperVisitEventStore {
         String getCountry() { return country; }
         String getRegionCode() { return regionCode; }
         String getRegionName() { return regionName; }
+        String getCityName() { return cityName; }
+        Integer getAccuracyRadiusKm() { return accuracyRadiusKm; }
+        String getAccuracyLabel() { return accuracyLabel; }
+        String getAsnNumber() { return asnNumber; }
+        String getNetworkOrganization() { return networkOrganization; }
         String getVisitorId() { return visitorId; }
         String getUserAgentHash() { return userAgentHash; }
         String getBrowser() { return browser; }

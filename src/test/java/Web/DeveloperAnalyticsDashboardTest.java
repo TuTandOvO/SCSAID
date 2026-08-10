@@ -33,6 +33,8 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(jsp.contains("Visit event ledger"));
         assertTrue(jsp.contains("id=\"eventRows\""));
         assertTrue(jsp.contains("UA fingerprint"));
+        assertTrue(jsp.contains("Approximate location"));
+        assertTrue(jsp.contains("Registered network"));
         assertTrue(js.contains("L.map(\"visitMap\""));
         assertTrue(js.contains("/map_resources/world-countries.geojson"));
         assertTrue(js.contains("/map_resources/us-states.geojson"));
@@ -61,6 +63,9 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(js.contains("data-map-scope"));
         assertTrue(js.contains("function renderMap"));
         assertTrue(js.contains("function renderEventLedger"));
+        assertTrue(js.contains("function eventAccuracy"));
+        assertTrue(js.contains("function eventNetwork"));
+        assertTrue(js.contains("Latest approximate location"));
         assertTrue(js.contains("/developer-visit-events?offset="));
         assertFalse(jsp.contains("<svg id=\"visitMap\""));
         assertFalse(jsp.contains("Unknown / unavailable"));
@@ -74,7 +79,10 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(servlet.contains("visitorAnalyticsRuntime"));
         assertTrue(eventServlet.contains("retainedFields"));
         assertTrue(eventServlet.contains("userAgentHash"));
+        assertTrue(eventServlet.contains("accuracyRadiusKm"));
+        assertTrue(eventServlet.contains("networkOrganization"));
         assertTrue(filter.contains("DeveloperVisitEventStore"));
+        assertTrue(filter.contains("geoIpAsnDatabase"));
         assertTrue(filter.contains("developer-visit-events.tsv"));
         assertTrue(filter.contains("scsaid_vid"));
     }

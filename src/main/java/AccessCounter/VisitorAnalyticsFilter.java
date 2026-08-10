@@ -59,6 +59,7 @@ public final class VisitorAnalyticsFilter implements Filter {
         developerVisitorStore = new DeveloperVisitorStore(resolveDeveloperVisitorPath(filterConfig, counterPath), 0);
         developerVisitEventStore = new DeveloperVisitEventStore(resolveDeveloperVisitEventPath(filterConfig, counterPath));
         Path geoIpDatabase = resolveGeoIpDatabasePath(filterConfig, context);
+        Path geoIpAsnDatabase = resolveGeoIpAsnDatabasePath(filterConfig, context);
 
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
         CounterStore.Snapshot snapshot;
@@ -98,10 +99,13 @@ public final class VisitorAnalyticsFilter implements Filter {
             context.log("Unable to load developer-only visitor address history", error);
         }
         try {
-            countryResolver = CountryResolver.open(geoIpDatabase);
+            countryResolver = CountryResolver.open(geoIpDatabase, geoIpAsnDatabase);
             if (countryResolver == null) {
                 context.log("Country-level traffic analytics is running without a local GeoLite database.");
+            } else if (!countryResolver.hasAsnDatabase()) {
+                context.log("Visitor network organization is unavailable because the optional local GeoLite2-ASN database is missing.");
             }
+            developerVisitEventStore.setCountryResolver(countryResolver);
         } catch (IOException error) {
             context.log("Unable to open local GeoLite database for country-level traffic analytics", error);
         }
@@ -165,6 +169,15 @@ public final class VisitorAnalyticsFilter implements Filter {
             return Path.of(configured.trim());
         }
         String deployed = context.getRealPath("/WEB-INF/GeoLite2-City.mmdb");
+        return deployed == null ? null : Path.of(deployed);
+    }
+
+    private Path resolveGeoIpAsnDatabasePath(FilterConfig config, ServletContext context) {
+        String configured = config.getInitParameter("geoIpAsnDatabase");
+        if (configured != null && !configured.trim().isEmpty()) {
+            return Path.of(configured.trim());
+        }
+        String deployed = context.getRealPath("/WEB-INF/GeoLite2-ASN.mmdb");
         return deployed == null ? null : Path.of(deployed);
     }
 
