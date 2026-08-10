@@ -15,6 +15,10 @@
     var regionFeatureLayers = [];
     var mapAssetWarning = "";
     var expandedVisitors = {};
+    var eventOffset = 0;
+    var eventLimit = 100;
+    var eventQuery = "";
+    var eventRequestSequence = 0;
     var NS = "http://www.w3.org/2000/svg";
     var localTimeZone = detectTimeZone();
     var localTimeFormatter = createTimeFormatter(localTimeZone);
@@ -269,6 +273,65 @@
         history.hidden = !open;
         summary.classList.toggle("is-open", open);
         if (open) expandedVisitors[key] = true; else delete expandedVisitors[key];
+    }
+
+    function eventLocation(event) {
+        var country = countryName(event.country || "") + " (" + display(event.country) + ")";
+        var region = String(event.regionName || "").trim();
+        var code = String(event.regionCode || "").trim();
+        if (!region && !code) return country;
+        return country + " · " + (region || "—") + (code ? " (" + code + ")" : "");
+    }
+
+    function renderEventLedger(payload) {
+        var page = payload.page || {};
+        var events = page.events || [];
+        var target = document.getElementById("eventRows");
+        target.innerHTML = events.length ? events.map(function (event) {
+            var client = display(event.browser) + " · " + display(event.operatingSystem);
+            return '<tr><td><time class="developer-analytics__time">' +
+                escapeHtml(formatLocalTime(event.timestamp)) + '</time></td><td><strong class="developer-analytics__visit-count">#' +
+                number(event.visitNumber) + '</strong></td><td><code class="developer-analytics__ledger-value">' +
+                escapeHtml(display(event.visitorId)) + '</code></td><td><code class="developer-analytics__ledger-value">' +
+                escapeHtml(display(event.address)) + '</code></td><td><span class="developer-analytics__ledger-location">' +
+                escapeHtml(eventLocation(event)) + '</span></td><td>' + escapeHtml(client) +
+                '</td><td>' + escapeHtml(display(event.language)) +
+                '</td><td><code class="developer-analytics__ledger-value">' + escapeHtml(display(event.userAgentHash)) +
+                '</code></td><td><code class="developer-analytics__ledger-path" title="' +
+                escapeHtml(display(event.path)) + '">' + escapeHtml(display(event.path)) + '</code></td></tr>';
+        }).join("") : '<tr><td colspan="9">No retained visit events match this filter.</td></tr>';
+
+        var matched = Number(page.matchedEvents || 0);
+        var total = Number(page.totalEvents || 0);
+        var offset = Number(page.offset || 0);
+        var shownStart = events.length ? offset + 1 : 0;
+        var shownEnd = offset + events.length;
+        document.getElementById("eventLedgerStatus").textContent = eventQuery
+            ? "Showing " + number(shownStart) + "–" + number(shownEnd) + " of " + number(matched) +
+                " matching events (" + number(total) + " retained total)."
+            : "Showing " + number(shownStart) + "–" + number(shownEnd) + " of " + number(total) + " retained events.";
+        var totalPages = Math.max(1, Math.ceil(matched / eventLimit));
+        var currentPage = matched ? Math.floor(offset / eventLimit) + 1 : 1;
+        document.getElementById("eventPageLabel").textContent = "Page " + number(currentPage) + " of " + number(totalPages);
+        document.getElementById("eventPrevious").disabled = !page.hasPrevious;
+        document.getElementById("eventNext").disabled = !page.hasNext;
+    }
+
+    function refreshEventLedger() {
+        var sequence = ++eventRequestSequence;
+        var url = "/developer-visit-events?offset=" + eventOffset + "&limit=" + eventLimit;
+        if (eventQuery) url += "&q=" + encodeURIComponent(eventQuery);
+        return fetch(url + "&_=" + Date.now(), {
+            credentials:"same-origin", cache:"no-store", headers:{ "Accept":"application/json" }
+        }).then(function (response) {
+            if (!response.ok) throw new Error("Unable to load visit ledger.");
+            return response.json();
+        }).then(function (payload) {
+            if (sequence === eventRequestSequence) renderEventLedger(payload);
+        }).catch(function () {
+            if (sequence !== eventRequestSequence) return;
+            document.getElementById("eventLedgerStatus").textContent = "The protected visit ledger is temporarily unavailable.";
+        });
     }
 
     function svgElement(name, attributes) {
@@ -549,8 +612,29 @@
             var button = event.target.closest("[data-visitor-toggle]");
             if (button) toggleVisitor(button);
         });
+        document.getElementById("eventSearchForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            eventQuery = document.getElementById("eventSearchInput").value.trim();
+            eventOffset = 0;
+            refreshEventLedger();
+        });
+        document.getElementById("eventSearchClear").addEventListener("click", function () {
+            document.getElementById("eventSearchInput").value = "";
+            eventQuery = "";
+            eventOffset = 0;
+            refreshEventLedger();
+        });
+        document.getElementById("eventPrevious").addEventListener("click", function () {
+            eventOffset = Math.max(0, eventOffset - eventLimit);
+            refreshEventLedger();
+        });
+        document.getElementById("eventNext").addEventListener("click", function () {
+            eventOffset += eventLimit;
+            refreshEventLedger();
+        });
         refresh();
-        window.setInterval(refresh, POLL_MS);
+        refreshEventLedger();
+        window.setInterval(function () { refresh(); refreshEventLedger(); }, POLL_MS);
     }
 
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();

@@ -8,7 +8,7 @@
     <title>Private visitor analytics · scSAID</title>
     <link rel="stylesheet" href="lib/leaflet/leaflet.css?v=1.9.4">
     <link rel="stylesheet" href="CSS/design-system.css?v=20260714a">
-    <link rel="stylesheet" href="CSS/developer-traffic.css?v=20260714b">
+    <link rel="stylesheet" href="CSS/developer-traffic.css?v=20260810a">
 </head>
 <body class="developer-analytics-page">
 <main class="developer-analytics" aria-labelledby="analyticsTitle">
@@ -73,6 +73,41 @@
         </section>
     </div>
 
+    <section class="developer-analytics__panel developer-analytics__ledger-panel" aria-labelledby="eventLedgerTitle">
+        <div class="developer-analytics__panel-head developer-analytics__ledger-head">
+            <div>
+                <h2 id="eventLedgerTitle">Visit event ledger</h2>
+                <p>Every retained field for each counted visit, newest first. Times use your current time zone.</p>
+            </div>
+            <form id="eventSearchForm" class="developer-analytics__event-search" role="search">
+                <label class="sr-only" for="eventSearchInput">Filter visit events</label>
+                <input id="eventSearchInput" type="search" maxlength="120"
+                       placeholder="Filter any recorded field" autocomplete="off">
+                <button type="submit">Filter</button>
+                <button id="eventSearchClear" type="button">Clear</button>
+            </form>
+        </div>
+        <div class="developer-analytics__table-wrap">
+            <table class="developer-analytics__event-table">
+                <thead><tr>
+                    <th scope="col">Time</th><th scope="col">Visit</th><th scope="col">Visitor ID</th>
+                    <th scope="col">IP address</th><th scope="col">Country / region</th>
+                    <th scope="col">Client</th><th scope="col">Language</th>
+                    <th scope="col">UA fingerprint</th><th scope="col">Page</th>
+                </tr></thead>
+                <tbody id="eventRows"><tr><td colspan="9">Loading the protected visit ledger…</td></tr></tbody>
+            </table>
+        </div>
+        <footer class="developer-analytics__ledger-footer">
+            <p id="eventLedgerStatus" aria-live="polite">Loading retained events…</p>
+            <div class="developer-analytics__pager" aria-label="Visit ledger pages">
+                <button id="eventPrevious" type="button" disabled>Previous</button>
+                <span id="eventPageLabel">—</span>
+                <button id="eventNext" type="button" disabled>Next</button>
+            </div>
+        </footer>
+    </section>
+
     <section class="developer-analytics__panel developer-analytics__visitor-panel" aria-labelledby="visitorTitle">
         <div class="developer-analytics__panel-head">
             <div><h2 id="visitorTitle">Returning visitor history</h2><p>Select a visitor to inspect each numbered return.</p></div>
@@ -100,6 +135,6 @@
 </main>
 <script src="lib/leaflet/leaflet.js?v=1.9.4"></script>
 <script src="lib/topojson-client.min.js?v=3.1.0"></script>
-<script src="JS/country-traffic.js?v=20260714e"></script>
+<script src="JS/country-traffic.js?v=20260810a"></script>
 </body>
 </html>

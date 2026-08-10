@@ -117,6 +117,33 @@ final class DeveloperVisitEventStore {
                 visitors(perVisitor, numbered, 200));
     }
 
+    /** Paginated, newest-first view of every retained event for the protected ledger. */
+    synchronized EventPage eventPage(int requestedOffset, int requestedLimit, String requestedQuery)
+            throws IOException {
+        List<Event> events = readEvents();
+        events.sort(Comparator.comparing(Event::getTimestamp));
+        Map<String, Long> perVisitor = new LinkedHashMap<>();
+        List<Event> numbered = new ArrayList<>(events.size());
+        for (Event event : events) {
+            long visitNumber = perVisitor.getOrDefault(event.visitorKey, 0L) + 1L;
+            perVisitor.put(event.visitorKey, visitNumber);
+            numbered.add(event.withVisitNumber(visitNumber));
+        }
+
+        String query = safeText(requestedQuery, 120).toLowerCase(java.util.Locale.ROOT);
+        if (!query.isBlank()) numbered.removeIf(event -> !event.matches(query));
+        numbered.sort(Comparator.comparing(Event::getTimestamp).reversed());
+
+        int limit = Math.max(1, Math.min(200, requestedLimit));
+        int offset = Math.max(0, requestedOffset);
+        int matched = numbered.size();
+        int start = Math.min(offset, matched);
+        int end = Math.min(start + limit, matched);
+        List<Event> page = new ArrayList<>(numbered.subList(start, end));
+        return new EventPage(events.size(), matched, start, limit,
+                Collections.unmodifiableList(page));
+    }
+
     Path getPath() { return path; }
 
     private List<Event> readEvents() throws IOException {
@@ -352,6 +379,12 @@ final class DeveloperVisitEventStore {
             return new Event(timestamp, address, country, regionCode, regionName, visitorId, visitorKey, userAgentHash,
                     browser, operatingSystem, language, path, value);
         }
+        boolean matches(String query) {
+            return (timestamp + "\n" + address + "\n" + country + "\n" + regionCode + "\n"
+                    + regionName + "\n" + visitorId + "\n" + userAgentHash + "\n" + browser + "\n"
+                    + operatingSystem + "\n" + language + "\n" + path + "\n" + visitNumber)
+                    .toLowerCase(java.util.Locale.ROOT).contains(query);
+        }
         Instant getTimestamp() { return timestamp; }
         String getAddress() { return address; }
         String getCountry() { return country; }
@@ -364,6 +397,34 @@ final class DeveloperVisitEventStore {
         String getLanguage() { return language; }
         String getPath() { return path; }
         long getVisitNumber() { return visitNumber; }
+    }
+
+    static final class EventPage {
+        private final int totalEvents;
+        private final int matchedEvents;
+        private final int offset;
+        private final int limit;
+        private final boolean hasPrevious;
+        private final boolean hasNext;
+        private final List<Event> events;
+
+        EventPage(int totalEvents, int matchedEvents, int offset, int limit, List<Event> events) {
+            this.totalEvents = totalEvents;
+            this.matchedEvents = matchedEvents;
+            this.offset = offset;
+            this.limit = limit;
+            this.hasPrevious = offset > 0;
+            this.hasNext = offset + events.size() < matchedEvents;
+            this.events = events;
+        }
+
+        int getTotalEvents() { return totalEvents; }
+        int getMatchedEvents() { return matchedEvents; }
+        int getOffset() { return offset; }
+        int getLimit() { return limit; }
+        boolean isHasPrevious() { return hasPrevious; }
+        boolean isHasNext() { return hasNext; }
+        List<Event> getEvents() { return events; }
     }
 
     static final class SeriesRow {

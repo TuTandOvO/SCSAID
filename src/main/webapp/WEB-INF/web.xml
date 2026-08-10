@@ -66,6 +66,7 @@
         <filter-name>DeveloperAnalyticsFilter</filter-name>
         <url-pattern>/developer-traffic.jsp</url-pattern>
         <url-pattern>/country-traffic-stats</url-pattern>
+        <url-pattern>/developer-visit-events</url-pattern>
     </filter-mapping>
 
     <filter>
@@ -131,6 +132,15 @@
     <servlet-mapping>
         <servlet-name>CountryTrafficStatsServlet</servlet-name>
         <url-pattern>/country-traffic-stats</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeveloperVisitEventsServlet</servlet-name>
+        <servlet-class>AccessCounter.DeveloperVisitEventsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeveloperVisitEventsServlet</servlet-name>
+        <url-pattern>/developer-visit-events</url-pattern>
     </servlet-mapping>
 
     <servlet>

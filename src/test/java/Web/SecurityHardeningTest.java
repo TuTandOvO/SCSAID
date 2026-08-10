@@ -24,6 +24,7 @@ class SecurityHardeningTest {
         assertTrue(webXml.contains("DeveloperAnalyticsFilter"));
         assertTrue(webXml.contains("<url-pattern>/developer-traffic.jsp</url-pattern>"));
         assertTrue(webXml.contains("/country-traffic-stats"));
+        assertTrue(webXml.contains("<url-pattern>/developer-visit-events</url-pattern>"));
         String filter = read("src/main/java/AccessCounter/DeveloperAnalyticsFilter.java");
         assertTrue(filter.contains("SC_UNAUTHORIZED"));
         assertTrue(filter.contains("MessageDigest.isEqual"));

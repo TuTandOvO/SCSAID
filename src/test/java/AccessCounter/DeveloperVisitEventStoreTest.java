@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DeveloperVisitEventStoreTest {
     @TempDir
@@ -130,5 +131,43 @@ class DeveloperVisitEventStoreTest {
                 .filter(row -> row.getPath().contains("wp-admin")).count());
         assertEquals(2, snapshot.mapEvents.size());
         assertEquals(0, snapshot.mapEvents.stream().filter(event -> "ZZ".equals(event.getCountry())).count());
+    }
+
+    @Test
+    void exposesEveryRetainedEventFieldWithFilteringAndPagination() throws Exception {
+        DeveloperVisitEventStore store = new DeveloperVisitEventStore(
+                temporaryDirectory.resolve("ledger.tsv"));
+        DeveloperVisitEventStore.UserContext visitor = new DeveloperVisitEventStore.UserContext(
+                "visitor-full", "0123456789abcdef", "Firefox", "Linux", "zh-CN");
+        CountryResolver.VisitorLocation location = new CountryResolver.VisitorLocation(
+                "8.8.8.8", "US", "NY", "New York");
+        store.record(location, visitor, Instant.parse("2026-08-10T10:00:00Z"), "/browse.jsp");
+        store.record(location, visitor, Instant.parse("2026-08-10T11:00:00Z"), "/details.jsp");
+
+        DeveloperVisitEventStore.EventPage page = store.eventPage(0, 1, "firefox");
+        DeveloperVisitEventStore.Event event = page.getEvents().get(0);
+
+        assertEquals(2, page.getTotalEvents());
+        assertEquals(2, page.getMatchedEvents());
+        assertEquals(1, page.getEvents().size());
+        assertFalse(page.isHasPrevious());
+        assertTrue(page.isHasNext());
+        assertEquals(2, event.getVisitNumber());
+        assertEquals("visitor-full", event.getVisitorId());
+        assertEquals("8.8.8.8", event.getAddress());
+        assertEquals("US", event.getCountry());
+        assertEquals("NY", event.getRegionCode());
+        assertEquals("New York", event.getRegionName());
+        assertEquals("Firefox", event.getBrowser());
+        assertEquals("Linux", event.getOperatingSystem());
+        assertEquals("zh-CN", event.getLanguage());
+        assertEquals("0123456789abcdef", event.getUserAgentHash());
+        assertEquals("/details.jsp", event.getPath());
+        assertEquals(Instant.parse("2026-08-10T11:00:00Z"), event.getTimestamp());
+
+        DeveloperVisitEventStore.EventPage second = store.eventPage(1, 1, "8.8.8.8");
+        assertTrue(second.isHasPrevious());
+        assertFalse(second.isHasNext());
+        assertEquals("/browse.jsp", second.getEvents().get(0).getPath());
     }
 }

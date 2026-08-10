@@ -17,6 +17,7 @@ class DeveloperAnalyticsDashboardTest {
         String css = Files.readString(Path.of("src/main/webapp/CSS/developer-traffic.css"), StandardCharsets.UTF_8);
         String chinaMap = Files.readString(Path.of("src/main/webapp/map_resources/china-provinces.json"), StandardCharsets.UTF_8);
         String servlet = Files.readString(Path.of("src/main/java/AccessCounter/CountryTrafficStatsServlet.java"), StandardCharsets.UTF_8);
+        String eventServlet = Files.readString(Path.of("src/main/java/AccessCounter/DeveloperVisitEventsServlet.java"), StandardCharsets.UTF_8);
         String filter = Files.readString(Path.of("src/main/java/AccessCounter/VisitorAnalyticsFilter.java"), StandardCharsets.UTF_8);
 
         assertTrue(jsp.contains("lib/leaflet/leaflet.css"));
@@ -29,6 +30,9 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(jsp.contains("id=\"visitorTimeZone\""));
         assertTrue(jsp.contains("Select a visitor to inspect each numbered return."));
         assertTrue(jsp.contains("Most visited pages"));
+        assertTrue(jsp.contains("Visit event ledger"));
+        assertTrue(jsp.contains("id=\"eventRows\""));
+        assertTrue(jsp.contains("UA fingerprint"));
         assertTrue(js.contains("L.map(\"visitMap\""));
         assertTrue(js.contains("/map_resources/world-countries.geojson"));
         assertTrue(js.contains("/map_resources/us-states.geojson"));
@@ -56,6 +60,8 @@ class DeveloperAnalyticsDashboardTest {
         assertFalse(js.contains("toISOString()"));
         assertTrue(js.contains("data-map-scope"));
         assertTrue(js.contains("function renderMap"));
+        assertTrue(js.contains("function renderEventLedger"));
+        assertTrue(js.contains("/developer-visit-events?offset="));
         assertFalse(jsp.contains("<svg id=\"visitMap\""));
         assertFalse(jsp.contains("Unknown / unavailable"));
         assertFalse(js.contains("mapmyvisitors.com"));
@@ -66,6 +72,8 @@ class DeveloperAnalyticsDashboardTest {
         assertTrue(chinaMap.contains("\"centroid\":[114.134357,22.377366]"));
         assertTrue(servlet.contains("visitAnalytics"));
         assertTrue(servlet.contains("visitorAnalyticsRuntime"));
+        assertTrue(eventServlet.contains("retainedFields"));
+        assertTrue(eventServlet.contains("userAgentHash"));
         assertTrue(filter.contains("DeveloperVisitEventStore"));
         assertTrue(filter.contains("developer-visit-events.tsv"));
         assertTrue(filter.contains("scsaid_vid"));

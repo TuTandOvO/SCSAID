@@ -218,13 +218,17 @@ jobs:
             # protected JSON endpoints before declaring the deployment healthy.
             PUBLIC_TRAFFIC_CHECK=/tmp/scsaid-public-traffic-check.json
             PRIVATE_TRAFFIC_CHECK=/tmp/scsaid-private-traffic-check.json
+            PRIVATE_EVENTS_CHECK=/tmp/scsaid-private-events-check.json
             curl -fsS http://127.0.0.1:8080/traffic-stats > "$PUBLIC_TRAFFIC_CHECK"
             set -a
             . "$ANALYTICS_ENV"
             set +a
             curl -fsS --config <(printf 'user = "%s:%s"\n' "$SCSAID_ANALYTICS_USER" "$SCSAID_ANALYTICS_PASSWORD") \
               http://127.0.0.1:8080/country-traffic-stats > "$PRIVATE_TRAFFIC_CHECK"
+            curl -fsS --config <(printf 'user = "%s:%s"\n' "$SCSAID_ANALYTICS_USER" "$SCSAID_ANALYTICS_PASSWORD") \
+              'http://127.0.0.1:8080/developer-visit-events?limit=1' > "$PRIVATE_EVENTS_CHECK"
             "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert isinstance(p.get("totalVisits"), int); assert isinstance(p.get("todayVisits"), int)' "$PUBLIC_TRAFFIC_CHECK"
             "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert "visitAnalytics" in p; assert "allTimeTotal" in p' "$PRIVATE_TRAFFIC_CHECK"
-            rm -f "$PUBLIC_TRAFFIC_CHECK" "$PRIVATE_TRAFFIC_CHECK"
+            "$SCSAID_PYTHON" -c 'import json,sys; p=json.load(open(sys.argv[1])); assert p.get("runtime")=="visitor-analytics-v2"; assert "retainedFields" in p; assert "events" in p.get("page", {})' "$PRIVATE_EVENTS_CHECK"
+            rm -f "$PUBLIC_TRAFFIC_CHECK" "$PRIVATE_TRAFFIC_CHECK" "$PRIVATE_EVENTS_CHECK"
             echo "Deploy OK: Tomcat serving on 8080"
