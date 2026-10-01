@@ -69,7 +69,7 @@ table.dataTable.hb-table thead th {
     background-color: var(--compact-table-head) !important;
     border-bottom: 1px solid var(--compact-table-rule) !important;
     color: var(--compact-table-ink);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0;
     text-transform: none;
     white-space: nowrap;
@@ -131,7 +131,7 @@ table.hb-table .cell-link,
 table.hb-table .gene-link {
     gap: 4px;
     color: var(--color-secondary, #337ab7);
-    font-weight: 400;
+    font-weight: 500;
 }
 
 table.hb-table .cell-link svg { width: 13px; height: 13px; }
@@ -201,7 +201,7 @@ table.hb-table .cell-link svg { width: 13px; height: 13px; }
         border-radius: 0;
         background: var(--compact-table-head) !important;
         font-size: var(--compact-table-font-size);
-        font-weight: 600;
+        font-weight: 700;
     }
 
     table.hb-table tbody {
@@ -228,7 +228,7 @@ table.hb-table .cell-link svg { width: 13px; height: 13px; }
     table.hb-table td::before {
         color: var(--compact-table-muted);
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0;
         text-transform: none;
     }

@@ -65,6 +65,7 @@ app.layout = html.Div(
         "width": "100%",
         "minHeight": "100vh",
         "backgroundColor": "#0f172a",
+        "fontWeight": "500",
         "fontFamily": "'Segoe UI', Arial, sans-serif",
         "color": "#e2e8f0",
     },
@@ -227,7 +228,7 @@ app.layout = html.Div(
                         "flexWrap": "wrap",
                     },
                     children=[
-                        html.Span("Significance:", style={"fontWeight": "600", "color": "#64748b"}),
+                        html.Span("Significance:", style={"fontWeight": "700", "color": "#64748b"}),
                         html.Span([html.Span("●", style={"color": "#22c55e", "marginRight": "6px"}), "p < 0.001"], style={"color": "#94a3b8"}),
                         html.Span([html.Span("●", style={"color": "#84cc16", "marginRight": "6px"}), "p < 0.01"], style={"color": "#94a3b8"}),
                         html.Span([html.Span("●", style={"color": "#facc15", "marginRight": "6px"}), "p < 0.05"], style={"color": "#94a3b8"}),
@@ -280,11 +281,11 @@ def update_content(celltype, library):
             style={"display": "flex", "gap": "32px", "marginBottom": "16px"},
             children=[
                 html.Div([
-                    html.Span(f"{n_genes}", style={"fontSize": "32px", "fontWeight": "700", "color": "#06b6d4"}),
+                    html.Span(f"{n_genes}", style={"fontSize": "32px", "fontWeight": "800", "color": "#06b6d4"}),
                     html.Span(" genes", style={"color": "#64748b", "marginLeft": "8px"}),
                 ]),
                 html.Div([
-                    html.Span(f"{avg_lfc:.2f}", style={"fontSize": "32px", "fontWeight": "700", "color": "#06b6d4"}),
+                    html.Span(f"{avg_lfc:.2f}", style={"fontSize": "32px", "fontWeight": "800", "color": "#06b6d4"}),
                     html.Span(" avg logFC", style={"color": "#64748b", "marginLeft": "8px"}),
                 ]),
             ],
@@ -352,7 +353,7 @@ def update_content(celltype, library):
         },
         style_header={
             'backgroundColor': 'rgba(15, 23, 42, 0.6)',
-            'fontWeight': '600',
+            'fontWeight': '700',
             'color': '#94a3b8',
         },
         style_data_conditional=[

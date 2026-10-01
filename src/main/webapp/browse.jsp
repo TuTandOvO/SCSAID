@@ -36,7 +36,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
@@ -499,7 +499,7 @@ $(document).ready(function() {
 
     // Add badge next to the Generate button
     $('#integrate-button').after(
-        '<span id="selection-badge" style="display:none; margin-left:12px; background:var(--color-primary); color:var(--text-inverse); padding:4px 12px; border-radius:var(--radius-lg); font-size:0.85rem; font-weight:300;"></span>' +
+        '<span id="selection-badge" style="display:none; margin-left:12px; background:var(--color-primary); color:var(--text-inverse); padding:4px 12px; border-radius:var(--radius-lg); font-size:0.85rem; font-weight:400;"></span>' +
         '<button id="clear-selection-btn" class="btn-danger" style="margin-left:8px; display:none;" title="Clear all selections">Clear All</button>'
     );
 

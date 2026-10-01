@@ -44,7 +44,7 @@ body { background-color: var(--bg-body); }
 .table-card__title {
     font-family: var(--font-display);
     font-size: 1.35rem;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text-primary);
     margin: 0;
 }
@@ -78,7 +78,7 @@ body { background-color: var(--bg-body); }
 
 .filter-group__label {
     font-size: 0.72rem;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-muted);
@@ -125,7 +125,7 @@ body { background-color: var(--bg-body); }
 
 .filter-count strong {
     color: var(--color-secondary);
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* Clear-filters link — design-system btn-default (white / grey) grammar */
@@ -135,7 +135,7 @@ body { background-color: var(--bg-body); }
     padding: 6px 12px;
     font-family: var(--font-body);
     font-size: 0.85rem;
-    font-weight: 300;
+    font-weight: 400;
     border-radius: var(--radius-sm);
     cursor: pointer;
     text-decoration: none;
@@ -177,7 +177,7 @@ body { background-color: var(--bg-body); }
 .browse-table th {
     padding: 0.6rem 1.25rem;
     text-align: left;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 0.8rem;
     color: var(--text-primary);
     white-space: nowrap;
@@ -220,12 +220,12 @@ body { background-color: var(--bg-body); }
     font-family: var(--font-body);
     font-size: 0.85rem;
     color: var(--text-primary);
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .browse-table .cell-link {
     color: var(--color-secondary);
-    font-weight: 300;
+    font-weight: 400;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -243,7 +243,7 @@ body { background-color: var(--bg-body); }
     align-items: center;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-radius: var(--radius-full);
@@ -294,7 +294,7 @@ body { background-color: var(--bg-body); }
     padding: 0 var(--space-md);
     font-family: var(--font-body);
     font-size: 0.9rem;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text-secondary);
     background: var(--bg-surface);
     border: 1px solid var(--input-border);
@@ -355,7 +355,7 @@ body { background-color: var(--bg-body); }
 .umap-container__title {
     font-family: var(--font-display);
     font-size: 1.25rem;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text-primary);
     margin-bottom: var(--space-md);
 }
@@ -462,7 +462,7 @@ body { background-color: var(--bg-body); }
         content: attr(data-label);
         color: var(--text-muted);
         font-size: 0.68rem;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 0.08em;
         text-transform: uppercase;
     }

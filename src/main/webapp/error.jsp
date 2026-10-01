@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260703a">
     <title>Something went wrong - scSAID</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
     <style>
         body { background:#ffffff; font-family:'Nunito', sans-serif; color:#333333;
@@ -21,7 +21,7 @@
         .err { width:min(100%,520px); text-align:center; padding:clamp(1rem,5vw,2rem); }
         .err h1 { font-size:clamp(2rem,10vw,3rem); margin:0 0 .5rem; color:#333333; }
         .err p { color:#6b7280; line-height:1.7; }
-        .err a { color:#337ab7; text-decoration:none; font-weight:300; }
+        .err a { color:#337ab7; text-decoration:none; font-weight:400; }
     </style>
 </head>
 <body>

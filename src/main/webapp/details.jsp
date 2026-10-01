@@ -404,7 +404,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
@@ -2364,7 +2364,7 @@
                     }
 
                     interactions.forEach(function(row) {
-                        var pClass = row.pvalue < 0.01 ? 'color:#c0392b; font-weight:300;' : (row.pvalue < 0.05 ? 'color:#e67e22;' : '');
+                        var pClass = row.pvalue < 0.01 ? 'color:#c0392b; font-weight:400;' : (row.pvalue < 0.05 ? 'color:#e67e22;' : '');
                         tbody.append(
                             '<tr>' +
                             '<td>' + (row.interaction || '') + '</td>' +

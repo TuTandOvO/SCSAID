@@ -16,7 +16,7 @@
         backgroundColor: '#1a2332',
         borderColor: '#2d3a4f',
         borderWidth: 1,
-        textStyle: { color: '#ffffff', fontSize: 13 },
+        textStyle: { fontWeight: 500, color: '#ffffff', fontSize: 13 },
         extraCssText: 'border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);'
     };
 
@@ -79,6 +79,7 @@
         }
 
         var option = {
+            textStyle: { fontWeight: 500 },
             tooltip: Object.assign({}, TOOLTIP_STYLE, {
                 trigger: 'item',
                 formatter: function (p) {
@@ -91,8 +92,8 @@
                 orient: 'horizontal',
                 bottom: 0,
                 left: 'center',
-                textStyle: { fontSize: 11, color: '#5a6473' },
-                pageTextStyle: { color: '#5a6473' },
+                textStyle: { fontWeight: 500, fontSize: 11, color: '#5a6473' },
+                pageTextStyle: { fontWeight: 500, color: '#5a6473' },
                 pageIconColor: '#8b95a5',
                 pageIconInactiveColor: '#d1c9bd'
             },
@@ -105,7 +106,7 @@
                 itemStyle: { borderRadius: 4, borderColor: '#fff', borderWidth: 2 },
                 label: { show: false },
                 emphasis: {
-                    label: { show: true, fontSize: 13, fontWeight: 'bold' },
+                    label: { show: true, fontSize: 13, fontWeight: '800' },
                     itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0,0,0,0.2)' }
                 },
                 data: seriesData
@@ -125,7 +126,7 @@
                             textAlign: 'center',
                             fill: '#1a2332',
                             fontSize: 22,
-                            fontWeight: 'bold',
+                            fontWeight: '800',
                             fontFamily: 'Cormorant Garamond, Georgia, serif'
                         }
                     },
@@ -137,6 +138,7 @@
                             textAlign: 'center',
                             fill: '#8b95a5',
                             fontSize: 12,
+                            fontWeight: 500,
                             fontFamily: 'Montserrat, sans-serif'
                         }
                     }
@@ -169,6 +171,7 @@
         var leftMargin = Math.min(Math.max(maxLen * 6.5, 100), 280);
 
         var option = {
+            textStyle: { fontWeight: 500 },
             tooltip: Object.assign({}, TOOLTIP_STYLE, {
                 trigger: 'axis',
                 axisPointer: { type: 'shadow' },
@@ -244,6 +247,7 @@
         var startPercent = Math.max(0, 100 - (visibleCount / data.length * 100));
 
         var option = {
+            textStyle: { fontWeight: 500 },
             tooltip: Object.assign({}, TOOLTIP_STYLE, {
                 trigger: 'axis',
                 axisPointer: { type: 'shadow' },
@@ -264,7 +268,7 @@
                 handleStyle: { color: '#e8927c', borderColor: '#d4755d' },
                 fillerColor: 'rgba(232,146,124,0.15)',
                 borderColor: '#e5e0d8',
-                textStyle: { color: '#8b95a5' }
+                textStyle: { fontWeight: 500, color: '#8b95a5' }
             }],
             xAxis: {
                 type: 'value',

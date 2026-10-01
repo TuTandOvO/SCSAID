@@ -105,7 +105,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
     <!-- Design System -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
@@ -171,7 +171,7 @@
             padding: var(--space-sm) var(--space-lg);
             margin-bottom: var(--space-lg);
             font-size: 0.8rem;
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-accent);
@@ -184,7 +184,7 @@
         .hero__title {
             font-family: var(--font-display);
             font-size: clamp(3.25rem, 8vw, 6rem);
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-inverse);
             letter-spacing: -0.03em;
             line-height: 1;
@@ -204,7 +204,7 @@
             display: block;
             font-size: clamp(1.1rem, 2.6vw, 1.9rem);
             font-family: var(--font-body);
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: 0.05em;
             margin-top: var(--space-sm);
             color: rgba(255, 255, 255, 0.7);
@@ -338,7 +338,7 @@
         .quick-nav__label {
             font-family: var(--font-display);
             font-size: 1.1rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-primary);
         }
 
@@ -398,7 +398,7 @@
         .overview__image-title {
             font-family: var(--font-display);
             font-size: 1.1rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-primary);
             margin-bottom: var(--space-xs);
         }
@@ -416,7 +416,7 @@
         .overview__section-label {
             display: inline-block;
             font-size: 0.75rem;
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--color-secondary);
@@ -426,7 +426,7 @@
         .overview__heading {
             font-family: var(--font-display);
             font-size: 2.5rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-primary);
             margin-bottom: var(--space-xl);
             line-height: 1.2;
@@ -441,7 +441,7 @@
 
         .overview__text strong {
             color: var(--color-secondary);
-            font-weight: 300;
+            font-weight: 400;
         }
 
         .overview__graphical-abstract {
@@ -483,7 +483,7 @@
         .stats__number {
             font-family: var(--font-display);
             font-size: 3rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--color-secondary);
             line-height: 1;
             margin-bottom: var(--space-sm);
@@ -491,7 +491,7 @@
 
         .stats__label {
             font-size: 0.9rem;
-            font-weight: 300;
+            font-weight: 400;
             color: rgba(255, 255, 255, 0.6);
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -511,7 +511,7 @@
         .site-footer__logo {
             font-family: var(--font-display);
             font-size: 1.5rem;
-            font-weight: 300;
+            font-weight: 400;
             color: var(--color-accent);
             margin-bottom: var(--space-md);
         }
@@ -609,7 +609,7 @@
             margin: 0;
             font-family: var(--font-display);
             font-size: clamp(1.65rem, 4vw, 2.4rem);
-            font-weight: 300;
+            font-weight: 400;
             line-height: 1.15;
         }
         .traffic-modal__subtitle {
@@ -643,7 +643,7 @@
             color: var(--color-secondary-dark);
             font-family: var(--font-display);
             font-size: 2rem;
-            font-weight: 300;
+            font-weight: 400;
         }
         .traffic-modal__metric-label {
             color: var(--text-muted);

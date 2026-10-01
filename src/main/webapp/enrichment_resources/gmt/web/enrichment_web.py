@@ -66,6 +66,7 @@ app.layout = html.Div(
         "width": "100%",
         "minHeight": "100vh",
         "backgroundColor": "#faf8f5",
+        "fontWeight": "500",
         "fontFamily": "'Source Sans 3', sans-serif",
         "color": "#1a2332",
         "padding": "0",
@@ -92,7 +93,7 @@ app.layout = html.Div(
                                     "fontSize": "22px",
                                     "fontFamily": "'Cormorant Garamond', Georgia, serif",
                                     "color": "#ffffff",
-                                    "fontWeight": "500",
+                                    "fontWeight": "600",
                                 },
                             ),
                             html.P(
@@ -109,7 +110,7 @@ app.layout = html.Div(
                                 "borderRadius": "6px",
                                 "fontSize": "13px",
                                 "color": "#e8927c",
-                                "fontWeight": "500",
+                                "fontWeight": "600",
                             },
                             children=f"{len(CELLTYPES)} cell types • {len(AVAILABLE_LIBS)} databases",
                         ),
@@ -145,7 +146,7 @@ app.layout = html.Div(
                                     "fontSize": "11px",
                                     "color": "#5a6473",
                                     "marginBottom": "6px",
-                                    "fontWeight": "600",
+                                    "fontWeight": "700",
                                     "textTransform": "uppercase",
                                     "letterSpacing": "0.05em",
                                 }
@@ -166,7 +167,7 @@ app.layout = html.Div(
                                     "fontSize": "11px",
                                     "color": "#5a6473",
                                     "marginBottom": "6px",
-                                    "fontWeight": "600",
+                                    "fontWeight": "700",
                                     "textTransform": "uppercase",
                                     "letterSpacing": "0.05em",
                                 }
@@ -189,7 +190,7 @@ app.layout = html.Div(
                                 "borderRadius": "6px",
                                 "fontSize": "13px",
                                 "color": "#e8927c",
-                                "fontWeight": "600",
+                                "fontWeight": "700",
                             },
                         ),
                     ],
@@ -230,7 +231,7 @@ app.layout = html.Div(
                                         "fontSize": "15px",
                                         "color": "#1a2332",
                                         "fontFamily": "'Cormorant Garamond', Georgia, serif",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                     }
                                 ),
                                 html.Div(id="result-table"),
@@ -254,7 +255,7 @@ app.layout = html.Div(
                                         "fontSize": "15px",
                                         "color": "#1a2332",
                                         "fontFamily": "'Cormorant Garamond', Georgia, serif",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                     }
                                 ),
                                 dcc.Graph(id="bar-chart", config={"displayModeBar": False}),
@@ -280,7 +281,7 @@ app.layout = html.Div(
                     children=[
                         html.Span(
                             "Significance:",
-                            style={"fontWeight": "600", "color": "#5a6473", "fontSize": "12px"}
+                            style={"fontWeight": "700", "color": "#5a6473", "fontSize": "12px"}
                         ),
                         html.Span(
                             [html.Span("●", style={"color": "#e8927c", "marginRight": "5px"}), "p < 0.001"],
@@ -330,7 +331,7 @@ def update_content(celltype, library):
                 "fontSize": "15px",
                 "color": "#1a2332",
                 "fontFamily": "'Cormorant Garamond', Georgia, serif",
-                "fontWeight": "600",
+                "fontWeight": "700",
             }
         ),
         html.Div(
@@ -339,7 +340,7 @@ def update_content(celltype, library):
                 html.Div([
                     html.Span(
                         f"{n_genes}",
-                        style={"fontSize": "28px", "fontWeight": "700", "color": "#e8927c"}
+                        style={"fontSize": "28px", "fontWeight": "800", "color": "#e8927c"}
                     ),
                     html.Span(
                         " genes",
@@ -349,7 +350,7 @@ def update_content(celltype, library):
                 html.Div([
                     html.Span(
                         f"{avg_lfc:.2f}",
-                        style={"fontSize": "28px", "fontWeight": "700", "color": "#d4a574"}
+                        style={"fontSize": "28px", "fontWeight": "800", "color": "#d4a574"}
                     ),
                     html.Span(
                         " avg logFC",
@@ -380,7 +381,7 @@ def update_content(celltype, library):
                         "borderRadius": "4px",
                         "fontSize": "11px",
                         "fontFamily": "'JetBrains Mono', monospace",
-                        "fontWeight": "500",
+                        "fontWeight": "600",
                     }
                 ) for g in genes[:50]
             ] + ([
@@ -449,7 +450,7 @@ def update_content(celltype, library):
         },
         style_header={
             'backgroundColor': '#f5f2ed',
-            'fontWeight': '600',
+            'fontWeight': '700',
             'color': '#5a6473',
             'fontSize': '11px',
             'textTransform': 'uppercase',

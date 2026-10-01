@@ -217,7 +217,7 @@ app.layout = html.Div([
                        'fontFamily': 'Cormorant Garamond',
                        'color': COLORS['navy'],
                        'marginBottom': '0.5rem',
-                       'fontWeight': '600'
+                       'fontWeight': '700'
                    }),
             html.P("Visualize gene expression patterns on integrated UMAP",
                   style={
@@ -282,7 +282,7 @@ app.layout = html.Div([
     # Hidden div for storing data
     dcc.Store(id='gene-data', data=None)
 
-], style={'fontFamily': 'Source Sans 3'})
+], style={'fontFamily': 'Source Sans 3', 'fontWeight': '500'})
 
 @app.callback(
     [Output('umap-plot', 'figure'),

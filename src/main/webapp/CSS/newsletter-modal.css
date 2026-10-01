@@ -79,7 +79,7 @@
 .nl-modal__title {
     font-family: var(--font-display, 'Nunito', sans-serif);
     font-size: 1.35rem;
-    font-weight: 800;
+    font-weight: 900;
     color: var(--text-primary, #333);
     margin: 0;
     line-height: 1.25;
@@ -99,12 +99,12 @@
     text-align: center;
 }
 
-.nl-modal__lead strong { color: var(--text-primary, #333); font-weight: 700; }
+.nl-modal__lead strong { color: var(--text-primary, #333); font-weight: 800; }
 
 .nl-modal__confirm-note {
     font-family: var(--font-body, 'Nunito', sans-serif);
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.55;
     color: #c0392b;
     margin: var(--space-md, 1rem) 0 0;
@@ -130,7 +130,7 @@
 .nl-form__label {
     font-family: var(--font-body, 'Nunito', sans-serif);
     font-size: 0.82rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-primary, #333);
 }
 
@@ -166,7 +166,7 @@
     padding: 0.65rem 1rem;
     font-family: var(--font-body, 'Nunito', sans-serif);
     font-size: 0.98rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #fff;
     background: var(--color-primary, #337ab7);
     border: 1px solid var(--btn-primary-border, #2e6da4);
@@ -208,7 +208,7 @@
 .nl-modal__success-title {
     font-family: var(--font-display, 'Nunito', sans-serif);
     font-size: 1.2rem;
-    font-weight: 800;
+    font-weight: 900;
     color: var(--text-primary, #333);
     margin: 0 0 var(--space-sm, 0.5rem);
 }

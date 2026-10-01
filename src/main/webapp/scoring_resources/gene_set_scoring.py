@@ -228,6 +228,7 @@ app.layout = html.Div(
         "width": "100%",
         "minHeight": "100vh",
         "backgroundColor": "#faf8f5",
+        "fontWeight": "500",
         "fontFamily": "'Source Sans 3', sans-serif",
         "color": "#1a2332",
         "padding": "0",
@@ -250,7 +251,7 @@ app.layout = html.Div(
                         "fontSize": "22px",
                         "fontFamily": "'Cormorant Garamond', Georgia, serif",
                         "color": "#ffffff",
-                        "fontWeight": "500",
+                        "fontWeight": "600",
                     },
                 ),
                 html.P(
@@ -285,7 +286,7 @@ app.layout = html.Div(
                                 "margin": "0 0 12px 0",
                                 "fontSize": "15px",
                                 "fontFamily": "'Cormorant Garamond', Georgia, serif",
-                                "fontWeight": "600",
+                                "fontWeight": "700",
                                 "color": "#1a2332",
                             }
                         ),
@@ -321,7 +322,7 @@ app.layout = html.Div(
                                                 "fontSize": "11px",
                                                 "color": "#5a6473",
                                                 "marginBottom": "6px",
-                                                "fontWeight": "600",
+                                                "fontWeight": "700",
                                                 "textTransform": "uppercase",
                                                 "letterSpacing": "0.05em",
                                             }
@@ -352,7 +353,7 @@ app.layout = html.Div(
                                                 "fontSize": "11px",
                                                 "color": "#5a6473",
                                                 "marginBottom": "6px",
-                                                "fontWeight": "600",
+                                                "fontWeight": "700",
                                                 "textTransform": "uppercase",
                                                 "letterSpacing": "0.05em",
                                             }
@@ -428,7 +429,7 @@ def update_recommendations(dataset_id):
                                     f"#{i+1}  {rec['description']}",
                                     style={
                                         "fontSize": "14px",
-                                        "fontWeight": "600",
+                                        "fontWeight": "700",
                                         "color": "#1a2332",
                                         "marginBottom": "4px",
                                     }
@@ -443,7 +444,7 @@ def update_recommendations(dataset_id):
                             f"{rec['score']:.2f}",
                             style={
                                 "fontSize": "16px",
-                                "fontWeight": "700",
+                                "fontWeight": "800",
                                 "color": "#e8927c",
                                 "fontFamily": "'JetBrains Mono', monospace",
                             }
@@ -506,7 +507,7 @@ def update_search_results(search_term):
             children=[
                 html.Div(
                     match['description'],
-                    style={"fontSize": "14px", "fontWeight": "500", "color": "#1a2332", "marginBottom": "4px"}
+                    style={"fontSize": "14px", "fontWeight": "600", "color": "#1a2332", "marginBottom": "4px"}
                 ),
                 html.Div(
                     f"{match['size']} genes",
@@ -520,7 +521,7 @@ def update_search_results(search_term):
     return [
         html.P(
             f"Found {len(matches)} matching gene sets:",
-            style={"fontSize": "13px", "color": "#5a6473", "fontWeight": "600", "margin": "0 0 12px 0"}
+            style={"fontSize": "13px", "color": "#5a6473", "fontWeight": "700", "margin": "0 0 12px 0"}
         ),
         html.Div(
             style={"maxHeight": "400px", "overflowY": "auto"},

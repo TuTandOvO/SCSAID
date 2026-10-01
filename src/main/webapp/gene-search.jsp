@@ -24,7 +24,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
     <!-- Design System — same primitives as Details / Compare -->
     <link rel="stylesheet" href="CSS/design-system.css?v=20260710c">
@@ -48,7 +48,7 @@
             padding: 0.55rem 0.8rem; font-family: var(--font-mono); font-size: 0.9rem;
             color: var(--text-primary); border-radius: var(--radius-sm); cursor: pointer;
         }
-        .search-suggest__item mark { background: transparent; color: var(--color-secondary-dark); font-weight: 300; }
+        .search-suggest__item mark { background: transparent; color: var(--color-secondary-dark); font-weight: 400; }
         .search-suggest__item:hover,
         .search-suggest__item.is-active {
             background: color-mix(in srgb, var(--color-secondary) 14%, transparent);

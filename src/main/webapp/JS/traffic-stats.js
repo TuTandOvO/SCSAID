@@ -32,6 +32,7 @@
         var average = mode === "average";
         return {
             animationDuration: 280,
+            textStyle: { fontWeight: 500 },
             color: ["#3d86c6"],
             grid: { left: 48, right: 22, top: 30, bottom: 58 },
             tooltip: {
@@ -107,7 +108,7 @@
             return '<text x="' + point.x + '" y="' + (height - 12) + '" text-anchor="middle">' + label + '</text>';
         }).join("");
         chartNode.innerHTML = '<svg viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="Traffic chart" ' +
-            'style="width:100%;height:100%;font:11px sans-serif;fill:#777"><g>' + grid + '</g><path d="' + area +
+            'style="width:100%;height:100%;font:500 11px sans-serif;fill:#777"><g>' + grid + '</g><path d="' + area +
             '" fill="rgba(61,134,198,.13)"/><path d="' + line + '" fill="none" stroke="#3d86c6" stroke-width="2.5"/>' +
             points.map(function (point) { return '<circle cx="' + point.x + '" cy="' + point.y + '" r="3" fill="#3d86c6" stroke="#fff"/>'; }).join("") +
             '<g>' + labelsSvg + '</g></svg>';
